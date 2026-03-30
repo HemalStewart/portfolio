@@ -89,33 +89,6 @@ const selectedProjects: ProjectExperience[] = [
     ],
   },
   {
-    title: "Real-Time Meetings Platform (Web)",
-    techStack: "Next.js, TypeScript, Clerk, Stream Video SDK, Tailwind CSS",
-    responsibilities: [
-      "Implemented meeting lifecycle features: instant meetings, scheduled meetings, personal room, recordings, and history views.",
-      "Built meeting room and setup components with participant-facing controls.",
-      "Integrated authentication and route protection for signed-in meeting experiences.",
-    ],
-    impact: [
-      "Delivered a full video conferencing workflow with scheduling and session management.",
-    ],
-    references: [{ label: "Repository", note: "Link available on request" }],
-  },
-  {
-    title: "Real-Time Meetings App (Flutter)",
-    techStack: "Flutter, GetX, Stream Video SDK, permission_handler",
-    responsibilities: [
-      "Built meeting flows for login, home dashboard, personal room, upcoming meetings, previous meetings, recordings, and meeting room navigation.",
-      "Implemented controller logic for create, join, leave, schedule, and recording retrieval.",
-      "Added camera/microphone permission workflow and meeting lobby handoff into active call room.",
-      "Structured project into controllers, models, screens, widgets, and utility layers.",
-    ],
-    impact: [
-      "Delivered a production-style conferencing app architecture in Flutter with concrete meeting operations and call-state handling.",
-    ],
-    references: [{ label: "Source Project", note: "Code available on request" }],
-  },
-  {
     title: "WriteScan App",
     techStack: "Flutter, Riverpod, GoRouter, ML Kit, SQLite",
     responsibilities: [
@@ -218,6 +191,33 @@ const selectedProjects: ProjectExperience[] = [
       },
     ],
   },
+  {
+    title: "Real-Time Meetings Platform (Web)",
+    techStack: "Next.js, TypeScript, Clerk, Stream Video SDK, Tailwind CSS",
+    responsibilities: [
+      "Implemented meeting lifecycle features: instant meetings, scheduled meetings, personal room, recordings, and history views.",
+      "Built meeting room and setup components with participant-facing controls.",
+      "Integrated authentication and route protection for signed-in meeting experiences.",
+    ],
+    impact: [
+      "Delivered a full video conferencing workflow with scheduling and session management.",
+    ],
+    references: [{ label: "Repository", note: "Link available on request" }],
+  },
+  {
+    title: "Real-Time Meetings App (Flutter)",
+    techStack: "Flutter, GetX, Stream Video SDK, permission_handler",
+    responsibilities: [
+      "Built meeting flows for login, home dashboard, personal room, upcoming meetings, previous meetings, recordings, and meeting room navigation.",
+      "Implemented controller logic for create, join, leave, schedule, and recording retrieval.",
+      "Added camera/microphone permission workflow and meeting lobby handoff into active call room.",
+      "Structured project into controllers, models, screens, widgets, and utility layers.",
+    ],
+    impact: [
+      "Delivered a production-style conferencing app architecture in Flutter with concrete meeting operations and call-state handling.",
+    ],
+    references: [{ label: "Source Project", note: "Code available on request" }],
+  },
 ];
 
 const additionalProjects: ExternalReference[] = [
@@ -236,7 +236,7 @@ function renderReference(reference: ExternalReference) {
   if (reference.href) {
     return (
       <a
-        className="text-sm text-brand-700 transition hover:text-brand-900 hover:underline"
+        className="text-sm text-brand-300 transition hover:text-brand-200 hover:underline"
         href={reference.href}
         target="_blank"
         rel="noreferrer noopener"
@@ -248,33 +248,33 @@ function renderReference(reference: ExternalReference) {
 
   if (reference.path) {
     return (
-      <p className="text-sm text-slate-700">
+      <p className="text-sm text-slate-300">
         {reference.label}:{" "}
-        <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-800">
+        <code className="rounded bg-slate-800 px-1.5 py-0.5 text-xs text-slate-200">
           {reference.path}
         </code>
       </p>
     );
   }
 
-  return <p className="text-sm text-slate-700">{`${reference.label}: ${reference.note}`}</p>;
+  return <p className="text-sm text-slate-300">{`${reference.label}: ${reference.note}`}</p>;
 }
 
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-8 px-5 py-8 md:px-8 md:py-12">
-      <section className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white/90 shadow-[0_20px_70px_-40px_rgba(13,36,61,0.6)]">
-        <div className="relative border-b border-slate-200/80 bg-[radial-gradient(circle_at_top_left,_#e0efff_0,_transparent_45%),radial-gradient(circle_at_top_right,_#fcf0dc_0,_transparent_40%)] p-8 md:p-12">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+    <main className="flex w-full min-h-screen flex-1 flex-col gap-6 px-4 py-6 md:px-10 md:py-10">
+      <section className="overflow-hidden rounded-3xl border border-slate-800/90 bg-slate-950/80 shadow-[0_30px_80px_-45px_rgba(0,0,0,0.95)]">
+        <div className="relative border-b border-slate-800/80 bg-[radial-gradient(circle_at_top_left,_rgba(19,104,213,0.28)_0,_transparent_50%),radial-gradient(circle_at_top_right,_rgba(15,23,42,0.8)_0,_transparent_45%)] p-8 md:p-12">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
             Last updated: 2026-03-30
           </p>
-          <h1 className="mt-4 font-display text-4xl font-semibold text-slate-900 md:text-5xl">
+          <h1 className="mt-4 font-display text-4xl font-semibold text-slate-100 md:text-5xl">
             Hemal Herath
           </h1>
-          <p className="mt-2 text-lg font-semibold text-brand-700">
+          <p className="mt-2 text-lg font-semibold text-brand-300">
             Full-Stack Software Engineer
           </p>
-          <p className="mt-5 max-w-3xl text-[15px] leading-7 text-slate-700 md:text-base">
+          <p className="mt-5 max-w-3xl text-[15px] leading-7 text-slate-300 md:text-base">
             Full-stack software engineer with hands-on delivery experience across
             Flutter, Next.js, TypeScript, PHP (CodeIgniter), and FastAPI. Built
             and maintained production-style web and mobile platforms with complex
@@ -284,13 +284,13 @@ export default function Home() {
           <div className="mt-7 flex flex-wrap gap-3">
             <a
               href="mailto:nuwanhemal@gmail.com"
-              className="rounded-full bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800"
+              className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-400"
             >
               Contact via Email
             </a>
             <a
               href="/resume.pdf"
-              className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+              className="rounded-full border border-slate-700 px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-slate-500 hover:bg-slate-900"
               target="_blank"
               rel="noreferrer"
             >
@@ -299,89 +299,89 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="grid gap-3 px-8 py-6 text-sm text-slate-700 md:grid-cols-3 md:px-12">
+        <div className="grid gap-3 px-8 py-6 text-sm text-slate-300 md:grid-cols-3 md:px-12">
           <p>
-            <span className="font-semibold text-slate-900">Email:</span>{" "}
+            <span className="font-semibold text-slate-100">Email:</span>{" "}
             nuwanhemal@gmail.com
           </p>
           <p>
-            <span className="font-semibold text-slate-900">Phone:</span> +94 71
+            <span className="font-semibold text-slate-100">Phone:</span> +94 71
             88 50 419
           </p>
           <p>
-            <span className="font-semibold text-slate-900">Location:</span>{" "}
+            <span className="font-semibold text-slate-100">Location:</span>{" "}
             Polgasowita, Kottawa
           </p>
         </div>
       </section>
 
-      <section className="rounded-3xl border border-slate-200/80 bg-white/90 p-7 md:p-9">
-        <h2 className="font-display text-2xl font-semibold text-slate-900">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/70 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
           Delivery Snapshot
         </h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          <article className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <article className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
               Active Project Timeline
             </p>
-            <p className="mt-2 text-base font-semibold text-slate-900">
+            <p className="mt-2 text-base font-semibold text-slate-100">
               2025-08-22 to 2026-03-25
             </p>
           </article>
-          <article className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <article className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
               Repositories Reviewed
             </p>
-            <p className="mt-2 text-base font-semibold text-slate-900">
+            <p className="mt-2 text-base font-semibold text-slate-100">
               13 repositories + 1 local MAMP project
             </p>
           </article>
-          <article className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <article className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
               Combined Commits
             </p>
-            <p className="mt-2 text-base font-semibold text-slate-900">605</p>
+            <p className="mt-2 text-base font-semibold text-slate-100">605</p>
           </article>
         </div>
       </section>
 
-      <section className="rounded-3xl border border-slate-200/80 bg-white/90 p-7 md:p-9">
-        <h2 className="font-display text-2xl font-semibold text-slate-900">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/70 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
           Production Deployments
         </h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           {productionDeployments.map((deployment) => (
             <a
               key={`${deployment.name}-${deployment.platform}`}
-              className="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-brand-200 hover:bg-brand-50/50"
+              className="rounded-2xl border border-slate-800 bg-slate-900 p-4 transition hover:border-brand-500 hover:bg-brand-950/40"
               href={deployment.href}
               target="_blank"
               rel="noreferrer noopener"
             >
-              <p className="text-base font-semibold text-slate-900">
+              <p className="text-base font-semibold text-slate-100">
                 {deployment.name}
               </p>
-              <p className="mt-1 text-sm text-slate-600">{deployment.platform}</p>
-              <p className="mt-3 text-sm text-brand-700">Open deployment</p>
+              <p className="mt-1 text-sm text-slate-400">{deployment.platform}</p>
+              <p className="mt-3 text-sm text-brand-300">Open deployment</p>
             </a>
           ))}
         </div>
       </section>
 
-      <section className="rounded-3xl border border-slate-200/80 bg-white/90 p-7 md:p-9">
-        <h2 className="font-display text-2xl font-semibold text-slate-900">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/70 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
           Core Skills
         </h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {coreSkills.map((skill) => (
             <article
               key={skill.group}
-              className="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+              className="rounded-2xl border border-slate-800 bg-slate-900 p-4"
             >
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
                 {skill.group}
               </p>
-              <p className="mt-2 text-sm leading-6 text-slate-700">
+              <p className="mt-2 text-sm leading-6 text-slate-300">
                 {skill.skills}
               </p>
             </article>
@@ -389,42 +389,42 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="rounded-3xl border border-slate-200/80 bg-white/90 p-7 md:p-9">
-        <h2 className="font-display text-2xl font-semibold text-slate-900">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/70 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
           Selected Project Experience
         </h2>
         <div className="mt-6 grid gap-5">
           {selectedProjects.map((project) => (
             <article
               key={project.title}
-              className="rounded-2xl border border-slate-200 bg-white p-5"
+              className="rounded-2xl border border-slate-800 bg-slate-900 p-5"
             >
-              <h3 className="text-lg font-semibold text-slate-900">
+              <h3 className="text-lg font-semibold text-slate-100">
                 {project.title}
               </h3>
-              <p className="mt-1 text-sm text-slate-600">
+              <p className="mt-1 text-sm text-slate-400">
                 Tech stack: {project.techStack}
               </p>
 
-              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-400">
                 Responsibilities
               </p>
-              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-6 text-slate-700">
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-6 text-slate-300">
                 {project.responsibilities.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
 
-              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-400">
                 Impact
               </p>
-              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-6 text-slate-700">
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-6 text-slate-300">
                 {project.impact.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
 
-              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-400">
                 References
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-3">
@@ -439,8 +439,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="rounded-3xl border border-slate-200/80 bg-white/90 p-7 md:p-9">
-        <h2 className="font-display text-2xl font-semibold text-slate-900">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/70 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
           Additional Projects
         </h2>
         <div className="mt-4 flex flex-col gap-2">

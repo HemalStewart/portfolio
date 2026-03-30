@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f7fb;
-  --foreground: #0f172a;
+  --background: #030712;
+  --foreground: #e2e8f0;
   --color-brand-50: #eef7ff;
   --color-brand-100: #d7ebff;
   --color-brand-200: #badcff;
@@ -34,8 +34,9 @@
 
 body {
   background:
-    radial-gradient(circle at 8% 5%, #d8e9fb 0, transparent 30%),
-    radial-gradient(circle at 92% 9%, #f5e8d0 0, transparent 28%),
+    radial-gradient(circle at 10% 4%, rgba(19, 104, 213, 0.24) 0, transparent 32%),
+    radial-gradient(circle at 88% 8%, rgba(71, 85, 105, 0.2) 0, transparent 30%),
+    radial-gradient(circle at 50% 120%, rgba(11, 84, 176, 0.2) 0, transparent 34%),
     var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), "Segoe UI", sans-serif;
