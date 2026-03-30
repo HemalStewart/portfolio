@@ -13,6 +13,44 @@ type ProjectExperience = {
   references: ExternalReference[];
 };
 
+type ProfileLink = {
+  label: string;
+  href: string;
+  icon: "github" | "linkedin" | "email" | "phone" | "cv";
+  external?: boolean;
+};
+
+const profileLinks: ProfileLink[] = [
+  {
+    label: "GitHub",
+    href: "https://github.com/HemalStewart",
+    icon: "github",
+    external: true,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/hemal-herath-24a896131/",
+    icon: "linkedin",
+    external: true,
+  },
+  {
+    label: "Email",
+    href: "mailto:nuwanhemal@gmail.com",
+    icon: "email",
+  },
+  {
+    label: "Phone",
+    href: "tel:+94718850419",
+    icon: "phone",
+  },
+  {
+    label: "CV",
+    href: "/resume.pdf",
+    icon: "cv",
+    external: true,
+  },
+];
+
 const productionDeployments = [
   {
     name: "VibeChat AI",
@@ -265,6 +303,78 @@ function renderReference(reference: ExternalReference) {
   return <p className="text-sm text-slate-300">{`${reference.label}: ${reference.note}`}</p>;
 }
 
+function ContactIcon({ icon }: { icon: ProfileLink["icon"] }) {
+  if (icon === "github") {
+    return (
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="size-5">
+        <path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6V21c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6A4.7 4.7 0 0 1 6.4 8c-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C18 4.5 19 4.8 19 4.8c.6 1.7.2 2.9.1 3.2a4.7 4.7 0 0 1 1.3 3.2c0 4.7-2.9 5.7-5.6 6 .4.3.8 1 .8 2v3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z" />
+      </svg>
+    );
+  }
+
+  if (icon === "linkedin") {
+    return (
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="size-5">
+        <path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.2V9h3.4v1.6h.1A3.7 3.7 0 0 1 16 8.8c3.6 0 4.3 2.4 4.3 5.4v6.3ZM5.1 7.5a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2ZM6.9 20.5H3.3V9h3.6v11.5ZM22.2.8H1.8C.8.8 0 1.6 0 2.6v18.8c0 1 .8 1.8 1.8 1.8h20.4c1 0 1.8-.8 1.8-1.8V2.6c0-1-.8-1.8-1.8-1.8Z" />
+      </svg>
+    );
+  }
+
+  if (icon === "email") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="size-5">
+        <path
+          d="M3 6.5h18v11H3z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+        />
+        <path
+          d="m3.6 7 8.4 6 8.4-6"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "phone") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="size-5">
+        <path
+          d="M7.5 3.5h3L12 7l-2 1.8c.7 1.4 1.8 2.5 3.2 3.2L15 10l3.5 1.5v3c0 .6-.4 1-1 1A13.5 13.5 0 0 1 4 6.5c0-.6.4-1 1-1h2.5Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="size-5">
+      <rect
+        x="4"
+        y="3.5"
+        width="16"
+        height="17"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <path
+        d="M8 8h8M8 12h8M8 16h5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <main className="flex w-full min-h-screen flex-1 flex-col gap-6 px-4 py-6 md:px-10 md:py-10">
@@ -286,36 +396,23 @@ export default function Home() {
             operational workflows, secure authentication, role-based access
             controls, and multi-module architectures.
           </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <a
-              href="mailto:nuwanhemal@gmail.com"
-              className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-400"
-            >
-              Contact via Email
-            </a>
-            <a
-              href="/resume.pdf"
-              className="rounded-full border border-slate-700 px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-slate-500 hover:bg-slate-900"
-              target="_blank"
-              rel="noreferrer"
-            >
-              View Resume
-            </a>
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            {profileLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                aria-label={link.label}
+                title={link.label}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noreferrer noopener" : undefined}
+                className="group flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-700 bg-slate-900/80 text-slate-200 transition hover:-translate-y-0.5 hover:border-brand-400 hover:bg-brand-950/50 hover:text-brand-200"
+              >
+                <ContactIcon icon={link.icon} />
+              </a>
+            ))}
           </div>
-        </div>
-
-        <div className="grid gap-3 px-8 py-6 text-sm text-slate-300 md:grid-cols-3 md:px-12">
-          <p>
-            <span className="font-semibold text-slate-100">Email:</span>{" "}
-            nuwanhemal@gmail.com
-          </p>
-          <p>
-            <span className="font-semibold text-slate-100">Phone:</span> +94 71
-            88 50 419
-          </p>
-          <p>
-            <span className="font-semibold text-slate-100">Location:</span>{" "}
-            Polgasowita, Kottawa
+          <p className="mt-4 text-sm text-slate-400">
+            Polgasowita, Kottawa | +94 71 88 50 419 | nuwanhemal@gmail.com
           </p>
         </div>
       </section>
