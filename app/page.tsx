@@ -34,6 +34,11 @@ const productionDeployments = [
     platform: "iOS",
     href: "https://apps.apple.com/us/app/chatsoul-ai/id6756913536",
   },
+  {
+    name: "PDMS",
+    platform: "Web",
+    href: "https://pdms.moe.gov.lk/",
+  },
 ];
 
 const coreSkills = [
@@ -142,8 +147,8 @@ const selectedProjects: ProjectExperience[] = [
     ],
     references: [
       {
-        label: "Local Project Path",
-        path: "/Applications/MAMP/htdocs/pdms",
+        label: "Repository",
+        note: "Link available on request",
       },
     ],
   },
@@ -227,7 +232,7 @@ const additionalProjects: ExternalReference[] = [
   },
   {
     label: "PDF retrieval platform",
-    path: "/Users/lakminiinternational/rag-system",
+    note: "Repository: Link available on request",
   },
   { label: "Flicky (Flutter)", href: "https://github.com/HemalStewart/flicky" },
 ];
@@ -312,36 +317,6 @@ export default function Home() {
             <span className="font-semibold text-slate-100">Location:</span>{" "}
             Polgasowita, Kottawa
           </p>
-        </div>
-      </section>
-
-      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/70 p-7 md:p-9">
-        <h2 className="font-display text-2xl font-semibold text-slate-100">
-          Delivery Snapshot
-        </h2>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          <article className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-              Active Project Timeline
-            </p>
-            <p className="mt-2 text-base font-semibold text-slate-100">
-              2025-08-22 to 2026-03-25
-            </p>
-          </article>
-          <article className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-              Repositories Reviewed
-            </p>
-            <p className="mt-2 text-base font-semibold text-slate-100">
-              13 repositories + 1 local MAMP project
-            </p>
-          </article>
-          <article className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-              Combined Commits
-            </p>
-            <p className="mt-2 text-base font-semibold text-slate-100">605</p>
-          </article>
         </div>
       </section>
 
@@ -447,6 +422,36 @@ export default function Home() {
           {additionalProjects.map((project) => (
             <div key={project.label}>{renderReference(project)}</div>
           ))}
+        </div>
+      </section>
+
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/70 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
+          Delivery Snapshot
+        </h2>
+        <div className="mt-5 grid gap-4 sm:grid-cols-3">
+          <article className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Active Project Timeline
+            </p>
+            <p className="mt-2 text-base font-semibold text-slate-100">
+              2025-08-22 to 2026-03-25
+            </p>
+          </article>
+          <article className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Repositories Reviewed
+            </p>
+            <p className="mt-2 text-base font-semibold text-slate-100">
+              13 repositories + 1 local MAMP project
+            </p>
+          </article>
+          <article className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Combined Commits
+            </p>
+            <p className="mt-2 text-base font-semibold text-slate-100">605</p>
+          </article>
         </div>
       </section>
     </main>
