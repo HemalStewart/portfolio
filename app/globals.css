@@ -1,26 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f7fb;
+  --foreground: #0f172a;
+  --color-brand-50: #eef7ff;
+  --color-brand-100: #d7ebff;
+  --color-brand-200: #badcff;
+  --color-brand-300: #8cc5ff;
+  --color-brand-400: #58a8ff;
+  --color-brand-500: #2c86f3;
+  --color-brand-600: #1368d5;
+  --color-brand-700: #0b54b0;
+  --color-brand-800: #0d488f;
+  --color-brand-900: #113f77;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-manrope);
+  --font-display: var(--font-playfair-display);
+  --color-brand-50: var(--color-brand-50);
+  --color-brand-100: var(--color-brand-100);
+  --color-brand-200: var(--color-brand-200);
+  --color-brand-300: var(--color-brand-300);
+  --color-brand-400: var(--color-brand-400);
+  --color-brand-500: var(--color-brand-500);
+  --color-brand-600: var(--color-brand-600);
+  --color-brand-700: var(--color-brand-700);
+  --color-brand-800: var(--color-brand-800);
+  --color-brand-900: var(--color-brand-900);
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 8% 5%, #d8e9fb 0, transparent 30%),
+    radial-gradient(circle at 92% 9%, #f5e8d0 0, transparent 28%),
+    var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-manrope), "Segoe UI", sans-serif;
 }
