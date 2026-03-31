@@ -20,6 +20,13 @@ type ProfileLink = {
   external?: boolean;
 };
 
+type ProductionDeployment = {
+  name: string;
+  platform: string;
+  href?: string;
+  note?: string;
+};
+
 const profileLinks: ProfileLink[] = [
   {
     label: "GitHub",
@@ -51,7 +58,7 @@ const profileLinks: ProfileLink[] = [
   },
 ];
 
-const productionDeployments = [
+const productionDeployments: ProductionDeployment[] = [
   {
     name: "VibeChat AI",
     platform: "Android",
@@ -76,6 +83,11 @@ const productionDeployments = [
     name: "PDMS",
     platform: "Web",
     href: "https://pdms.moe.gov.lk/",
+  },
+  {
+    name: "Smart Guardian Pro",
+    platform: "Android",
+    href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery",
   },
 ];
 
@@ -207,6 +219,10 @@ const selectedProjects: ProjectExperience[] = [
       {
         label: "Source Repository",
         href: "https://github.com/shehan-077/Smart-Guardian-Pro",
+      },
+      {
+        label: "Production",
+        href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery",
       },
     ],
   },
@@ -430,19 +446,34 @@ export default function Home() {
         </h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           {productionDeployments.map((deployment) => (
-            <a
-              key={`${deployment.name}-${deployment.platform}`}
-              className="rounded-2xl border border-slate-800 bg-slate-900 p-4 transition hover:border-brand-500 hover:bg-brand-950/40"
-              href={deployment.href}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <p className="text-base font-semibold text-slate-100">
-                {deployment.name}
-              </p>
-              <p className="mt-1 text-sm text-slate-400">{deployment.platform}</p>
-              <p className="mt-3 text-sm text-brand-300">Open deployment</p>
-            </a>
+            deployment.href ? (
+              <a
+                key={`${deployment.name}-${deployment.platform}`}
+                className="rounded-2xl border border-slate-800 bg-slate-900 p-4 transition hover:border-brand-500 hover:bg-brand-950/40"
+                href={deployment.href}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <p className="text-base font-semibold text-slate-100">
+                  {deployment.name}
+                </p>
+                <p className="mt-1 text-sm text-slate-400">{deployment.platform}</p>
+                <p className="mt-3 text-sm text-brand-300">Open deployment</p>
+              </a>
+            ) : (
+              <div
+                key={`${deployment.name}-${deployment.platform}`}
+                className="rounded-2xl border border-slate-800 bg-slate-900 p-4"
+              >
+                <p className="text-base font-semibold text-slate-100">
+                  {deployment.name}
+                </p>
+                <p className="mt-1 text-sm text-slate-400">{deployment.platform}</p>
+                <p className="mt-3 text-sm text-brand-300">
+                  {deployment.note ?? "Link available on request"}
+                </p>
+              </div>
+            )
           ))}
         </div>
       </section>
