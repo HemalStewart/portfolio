@@ -34,10 +34,21 @@
 
 body {
   background:
-    radial-gradient(circle at 10% 4%, rgba(19, 104, 213, 0.24) 0, transparent 32%),
-    radial-gradient(circle at 88% 8%, rgba(71, 85, 105, 0.2) 0, transparent 30%),
-    radial-gradient(circle at 50% 120%, rgba(11, 84, 176, 0.2) 0, transparent 34%),
+    radial-gradient(circle at 6% 2%, rgba(19, 104, 213, 0.24) 0, transparent 35%),
+    radial-gradient(circle at 92% 5%, rgba(125, 211, 252, 0.1) 0, transparent 26%),
+    radial-gradient(circle at 50% 120%, rgba(11, 84, 176, 0.24) 0, transparent 36%),
+    linear-gradient(130deg, rgba(15, 23, 42, 0.5), rgba(2, 6, 23, 0.5)),
     var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  border-color: rgba(51, 65, 85, 0.7);
+}
+
+::selection {
+  background: rgba(44, 134, 243, 0.35);
+  color: #f8fafc;
 }
