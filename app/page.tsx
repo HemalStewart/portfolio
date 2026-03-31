@@ -87,7 +87,7 @@ const coreSkills = [
   {
     group: "Backend",
     skills:
-      "PHP (CodeIgniter), FastAPI, REST API design, authentication and authorization",
+      "PHP (CodeIgniter, Laravel), FastAPI, REST API design, authentication and authorization",
   },
   {
     group: "Data and Storage",
@@ -133,12 +133,14 @@ const selectedProjects: ProjectExperience[] = [
   },
   {
     title: "WriteScan App",
-    techStack: "Flutter, Riverpod, GoRouter, ML Kit, SQLite",
+    techStack:
+      "Flutter, Riverpod, GoRouter, ML Kit, SQLite, CodeIgniter/Laravel backend APIs",
     responsibilities: [
       "Built multi-mode document scan workflows including text extraction, handwriting scan, CSV scan, and review screens.",
       "Implemented auth and onboarding flows, shell navigation, notifications, and document/folder views.",
       "Added bot and chat modules with structured feature, state, and data layers.",
       "Integrated local storage and persistence for app continuity.",
+      "Integrated Flutter mobile flows with CodeIgniter/Laravel REST endpoints for production data exchange.",
     ],
     impact: [
       "Delivered a complete document-focused mobile workflow from capture to review and management.",
@@ -192,10 +194,11 @@ const selectedProjects: ProjectExperience[] = [
   },
   {
     title: "Smart Guardian Pro",
-    techStack: "Flutter, Dart",
+    techStack: "Flutter, Dart, CodeIgniter/Laravel backend APIs",
     responsibilities: [
       "Built safety-oriented mobile workflows for SOS, location, and group-based tracking modules.",
       "Implemented service-driven architecture for auth, location, notifications, and session handling.",
+      "Connected mobile modules to CodeIgniter/Laravel backend services for authentication and operational data.",
     ],
     impact: [
       "Delivered a structured mobile safety product with clear module separation and reusable services.",
@@ -209,11 +212,12 @@ const selectedProjects: ProjectExperience[] = [
   },
   {
     title: "ChatSoul AI / VibeChat AI (Primary Cross-Platform Project)",
-    techStack: "Flutter, Dart",
+    techStack: "Flutter, Dart, CodeIgniter/Laravel backend APIs",
     responsibilities: [
       "Built and maintained a full cross-platform application targeting Android, iOS, and Web from a single Flutter codebase.",
       "Implemented core product flows including authentication, chat, discover, match, wallet/subscription, referrals, and creation workflows.",
       "Structured the app into reusable feature, core, and data layers for maintainability and scale.",
+      "Integrated mobile and web clients with CodeIgniter/Laravel backend APIs for core product operations.",
     ],
     impact: [
       "Delivered one product across Android, iOS, and Web with shared architecture and feature parity.",
@@ -249,12 +253,14 @@ const selectedProjects: ProjectExperience[] = [
   },
   {
     title: "Real-Time Meetings App (Flutter)",
-    techStack: "Flutter, GetX, Stream Video SDK, permission_handler",
+    techStack:
+      "Flutter, GetX, Stream Video SDK, permission_handler, CodeIgniter/Laravel backend APIs",
     responsibilities: [
       "Built meeting flows for login, home dashboard, personal room, upcoming meetings, previous meetings, recordings, and meeting room navigation.",
       "Implemented controller logic for create, join, leave, schedule, and recording retrieval.",
       "Added camera/microphone permission workflow and meeting lobby handoff into active call room.",
       "Structured project into controllers, models, screens, widgets, and utility layers.",
+      "Integrated app-level business flows with CodeIgniter/Laravel backend endpoints.",
     ],
     impact: [
       "Delivered a production-style conferencing app architecture in Flutter with concrete meeting operations and call-state handling.",
@@ -394,7 +400,8 @@ export default function Home() {
             Flutter, Next.js, TypeScript, PHP (CodeIgniter), and FastAPI. Built
             and maintained production-style web and mobile platforms with complex
             operational workflows, secure authentication, role-based access
-            controls, and multi-module architectures.
+            controls, and multi-module architectures, including Flutter
+            applications integrated with CodeIgniter and Laravel backends.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-3">
             {profileLinks.map((link) => (
