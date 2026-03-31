@@ -340,141 +340,90 @@ function renderReference(reference: ExternalReference) {
 }
 
 export default function Home() {
-  const deploymentCount = productionDeployments.length;
-
   return (
-    <main className="relative flex w-full min-h-screen flex-1 flex-col gap-8 px-4 py-6 md:px-10 md:py-10">
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-brand-600/20 blur-3xl" />
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-400/10 blur-3xl" />
-      </div>
+    <main className="flex w-full min-h-screen flex-1 flex-col gap-6 px-4 py-6 md:px-10 md:py-10">
+      <section className="overflow-hidden rounded-3xl border border-slate-800/90 bg-slate-950/70 shadow-[0_30px_80px_-45px_rgba(0,0,0,0.95)]">
+        <div className="relative border-b border-slate-800/80 bg-[radial-gradient(circle_at_top_left,_rgba(14,159,150,0.28)_0,_transparent_48%),radial-gradient(circle_at_top_right,_rgba(13,24,39,0.84)_0,_transparent_45%)] p-8 md:p-12">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+            Last updated: 2026-03-31
+          </p>
+          <h1 className="mt-4 font-display text-4xl font-semibold text-slate-100 md:text-5xl">
+            Hemal Herath
+          </h1>
+          <p className="mt-2 text-lg font-semibold text-brand-300">
+            Full-Stack Software Engineer
+          </p>
+          <p className="mt-5 max-w-3xl text-[15px] leading-7 text-slate-300 md:text-base">
+            Full-stack software engineer with hands-on delivery experience across
+            Flutter, Next.js, TypeScript, PHP (CodeIgniter), and FastAPI. Built
+            and maintained production-style web and mobile platforms with complex
+            operational workflows, secure authentication, role-based access
+            controls, and multi-module architectures, including Flutter
+            applications integrated with CodeIgniter and Laravel backends.
+          </p>
 
-      <section className="overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-950/80 shadow-[0_32px_80px_-48px_rgba(0,0,0,0.95)] backdrop-blur">
-        <div className="grid gap-8 p-7 md:grid-cols-[1.5fr_1fr] md:p-10">
-          <div>
-            <p className="inline-flex items-center rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-300">
-              Last updated: 2026-03-31
-            </p>
-            <h1 className="mt-5 font-display text-4xl font-semibold leading-tight text-white md:text-6xl">
-              Hemal Herath
-            </h1>
-            <p className="mt-3 text-lg font-semibold text-brand-300 md:text-xl">
-              Full-Stack Software Engineer
-            </p>
-            <p className="mt-5 max-w-3xl text-[15px] leading-7 text-slate-300 md:text-base">
-              Full-stack software engineer with hands-on delivery experience across
-              Flutter, Next.js, TypeScript, PHP (CodeIgniter), and FastAPI.
-              Built and maintained production-style web and mobile platforms with
-              complex operational workflows, secure authentication, role-based
-              access controls, and multi-module architectures, including Flutter
-              applications integrated with CodeIgniter and Laravel backends.
-            </p>
-
-            <div className="mt-7 flex flex-wrap items-start gap-3">
-              {profileLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  aria-label={link.label}
-                  title={link.label}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noreferrer noopener" : undefined}
-                  className="group flex w-[78px] flex-col items-center gap-2 px-1 py-1.5 text-slate-200 transition hover:-translate-y-0.5"
-                >
-                  <Image
-                    src={link.iconSrc}
-                    alt={link.label}
-                    width={42}
-                    height={42}
-                    className={`h-[42px] w-[42px] object-contain transition duration-200 group-hover:scale-110 ${
-                      link.invertOnDark ? "invert" : ""
-                    }`}
-                  />
-                  <span className="text-[11px] font-semibold tracking-wide text-slate-300 group-hover:text-brand-200">
-                    {link.label}
-                  </span>
-                </a>
-              ))}
-            </div>
-            <p className="mt-5 text-sm text-slate-400">
-              Polgasowita, Kottawa | +94 71 88 50 419 | nuwanhemal@gmail.com
-            </p>
+          <div className="mt-7 flex flex-wrap items-start gap-4">
+            {profileLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                aria-label={link.label}
+                title={link.label}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noreferrer noopener" : undefined}
+                className="group flex w-[78px] flex-col items-center gap-2 text-slate-200 transition hover:-translate-y-0.5"
+              >
+                <Image
+                  src={link.iconSrc}
+                  alt={link.label}
+                  width={44}
+                  height={44}
+                  className={`h-11 w-11 object-contain transition duration-200 group-hover:scale-110 ${
+                    link.invertOnDark ? "invert" : ""
+                  }`}
+                />
+                <span className="text-[11px] font-semibold tracking-wide text-slate-300 group-hover:text-brand-200">
+                  {link.label}
+                </span>
+              </a>
+            ))}
           </div>
-
-          <aside className="rounded-3xl border border-slate-700 bg-slate-900/70 p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-              At A Glance
-            </p>
-            <div className="mt-5 grid gap-3">
-              <article className="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                  Production Deployments
-                </p>
-                <p className="mt-1 text-2xl font-semibold text-white">
-                  {deploymentCount}
-                </p>
-              </article>
-              {deliverySnapshot.map((item) => (
-                <article
-                  key={item.label}
-                  className="rounded-2xl border border-slate-700 bg-slate-950/70 p-4"
-                >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                    {item.label}
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-slate-100">
-                    {item.value}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </aside>
+          <p className="mt-4 text-sm text-slate-400">
+            Polgasowita, Kottawa | +94 71 88 50 419 | nuwanhemal@gmail.com
+          </p>
         </div>
       </section>
 
-      <section className="rounded-[1.75rem] border border-slate-800 bg-slate-950/65 p-6 md:p-8">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-              Live Products
-            </p>
-            <h2 className="mt-2 font-display text-3xl font-semibold text-white">
-              Production Deployments
-            </h2>
-          </div>
-        </div>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/55 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
+          Production Deployments
+        </h2>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
           {productionDeployments.map((deployment) => (
             deployment.href ? (
               <a
                 key={`${deployment.name}-${deployment.platform}`}
-                className="group rounded-2xl border border-slate-700 bg-slate-900/80 p-5 transition hover:-translate-y-0.5 hover:border-brand-400 hover:bg-brand-950/40"
+                className="rounded-2xl border border-slate-800 bg-slate-900/75 p-4 transition hover:border-brand-500 hover:bg-brand-950/40"
                 href={deployment.href}
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                <span className="inline-flex rounded-full border border-slate-600 bg-slate-800 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-300">
-                  {deployment.platform}
-                </span>
-                <p className="mt-3 text-base font-semibold text-slate-100">
+                <p className="text-base font-semibold text-slate-100">
                   {deployment.name}
                 </p>
-                <p className="mt-5 text-sm font-medium text-brand-300 group-hover:text-brand-200">
-                  Open deployment
-                </p>
+                <p className="mt-1 text-sm text-slate-400">{deployment.platform}</p>
+                <p className="mt-3 text-sm text-brand-300">Open deployment</p>
               </a>
             ) : (
               <div
                 key={`${deployment.name}-${deployment.platform}`}
-                className="rounded-2xl border border-slate-700 bg-slate-900/80 p-5"
+                className="rounded-2xl border border-slate-800 bg-slate-900/75 p-4"
               >
-                <span className="inline-flex rounded-full border border-slate-600 bg-slate-800 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-300">
-                  {deployment.platform}
-                </span>
-                <p className="mt-3 text-base font-semibold text-slate-100">
+                <p className="text-base font-semibold text-slate-100">
                   {deployment.name}
                 </p>
-                <p className="mt-5 text-sm font-medium text-brand-300">
+                <p className="mt-1 text-sm text-slate-400">{deployment.platform}</p>
+                <p className="mt-3 text-sm text-brand-300">
                   {deployment.note ?? "Link available on request"}
                 </p>
               </div>
@@ -483,23 +432,20 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="rounded-[1.75rem] border border-slate-800 bg-slate-950/65 p-6 md:p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-          Expertise
-        </p>
-        <h2 className="mt-2 font-display text-3xl font-semibold text-white">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/55 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
           Core Skills
         </h2>
-        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
           {coreSkills.map((skill) => (
             <article
               key={skill.group}
-              className="rounded-2xl border border-slate-700 bg-slate-900/75 p-5"
+              className="rounded-2xl border border-slate-800 bg-slate-900/75 p-4"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-300">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
                 {skill.group}
               </p>
-              <p className="mt-3 text-sm leading-6 text-slate-300">
+              <p className="mt-2 text-sm leading-6 text-slate-300">
                 {skill.skills}
               </p>
             </article>
@@ -507,99 +453,83 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="rounded-[1.75rem] border border-slate-800 bg-slate-950/65 p-6 md:p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-          Work
-        </p>
-        <h2 className="mt-2 font-display text-3xl font-semibold text-white">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/55 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
           Selected Project Experience
         </h2>
-        <div className="mt-7 grid gap-5">
+        <div className="mt-6 grid gap-5">
           {selectedProjects.map((project) => (
             <article
               key={project.title}
-              className="rounded-3xl border border-slate-700 bg-slate-900/80 p-6"
+              className="rounded-2xl border border-slate-800 bg-slate-900/75 p-5"
             >
-              <div className="flex flex-wrap items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-white">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-slate-400">
-                    Tech stack: {project.techStack}
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-lg font-semibold text-slate-100">
+                {project.title}
+              </h3>
+              <p className="mt-1 text-sm text-slate-400">
+                Tech stack: {project.techStack}
+              </p>
 
-              <div className="mt-6 grid gap-6 xl:grid-cols-2">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-300">
-                    Responsibilities
-                  </p>
-                  <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-6 text-slate-300">
-                    {project.responsibilities.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-400">
+                Responsibilities
+              </p>
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-6 text-slate-300">
+                {project.responsibilities.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
 
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-300">
-                    Impact
-                  </p>
-                  <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-6 text-slate-300">
-                    {project.impact.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                  <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
-                    References
-                  </p>
-                  <div className="mt-3 flex flex-wrap items-center gap-2.5">
-                    {project.references.map((reference) => (
-                      <div key={`${project.title}-${reference.label}`}>
-                        {renderReference(reference)}
-                      </div>
-                    ))}
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-400">
+                Impact
+              </p>
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-6 text-slate-300">
+                {project.impact.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+
+              <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-400">
+                References
+              </p>
+              <div className="mt-2 flex flex-wrap items-center gap-2.5">
+                {project.references.map((reference) => (
+                  <div key={`${project.title}-${reference.label}`}>
+                    {renderReference(reference)}
                   </div>
-                </div>
+                ))}
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="rounded-[1.75rem] border border-slate-800 bg-slate-950/65 p-6 md:p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-          More Work
-        </p>
-        <h2 className="mt-2 font-display text-3xl font-semibold text-white">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/55 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
           Additional Projects
         </h2>
-        <div className="mt-6 flex flex-wrap gap-2.5">
+        <div className="mt-4 flex flex-wrap gap-2.5">
           {additionalProjects.map((project) => (
             <div key={project.label}>{renderReference(project)}</div>
           ))}
         </div>
       </section>
 
-      <section className="rounded-[1.75rem] border border-slate-800 bg-slate-950/65 p-6 md:p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-          Portfolio Metrics
-        </p>
-        <h2 className="mt-2 font-display text-3xl font-semibold text-white">
+      <section className="rounded-3xl border border-slate-800/90 bg-slate-950/55 p-7 md:p-9">
+        <h2 className="font-display text-2xl font-semibold text-slate-100">
           Delivery Snapshot
         </h2>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
+        <div className="mt-5 grid gap-4 sm:grid-cols-3">
           {deliverySnapshot.map((item) => (
             <article
               key={item.label}
-              className="rounded-2xl border border-slate-700 bg-slate-900/75 p-5"
+              className="rounded-2xl border border-slate-800 bg-slate-900/75 p-4"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
                 {item.label}
               </p>
-              <p className="mt-3 text-base font-semibold text-white">{item.value}</p>
+              <p className="mt-2 text-base font-semibold text-slate-100">
+                {item.value}
+              </p>
             </article>
           ))}
         </div>

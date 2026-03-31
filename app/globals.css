@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030712;
-  --foreground: #e2e8f0;
-  --color-brand-50: #eef7ff;
-  --color-brand-100: #d7ebff;
-  --color-brand-200: #badcff;
-  --color-brand-300: #8cc5ff;
-  --color-brand-400: #58a8ff;
-  --color-brand-500: #2c86f3;
-  --color-brand-600: #1368d5;
-  --color-brand-700: #0b54b0;
-  --color-brand-800: #0d488f;
-  --color-brand-900: #113f77;
+  --background: #081317;
+  --foreground: #e6f0f0;
+  --color-brand-50: #e7f8f7;
+  --color-brand-100: #c9efec;
+  --color-brand-200: #9de2dc;
+  --color-brand-300: #6cd1ca;
+  --color-brand-400: #37bab1;
+  --color-brand-500: #0e9f96;
+  --color-brand-600: #0b837b;
+  --color-brand-700: #0c6b65;
+  --color-brand-800: #0e5752;
+  --color-brand-900: #114846;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-manrope);
-  --font-display: var(--font-playfair-display);
+  --font-sans: var(--font-space-grotesk);
+  --font-display: var(--font-cormorant-garamond);
   --color-brand-50: var(--color-brand-50);
   --color-brand-100: var(--color-brand-100);
   --color-brand-200: var(--color-brand-200);
@@ -34,13 +34,28 @@
 
 body {
   background:
-    radial-gradient(circle at 6% 2%, rgba(19, 104, 213, 0.24) 0, transparent 35%),
-    radial-gradient(circle at 92% 5%, rgba(125, 211, 252, 0.1) 0, transparent 26%),
-    radial-gradient(circle at 50% 120%, rgba(11, 84, 176, 0.24) 0, transparent 36%),
-    linear-gradient(130deg, rgba(15, 23, 42, 0.5), rgba(2, 6, 23, 0.5)),
+    radial-gradient(circle at 8% 2%, rgba(14, 159, 150, 0.22) 0, transparent 34%),
+    radial-gradient(circle at 92% 8%, rgba(251, 191, 36, 0.1) 0, transparent 24%),
+    radial-gradient(circle at 12% 78%, rgba(45, 212, 191, 0.12) 0, transparent 30%),
+    radial-gradient(circle at 88% 92%, rgba(13, 148, 136, 0.14) 0, transparent 28%),
+    linear-gradient(
+      180deg,
+      rgba(7, 19, 24, 0.88) 0%,
+      rgba(9, 28, 33, 0.86) 30%,
+      rgba(8, 24, 31, 0.88) 62%,
+      rgba(5, 16, 20, 0.92) 100%
+    ),
     var(--background);
+  background-repeat: no-repeat;
+  background-size:
+    1600px 1200px,
+    1400px 1100px,
+    1300px 1200px,
+    1200px 1100px,
+    100% 100%,
+    auto;
   color: var(--foreground);
-  font-family: var(--font-manrope), "Segoe UI", sans-serif;
+  font-family: var(--font-space-grotesk), "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -49,6 +64,6 @@ body {
 }
 
 ::selection {
-  background: rgba(44, 134, 243, 0.35);
-  color: #f8fafc;
+  background: rgba(14, 159, 150, 0.45);
+  color: #f7fffd;
 }
