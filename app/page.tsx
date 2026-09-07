@@ -1,4 +1,7 @@
 import Image from "next/image";
+import { Counter } from "./components/Counter";
+import { GlowCard } from "./components/GlowCard";
+import { Reveal, RevealGroup, RevealItem } from "./components/Reveal";
 
 type ExternalReference = {
   label: string;
@@ -14,6 +17,7 @@ type ProjectExperience = {
   highlights: string[];
   references: ExternalReference[];
   featured?: boolean;
+  accent: string;
 };
 
 type LightProject = {
@@ -45,6 +49,21 @@ const navLinks = [
   { label: "Work", href: "#work" },
   { label: "Extras", href: "#extras" },
   { label: "Contact", href: "#contact" },
+];
+
+const marqueeItems = [
+  "Flutter",
+  "Next.js",
+  "TypeScript",
+  "FastAPI",
+  "CodeIgniter",
+  "Laravel",
+  "RAG Pipelines",
+  "Riverpod",
+  "Prisma",
+  "Stream Video SDK",
+  "Whisper ASR",
+  "ML Kit",
 ];
 
 const profileLinks: ProfileLink[] = [
@@ -149,6 +168,7 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Mobile repo", href: "https://github.com/Dilmith-Ranasinghe518/LinkForexApp" },
     ],
     featured: true,
+    accent: "#0e9f96",
   },
   {
     title: "ChatSoul AI / VibeChat AI",
@@ -168,6 +188,7 @@ const selectedProjects: ProjectExperience[] = [
       { label: "iOS", href: "https://apps.apple.com/us/app/chatsoul-ai/id6756913536" },
     ],
     featured: true,
+    accent: "#a78bfa",
   },
   {
     title: "WriteScan",
@@ -185,6 +206,7 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.appmixer.writescan" },
     ],
     featured: true,
+    accent: "#f59e0b",
   },
   {
     title: "Huddle",
@@ -201,6 +223,7 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Web repo", href: "https://github.com/HemalStewart/zoom-clone-main" },
       { label: "Mobile", note: "Code available on request" },
     ],
+    accent: "#38bdf8",
   },
   {
     title: "Smart Guardian Pro",
@@ -217,6 +240,7 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Source repo", href: "https://github.com/shehan-077/Smart-Guardian-Pro" },
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery" },
     ],
+    accent: "#fb7185",
   },
   {
     title: "PDMS",
@@ -234,6 +258,7 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Repository", note: "Link available on request" },
     ],
     featured: true,
+    accent: "#818cf8",
   },
   {
     title: "Scholar Desktop",
@@ -249,6 +274,7 @@ const selectedProjects: ProjectExperience[] = [
     references: [
       { label: "Source repo", href: "https://github.com/HemalStewart/edu-ai-browser" },
     ],
+    accent: "#818cf8",
   },
   {
     title: "PaperMind",
@@ -264,6 +290,7 @@ const selectedProjects: ProjectExperience[] = [
     references: [
       { label: "Source repo", href: "https://github.com/HemalStewart/chat-bot" },
     ],
+    accent: "#a78bfa",
   },
   {
     title: "EnglishMind AI",
@@ -277,6 +304,7 @@ const selectedProjects: ProjectExperience[] = [
       "Architected for either lightweight cloud use or on-prem privacy requirements.",
     ],
     references: [{ label: "Source", note: "Code available on request" }],
+    accent: "#38bdf8",
   },
   {
     title: "Sea Cloud, Dalawella",
@@ -290,6 +318,7 @@ const selectedProjects: ProjectExperience[] = [
       "A real client engagement, not a template.",
     ],
     references: [{ label: "Source", note: "Code available on request" }],
+    accent: "#f59e0b",
   },
 ];
 
@@ -338,12 +367,6 @@ const additionalProjects: LightProject[] = [
   },
 ];
 
-const deliverySnapshot = [
-  { label: "Active building window", value: "Aug 2025 – present" },
-  { label: "Shipped repositories", value: "25+" },
-  { label: "Commit volume", value: "700+" },
-];
-
 function TechChip({ label }: { label: string }) {
   return (
     <span className="rounded-md bg-white/[0.04] px-2 py-1 font-mono text-[11px] text-slate-400">
@@ -356,13 +379,13 @@ function renderReference(reference: ExternalReference) {
   if (reference.href) {
     return (
       <a
-        className="inline-flex items-center gap-1 font-mono text-xs text-slate-400 transition hover:text-brand-300"
+        className="group/ref inline-flex items-center gap-1 font-mono text-xs text-slate-400 transition hover:text-brand-300"
         href={reference.href}
         target="_blank"
         rel="noreferrer noopener"
       >
         {reference.label}
-        <span className="transition group-hover:translate-x-0.5">→</span>
+        <span className="transition group-hover/ref:translate-x-0.5">→</span>
       </a>
     );
   }
@@ -385,16 +408,6 @@ export default function Home() {
             <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand-500/30 bg-brand-500/10 font-mono text-sm font-medium text-brand-300">
               HH
             </div>
-            <h1 className="mt-6 text-3xl font-semibold tracking-tight text-slate-100">
-              Hemal Herath
-            </h1>
-            <p className="mt-2 text-base text-brand-300">
-              Full-Stack Software Engineer
-            </p>
-            <p className="mt-5 max-w-xs text-sm leading-6 text-slate-400">
-              I build production-style web and mobile platforms end to end —
-              what I&apos;ve actually shipped, not a tech-stack word cloud.
-            </p>
 
             <nav className="mt-10 hidden lg:block">
               <ul className="space-y-3">
@@ -447,32 +460,71 @@ export default function Home() {
 
         {/* Content */}
         <div className="min-w-0 py-16 lg:py-20">
+          {/* Hero */}
           <section id="about" className="scroll-mt-10">
-            <p className="max-w-xl text-[15px] leading-7 text-slate-300">
-              Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
-              FastAPI on the back, with applied AI — RAG, LLM routing, voice —
-              layered in where it earns its place. I ship complete systems:
-              admin consoles, mobile clients, and the backends underneath
-              them.
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-brand-400">
+              Full-Stack Software Engineer
             </p>
-
-            <dl className="mt-10 grid grid-cols-3 gap-6 border-y border-border py-6">
-              {deliverySnapshot.map((item) => (
-                <div key={item.label}>
-                  <dt className="text-2xl font-semibold text-slate-100 md:text-3xl">
-                    {item.value}
-                  </dt>
-                  <dd className="mt-1 text-xs text-slate-500">{item.label}</dd>
-                </div>
-              ))}
-            </dl>
+            <h1 className="mt-4 text-[13vw] font-semibold leading-[0.95] tracking-tighter text-slate-100 sm:text-6xl md:text-7xl">
+              Hemal
+              <br />
+              <span className="text-gradient">Herath</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-[15px] leading-7 text-slate-300">
+              I build production-style web and mobile platforms end to end —
+              Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
+              FastAPI on the back, with applied AI layered in where it earns
+              its place. What&apos;s below is what I&apos;ve actually shipped,
+              not a tech-stack word cloud.
+            </p>
           </section>
 
-          <section id="production" className="mt-20 scroll-mt-10">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
-              In production
-            </h2>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          {/* Marquee */}
+          <div className="marquee-fade mt-10 overflow-hidden border-y border-border py-4">
+            <div className="marquee-track flex w-max gap-8">
+              {[...marqueeItems, ...marqueeItems].map((item, i) => (
+                <span
+                  key={`${item}-${i}`}
+                  className="flex items-center gap-8 font-mono text-sm text-slate-600"
+                >
+                  {item}
+                  <span className="text-brand-500">/</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <Reveal>
+            <dl className="mt-10 grid grid-cols-3 gap-6">
+              <div>
+                <dt className="text-3xl font-semibold text-slate-100">
+                  <Counter value={25} suffix="+" />
+                </dt>
+                <dd className="mt-1 text-xs text-slate-500">Shipped repositories</dd>
+              </div>
+              <div>
+                <dt className="text-3xl font-semibold text-slate-100">
+                  <Counter value={700} suffix="+" />
+                </dt>
+                <dd className="mt-1 text-xs text-slate-500">Commits logged</dd>
+              </div>
+              <div>
+                <dt className="text-3xl font-semibold text-slate-100">
+                  <Counter value={6} />
+                </dt>
+                <dd className="mt-1 text-xs text-slate-500">Live production apps</dd>
+              </div>
+            </dl>
+          </Reveal>
+
+          {/* Production */}
+          <section id="production" className="mt-24 scroll-mt-10">
+            <Reveal>
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+                In production
+              </h2>
+            </Reveal>
+            <RevealGroup className="mt-6 grid gap-3 sm:grid-cols-2">
               {productionDeployments.map((deployment) => {
                 const content = (
                   <>
@@ -487,66 +539,65 @@ export default function Home() {
                     </span>
                   </>
                 );
-                return deployment.href ? (
-                  <a
-                    key={`${deployment.name}-${deployment.platform}`}
-                    href={deployment.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="flex items-start gap-3 rounded-xl border border-border bg-white/[0.015] px-4 py-3 transition hover:border-brand-500/40 hover:bg-white/[0.03]"
-                  >
-                    {content}
-                  </a>
-                ) : (
-                  <div
-                    key={`${deployment.name}-${deployment.platform}`}
-                    className="flex items-start gap-3 rounded-xl border border-border bg-white/[0.015] px-4 py-3"
-                  >
-                    {content}
-                  </div>
+                return (
+                  <RevealItem key={`${deployment.name}-${deployment.platform}`}>
+                    {deployment.href ? (
+                      <a
+                        href={deployment.href}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="flex items-start gap-3 rounded-xl border border-border bg-white/[0.015] px-4 py-3 transition hover:border-brand-500/40 hover:bg-white/[0.03]"
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      <div className="flex items-start gap-3 rounded-xl border border-border bg-white/[0.015] px-4 py-3">
+                        {content}
+                      </div>
+                    )}
+                  </RevealItem>
                 );
               })}
-            </div>
+            </RevealGroup>
           </section>
 
-          <section id="skills" className="mt-20 scroll-mt-10">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
-              Core skills
-            </h2>
-            <div className="mt-6 grid gap-6 sm:grid-cols-2">
+          {/* Skills */}
+          <section id="skills" className="mt-24 scroll-mt-10">
+            <Reveal>
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+                Core skills
+              </h2>
+            </Reveal>
+            <RevealGroup className="mt-6 grid gap-6 sm:grid-cols-2">
               {coreSkills.map((skill) => (
-                <div key={skill.group}>
+                <RevealItem key={skill.group}>
                   <p className="text-sm font-medium text-slate-200">{skill.group}</p>
                   <div className="mt-2.5 flex flex-wrap gap-1.5">
                     {skill.skills.map((s) => (
                       <TechChip key={s} label={s} />
                     ))}
                   </div>
-                </div>
+                </RevealItem>
               ))}
-            </div>
+            </RevealGroup>
           </section>
 
-          <section id="work" className="mt-20 scroll-mt-10">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
-              Featured work
-            </h2>
+          {/* Featured work */}
+          <section id="work" className="mt-24 scroll-mt-10">
+            <Reveal>
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+                Featured work
+              </h2>
+            </Reveal>
             <div className="mt-6 grid gap-5">
               {selectedProjects.map((project, index) => (
-                <article
-                  key={project.title}
-                  className={`card-glow group relative rounded-2xl border p-6 transition duration-300 hover:-translate-y-0.5 hover:bg-white/[0.03] md:p-7 ${
-                    project.featured
-                      ? "border-brand-500/20 bg-brand-500/[0.03]"
-                      : "border-border bg-white/[0.015]"
-                  }`}
-                >
+                <GlowCard key={project.title} accent={project.accent} className="p-6 md:p-7">
                   <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
                     <div className="flex items-baseline gap-3">
                       <span className="font-mono text-xs text-slate-600">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <h3 className="text-xl font-semibold text-slate-100 transition group-hover:text-brand-200">
+                      <h3 className="text-xl font-semibold text-slate-100">
                         {project.title}
                       </h3>
                     </div>
@@ -575,7 +626,10 @@ export default function Home() {
                   <ul className="mt-5 space-y-2 text-sm leading-6 text-slate-300">
                     {project.highlights.map((item) => (
                       <li key={item} className="flex gap-2.5">
-                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-500" />
+                        <span
+                          className="mt-2 h-1 w-1 shrink-0 rounded-full"
+                          style={{ background: project.accent }}
+                        />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -588,49 +642,56 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                </article>
+                </GlowCard>
               ))}
             </div>
           </section>
 
-          <section id="extras" className="mt-20 scroll-mt-10">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
-              Additional builds
-            </h2>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
-              Smaller or in-progress projects exploring specific problems —
-              RAG pipelines, OCR, gamified learning, and media.
-            </p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          {/* Extras */}
+          <section id="extras" className="mt-24 scroll-mt-10">
+            <Reveal>
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+                Additional builds
+              </h2>
+              <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
+                Smaller or in-progress projects exploring specific problems —
+                RAG pipelines, OCR, gamified learning, and media.
+              </p>
+            </Reveal>
+            <RevealGroup className="mt-6 grid gap-3 sm:grid-cols-2">
               {additionalProjects.map((project) => (
-                <div
-                  key={project.title}
-                  className="rounded-xl border border-border bg-white/[0.015] px-4 py-3.5 transition hover:border-brand-500/30 hover:bg-white/[0.03]"
-                >
-                  <p className="text-sm font-medium text-slate-200">{project.title}</p>
-                  <p className="mt-1 text-xs leading-5 text-slate-500">{project.tagline}</p>
-                  <p className="mt-2 font-mono text-[10px] text-slate-600">
-                    {project.techStack}
-                  </p>
-                  <div className="mt-1.5">{renderReference(project.reference)}</div>
-                </div>
+                <RevealItem key={project.title}>
+                  <div className="rounded-xl border border-border bg-white/[0.015] px-4 py-3.5 transition hover:border-brand-500/30 hover:bg-white/[0.03]">
+                    <p className="text-sm font-medium text-slate-200">{project.title}</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-500">{project.tagline}</p>
+                    <p className="mt-2 font-mono text-[10px] text-slate-600">
+                      {project.techStack}
+                    </p>
+                    <div className="mt-1.5">{renderReference(project.reference)}</div>
+                  </div>
+                </RevealItem>
               ))}
-            </div>
+            </RevealGroup>
           </section>
 
-          <section id="contact" className="mt-20 scroll-mt-10 border-t border-border pt-16 pb-24">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
-              Contact
-            </h2>
-            <p className="mt-4 max-w-md text-2xl font-semibold leading-tight text-slate-100">
-              Building something that needs a full-stack engineer?
-            </p>
-            <a
-              href="mailto:nuwanhemal@gmail.com"
-              className="mt-5 inline-flex items-center gap-2 text-base text-brand-300 transition hover:text-brand-200"
-            >
-              nuwanhemal@gmail.com <span>→</span>
-            </a>
+          {/* Contact */}
+          <section id="contact" className="mt-24 scroll-mt-10 border-t border-border pt-16 pb-24">
+            <Reveal>
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+                Contact
+              </h2>
+              <p className="mt-4 max-w-md text-3xl font-semibold leading-tight tracking-tight text-slate-100">
+                Building something that needs a{" "}
+                <span className="text-gradient">full-stack engineer</span>?
+              </p>
+              <a
+                href="mailto:nuwanhemal@gmail.com"
+                className="group mt-6 inline-flex items-center gap-2 text-base text-brand-300 transition hover:text-brand-200"
+              >
+                nuwanhemal@gmail.com{" "}
+                <span className="transition group-hover:translate-x-1">→</span>
+              </a>
+            </Reveal>
           </section>
         </div>
       </div>

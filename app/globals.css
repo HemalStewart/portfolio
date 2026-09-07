@@ -41,12 +41,7 @@ html {
 }
 
 body {
-  background:
-    radial-gradient(circle at 15% 0%, rgba(14, 159, 150, 0.16) 0, transparent 42%),
-    radial-gradient(circle at 100% 30%, rgba(14, 159, 150, 0.07) 0, transparent 38%),
-    var(--background);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-space-grotesk), "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -55,11 +50,16 @@ body {
 
 body::before {
   content: "";
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 900px;
   pointer-events: none;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(14, 159, 150, 0.16) 0, transparent 42%),
+    radial-gradient(circle at 100% 30%, rgba(14, 159, 150, 0.07) 0, transparent 38%),
+    radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px) 0 0 / 28px 28px;
   mask-image: radial-gradient(ellipse 80% 60% at 20% 10%, black 10%, transparent 70%);
   z-index: 0;
 }
@@ -73,34 +73,32 @@ body::before {
   color: #f7fffd;
 }
 
-.card-glow {
-  position: relative;
-  isolation: isolate;
+.text-gradient {
+  background: linear-gradient(120deg, var(--color-brand-200), var(--color-brand-500) 60%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.card-glow::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(14, 159, 150, 0),
-    rgba(14, 159, 150, 0)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  transition: background 0.3s ease;
-  pointer-events: none;
-  z-index: -1;
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-.card-glow:hover::before {
-  background: linear-gradient(
-    135deg,
-    rgba(14, 159, 150, 0.5),
-    rgba(14, 159, 150, 0)
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-fade {
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black 8%,
+    black 92%,
+    transparent 100%
   );
 }
