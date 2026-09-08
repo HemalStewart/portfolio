@@ -45,15 +45,15 @@ export function NavRail({ links }: { links: NavLink[] }) {
                   aria-current={isActive ? "true" : undefined}
                   className={`group flex items-center gap-3 text-xs font-medium uppercase tracking-[0.15em] transition ${
                     isActive
-                      ? "text-slate-900"
-                      : "text-slate-400 hover:text-slate-900"
+                      ? "text-white"
+                      : "text-slate-400 hover:text-white"
                   }`}
                 >
                   <span
                     className={`h-px transition-all ${
                       isActive
                         ? "w-10 bg-brand-500"
-                        : "w-6 bg-slate-300 group-hover:w-10 group-hover:bg-brand-500"
+                        : "w-6 bg-slate-600 group-hover:w-10 group-hover:bg-brand-500"
                     }`}
                   />
                   {link.label}
@@ -79,8 +79,8 @@ export function NavRail({ links }: { links: NavLink[] }) {
                   aria-current={isActive ? "true" : undefined}
                   className={`inline-flex min-h-[38px] items-center rounded-full px-3.5 text-xs font-medium transition ${
                     isActive
-                      ? "bg-brand-50 text-brand-700"
-                      : "text-slate-500 hover:text-slate-900"
+                      ? "bg-brand-500/15 text-brand-200"
+                      : "text-slate-400 hover:text-white"
                   }`}
                 >
                   {link.label}

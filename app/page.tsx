@@ -40,6 +40,8 @@ type ProfileLink = {
   label: string;
   href: string;
   iconSrc: string;
+  /** Dark-on-transparent logos (e.g. GitHub) need inverting on the dark theme. */
+  invertOnDark?: boolean;
   external?: boolean;
 };
 
@@ -79,6 +81,7 @@ const profileLinks: ProfileLink[] = [
     label: "GitHub",
     href: "https://github.com/HemalStewart",
     iconSrc: "/icons/github.png",
+    invertOnDark: true,
     external: true,
   },
   {
@@ -407,7 +410,7 @@ const deliverySnapshot = [
 
 function TechChip({ label }: { label: string }) {
   return (
-    <span className="rounded-full border border-border bg-white px-2.5 py-1 font-mono text-[11px] text-slate-600">
+    <span className="rounded-full border border-border bg-white/5 px-2.5 py-1 font-mono text-[11px] text-slate-300">
       {label}
     </span>
   );
@@ -417,7 +420,7 @@ function ReferenceLink({ reference }: { reference: ExternalReference }) {
   if (reference.href) {
     return (
       <a
-        className="group/ref inline-flex items-center gap-1 font-mono text-xs text-slate-500 underline decoration-slate-300 underline-offset-4 transition hover:text-brand-700 hover:decoration-brand-500"
+        className="group/ref inline-flex items-center gap-1 font-mono text-xs text-slate-400 underline decoration-white/25 underline-offset-4 transition hover:text-brand-200 hover:decoration-brand-500"
         href={reference.href}
         target="_blank"
         rel="noopener noreferrer"
@@ -439,6 +442,11 @@ function ReferenceLink({ reference }: { reference: ExternalReference }) {
 export default function Home() {
   return (
     <main className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-6 md:px-10 xl:px-16">
+      {/* Hero scene, spanning the full page width behind the first screen. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[92svh] overflow-hidden">
+        <HeroBackdrop />
+      </div>
+
       <div className="lg:grid lg:grid-cols-[300px_1fr] lg:gap-16">
         {/* Sidebar */}
         <aside className="pt-10 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:justify-between lg:py-20 lg:pt-0">
@@ -446,8 +454,8 @@ export default function Home() {
             <div className="flex items-center gap-3">
               <Avatar src="/avatar.png" alt="Hemal Herath" fallbackInitials="HH" size={52} />
               <div className="lg:hidden">
-                <p className="text-sm font-semibold text-slate-900">Hemal Herath</p>
-                <p className="text-xs text-slate-500">Full-Stack Software Engineer</p>
+                <p className="text-sm font-semibold text-white">Hemal Herath</p>
+                <p className="text-xs text-slate-400">Full-Stack Software Engineer</p>
               </div>
             </div>
 
@@ -464,14 +472,16 @@ export default function Home() {
                   rel={link.external ? "noopener noreferrer" : undefined}
                   aria-label={link.label}
                   title={link.label}
-                  className="group -m-1.5 flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-slate-100"
+                  className="group -m-1.5 flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/5"
                 >
                   <Image
                     src={link.iconSrc}
                     alt=""
                     width={20}
                     height={20}
-                    className="h-5 w-5 object-contain opacity-70 grayscale transition group-hover:opacity-100 group-hover:grayscale-0"
+                    className={`h-5 w-5 object-contain opacity-80 transition group-hover:opacity-100 ${
+                      link.invertOnDark ? "invert" : ""
+                    }`}
                   />
                 </a>
               ))}
@@ -487,9 +497,8 @@ export default function Home() {
         {/* Content */}
         <div className="min-w-0">
           {/* Hero — full first screen */}
-          <section id="about" className="scroll-mt-8 py-10 lg:py-14">
-            <div className="relative flex min-h-[78svh] flex-col justify-center overflow-hidden rounded-[32px] bg-[#0a1720] px-6 py-16 shadow-[0_30px_60px_-40px_rgba(8,20,28,0.6)] sm:px-10 sm:py-20 md:px-14">
-              <HeroBackdrop />
+          <section id="about" className="scroll-mt-8">
+            <div className="relative flex min-h-[92svh] flex-col justify-center py-16 lg:py-20">
               <HeroMascot />
 
               <div className="relative">
@@ -512,13 +521,13 @@ export default function Home() {
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <CtaLink href="#work" variant="primary" onDark>
+                  <CtaLink href="#work" variant="primary">
                     View work
                   </CtaLink>
-                  <CtaLink href="/resume.pdf" variant="secondary" external onDark>
+                  <CtaLink href="/resume.pdf" variant="secondary" external>
                     Download CV
                   </CtaLink>
-                  <CtaLink href="#contact" variant="ghost" onDark>
+                  <CtaLink href="#contact" variant="ghost">
                     Contact →
                   </CtaLink>
                 </div>
@@ -546,10 +555,10 @@ export default function Home() {
               <dl className="mt-10 grid grid-cols-3 gap-6">
                 {deliverySnapshot.map((item) => (
                   <div key={item.label}>
-                    <dt className="text-3xl font-semibold text-slate-900">
+                    <dt className="text-3xl font-semibold text-white">
                       <Counter value={item.value} suffix={item.suffix} />
                     </dt>
-                    <dd className="mt-1 text-xs text-slate-500">{item.label}</dd>
+                    <dd className="mt-1 text-xs text-slate-400">{item.label}</dd>
                   </div>
                 ))}
               </dl>
@@ -560,7 +569,7 @@ export default function Home() {
           <section id="production" className="scroll-mt-20 border-t border-border py-16 lg:py-20">
             <Reveal>
               <SectionHeader>In production</SectionHeader>
-              <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
+              <p className="mt-2 max-w-xl text-sm leading-6 text-slate-400">
                 Shipped and live — the clearest evidence of delivery.
               </p>
             </Reveal>
@@ -573,14 +582,14 @@ export default function Home() {
                         className="block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"
                         aria-hidden="true"
                       />
-                      <span className="font-mono text-[10px] uppercase tracking-wide text-brand-600">
+                      <span className="font-mono text-[10px] uppercase tracking-wide text-brand-300">
                         Live
                       </span>
                     </span>
-                    <span className="mt-1.5 block text-sm font-medium text-slate-800">
+                    <span className="mt-1.5 block text-sm font-medium text-slate-100">
                       {deployment.name}
                     </span>
-                    <span className="block text-xs text-slate-500">
+                    <span className="block text-xs text-slate-400">
                       {deployment.platform}
                     </span>
                   </>
@@ -592,13 +601,13 @@ export default function Home() {
                         href={deployment.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex min-h-[44px] items-start justify-between gap-3 rounded-2xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/50 hover:shadow-[0_10px_24px_-16px_rgba(15,23,42,0.2)]"
+                        className="group flex min-h-[44px] items-start justify-between gap-3 rounded-2xl border border-border bg-card px-4 py-3.5 transition hover:border-brand-400/50 hover:bg-white/[0.04]"
                       >
                         <span>{content}</span>
-                        <ExternalArrowIcon className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition group-hover:text-brand-600" />
+                        <ExternalArrowIcon className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition group-hover:text-brand-300" />
                       </a>
                     ) : (
-                      <div className="flex min-h-[44px] items-start gap-3 rounded-2xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+                      <div className="flex min-h-[44px] items-start gap-3 rounded-2xl border border-border bg-card px-4 py-3.5 ">
                         {content}
                       </div>
                     )}
@@ -616,7 +625,7 @@ export default function Home() {
             <RevealGroup className="mt-6 grid gap-6 sm:grid-cols-2">
               {coreSkills.map((skill) => (
                 <RevealItem key={skill.group}>
-                  <p className="text-sm font-medium text-slate-800">{skill.group}</p>
+                  <p className="text-sm font-medium text-slate-100">{skill.group}</p>
                   <div className="mt-2.5 flex flex-wrap gap-1.5">
                     {skill.skills.map((s) => (
                       <TechChip key={s} label={s} />
@@ -648,7 +657,7 @@ export default function Home() {
                   <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
                     <div>
                       {project.featured && (
-                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand-600">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand-300">
                           Featured
                         </p>
                       )}
@@ -656,7 +665,7 @@ export default function Home() {
                         <span className="font-mono text-xs text-slate-400">
                           {String(index + 1).padStart(2, "0")}
                         </span>
-                        <h3 className="text-xl font-semibold text-slate-900">
+                        <h3 className="text-xl font-semibold text-white">
                           {project.title}
                         </h3>
                       </div>
@@ -665,7 +674,7 @@ export default function Home() {
                       {project.platforms.map((platform) => (
                         <span
                           key={platform}
-                          className="rounded-full border border-border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-slate-500"
+                          className="rounded-full border border-border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-slate-400"
                         >
                           {platform}
                         </span>
@@ -673,7 +682,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
+                  <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
                     {project.tagline}
                   </p>
 
@@ -683,7 +692,7 @@ export default function Home() {
                     ))}
                   </div>
 
-                  <ul className="mt-5 max-w-2xl space-y-2 text-sm leading-6 text-slate-600">
+                  <ul className="mt-5 max-w-2xl space-y-2 text-sm leading-6 text-slate-300">
                     {project.highlights.map((item) => (
                       <li key={item} className="flex gap-2.5">
                         <span
@@ -712,7 +721,7 @@ export default function Home() {
           <section id="extras" className="scroll-mt-20 border-t border-border py-16 lg:py-20">
             <Reveal>
               <SectionHeader>Additional projects</SectionHeader>
-              <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
+              <p className="mt-2 max-w-xl text-sm leading-6 text-slate-400">
                 Smaller or in-progress builds exploring specific problems —
                 RAG pipelines, OCR, gamified learning, and media.
               </p>
@@ -720,9 +729,9 @@ export default function Home() {
             <RevealGroup className="mt-6 grid gap-3 sm:grid-cols-2">
               {additionalProjects.map((project) => (
                 <RevealItem key={project.title}>
-                  <div className="rounded-2xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/40">
-                    <p className="text-sm font-medium text-slate-800">{project.title}</p>
-                    <p className="mt-1 text-xs leading-5 text-slate-500">{project.tagline}</p>
+                  <div className="rounded-2xl border border-border bg-card px-4 py-3.5 transition hover:border-brand-400/50 hover:bg-white/[0.04]">
+                    <p className="text-sm font-medium text-slate-100">{project.title}</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-400">{project.tagline}</p>
                     <p className="mt-2 font-mono text-[10px] text-slate-400">
                       {project.techStack}
                     </p>
@@ -739,7 +748,7 @@ export default function Home() {
           <section id="contact" className="scroll-mt-20 border-t border-border py-16 pb-24 lg:py-20">
             <Reveal>
               <SectionHeader>Contact</SectionHeader>
-              <p className="mt-4 max-w-md text-3xl font-semibold leading-tight tracking-tight text-slate-900">
+              <p className="mt-4 max-w-md text-3xl font-semibold leading-tight tracking-tight text-white">
                 Building something that needs a{" "}
                 <span className="text-gradient">full-stack engineer</span>?
               </p>

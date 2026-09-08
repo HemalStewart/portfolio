@@ -18,11 +18,11 @@ export function Avatar({
 
   return (
     <div
-      className="inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-brand-200 bg-card shadow-[0_1px_2px_rgba(15,23,42,0.06)]"
+      className="inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-brand-500/50 bg-card "
       style={{ width: size, height: size }}
     >
       {errored ? (
-        <span className="font-mono text-sm font-medium text-brand-700">
+        <span className="font-mono text-sm font-medium text-brand-300">
           {fallbackInitials}
         </span>
       ) : (

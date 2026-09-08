@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #faf9f7;
-  --foreground: #16181d;
-  --muted: #6b7280;
-  --border: rgba(15, 23, 42, 0.1);
-  --card: #ffffff;
+  --background: #0a1720;
+  --foreground: #e6eef4;
+  --muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.1);
+  --card: #0f212c;
   --color-brand-50: #eefaf8;
   --color-brand-100: #d3f1ec;
   --color-brand-200: #a7e3da;
@@ -56,19 +56,19 @@ body {
 }
 
 ::selection {
-  background: rgba(20, 149, 138, 0.2);
-  color: #0b3f3b;
+  background: rgba(63, 179, 165, 0.3);
+  color: #eefaf8;
 }
 
 /* Strong, visible keyboard focus state everywhere. */
 :focus-visible {
-  outline: 2px solid var(--color-brand-500);
+  outline: 2px solid var(--color-brand-400);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
 .text-gradient {
-  background: linear-gradient(120deg, var(--color-brand-600), var(--color-brand-900) 70%);
+  background: linear-gradient(120deg, var(--color-brand-200), var(--color-brand-400) 70%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
