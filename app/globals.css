@@ -6,16 +6,16 @@
   --muted: #94a3b8;
   --border: rgba(255, 255, 255, 0.1);
   --card: #0f212c;
-  --color-brand-50: #eefaf8;
-  --color-brand-100: #d3f1ec;
-  --color-brand-200: #a7e3da;
-  --color-brand-300: #71cec1;
-  --color-brand-400: #3fb3a5;
-  --color-brand-500: #14958a;
-  --color-brand-600: #0d7a71;
-  --color-brand-700: #0c625b;
-  --color-brand-800: #0d4f4a;
-  --color-brand-900: #0b3f3b;
+  --color-brand-50: #fff1f5;
+  --color-brand-100: #ffe4ec;
+  --color-brand-200: #fecdd9;
+  --color-brand-300: #fda4bd;
+  --color-brand-400: #fb7199;
+  --color-brand-500: #f43f6f;
+  --color-brand-600: #e11d54;
+  --color-brand-700: #be1244;
+  --color-brand-800: #9f1239;
+  --color-brand-900: #881337;
 }
 
 @theme inline {
@@ -48,7 +48,9 @@ body {
   font-family: var(--font-plus-jakarta-sans), "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   position: relative;
-  overflow-x: hidden;
+  /* clip, not hidden — `overflow-x: hidden` creates a scroll container and
+     breaks `position: sticky` on the header. */
+  overflow-x: clip;
 }
 
 * {
@@ -56,8 +58,8 @@ body {
 }
 
 ::selection {
-  background: rgba(63, 179, 165, 0.3);
-  color: #eefaf8;
+  background: rgba(244, 63, 111, 0.3);
+  color: #fff1f5;
 }
 
 /* Strong, visible keyboard focus state everywhere. */

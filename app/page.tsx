@@ -1,15 +1,13 @@
-import Image from "next/image";
-import { Avatar } from "./components/Avatar";
 import { Counter } from "./components/Counter";
 import { CtaLink } from "./components/CtaLink";
 import { GlowCard } from "./components/GlowCard";
 import { HeroBackdrop } from "./components/HeroBackdrop";
 import { HeroMascot } from "./components/HeroMascot";
 import { ExternalArrowIcon } from "./components/icons";
-import { NavRail } from "./components/NavRail";
 import { ProjectImage } from "./components/ProjectImage";
 import { Reveal, RevealGroup, RevealItem } from "./components/Reveal";
 import { SectionHeader } from "./components/SectionHeader";
+import { TopNav } from "./components/TopNav";
 
 type ExternalReference = {
   label: string;
@@ -441,97 +439,46 @@ function ReferenceLink({ reference }: { reference: ExternalReference }) {
 
 export default function Home() {
   return (
-    <main className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-6 md:px-10 xl:px-16">
-      {/* Hero scene, spanning the full page width behind the first screen. */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[92svh] overflow-hidden">
-        <HeroBackdrop />
-      </div>
+    <>
+      <TopNav links={navLinks} profileLinks={profileLinks} />
 
-      <div className="lg:grid lg:grid-cols-[300px_1fr] lg:gap-16">
-        {/* Sidebar */}
-        <aside className="pt-10 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:justify-between lg:py-20 lg:pt-0">
-          <div>
-            <div className="flex items-center gap-3">
-              <Avatar src="/avatar.png" alt="Hemal Herath" fallbackInitials="HH" size={52} />
-              <div className="lg:hidden">
-                <p className="text-sm font-semibold text-white">Hemal Herath</p>
-                <p className="text-xs text-slate-400">Full-Stack Software Engineer</p>
-              </div>
-            </div>
+      <main id="top" className="relative z-10 flex w-full flex-1 flex-col">
+        {/* Empty illustrated first screen — content begins below it. */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[78svh] overflow-hidden">
+          <HeroBackdrop />
+        </div>
+        <div className="relative h-[62svh] w-full sm:h-[70svh]">
+          <HeroMascot />
+        </div>
 
-            <NavRail links={navLinks} />
-          </div>
-
-          <div className="mt-8 lg:mt-0">
-            <div className="flex flex-wrap items-center gap-1">
-              {profileLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noopener noreferrer" : undefined}
-                  aria-label={link.label}
-                  title={link.label}
-                  className="group -m-1.5 flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/5"
-                >
-                  <Image
-                    src={link.iconSrc}
-                    alt=""
-                    width={20}
-                    height={20}
-                    className={`h-5 w-5 object-contain opacity-80 transition group-hover:opacity-100 ${
-                      link.invertOnDark ? "invert" : ""
-                    }`}
-                  />
-                </a>
-              ))}
-            </div>
-            <p className="mt-3 font-mono text-[11px] text-slate-400">
-              Polgasowita, Kottawa
-              <br />
-              nuwanhemal@gmail.com
+        <div className="mx-auto w-full max-w-[1240px] px-6 md:px-10 xl:px-16">
+          <section id="about" className="scroll-mt-24 pt-4">
+            <SectionHeader>Full-Stack Software Engineer</SectionHeader>
+            <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl">
+              Hemal Herath
+            </h1>
+            <p className="mt-5 max-w-2xl text-[15px] leading-7 text-slate-300">
+              I build production-style web and mobile platforms end to end —
+              Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
+              FastAPI on the back, with applied AI layered in where it earns
+              its place.
             </p>
-          </div>
-        </aside>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400">
+              Live on Google Play, the App Store, and Sri Lanka&apos;s Ministry
+              of Education — what follows is what I&apos;ve actually shipped,
+              not a tech-stack word cloud.
+            </p>
 
-        {/* Content */}
-        <div className="min-w-0">
-          {/* Hero — full first screen */}
-          <section id="about" className="scroll-mt-8">
-            <div className="relative flex min-h-[92svh] flex-col justify-center py-16 lg:py-20">
-              <HeroMascot />
-
-              <div className="relative">
-                <p className="inline-flex items-center rounded-full bg-white/8 px-3 py-1 font-mono text-xs uppercase tracking-[0.25em] text-brand-200 ring-1 ring-white/15">
-                  Full-Stack Software Engineer
-                </p>
-                <h1 className="mt-5 text-5xl font-extrabold leading-[1.02] tracking-tight text-white sm:text-6xl md:text-7xl">
-                  Hemal Herath
-                </h1>
-                <p className="mt-6 max-w-xl text-[15px] leading-7 text-slate-300">
-                  I build production-style web and mobile platforms end to end —
-                  Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
-                  FastAPI on the back, with applied AI layered in where it earns
-                  its place.
-                </p>
-                <p className="mt-3 max-w-xl text-sm leading-6 text-slate-400">
-                  Live on Google Play, the App Store, and Sri Lanka&apos;s Ministry
-                  of Education — what follows is what I&apos;ve actually shipped,
-                  not a tech-stack word cloud.
-                </p>
-
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <CtaLink href="#work" variant="primary">
-                    View work
-                  </CtaLink>
-                  <CtaLink href="/resume.pdf" variant="secondary" external>
-                    Download CV
-                  </CtaLink>
-                  <CtaLink href="#contact" variant="ghost">
-                    Contact →
-                  </CtaLink>
-                </div>
-              </div>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <CtaLink href="#work" variant="primary">
+                View work
+              </CtaLink>
+              <CtaLink href="/resume.pdf" variant="secondary" external>
+                Download CV
+              </CtaLink>
+              <CtaLink href="#contact" variant="ghost">
+                Contact →
+              </CtaLink>
             </div>
 
             {/* Marquee */}
@@ -762,8 +709,14 @@ export default function Home() {
               </div>
             </Reveal>
           </section>
+
+          <footer className="border-t border-border py-10">
+            <p className="font-mono text-[11px] text-slate-400">
+              Polgasowita, Kottawa · nuwanhemal@gmail.com
+            </p>
+          </footer>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
