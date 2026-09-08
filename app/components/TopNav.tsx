@@ -21,6 +21,14 @@ export function TopNav({
   profileLinks: ProfileLink[];
 }) {
   const [active, setActive] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const ids = links.map((link) => link.href.slice(1));
@@ -47,21 +55,30 @@ export function TopNav({
   }, [links]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-[1440px] items-center gap-4 px-6 py-3 md:px-10 xl:px-16">
+    <header
+      className={`sticky top-0 z-50 transition-colors duration-300 ${
+        scrolled
+          ? "border-b border-border bg-[rgba(10,23,32,0.85)] backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex w-full max-w-[1440px] items-center gap-8 px-6 py-4 md:px-10 xl:px-16">
         <a
           href="#top"
-          className="flex shrink-0 items-center gap-2.5 text-sm font-bold tracking-tight text-white"
+          className="flex shrink-0 items-center gap-2.5 text-base font-extrabold tracking-tight"
         >
-          <Avatar src="/avatar.png" alt="" fallbackInitials="HH" size={34} />
-          <span className="hidden sm:inline">Hemal Herath</span>
+          <Avatar src="/avatar.png" alt="" fallbackInitials="HH" size={32} />
+          <span className="hidden sm:inline">
+            <span className="text-white">Hemal</span>{" "}
+            <span className="text-brand-400">Herath</span>
+          </span>
         </a>
 
         <nav
           aria-label="Section navigation"
-          className="ml-2 hidden min-w-0 flex-1 md:block"
+          className="hidden min-w-0 flex-1 md:block"
         >
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-6">
             {links.map((link) => {
               const id = link.href.slice(1);
               const isActive = active === id;
@@ -70,7 +87,7 @@ export function TopNav({
                   <a
                     href={link.href}
                     aria-current={isActive ? "true" : undefined}
-                    className={`inline-flex min-h-[40px] items-center rounded-full px-3 text-sm font-medium transition ${
+                    className={`inline-flex min-h-[40px] items-center text-sm font-medium transition-colors ${
                       isActive
                         ? "text-brand-300"
                         : "text-slate-300 hover:text-white"
