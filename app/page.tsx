@@ -714,6 +714,18 @@ export default function Home() {
             <p className="font-mono text-[11px] text-slate-400">
               Polgasowita, Kottawa · nuwanhemal@gmail.com
             </p>
+            <p className="mt-2 font-mono text-[10px] text-slate-500">
+              Hero character from{" "}
+              <a
+                href="https://github.com/microsoft/fluentui-emoji"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-white/25 underline-offset-4 transition hover:text-brand-300"
+              >
+                Microsoft Fluent Emoji
+              </a>{" "}
+              (MIT).
+            </p>
           </footer>
         </div>
       </main>
