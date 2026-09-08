@@ -1,20 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #08090b;
-  --foreground: #e8ebed;
-  --muted: #8a929b;
-  --border: rgba(255, 255, 255, 0.09);
-  --color-brand-50: #e7f8f7;
-  --color-brand-100: #c9efec;
-  --color-brand-200: #9de2dc;
-  --color-brand-300: #6cd1ca;
-  --color-brand-400: #37bab1;
-  --color-brand-500: #0e9f96;
-  --color-brand-600: #0b837b;
-  --color-brand-700: #0c6b65;
-  --color-brand-800: #0e5752;
-  --color-brand-900: #114846;
+  --background: #faf9f7;
+  --foreground: #16181d;
+  --muted: #6b7280;
+  --border: rgba(15, 23, 42, 0.09);
+  --card: #ffffff;
+  --color-brand-50: #eefaf8;
+  --color-brand-100: #d3f1ec;
+  --color-brand-200: #a7e3da;
+  --color-brand-300: #71cec1;
+  --color-brand-400: #3fb3a5;
+  --color-brand-500: #14958a;
+  --color-brand-600: #0d7a71;
+  --color-brand-700: #0c625b;
+  --color-brand-800: #0d4f4a;
+  --color-brand-900: #0b3f3b;
 }
 
 @theme inline {
@@ -22,6 +23,7 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
+  --color-card: var(--card);
   --font-sans: var(--font-space-grotesk);
   --font-mono: var(--font-ibm-plex-mono);
   --color-brand-50: var(--color-brand-50);
@@ -57,9 +59,9 @@ body::before {
   height: 900px;
   pointer-events: none;
   background:
-    radial-gradient(circle at 15% 0%, rgba(14, 159, 150, 0.16) 0, transparent 42%),
-    radial-gradient(circle at 100% 30%, rgba(14, 159, 150, 0.07) 0, transparent 38%),
-    radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px) 0 0 / 28px 28px;
+    radial-gradient(circle at 15% 0%, rgba(20, 149, 138, 0.09) 0, transparent 42%),
+    radial-gradient(circle at 100% 20%, rgba(20, 149, 138, 0.05) 0, transparent 38%),
+    radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px) 0 0 / 28px 28px;
   mask-image: radial-gradient(ellipse 80% 60% at 20% 10%, black 10%, transparent 70%);
   z-index: 0;
 }
@@ -69,12 +71,12 @@ body::before {
 }
 
 ::selection {
-  background: rgba(14, 159, 150, 0.35);
-  color: #f7fffd;
+  background: rgba(20, 149, 138, 0.2);
+  color: #0b3f3b;
 }
 
 .text-gradient {
-  background: linear-gradient(120deg, var(--color-brand-200), var(--color-brand-500) 60%);
+  background: linear-gradient(120deg, var(--color-brand-500), var(--color-brand-800) 65%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

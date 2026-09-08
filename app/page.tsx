@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Counter } from "./components/Counter";
 import { GlowCard } from "./components/GlowCard";
+import { ProjectImage } from "./components/ProjectImage";
 import { Reveal, RevealGroup, RevealItem } from "./components/Reveal";
 
 type ExternalReference = {
@@ -10,6 +11,8 @@ type ExternalReference = {
 };
 
 type ProjectExperience = {
+  slug: string;
+  initials: string;
   title: string;
   tagline: string;
   platforms: string[];
@@ -31,7 +34,6 @@ type ProfileLink = {
   label: string;
   href: string;
   iconSrc: string;
-  invertOnDark?: boolean;
   external?: boolean;
 };
 
@@ -71,7 +73,6 @@ const profileLinks: ProfileLink[] = [
     label: "GitHub",
     href: "https://github.com/HemalStewart",
     iconSrc: "/icons/github.png",
-    invertOnDark: true,
     external: true,
   },
   {
@@ -152,6 +153,8 @@ const coreSkills = [
 
 const selectedProjects: ProjectExperience[] = [
   {
+    slug: "linkforex",
+    initials: "LF",
     title: "LinkForex",
     tagline:
       "Admin console, mobile app, and backend for a live fintech remittance operation.",
@@ -168,9 +171,11 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Mobile repo", href: "https://github.com/Dilmith-Ranasinghe518/LinkForexApp" },
     ],
     featured: true,
-    accent: "#0e9f96",
+    accent: "#14958a",
   },
   {
+    slug: "chatsoul-ai",
+    initials: "CS",
     title: "ChatSoul AI / VibeChat AI",
     tagline:
       "One Flutter codebase shipped to Android, iOS, and Web as an AI companion app.",
@@ -188,9 +193,11 @@ const selectedProjects: ProjectExperience[] = [
       { label: "iOS", href: "https://apps.apple.com/us/app/chatsoul-ai/id6756913536" },
     ],
     featured: true,
-    accent: "#a78bfa",
+    accent: "#8b5cf6",
   },
   {
+    slug: "writescan",
+    initials: "WS",
     title: "WriteScan",
     tagline:
       "AI-powered document scanner and writing assistant, live on Google Play.",
@@ -206,9 +213,11 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.appmixer.writescan" },
     ],
     featured: true,
-    accent: "#f59e0b",
+    accent: "#d97706",
   },
   {
+    slug: "huddle",
+    initials: "HU",
     title: "Huddle",
     tagline:
       "Real-time video conferencing platform, built to prove out call infrastructure end to end.",
@@ -223,9 +232,11 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Web repo", href: "https://github.com/HemalStewart/zoom-clone-main" },
       { label: "Mobile", note: "Code available on request" },
     ],
-    accent: "#38bdf8",
+    accent: "#0284c7",
   },
   {
+    slug: "smart-guardian-pro",
+    initials: "SG",
     title: "Smart Guardian Pro",
     tagline:
       "Personal-safety app with SOS, live location, and group tracking — on Google Play.",
@@ -240,9 +251,11 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Source repo", href: "https://github.com/shehan-077/Smart-Guardian-Pro" },
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery" },
     ],
-    accent: "#fb7185",
+    accent: "#e11d48",
   },
   {
+    slug: "pdms",
+    initials: "PD",
     title: "PDMS",
     tagline:
       "Modular school-operations platform, live at Sri Lanka's Ministry of Education.",
@@ -258,9 +271,11 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Repository", note: "Link available on request" },
     ],
     featured: true,
-    accent: "#818cf8",
+    accent: "#4f46e5",
   },
   {
+    slug: "scholar-desktop",
+    initials: "SD",
     title: "Scholar Desktop",
     tagline:
       "Electron desktop app pairing a reading pane with an AI tutor panel.",
@@ -274,9 +289,11 @@ const selectedProjects: ProjectExperience[] = [
     references: [
       { label: "Source repo", href: "https://github.com/HemalStewart/edu-ai-browser" },
     ],
-    accent: "#818cf8",
+    accent: "#4f46e5",
   },
   {
+    slug: "papermind",
+    initials: "PM",
     title: "PaperMind",
     tagline:
       "Multi-provider AI chat app with OCR ingestion and document-grounded context.",
@@ -290,9 +307,11 @@ const selectedProjects: ProjectExperience[] = [
     references: [
       { label: "Source repo", href: "https://github.com/HemalStewart/chat-bot" },
     ],
-    accent: "#a78bfa",
+    accent: "#8b5cf6",
   },
   {
+    slug: "englishmind-ai",
+    initials: "EM",
     title: "EnglishMind AI",
     tagline:
       "Spoken-English coach that scores fluency and grammar directly from voice.",
@@ -304,9 +323,11 @@ const selectedProjects: ProjectExperience[] = [
       "Architected for either lightweight cloud use or on-prem privacy requirements.",
     ],
     references: [{ label: "Source", note: "Code available on request" }],
-    accent: "#38bdf8",
+    accent: "#0284c7",
   },
   {
+    slug: "sea-cloud-dalawella",
+    initials: "SC",
     title: "Sea Cloud, Dalawella",
     tagline:
       "Marketing site and reservation flow for a boutique hotel in Sri Lanka.",
@@ -318,7 +339,7 @@ const selectedProjects: ProjectExperience[] = [
       "A real client engagement, not a template.",
     ],
     references: [{ label: "Source", note: "Code available on request" }],
-    accent: "#f59e0b",
+    accent: "#d97706",
   },
 ];
 
@@ -369,7 +390,7 @@ const additionalProjects: LightProject[] = [
 
 function TechChip({ label }: { label: string }) {
   return (
-    <span className="rounded-md bg-white/[0.04] px-2 py-1 font-mono text-[11px] text-slate-400">
+    <span className="rounded-md bg-slate-100 px-2 py-1 font-mono text-[11px] text-slate-600">
       {label}
     </span>
   );
@@ -379,7 +400,7 @@ function renderReference(reference: ExternalReference) {
   if (reference.href) {
     return (
       <a
-        className="group/ref inline-flex items-center gap-1 font-mono text-xs text-slate-400 transition hover:text-brand-300"
+        className="group/ref inline-flex items-center gap-1 font-mono text-xs text-slate-500 transition hover:text-brand-600"
         href={reference.href}
         target="_blank"
         rel="noreferrer noopener"
@@ -391,7 +412,7 @@ function renderReference(reference: ExternalReference) {
   }
 
   return (
-    <span className="font-mono text-xs text-slate-600">
+    <span className="font-mono text-xs text-slate-400">
       {reference.label}
       {reference.note ? ` — ${reference.note}` : ""}
     </span>
@@ -405,7 +426,7 @@ export default function Home() {
         {/* Sidebar */}
         <aside className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:justify-between lg:py-20">
           <div className="pt-16 lg:pt-0">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand-500/30 bg-brand-500/10 font-mono text-sm font-medium text-brand-300">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand-500/25 bg-brand-50 font-mono text-sm font-medium text-brand-700">
               HH
             </div>
 
@@ -415,9 +436,9 @@ export default function Home() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      className="group flex items-center gap-3 text-xs font-medium uppercase tracking-[0.15em] text-slate-500 transition hover:text-slate-100"
+                      className="group flex items-center gap-3 text-xs font-medium uppercase tracking-[0.15em] text-slate-400 transition hover:text-slate-900"
                     >
-                      <span className="h-px w-6 bg-slate-700 transition group-hover:w-10 group-hover:bg-brand-400" />
+                      <span className="h-px w-6 bg-slate-300 transition group-hover:w-10 group-hover:bg-brand-500" />
                       {link.label}
                     </a>
                   </li>
@@ -443,14 +464,12 @@ export default function Home() {
                     alt=""
                     width={20}
                     height={20}
-                    className={`h-5 w-5 object-contain opacity-60 transition group-hover:-translate-y-0.5 group-hover:opacity-100 ${
-                      link.invertOnDark ? "invert" : ""
-                    }`}
+                    className="h-5 w-5 object-contain opacity-70 grayscale transition group-hover:-translate-y-0.5 group-hover:opacity-100 group-hover:grayscale-0"
                   />
                 </a>
               ))}
             </div>
-            <p className="mt-4 font-mono text-[11px] text-slate-600">
+            <p className="mt-4 font-mono text-[11px] text-slate-400">
               Polgasowita, Kottawa
               <br />
               nuwanhemal@gmail.com
@@ -462,15 +481,15 @@ export default function Home() {
         <div className="min-w-0 py-16 lg:py-20">
           {/* Hero */}
           <section id="about" className="scroll-mt-10">
-            <p className="font-mono text-xs uppercase tracking-[0.25em] text-brand-400">
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-brand-600">
               Full-Stack Software Engineer
             </p>
-            <h1 className="mt-4 text-[13vw] font-semibold leading-[0.95] tracking-tighter text-slate-100 sm:text-6xl md:text-7xl">
+            <h1 className="mt-4 text-[13vw] font-semibold leading-[0.95] tracking-tighter text-slate-900 sm:text-6xl md:text-7xl">
               Hemal
               <br />
               <span className="text-gradient">Herath</span>
             </h1>
-            <p className="mt-6 max-w-xl text-[15px] leading-7 text-slate-300">
+            <p className="mt-6 max-w-xl text-[15px] leading-7 text-slate-600">
               I build production-style web and mobile platforms end to end —
               Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
               FastAPI on the back, with applied AI layered in where it earns
@@ -485,7 +504,7 @@ export default function Home() {
               {[...marqueeItems, ...marqueeItems].map((item, i) => (
                 <span
                   key={`${item}-${i}`}
-                  className="flex items-center gap-8 font-mono text-sm text-slate-600"
+                  className="flex items-center gap-8 font-mono text-sm text-slate-400"
                 >
                   {item}
                   <span className="text-brand-500">/</span>
@@ -497,19 +516,19 @@ export default function Home() {
           <Reveal>
             <dl className="mt-10 grid grid-cols-3 gap-6">
               <div>
-                <dt className="text-3xl font-semibold text-slate-100">
+                <dt className="text-3xl font-semibold text-slate-900">
                   <Counter value={25} suffix="+" />
                 </dt>
                 <dd className="mt-1 text-xs text-slate-500">Shipped repositories</dd>
               </div>
               <div>
-                <dt className="text-3xl font-semibold text-slate-100">
+                <dt className="text-3xl font-semibold text-slate-900">
                   <Counter value={700} suffix="+" />
                 </dt>
                 <dd className="mt-1 text-xs text-slate-500">Commits logged</dd>
               </div>
               <div>
-                <dt className="text-3xl font-semibold text-slate-100">
+                <dt className="text-3xl font-semibold text-slate-900">
                   <Counter value={6} />
                 </dt>
                 <dd className="mt-1 text-xs text-slate-500">Live production apps</dd>
@@ -520,7 +539,7 @@ export default function Home() {
           {/* Production */}
           <section id="production" className="mt-24 scroll-mt-10">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
                 In production
               </h2>
             </Reveal>
@@ -528,9 +547,9 @@ export default function Home() {
               {productionDeployments.map((deployment) => {
                 const content = (
                   <>
-                    <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400 shadow-[0_0_8px_rgba(14,159,150,0.8)]" />
+                    <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500 shadow-[0_0_8px_rgba(20,149,138,0.5)]" />
                     <span>
-                      <span className="block text-sm font-medium text-slate-200">
+                      <span className="block text-sm font-medium text-slate-800">
                         {deployment.name}
                       </span>
                       <span className="block text-xs text-slate-500">
@@ -546,12 +565,12 @@ export default function Home() {
                         href={deployment.href}
                         target="_blank"
                         rel="noreferrer noopener"
-                        className="flex items-start gap-3 rounded-xl border border-border bg-white/[0.015] px-4 py-3 transition hover:border-brand-500/40 hover:bg-white/[0.03]"
+                        className="flex items-start gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/40 hover:shadow-[0_8px_20px_-12px_rgba(15,23,42,0.15)]"
                       >
                         {content}
                       </a>
                     ) : (
-                      <div className="flex items-start gap-3 rounded-xl border border-border bg-white/[0.015] px-4 py-3">
+                      <div className="flex items-start gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
                         {content}
                       </div>
                     )}
@@ -564,14 +583,14 @@ export default function Home() {
           {/* Skills */}
           <section id="skills" className="mt-24 scroll-mt-10">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
                 Core skills
               </h2>
             </Reveal>
             <RevealGroup className="mt-6 grid gap-6 sm:grid-cols-2">
               {coreSkills.map((skill) => (
                 <RevealItem key={skill.group}>
-                  <p className="text-sm font-medium text-slate-200">{skill.group}</p>
+                  <p className="text-sm font-medium text-slate-800">{skill.group}</p>
                   <div className="mt-2.5 flex flex-wrap gap-1.5">
                     {skill.skills.map((s) => (
                       <TechChip key={s} label={s} />
@@ -585,19 +604,31 @@ export default function Home() {
           {/* Featured work */}
           <section id="work" className="mt-24 scroll-mt-10">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
                 Featured work
               </h2>
             </Reveal>
-            <div className="mt-6 grid gap-5">
+            <div className="mt-6 grid gap-6">
               {selectedProjects.map((project, index) => (
-                <GlowCard key={project.title} accent={project.accent} className="p-6 md:p-7">
+                <GlowCard
+                  key={project.title}
+                  accent={project.accent}
+                  className="p-6 md:p-7"
+                  image={
+                    <ProjectImage
+                      src={`/projects/${project.slug}.png`}
+                      alt={`${project.title} preview`}
+                      accent={project.accent}
+                      initials={project.initials}
+                    />
+                  }
+                >
                   <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
                     <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-xs text-slate-600">
+                      <span className="font-mono text-xs text-slate-400">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <h3 className="text-xl font-semibold text-slate-100">
+                      <h3 className="text-xl font-semibold text-slate-900">
                         {project.title}
                       </h3>
                     </div>
@@ -613,7 +644,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400">
+                  <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
                     {project.tagline}
                   </p>
 
@@ -623,7 +654,7 @@ export default function Home() {
                     ))}
                   </div>
 
-                  <ul className="mt-5 space-y-2 text-sm leading-6 text-slate-300">
+                  <ul className="mt-5 space-y-2 text-sm leading-6 text-slate-600">
                     {project.highlights.map((item) => (
                       <li key={item} className="flex gap-2.5">
                         <span
@@ -650,7 +681,7 @@ export default function Home() {
           {/* Extras */}
           <section id="extras" className="mt-24 scroll-mt-10">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
                 Additional builds
               </h2>
               <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
@@ -661,10 +692,10 @@ export default function Home() {
             <RevealGroup className="mt-6 grid gap-3 sm:grid-cols-2">
               {additionalProjects.map((project) => (
                 <RevealItem key={project.title}>
-                  <div className="rounded-xl border border-border bg-white/[0.015] px-4 py-3.5 transition hover:border-brand-500/30 hover:bg-white/[0.03]">
-                    <p className="text-sm font-medium text-slate-200">{project.title}</p>
+                  <div className="rounded-xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/30 hover:shadow-[0_8px_20px_-12px_rgba(15,23,42,0.15)]">
+                    <p className="text-sm font-medium text-slate-800">{project.title}</p>
                     <p className="mt-1 text-xs leading-5 text-slate-500">{project.tagline}</p>
-                    <p className="mt-2 font-mono text-[10px] text-slate-600">
+                    <p className="mt-2 font-mono text-[10px] text-slate-400">
                       {project.techStack}
                     </p>
                     <div className="mt-1.5">{renderReference(project.reference)}</div>
@@ -677,16 +708,16 @@ export default function Home() {
           {/* Contact */}
           <section id="contact" className="mt-24 scroll-mt-10 border-t border-border pt-16 pb-24">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
                 Contact
               </h2>
-              <p className="mt-4 max-w-md text-3xl font-semibold leading-tight tracking-tight text-slate-100">
+              <p className="mt-4 max-w-md text-3xl font-semibold leading-tight tracking-tight text-slate-900">
                 Building something that needs a{" "}
                 <span className="text-gradient">full-stack engineer</span>?
               </p>
               <a
                 href="mailto:nuwanhemal@gmail.com"
-                className="group mt-6 inline-flex items-center gap-2 text-base text-brand-300 transition hover:text-brand-200"
+                className="group mt-6 inline-flex items-center gap-2 text-base text-brand-600 transition hover:text-brand-700"
               >
                 nuwanhemal@gmail.com{" "}
                 <span className="transition group-hover:translate-x-1">→</span>
