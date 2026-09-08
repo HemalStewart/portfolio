@@ -487,51 +487,41 @@ export default function Home() {
         {/* Content */}
         <div className="min-w-0">
           {/* Hero — full first screen */}
-          <section
-            id="about"
-            className="relative flex min-h-[100svh] scroll-mt-8 flex-col justify-center overflow-hidden py-16 lg:min-h-[100svh] lg:py-20"
-          >
-            <div
-              className="absolute inset-x-0 top-0 -z-10 h-[300px] sm:h-[420px] md:h-[520px]"
-              style={{
-                maskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 92%)",
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, black 0%, black 45%, transparent 92%)",
-              }}
-            >
+          <section id="about" className="scroll-mt-8 py-10 lg:py-14">
+            <div className="relative flex min-h-[78svh] flex-col justify-center overflow-hidden rounded-[32px] bg-[#0a1720] px-6 py-16 shadow-[0_30px_60px_-40px_rgba(8,20,28,0.6)] sm:px-10 sm:py-20 md:px-14">
               <HeroBackdrop />
-            </div>
-            <HeroMascot />
+              <HeroMascot />
 
-            <div className="relative">
-              <p className="inline-flex items-center rounded-full bg-white/70 px-3 py-1 font-mono text-xs uppercase tracking-[0.25em] text-brand-600 shadow-[0_1px_2px_rgba(15,23,42,0.04)] ring-1 ring-brand-500/15">
-                Full-Stack Software Engineer
-              </p>
-              <h1 className="mt-5 text-5xl font-extrabold leading-[1.02] tracking-tight text-slate-900 sm:text-6xl md:text-7xl">
-                Hemal Herath
-              </h1>
-              <p className="mt-6 max-w-xl text-[15px] leading-7 text-slate-600">
-                I build production-style web and mobile platforms end to end —
-                Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
-                FastAPI on the back, with applied AI layered in where it earns
-                its place.
-              </p>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">
-                Live on Google Play, the App Store, and Sri Lanka&apos;s Ministry
-                of Education — what follows is what I&apos;ve actually shipped,
-                not a tech-stack word cloud.
-              </p>
+              <div className="relative">
+                <p className="inline-flex items-center rounded-full bg-white/8 px-3 py-1 font-mono text-xs uppercase tracking-[0.25em] text-brand-200 ring-1 ring-white/15">
+                  Full-Stack Software Engineer
+                </p>
+                <h1 className="mt-5 text-5xl font-extrabold leading-[1.02] tracking-tight text-white sm:text-6xl md:text-7xl">
+                  Hemal Herath
+                </h1>
+                <p className="mt-6 max-w-xl text-[15px] leading-7 text-slate-300">
+                  I build production-style web and mobile platforms end to end —
+                  Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
+                  FastAPI on the back, with applied AI layered in where it earns
+                  its place.
+                </p>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-slate-400">
+                  Live on Google Play, the App Store, and Sri Lanka&apos;s Ministry
+                  of Education — what follows is what I&apos;ve actually shipped,
+                  not a tech-stack word cloud.
+                </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <CtaLink href="#work" variant="primary">
-                  View work
-                </CtaLink>
-                <CtaLink href="/resume.pdf" variant="secondary" external>
-                  Download CV
-                </CtaLink>
-                <CtaLink href="#contact" variant="ghost">
-                  Contact →
-                </CtaLink>
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <CtaLink href="#work" variant="primary" onDark>
+                    View work
+                  </CtaLink>
+                  <CtaLink href="/resume.pdf" variant="secondary" external onDark>
+                    Download CV
+                  </CtaLink>
+                  <CtaLink href="#contact" variant="ghost" onDark>
+                    Contact →
+                  </CtaLink>
+                </div>
               </div>
             </div>
 
