@@ -4,6 +4,7 @@ import { Counter } from "./components/Counter";
 import { CtaLink } from "./components/CtaLink";
 import { GlowCard } from "./components/GlowCard";
 import { HeroBackdrop } from "./components/HeroBackdrop";
+import { HeroMascot } from "./components/HeroMascot";
 import { ExternalArrowIcon } from "./components/icons";
 import { NavRail } from "./components/NavRail";
 import { ProjectImage } from "./components/ProjectImage";
@@ -500,6 +501,7 @@ export default function Home() {
             >
               <HeroBackdrop />
             </div>
+            <HeroMascot />
 
             <div className="relative">
               <p className="inline-flex items-center rounded-full bg-white/70 px-3 py-1 font-mono text-xs uppercase tracking-[0.25em] text-brand-600 shadow-[0_1px_2px_rgba(15,23,42,0.04)] ring-1 ring-brand-500/15">
