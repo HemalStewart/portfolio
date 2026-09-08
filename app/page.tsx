@@ -53,7 +53,6 @@ type ProductionDeployment = {
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "Production", href: "#production" },
-  { label: "Skills", href: "#skills" },
   { label: "Work", href: "#work" },
   { label: "Projects", href: "#extras" },
   { label: "Contact", href: "#contact" },
@@ -149,24 +148,6 @@ const productionDeployments: ProductionDeployment[] = [
   },
 ];
 
-const coreSkills = [
-  {
-    group: "Frontend",
-    skills: ["Flutter", "Next.js", "React", "TypeScript", "Tailwind CSS"],
-  },
-  {
-    group: "Backend",
-    skills: ["PHP · CodeIgniter", "Laravel", "FastAPI", "REST API design", "Auth & RBAC"],
-  },
-  {
-    group: "Data & AI",
-    skills: ["SQL schema design", "Prisma", "RAG pipelines", "Embeddings", "OpenAI · Gemini"],
-  },
-  {
-    group: "Mobile & Platform",
-    skills: ["Android/iOS via Flutter", "go_router", "Riverpod", "GetX"],
-  },
-];
 
 // Ordered so LinkForex, ChatSoul/VibeChat, WriteScan, and PDMS (the four
 // featured, production-proven builds) lead the section; Huddle stays lower
@@ -565,24 +546,6 @@ export default function Home() {
           </section>
 
           {/* Skills */}
-          <section id="skills" className="scroll-mt-20 border-t border-border py-16 lg:py-20">
-            <Reveal>
-              <SectionHeader>Core skills</SectionHeader>
-            </Reveal>
-            <RevealGroup className="mt-6 grid gap-6 sm:grid-cols-2">
-              {coreSkills.map((skill) => (
-                <RevealItem key={skill.group}>
-                  <p className="text-sm font-medium text-slate-100">{skill.group}</p>
-                  <div className="mt-2.5 flex flex-wrap gap-1.5">
-                    {skill.skills.map((s) => (
-                      <TechChip key={s} label={s} />
-                    ))}
-                  </div>
-                </RevealItem>
-              ))}
-            </RevealGroup>
-          </section>
-
           {/* Featured work */}
           <section id="work" className="scroll-mt-20 border-t border-border py-16 lg:py-20">
             <Reveal>
