@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Avatar } from "./components/Avatar";
 import { Counter } from "./components/Counter";
 import { GlowCard } from "./components/GlowCard";
 import { ProjectImage } from "./components/ProjectImage";
@@ -426,9 +427,7 @@ export default function Home() {
         {/* Sidebar */}
         <aside className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:justify-between lg:py-20">
           <div className="pt-16 lg:pt-0">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand-500/25 bg-brand-50 font-mono text-sm font-medium text-brand-700">
-              HH
-            </div>
+            <Avatar src="/avatar.png" alt="Hemal Herath" fallbackInitials="HH" size={56} />
 
             <nav className="mt-10 hidden lg:block">
               <ul className="space-y-3">

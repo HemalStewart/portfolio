@@ -104,3 +104,21 @@ body::before {
     transparent 100%
   );
 }
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.avatar-ring {
+  background: conic-gradient(
+    from 0deg,
+    var(--color-brand-500),
+    var(--color-brand-200),
+    var(--color-brand-600),
+    var(--color-brand-200),
+    var(--color-brand-500)
+  );
+  animation: spin-slow 7s linear infinite;
+}
