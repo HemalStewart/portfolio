@@ -112,6 +112,16 @@ body::before {
 }
 
 .avatar-ring {
+  position: relative;
+  isolation: isolate;
+}
+
+.avatar-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 9999px;
   background: conic-gradient(
     from 0deg,
     var(--color-brand-500),
