@@ -4,7 +4,7 @@
   --background: #faf9f7;
   --foreground: #16181d;
   --muted: #6b7280;
-  --border: rgba(15, 23, 42, 0.09);
+  --border: rgba(15, 23, 42, 0.1);
   --card: #ffffff;
   --color-brand-50: #eefaf8;
   --color-brand-100: #d3f1ec;
@@ -48,21 +48,22 @@ body {
   font-family: var(--font-space-grotesk), "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  overflow-x: hidden;
 }
 
+/* Soft radial wash + faint grid, confined to the hero area only. */
 body::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 900px;
+  height: 760px;
   pointer-events: none;
   background:
-    radial-gradient(circle at 15% 0%, rgba(20, 149, 138, 0.09) 0, transparent 42%),
-    radial-gradient(circle at 100% 20%, rgba(20, 149, 138, 0.05) 0, transparent 38%),
-    radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px) 0 0 / 28px 28px;
-  mask-image: radial-gradient(ellipse 80% 60% at 20% 10%, black 10%, transparent 70%);
+    radial-gradient(circle at 12% 0%, rgba(20, 149, 138, 0.07) 0, transparent 45%),
+    radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px) 0 0 / 32px 32px;
+  mask-image: radial-gradient(ellipse 70% 55% at 18% 8%, black 15%, transparent 72%);
   z-index: 0;
 }
 
@@ -75,8 +76,15 @@ body::before {
   color: #0b3f3b;
 }
 
+/* Strong, visible keyboard focus state everywhere. */
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 .text-gradient {
-  background: linear-gradient(120deg, var(--color-brand-500), var(--color-brand-800) 65%);
+  background: linear-gradient(120deg, var(--color-brand-600), var(--color-brand-900) 70%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -92,7 +100,12 @@ body::before {
 }
 
 .marquee-track {
-  animation: marquee 28s linear infinite;
+  animation: marquee 32s linear infinite;
+}
+
+.marquee-fade:hover .marquee-track,
+.marquee-fade:focus-within .marquee-track {
+  animation-play-state: paused;
 }
 
 .marquee-fade {
@@ -105,30 +118,12 @@ body::before {
   );
 }
 
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-}
 
-.avatar-ring {
-  position: relative;
-  isolation: isolate;
-}
-
-.avatar-ring::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: 9999px;
-  background: conic-gradient(
-    from 0deg,
-    var(--color-brand-500),
-    var(--color-brand-200),
-    var(--color-brand-600),
-    var(--color-brand-200),
-    var(--color-brand-500)
-  );
-  animation: spin-slow 7s linear infinite;
+  .marquee-track {
+    animation: none;
+  }
 }

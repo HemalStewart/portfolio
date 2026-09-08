@@ -13,10 +13,25 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
+const title = "Hemal Herath | Full-Stack Software Engineer";
+const description =
+  "Portfolio of Hemal Herath, a full-stack software engineer building production web and mobile systems with Flutter, Next.js, TypeScript, PHP (CodeIgniter/Laravel), and FastAPI.";
+
 export const metadata: Metadata = {
-  title: "Hemal Herath | Software Engineer Portfolio",
-  description:
-    "Professional portfolio of Hemal Herath, a full-stack software engineer with Flutter, Next.js, TypeScript, PHP, and FastAPI delivery experience.",
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    images: ["/avatar.png"],
+  },
+  twitter: {
+    card: "summary",
+    title,
+    description,
+    images: ["/avatar.png"],
+  },
 };
 
 export default function RootLayout({

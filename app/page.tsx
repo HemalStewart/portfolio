@@ -1,9 +1,13 @@
 import Image from "next/image";
 import { Avatar } from "./components/Avatar";
 import { Counter } from "./components/Counter";
+import { CtaLink } from "./components/CtaLink";
 import { GlowCard } from "./components/GlowCard";
+import { ExternalArrowIcon } from "./components/icons";
+import { NavRail } from "./components/NavRail";
 import { ProjectImage } from "./components/ProjectImage";
 import { Reveal, RevealGroup, RevealItem } from "./components/Reveal";
+import { SectionHeader } from "./components/SectionHeader";
 
 type ExternalReference = {
   label: string;
@@ -21,7 +25,6 @@ type ProjectExperience = {
   highlights: string[];
   references: ExternalReference[];
   featured?: boolean;
-  accent: string;
 };
 
 type LightProject = {
@@ -50,7 +53,7 @@ const navLinks = [
   { label: "Production", href: "#production" },
   { label: "Skills", href: "#skills" },
   { label: "Work", href: "#work" },
-  { label: "Extras", href: "#extras" },
+  { label: "Projects", href: "#extras" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -152,6 +155,9 @@ const coreSkills = [
   },
 ];
 
+// Ordered so LinkForex, ChatSoul/VibeChat, WriteScan, and PDMS (the four
+// featured, production-proven builds) lead the section; Huddle stays lower
+// in the list as a personal infrastructure build rather than a client product.
 const selectedProjects: ProjectExperience[] = [
   {
     slug: "linkforex",
@@ -172,7 +178,6 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Mobile repo", href: "https://github.com/Dilmith-Ranasinghe518/LinkForexApp" },
     ],
     featured: true,
-    accent: "#14958a",
   },
   {
     slug: "chatsoul-ai",
@@ -194,7 +199,6 @@ const selectedProjects: ProjectExperience[] = [
       { label: "iOS", href: "https://apps.apple.com/us/app/chatsoul-ai/id6756913536" },
     ],
     featured: true,
-    accent: "#8b5cf6",
   },
   {
     slug: "writescan",
@@ -214,45 +218,6 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.appmixer.writescan" },
     ],
     featured: true,
-    accent: "#d97706",
-  },
-  {
-    slug: "huddle",
-    initials: "HU",
-    title: "Huddle",
-    tagline:
-      "Real-time video conferencing platform, built to prove out call infrastructure end to end.",
-    platforms: ["Web", "Mobile"],
-    techStack: ["Next.js", "TypeScript", "Flutter", "Clerk", "Stream Video SDK"],
-    highlights: [
-      "Implemented the full meeting lifecycle — instant/scheduled meetings, personal room, recordings, history — on a Next.js web client and a separate Flutter mobile client.",
-      "Integrated the Stream Video SDK for real-time call state, plus Clerk auth and route protection on web.",
-      "Handled camera/microphone permission flows and lobby-to-call handoff on mobile.",
-    ],
-    references: [
-      { label: "Web repo", href: "https://github.com/HemalStewart/zoom-clone-main" },
-      { label: "Mobile", note: "Code available on request" },
-    ],
-    accent: "#0284c7",
-  },
-  {
-    slug: "smart-guardian-pro",
-    initials: "SG",
-    title: "Smart Guardian Pro",
-    tagline:
-      "Personal-safety app with SOS, live location, and group tracking — on Google Play.",
-    platforms: ["Android"],
-    techStack: ["Flutter", "Dart", "CodeIgniter/Laravel APIs"],
-    highlights: [
-      "Built SOS, live-location sharing, and group/\"circle\" safety-network features end to end.",
-      "Designed a service-driven architecture separating auth, location, notifications, and session handling.",
-      "Shipped and live on Google Play.",
-    ],
-    references: [
-      { label: "Source repo", href: "https://github.com/shehan-077/Smart-Guardian-Pro" },
-      { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery" },
-    ],
-    accent: "#e11d48",
   },
   {
     slug: "pdms",
@@ -272,7 +237,42 @@ const selectedProjects: ProjectExperience[] = [
       { label: "Repository", note: "Link available on request" },
     ],
     featured: true,
-    accent: "#4f46e5",
+  },
+  {
+    slug: "smart-guardian-pro",
+    initials: "SG",
+    title: "Smart Guardian Pro",
+    tagline:
+      "Personal-safety app with SOS, live location, and group tracking — on Google Play.",
+    platforms: ["Android"],
+    techStack: ["Flutter", "Dart", "CodeIgniter/Laravel APIs"],
+    highlights: [
+      "Built SOS, live-location sharing, and group/\"circle\" safety-network features end to end.",
+      "Designed a service-driven architecture separating auth, location, notifications, and session handling.",
+      "Shipped and live on Google Play.",
+    ],
+    references: [
+      { label: "Source repo", href: "https://github.com/shehan-077/Smart-Guardian-Pro" },
+      { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery" },
+    ],
+  },
+  {
+    slug: "huddle",
+    initials: "HU",
+    title: "Huddle",
+    tagline:
+      "Real-time video conferencing platform, built to prove out call infrastructure end to end.",
+    platforms: ["Web", "Mobile"],
+    techStack: ["Next.js", "TypeScript", "Flutter", "Clerk", "Stream Video SDK"],
+    highlights: [
+      "Implemented the full meeting lifecycle — instant/scheduled meetings, personal room, recordings, history — on a Next.js web client and a separate Flutter mobile client.",
+      "Integrated the Stream Video SDK for real-time call state, plus Clerk auth and route protection on web.",
+      "Handled camera/microphone permission flows and lobby-to-call handoff on mobile.",
+    ],
+    references: [
+      { label: "Web repo", href: "https://github.com/HemalStewart/zoom-clone-main" },
+      { label: "Mobile", note: "Code available on request" },
+    ],
   },
   {
     slug: "scholar-desktop",
@@ -290,7 +290,6 @@ const selectedProjects: ProjectExperience[] = [
     references: [
       { label: "Source repo", href: "https://github.com/HemalStewart/edu-ai-browser" },
     ],
-    accent: "#4f46e5",
   },
   {
     slug: "papermind",
@@ -308,7 +307,6 @@ const selectedProjects: ProjectExperience[] = [
     references: [
       { label: "Source repo", href: "https://github.com/HemalStewart/chat-bot" },
     ],
-    accent: "#8b5cf6",
   },
   {
     slug: "englishmind-ai",
@@ -324,7 +322,6 @@ const selectedProjects: ProjectExperience[] = [
       "Architected for either lightweight cloud use or on-prem privacy requirements.",
     ],
     references: [{ label: "Source", note: "Code available on request" }],
-    accent: "#0284c7",
   },
   {
     slug: "sea-cloud-dalawella",
@@ -340,7 +337,6 @@ const selectedProjects: ProjectExperience[] = [
       "A real client engagement, not a template.",
     ],
     references: [{ label: "Source", note: "Code available on request" }],
-    accent: "#d97706",
   },
 ];
 
@@ -389,6 +385,12 @@ const additionalProjects: LightProject[] = [
   },
 ];
 
+const deliverySnapshot = [
+  { value: 25, suffix: "+", label: "Shipped repositories" },
+  { value: 700, suffix: "+", label: "Commits logged" },
+  { value: 6, suffix: "", label: "Live production apps" },
+];
+
 function TechChip({ label }: { label: string }) {
   return (
     <span className="rounded-md bg-slate-100 px-2 py-1 font-mono text-[11px] text-slate-600">
@@ -397,17 +399,17 @@ function TechChip({ label }: { label: string }) {
   );
 }
 
-function renderReference(reference: ExternalReference) {
+function ReferenceLink({ reference }: { reference: ExternalReference }) {
   if (reference.href) {
     return (
       <a
-        className="group/ref inline-flex items-center gap-1 font-mono text-xs text-slate-500 transition hover:text-brand-600"
+        className="group/ref inline-flex items-center gap-1 font-mono text-xs text-slate-500 underline decoration-slate-300 underline-offset-4 transition hover:text-brand-700 hover:decoration-brand-500"
         href={reference.href}
         target="_blank"
-        rel="noreferrer noopener"
+        rel="noopener noreferrer"
       >
         {reference.label}
-        <span className="transition group-hover/ref:translate-x-0.5">→</span>
+        <ExternalArrowIcon className="h-3 w-3 transition group-hover/ref:translate-x-0.5 group-hover/ref:-translate-y-0.5" />
       </a>
     );
   }
@@ -422,53 +424,45 @@ function renderReference(reference: ExternalReference) {
 
 export default function Home() {
   return (
-    <main className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 md:px-10">
+    <main className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-6 md:px-10 xl:px-16">
       <div className="lg:grid lg:grid-cols-[300px_1fr] lg:gap-16">
         {/* Sidebar */}
-        <aside className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:justify-between lg:py-20">
-          <div className="pt-16 lg:pt-0">
-            <Avatar src="/avatar.png" alt="Hemal Herath" fallbackInitials="HH" size={56} />
+        <aside className="pt-10 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:justify-between lg:py-20 lg:pt-0">
+          <div>
+            <div className="flex items-center gap-3">
+              <Avatar src="/avatar.png" alt="Hemal Herath" fallbackInitials="HH" size={52} />
+              <div className="lg:hidden">
+                <p className="text-sm font-semibold text-slate-900">Hemal Herath</p>
+                <p className="text-xs text-slate-500">Full-Stack Software Engineer</p>
+              </div>
+            </div>
 
-            <nav className="mt-10 hidden lg:block">
-              <ul className="space-y-3">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      className="group flex items-center gap-3 text-xs font-medium uppercase tracking-[0.15em] text-slate-400 transition hover:text-slate-900"
-                    >
-                      <span className="h-px w-6 bg-slate-300 transition group-hover:w-10 group-hover:bg-brand-500" />
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <NavRail links={navLinks} />
           </div>
 
-          <div className="mt-10 lg:mt-0">
-            <div className="flex flex-wrap items-center gap-4">
+          <div className="mt-8 lg:mt-0">
+            <div className="flex flex-wrap items-center gap-1">
               {profileLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noreferrer noopener" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
                   aria-label={link.label}
                   title={link.label}
-                  className="group"
+                  className="group -m-1.5 flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-slate-100"
                 >
                   <Image
                     src={link.iconSrc}
                     alt=""
                     width={20}
                     height={20}
-                    className="h-5 w-5 object-contain opacity-70 grayscale transition group-hover:-translate-y-0.5 group-hover:opacity-100 group-hover:grayscale-0"
+                    className="h-5 w-5 object-contain opacity-70 grayscale transition group-hover:opacity-100 group-hover:grayscale-0"
                   />
                 </a>
               ))}
             </div>
-            <p className="mt-4 font-mono text-[11px] text-slate-400">
+            <p className="mt-3 font-mono text-[11px] text-slate-400">
               Polgasowita, Kottawa
               <br />
               nuwanhemal@gmail.com
@@ -477,83 +471,99 @@ export default function Home() {
         </aside>
 
         {/* Content */}
-        <div className="min-w-0 py-16 lg:py-20">
-          {/* Hero */}
-          <section id="about" className="scroll-mt-10">
+        <div className="min-w-0">
+          {/* Hero — full first screen */}
+          <section
+            id="about"
+            className="flex min-h-[100svh] scroll-mt-8 flex-col justify-center py-16 lg:min-h-[100svh] lg:py-20"
+          >
             <p className="font-mono text-xs uppercase tracking-[0.25em] text-brand-600">
               Full-Stack Software Engineer
             </p>
-            <h1 className="mt-4 text-[13vw] font-semibold leading-[0.95] tracking-tighter text-slate-900 sm:text-6xl md:text-7xl">
-              Hemal
-              <br />
-              <span className="text-gradient">Herath</span>
+            <h1 className="mt-4 text-5xl font-semibold leading-[1.02] tracking-tight text-slate-900 sm:text-6xl md:text-7xl">
+              Hemal Herath
             </h1>
             <p className="mt-6 max-w-xl text-[15px] leading-7 text-slate-600">
               I build production-style web and mobile platforms end to end —
               Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
               FastAPI on the back, with applied AI layered in where it earns
-              its place. What&apos;s below is what I&apos;ve actually shipped,
+              its place.
+            </p>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-slate-500">
+              Live on Google Play, the App Store, and Sri Lanka&apos;s Ministry
+              of Education — what follows is what I&apos;ve actually shipped,
               not a tech-stack word cloud.
             </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <CtaLink href="#work" variant="primary">
+                View work
+              </CtaLink>
+              <CtaLink href="/resume.pdf" variant="secondary" external>
+                Download CV
+              </CtaLink>
+              <CtaLink href="#contact" variant="ghost">
+                Contact →
+              </CtaLink>
+            </div>
+
+            {/* Marquee */}
+            <div className="marquee-fade mt-12 overflow-hidden border-y border-border py-4">
+              <div className="marquee-track flex w-max gap-8">
+                {[...marqueeItems, ...marqueeItems].map((item, i) => (
+                  <span
+                    key={`${item}-${i}`}
+                    className="flex items-center gap-8 font-mono text-sm text-slate-400"
+                  >
+                    {item}
+                    <span className="text-brand-500" aria-hidden="true">
+                      /
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <Reveal>
+              <dl className="mt-10 grid grid-cols-3 gap-6">
+                {deliverySnapshot.map((item) => (
+                  <div key={item.label}>
+                    <dt className="text-3xl font-semibold text-slate-900">
+                      <Counter value={item.value} suffix={item.suffix} />
+                    </dt>
+                    <dd className="mt-1 text-xs text-slate-500">{item.label}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
           </section>
 
-          {/* Marquee */}
-          <div className="marquee-fade mt-10 overflow-hidden border-y border-border py-4">
-            <div className="marquee-track flex w-max gap-8">
-              {[...marqueeItems, ...marqueeItems].map((item, i) => (
-                <span
-                  key={`${item}-${i}`}
-                  className="flex items-center gap-8 font-mono text-sm text-slate-400"
-                >
-                  {item}
-                  <span className="text-brand-500">/</span>
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <Reveal>
-            <dl className="mt-10 grid grid-cols-3 gap-6">
-              <div>
-                <dt className="text-3xl font-semibold text-slate-900">
-                  <Counter value={25} suffix="+" />
-                </dt>
-                <dd className="mt-1 text-xs text-slate-500">Shipped repositories</dd>
-              </div>
-              <div>
-                <dt className="text-3xl font-semibold text-slate-900">
-                  <Counter value={700} suffix="+" />
-                </dt>
-                <dd className="mt-1 text-xs text-slate-500">Commits logged</dd>
-              </div>
-              <div>
-                <dt className="text-3xl font-semibold text-slate-900">
-                  <Counter value={6} />
-                </dt>
-                <dd className="mt-1 text-xs text-slate-500">Live production apps</dd>
-              </div>
-            </dl>
-          </Reveal>
-
           {/* Production */}
-          <section id="production" className="mt-24 scroll-mt-10">
+          <section id="production" className="scroll-mt-20 border-t border-border py-16 lg:py-20">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
-                In production
-              </h2>
+              <SectionHeader>In production</SectionHeader>
+              <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
+                Shipped and live — the clearest evidence of delivery.
+              </p>
             </Reveal>
             <RevealGroup className="mt-6 grid gap-3 sm:grid-cols-2">
               {productionDeployments.map((deployment) => {
                 const content = (
                   <>
-                    <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500 shadow-[0_0_8px_rgba(20,149,138,0.5)]" />
-                    <span>
-                      <span className="block text-sm font-medium text-slate-800">
-                        {deployment.name}
+                    <span className="flex items-center gap-1.5">
+                      <span
+                        className="block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"
+                        aria-hidden="true"
+                      />
+                      <span className="font-mono text-[10px] uppercase tracking-wide text-brand-600">
+                        Live
                       </span>
-                      <span className="block text-xs text-slate-500">
-                        {deployment.platform}
-                      </span>
+                    </span>
+                    <span className="mt-1.5 block text-sm font-medium text-slate-800">
+                      {deployment.name}
+                    </span>
+                    <span className="block text-xs text-slate-500">
+                      {deployment.platform}
                     </span>
                   </>
                 );
@@ -563,13 +573,14 @@ export default function Home() {
                       <a
                         href={deployment.href}
                         target="_blank"
-                        rel="noreferrer noopener"
-                        className="flex items-start gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/40 hover:shadow-[0_8px_20px_-12px_rgba(15,23,42,0.15)]"
+                        rel="noopener noreferrer"
+                        className="group flex min-h-[44px] items-start justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/50 hover:shadow-[0_10px_24px_-16px_rgba(15,23,42,0.2)]"
                       >
-                        {content}
+                        <span>{content}</span>
+                        <ExternalArrowIcon className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition group-hover:text-brand-600" />
                       </a>
                     ) : (
-                      <div className="flex items-start gap-3 rounded-xl border border-border bg-card px-4 py-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+                      <div className="flex min-h-[44px] items-start gap-3 rounded-xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
                         {content}
                       </div>
                     )}
@@ -580,11 +591,9 @@ export default function Home() {
           </section>
 
           {/* Skills */}
-          <section id="skills" className="mt-24 scroll-mt-10">
+          <section id="skills" className="scroll-mt-20 border-t border-border py-16 lg:py-20">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
-                Core skills
-              </h2>
+              <SectionHeader>Core skills</SectionHeader>
             </Reveal>
             <RevealGroup className="mt-6 grid gap-6 sm:grid-cols-2">
               {coreSkills.map((skill) => (
@@ -601,35 +610,38 @@ export default function Home() {
           </section>
 
           {/* Featured work */}
-          <section id="work" className="mt-24 scroll-mt-10">
+          <section id="work" className="scroll-mt-20 border-t border-border py-16 lg:py-20">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
-                Featured work
-              </h2>
+              <SectionHeader>Featured work</SectionHeader>
             </Reveal>
             <div className="mt-6 grid gap-6">
               {selectedProjects.map((project, index) => (
                 <GlowCard
                   key={project.title}
-                  accent={project.accent}
                   className="p-6 md:p-7"
                   image={
                     <ProjectImage
                       src={`/projects/${project.slug}.png`}
-                      alt={`${project.title} preview`}
-                      accent={project.accent}
+                      alt={`${project.title} product screenshot`}
                       initials={project.initials}
                     />
                   }
                 >
                   <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-xs text-slate-400">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <h3 className="text-xl font-semibold text-slate-900">
-                        {project.title}
-                      </h3>
+                    <div>
+                      {project.featured && (
+                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand-600">
+                          Featured
+                        </p>
+                      )}
+                      <div className="mt-1 flex items-baseline gap-3">
+                        <span className="font-mono text-xs text-slate-400">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <h3 className="text-xl font-semibold text-slate-900">
+                          {project.title}
+                        </h3>
+                      </div>
                     </div>
                     <div className="flex flex-wrap gap-1.5">
                       {project.platforms.map((platform) => (
@@ -653,12 +665,12 @@ export default function Home() {
                     ))}
                   </div>
 
-                  <ul className="mt-5 space-y-2 text-sm leading-6 text-slate-600">
+                  <ul className="mt-5 max-w-2xl space-y-2 text-sm leading-6 text-slate-600">
                     {project.highlights.map((item) => (
                       <li key={item} className="flex gap-2.5">
                         <span
-                          className="mt-2 h-1 w-1 shrink-0 rounded-full"
-                          style={{ background: project.accent }}
+                          className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-500"
+                          aria-hidden="true"
                         />
                         <span>{item}</span>
                       </li>
@@ -667,9 +679,10 @@ export default function Home() {
 
                   <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-1.5 border-t border-border pt-4">
                     {project.references.map((reference) => (
-                      <div key={`${project.title}-${reference.label}`}>
-                        {renderReference(reference)}
-                      </div>
+                      <ReferenceLink
+                        key={`${project.title}-${reference.label}`}
+                        reference={reference}
+                      />
                     ))}
                   </div>
                 </GlowCard>
@@ -677,27 +690,27 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Extras */}
-          <section id="extras" className="mt-24 scroll-mt-10">
+          {/* Additional projects */}
+          <section id="extras" className="scroll-mt-20 border-t border-border py-16 lg:py-20">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
-                Additional builds
-              </h2>
+              <SectionHeader>Additional projects</SectionHeader>
               <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
-                Smaller or in-progress projects exploring specific problems —
+                Smaller or in-progress builds exploring specific problems —
                 RAG pipelines, OCR, gamified learning, and media.
               </p>
             </Reveal>
             <RevealGroup className="mt-6 grid gap-3 sm:grid-cols-2">
               {additionalProjects.map((project) => (
                 <RevealItem key={project.title}>
-                  <div className="rounded-xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/30 hover:shadow-[0_8px_20px_-12px_rgba(15,23,42,0.15)]">
+                  <div className="rounded-xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/40">
                     <p className="text-sm font-medium text-slate-800">{project.title}</p>
                     <p className="mt-1 text-xs leading-5 text-slate-500">{project.tagline}</p>
                     <p className="mt-2 font-mono text-[10px] text-slate-400">
                       {project.techStack}
                     </p>
-                    <div className="mt-1.5">{renderReference(project.reference)}</div>
+                    <div className="mt-1.5">
+                      <ReferenceLink reference={project.reference} />
+                    </div>
                   </div>
                 </RevealItem>
               ))}
@@ -705,22 +718,21 @@ export default function Home() {
           </section>
 
           {/* Contact */}
-          <section id="contact" className="mt-24 scroll-mt-10 border-t border-border pt-16 pb-24">
+          <section id="contact" className="scroll-mt-20 border-t border-border py-16 pb-24 lg:py-20">
             <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
-                Contact
-              </h2>
+              <SectionHeader>Contact</SectionHeader>
               <p className="mt-4 max-w-md text-3xl font-semibold leading-tight tracking-tight text-slate-900">
                 Building something that needs a{" "}
                 <span className="text-gradient">full-stack engineer</span>?
               </p>
-              <a
-                href="mailto:nuwanhemal@gmail.com"
-                className="group mt-6 inline-flex items-center gap-2 text-base text-brand-600 transition hover:text-brand-700"
-              >
-                nuwanhemal@gmail.com{" "}
-                <span className="transition group-hover:translate-x-1">→</span>
-              </a>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <CtaLink href="mailto:nuwanhemal@gmail.com" variant="primary">
+                  nuwanhemal@gmail.com
+                </CtaLink>
+                <CtaLink href="tel:+94718850419" variant="secondary">
+                  +94 71 88 50 419
+                </CtaLink>
+              </div>
             </Reveal>
           </section>
         </div>
