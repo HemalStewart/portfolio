@@ -4,10 +4,10 @@ type CtaVariant = "primary" | "secondary" | "ghost";
 
 const variantClasses: Record<CtaVariant, string> = {
   primary:
-    "bg-brand-600 text-white hover:bg-brand-700 shadow-[0_1px_2px_rgba(15,23,42,0.06)]",
+    "bg-brand-600 text-white hover:bg-brand-700 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] shadow-[0_4px_14px_-4px_rgba(13,122,113,0.45)]",
   secondary:
-    "border border-slate-300 text-slate-800 hover:border-slate-400 hover:bg-slate-50",
-  ghost: "text-slate-600 hover:text-slate-900",
+    "border border-slate-300 text-slate-800 hover:border-brand-400 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] bg-white",
+  ghost: "text-slate-600 hover:text-brand-700",
 };
 
 export function CtaLink({

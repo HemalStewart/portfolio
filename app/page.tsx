@@ -3,6 +3,7 @@ import { Avatar } from "./components/Avatar";
 import { Counter } from "./components/Counter";
 import { CtaLink } from "./components/CtaLink";
 import { GlowCard } from "./components/GlowCard";
+import { HeroBackdrop } from "./components/HeroBackdrop";
 import { ExternalArrowIcon } from "./components/icons";
 import { NavRail } from "./components/NavRail";
 import { ProjectImage } from "./components/ProjectImage";
@@ -110,6 +111,11 @@ const productionDeployments: ProductionDeployment[] = [
     href: "https://play.google.com/store/apps/details?id=com.appmixer.vibechatai",
   },
   {
+    name: "VibeChat AI",
+    platform: "iOS",
+    href: "https://apps.apple.com/us/app/vibechat-ai-vibe-your-chat/id6782503745",
+  },
+  {
     name: "WriteScan",
     platform: "Android",
     href: "https://play.google.com/store/apps/details?id=com.appmixer.writescan",
@@ -133,6 +139,11 @@ const productionDeployments: ProductionDeployment[] = [
     name: "Smart Guardian Pro",
     platform: "Android",
     href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery",
+  },
+  {
+    name: "Smart Guardian Pro",
+    platform: "iOS",
+    href: "https://apps.apple.com/us/app/smart-guardian-family-safety/id6769642500",
   },
 ];
 
@@ -194,9 +205,10 @@ const selectedProjects: ProjectExperience[] = [
     ],
     references: [
       { label: "Source repo", href: "https://github.com/shehan-077/ChatSoulAi---Flutter" },
-      { label: "Web", href: "https://chatsoulai.com/" },
-      { label: "Android", href: "https://play.google.com/store/apps/details?id=com.appmixer.vibechatai" },
-      { label: "iOS", href: "https://apps.apple.com/us/app/chatsoul-ai/id6756913536" },
+      { label: "ChatSoul AI (Web)", href: "https://chatsoulai.com/" },
+      { label: "ChatSoul AI (iOS)", href: "https://apps.apple.com/us/app/chatsoul-ai/id6756913536" },
+      { label: "VibeChat AI (Android)", href: "https://play.google.com/store/apps/details?id=com.appmixer.vibechatai" },
+      { label: "VibeChat AI (iOS)", href: "https://apps.apple.com/us/app/vibechat-ai-vibe-your-chat/id6782503745" },
     ],
     featured: true,
   },
@@ -243,17 +255,18 @@ const selectedProjects: ProjectExperience[] = [
     initials: "SG",
     title: "Smart Guardian Pro",
     tagline:
-      "Personal-safety app with SOS, live location, and group tracking — on Google Play.",
-    platforms: ["Android"],
+      "Personal-safety app with SOS, live location, and group tracking — on Google Play and the App Store.",
+    platforms: ["Android", "iOS"],
     techStack: ["Flutter", "Dart", "CodeIgniter/Laravel APIs"],
     highlights: [
       "Built SOS, live-location sharing, and group/\"circle\" safety-network features end to end.",
       "Designed a service-driven architecture separating auth, location, notifications, and session handling.",
-      "Shipped and live on Google Play.",
+      "Shipped and live on Google Play and the App Store.",
     ],
     references: [
       { label: "Source repo", href: "https://github.com/shehan-077/Smart-Guardian-Pro" },
       { label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery" },
+      { label: "App Store", href: "https://apps.apple.com/us/app/smart-guardian-family-safety/id6769642500" },
     ],
   },
   {
@@ -388,12 +401,12 @@ const additionalProjects: LightProject[] = [
 const deliverySnapshot = [
   { value: 25, suffix: "+", label: "Shipped repositories" },
   { value: 700, suffix: "+", label: "Commits logged" },
-  { value: 6, suffix: "", label: "Live production apps" },
+  { value: 8, suffix: "", label: "Live production apps" },
 ];
 
 function TechChip({ label }: { label: string }) {
   return (
-    <span className="rounded-md bg-slate-100 px-2 py-1 font-mono text-[11px] text-slate-600">
+    <span className="rounded-full border border-border bg-white px-2.5 py-1 font-mono text-[11px] text-slate-600">
       {label}
     </span>
   );
@@ -475,36 +488,49 @@ export default function Home() {
           {/* Hero — full first screen */}
           <section
             id="about"
-            className="flex min-h-[100svh] scroll-mt-8 flex-col justify-center py-16 lg:min-h-[100svh] lg:py-20"
+            className="relative flex min-h-[100svh] scroll-mt-8 flex-col justify-center overflow-hidden py-16 lg:min-h-[100svh] lg:py-20"
           >
-            <p className="font-mono text-xs uppercase tracking-[0.25em] text-brand-600">
-              Full-Stack Software Engineer
-            </p>
-            <h1 className="mt-4 text-5xl font-semibold leading-[1.02] tracking-tight text-slate-900 sm:text-6xl md:text-7xl">
-              Hemal Herath
-            </h1>
-            <p className="mt-6 max-w-xl text-[15px] leading-7 text-slate-600">
-              I build production-style web and mobile platforms end to end —
-              Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
-              FastAPI on the back, with applied AI layered in where it earns
-              its place.
-            </p>
-            <p className="mt-3 max-w-xl text-sm leading-6 text-slate-500">
-              Live on Google Play, the App Store, and Sri Lanka&apos;s Ministry
-              of Education — what follows is what I&apos;ve actually shipped,
-              not a tech-stack word cloud.
-            </p>
+            <div
+              className="absolute inset-x-0 top-0 -z-10 h-[300px] sm:h-[420px] md:h-[520px]"
+              style={{
+                maskImage: "linear-gradient(to bottom, black 0%, black 45%, transparent 92%)",
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, black 0%, black 45%, transparent 92%)",
+              }}
+            >
+              <HeroBackdrop />
+            </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <CtaLink href="#work" variant="primary">
-                View work
-              </CtaLink>
-              <CtaLink href="/resume.pdf" variant="secondary" external>
-                Download CV
-              </CtaLink>
-              <CtaLink href="#contact" variant="ghost">
-                Contact →
-              </CtaLink>
+            <div className="relative">
+              <p className="inline-flex items-center rounded-full bg-white/70 px-3 py-1 font-mono text-xs uppercase tracking-[0.25em] text-brand-600 shadow-[0_1px_2px_rgba(15,23,42,0.04)] ring-1 ring-brand-500/15">
+                Full-Stack Software Engineer
+              </p>
+              <h1 className="mt-5 text-5xl font-extrabold leading-[1.02] tracking-tight text-slate-900 sm:text-6xl md:text-7xl">
+                Hemal Herath
+              </h1>
+              <p className="mt-6 max-w-xl text-[15px] leading-7 text-slate-600">
+                I build production-style web and mobile platforms end to end —
+                Flutter and Next.js on the front, PHP (CodeIgniter/Laravel) and
+                FastAPI on the back, with applied AI layered in where it earns
+                its place.
+              </p>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">
+                Live on Google Play, the App Store, and Sri Lanka&apos;s Ministry
+                of Education — what follows is what I&apos;ve actually shipped,
+                not a tech-stack word cloud.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <CtaLink href="#work" variant="primary">
+                  View work
+                </CtaLink>
+                <CtaLink href="/resume.pdf" variant="secondary" external>
+                  Download CV
+                </CtaLink>
+                <CtaLink href="#contact" variant="ghost">
+                  Contact →
+                </CtaLink>
+              </div>
             </div>
 
             {/* Marquee */}
@@ -574,13 +600,13 @@ export default function Home() {
                         href={deployment.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex min-h-[44px] items-start justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/50 hover:shadow-[0_10px_24px_-16px_rgba(15,23,42,0.2)]"
+                        className="group flex min-h-[44px] items-start justify-between gap-3 rounded-2xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/50 hover:shadow-[0_10px_24px_-16px_rgba(15,23,42,0.2)]"
                       >
                         <span>{content}</span>
                         <ExternalArrowIcon className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition group-hover:text-brand-600" />
                       </a>
                     ) : (
-                      <div className="flex min-h-[44px] items-start gap-3 rounded-xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+                      <div className="flex min-h-[44px] items-start gap-3 rounded-2xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
                         {content}
                       </div>
                     )}
@@ -702,7 +728,7 @@ export default function Home() {
             <RevealGroup className="mt-6 grid gap-3 sm:grid-cols-2">
               {additionalProjects.map((project) => (
                 <RevealItem key={project.title}>
-                  <div className="rounded-xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/40">
+                  <div className="rounded-2xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition hover:border-brand-500/40">
                     <p className="text-sm font-medium text-slate-800">{project.title}</p>
                     <p className="mt-1 text-xs leading-5 text-slate-500">{project.tagline}</p>
                     <p className="mt-2 font-mono text-[10px] text-slate-400">
