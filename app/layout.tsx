@@ -5,7 +5,7 @@ import "./globals.css";
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -19,19 +19,24 @@ const description =
   "Portfolio of Hemal Herath, a full-stack software engineer building production web and mobile systems with Flutter, Next.js, TypeScript, PHP (CodeIgniter/Laravel), and FastAPI.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3100",
+  ),
   title,
   description,
   openGraph: {
     title,
     description,
     type: "website",
-    images: ["/avatar.png"],
   },
   twitter: {
     card: "summary",
     title,
     description,
-    images: ["/avatar.png"],
   },
 };
 

@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "project": {
+    "name": "portfolio",
+    "productType": null,
+    "stack": [
+      "nextjs",
+      "react",
+      "tailwind-v4"
+    ]
+  },
+  "sources": {
+    "tokens": [
+      "app/globals.css"
+    ],
+    "components": [],
+    "assets": [],
+    "instructions": [
+      "AGENTS.md",
+      "CLAUDE.md"
+    ]
+  },
+  "design": {
+    "colorMode": "light",
+    "colors": {
+      "--background": {
+        "value": "#f4f3ed",
+        "source": "app/globals.css"
+      },
+      "--foreground": {
+        "value": "#172b2b",
+        "source": "app/globals.css"
+      },
+      "--muted": {
+        "value": "#586361",
+        "source": "app/globals.css"
+      },
+      "--border": {
+        "value": "#d7dcd3",
+        "source": "app/globals.css"
+      },
+      "--accent": {
+        "value": "#246052",
+        "source": "app/globals.css"
+      },
+      "--accent-light": {
+        "value": "#dfe9db",
+        "source": "app/globals.css"
+      },
+      "--color-background": {
+        "value": "var(--background)",
+        "source": "app/globals.css"
+      },
+      "--color-foreground": {
+        "value": "var(--foreground)",
+        "source": "app/globals.css"
+      },
+      "--color-muted": {
+        "value": "var(--muted)",
+        "source": "app/globals.css"
+      },
+      "--color-border": {
+        "value": "var(--border)",
+        "source": "app/globals.css"
+      },
+      "--color-card": {
+        "value": "var(--card)",
+        "source": "app/globals.css"
+      }
+    },
+    "typography": {
+      "--font-sans": {
+        "value": "var(--font-plus-jakarta-sans)",
+        "source": "app/globals.css"
+      },
+      "--font-mono": {
+        "value": "var(--font-ibm-plex-mono)",
+        "source": "app/globals.css"
+      }
+    },
+    "spacing": {},
+    "radius": {},
+    "shadows": {},
+    "motion": {},
+    "density": "unknown"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [],
+    "patterns": []
+  },
+  "constraints": {
+    "must": [],
+    "avoid": []
+  },
+  "decisions": [
+    "Warm stone canvas and restrained deep-teal accent; no dark theme, glass, or neon.",
+    "Sticky top navigation with a compact second navigation row on tablet/mobile.",
+    "Project-led hero; four featured case studies, six secondary builds, seven archive entries.",
+    "Project imagery is explicitly illustrative; production URLs and repository references are kept distinct.",
+    "CSS-only restrained hero entrance and hover transforms, disabled for reduced motion; native details preserve no-JavaScript delivery content."
+  ],
+  "evidence": [
+    {
+      "fact": "design.colorMode:light",
+      "source": "app/globals.css"
+    },
+    {
+      "fact": "design.tokens",
+      "source": "app/globals.css"
+    },
+    {
+      "fact": "project.instructions",
+      "source": "AGENTS.md"
+    },
+    {
+      "fact": "project.instructions",
+      "source": "CLAUDE.md"
+    },
+    {
+      "fact": "project.stack:nextjs",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:react",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:tailwind-v4",
+      "source": "package.json"
+    }
+  ],
+  "generatedAt": "2026-10-03T03:15:44.465Z"
+}
