@@ -1,5 +1,6 @@
-import Image from "next/image";
+import { ContactIcon } from "./components/ContactIcon";
 import { EngineerScene } from "./components/EngineerScene";
+import { FeaturedWork } from "./components/FeaturedWork";
 import { TopNav } from "./components/TopNav";
 import {
   ProjectCard,
@@ -24,17 +25,17 @@ const navigation = [
 const skillGroups = [
   {
     title: "Frontend",
-    detail: "Interfaces that feel considered.",
+    detail: "Web interfaces & application architecture",
     skills: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
   },
   {
     title: "Backend",
-    detail: "The systems behind the experience.",
+    detail: "Business logic & API integrations",
     skills: ["PHP", "CodeIgniter / HMVC", "Laravel APIs", "FastAPI"],
   },
   {
     title: "Data & AI",
-    detail: "Useful intelligence, not decoration.",
+    detail: "Documents, retrieval & applied AI",
     skills: [
       "Prisma",
       "MySQL",
@@ -47,7 +48,7 @@ const skillGroups = [
   },
   {
     title: "Mobile & Platform",
-    detail: "One product, across platforms.",
+    detail: "Cross-platform apps & desktop products",
     skills: [
       "Flutter",
       "Dart",
@@ -69,41 +70,34 @@ export default function Home() {
       </a>
       <TopNav links={navigation} profileLinks={profileLinks} />
       <main id="main">
-        <section id="about" className="hero shell">
-          <div className="hero-topline">
-            <span className="eyebrow">Software engineering · Sri Lanka</span>
-            <span className="eyebrow hero-edition">
-              Web / Mobile / Applied AI
-            </span>
-          </div>
-          <div className="hero-grid">
+        <section id="about" className="hero">
+          <div className="hero-grid-background" aria-hidden="true" />
+          <div className="shell hero-inner">
+            <div className="hero-profile">
+              <span className="eyebrow">
+                Hemal Herath / Full-Stack Software Engineer
+              </span>
+              <span className="hero-location">
+                <i className="status-dot" aria-hidden="true" /> Based in Sri
+                Lanka
+              </span>
+            </div>
+            <div className="hero-visual">
+              <EngineerScene />
+            </div>
             <div className="hero-copy">
-              <div className="intro-person">
-                <span className="hello-mark" aria-hidden="true">
-                  ✳
-                </span>
-                <span>
-                  Full-Stack Software Engineer
-                  <br />
-                  <small>Based in Sri Lanka. Building across platforms.</small>
-                </span>
-              </div>
               <h1>
-                Hemal Herath
-                <span>
-                  Software, with
-                  <br />
-                  <em>a human touch.</em>
-                </span>
+                Web & mobile.
+                <br />
+                <em>Built end to end.</em>
               </h1>
               <p className="hero-description">
-                From the interface you touch to the systems you don’t see. I
-                build web, mobile, and applied-AI products—and take them all the
-                way to production.
+                I build production web and mobile systems—from the interface and
+                backend integrations to the release.
               </p>
               <div className="hero-actions">
                 <a className="button primary" href="#work">
-                  Explore my work <span aria-hidden="true">↘</span>
+                  View my work <span aria-hidden="true">↘</span>
                 </a>
                 <a
                   className="button secondary"
@@ -113,37 +107,50 @@ export default function Home() {
                 >
                   Download CV <span aria-hidden="true">↗</span>
                 </a>
-                <a className="hero-contact" href="#contact">
-                  Contact me ↗
+                <a className="text-link" href="#contact">
+                  Contact <span aria-hidden="true">↗</span>
                 </a>
               </div>
-              <div className="hero-proof">
-                <span className="status-dot" />
-                <span>
-                  Deployed on Google Play, the App Store,
-                  <br /> and Sri Lanka’s Ministry of Education platform.
-                </span>
-              </div>
             </div>
-            <EngineerScene />
-          </div>
-          <div className="hero-bottom">
-            <span className="eyebrow">Selected work, real delivery</span>
-            <a href="#work">
-              Scroll to explore <span aria-hidden="true">↓</span>
-            </a>
-            <span className="eyebrow">
-              Built with care. Shipped with intent.
-            </span>
+            <div className="hero-bottom">
+              <a href="#work">
+                <span className="eyebrow">01 / Scroll to explore</span>
+                <span aria-hidden="true">↓</span>
+              </a>
+              <span className="hero-model-note">
+                Real-time 3D · Drag to rotate
+              </span>
+              <span className="hero-platforms">
+                Google Play · App Store · Web
+              </span>
+            </div>
           </div>
         </section>
-        <section id="production" className="production-section">
+        <section className="intro-section shell" aria-labelledby="intro-title">
+          <span className="eyebrow">The work, in context</span>
+          <h2 id="intro-title">
+            Interfaces. Integrations.
+            <br />
+            <span>Production releases.</span>
+          </h2>
+          <p>
+            Flutter and Next.js on the front. CodeIgniter and Laravel API
+            integrations behind them. Document workflows, applied AI, and real
+            deployments—not only source repositories.
+          </p>
+          <div className="intro-proof">
+            <span>Fintech & business systems</span>
+            <span>Cross-platform mobile</span>
+            <span>Applied AI & documents</span>
+          </div>
+        </section>
+        <section id="production" className="production-section section">
           <div className="shell">
             <SectionHeading
-              number="01"
+              number="02"
               label="In production"
-              title="Not just a repository."
-              description="Products you can open, download, and use. These are the live deployments behind the work."
+              title="Live deployments."
+              description="Published apps and operational systems. Open the product, not a mockup."
             />
             <div className="deployment-grid">
               {productionDeployments.map((item) => (
@@ -154,43 +161,46 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="deployment-platform">{item.platform}</span>
-                  <strong>{item.name}</strong>
-                  <span className="deployment-bottom">
-                    <span>
-                      <i className="status-dot" />
-                      Live deployment
-                    </span>
-                    <span aria-hidden="true">↗</span>
-                  </span>
+                  <i className="status-dot" aria-hidden="true" />
+                  <div>
+                    <strong>{item.name}</strong>
+                    <span>{item.platform}</span>
+                  </div>
+                  <span className="deployment-live">Live</span>
+                  <span aria-hidden="true">↗</span>
                 </a>
               ))}
             </div>
           </div>
         </section>
-        <section id="work" className="work-section shell">
+        <section id="work" className="work-section section shell">
           <SectionHeading
-            number="02"
+            number="03"
             label="Selected work"
-            title="Different products. Same care."
-            description="Fintech, mobile AI, document workflows, and education systems. A closer look at what I delivered and how it was built."
+            title="The systems I’ve shipped."
+            description="Four larger builds, from financial operations to multi-platform AI and school administration."
           />
-          <p className="preview-note">
-            Explore the original interactive product studies below. These are
-            visual explanations, not screenshots of the live applications.
-          </p>
-          <div className="featured-list">
-            {featured.map((project, index) => (
+          <FeaturedWork
+            projects={featured.map(
+              ({ slug, title, platforms, tagline, techStack }) => ({
+                slug,
+                title,
+                platforms,
+                summary: tagline,
+                techStack,
+              }),
+            )}
+            rows={featured.map((project, index) => (
               <ProjectCard key={project.slug} project={project} index={index} />
             ))}
-          </div>
+          />
           <div className="more-work-heading">
-            <h3>More systems, more surfaces.</h3>
+            <h3>More engineering work.</h3>
             <span className="eyebrow">
-              {String(more.length).padStart(2, "0")} further builds
+              {String(more.length).padStart(2, "0")} projects
             </span>
           </div>
-          <div className="secondary-grid">
+          <div className="secondary-list">
             {more.map((project, index) => (
               <ProjectCard
                 key={project.slug}
@@ -201,13 +211,13 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <section id="skills" className="skills-section">
+        <section id="skills" className="skills-section section">
           <div className="shell">
             <SectionHeading
-              number="03"
-              label="How I build"
-              title="Across the entire stack."
-              description="Flutter and Next.js on the front. CodeIgniter, Laravel API integrations, and FastAPI behind them. Applied AI where it earns its place."
+              number="04"
+              label="Technical toolkit"
+              title="From client to backend."
+              description="The technologies behind the work above, grouped by responsibility."
             />
             <div className="skills-grid">
               {skillGroups.map((group, index) => (
@@ -215,22 +225,22 @@ export default function Home() {
                   <span className="eyebrow">0{index + 1} /</span>
                   <h3>{group.title}</h3>
                   <p>{group.detail}</p>
-                  <div className="tags">
+                  <ul>
                     {group.skills.map((skill) => (
-                      <span key={skill}>{skill}</span>
+                      <li key={skill}>{skill}</li>
                     ))}
-                  </div>
+                  </ul>
                 </article>
               ))}
             </div>
           </div>
         </section>
-        <section id="extras" className="archive-section shell">
+        <section id="extras" className="archive-section section shell">
           <SectionHeading
-            number="04"
-            label="Project archive"
-            title="A little further down the rabbit hole."
-            description="Research tools, learning experiments, and focused builds. Every one explores a different engineering problem."
+            number="05"
+            label="Additional projects"
+            title="The wider collection."
+            description="Focused builds and research tools. Different problems, with the same hands-on engineering."
           />
           <div className="archive-list">
             {additionalProjects.map((project, index) => (
@@ -251,55 +261,58 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <section id="contact" className="contact-section">
-          <div className="shell contact-grid">
-            <div>
-              <span className="eyebrow">05 / Start a conversation</span>
-              <h2>
-                Good work starts
-                <br />
-                with a <em>hello.</em>
-              </h2>
-              <p>
-                Hiring a software engineer or building a product?
-                <br />
-                Let’s talk about what you have in mind.
-              </p>
-              <a className="contact-email" href="mailto:nuwanhemal@gmail.com">
-                nuwanhemal@gmail.com <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-            <div className="contact-details">
-              <div className="contact-seal" aria-hidden="true">
-                ✳
+        <section id="contact" className="contact-section section">
+          <div className="shell">
+            <div className="contact-grid">
+              <div>
+                <span className="eyebrow">06 / Contact</span>
+                <h2>
+                  Let’s build
+                  <br />
+                  what’s next.
+                </h2>
+                <p>
+                  Hiring a full-stack engineer or building a product?
+                  <br />
+                  Let’s talk about the work.
+                </p>
+                <a className="contact-email" href="mailto:nuwanhemal@gmail.com">
+                  nuwanhemal@gmail.com <span aria-hidden="true">↗</span>
+                </a>
               </div>
-              <strong>Hemal Herath</strong>
-              <span>Full-Stack Software Engineer</span>
-              <span>Polgasowita, Kottawa · Sri Lanka</span>
-              <a href="tel:+94718850419">+94 71 885 0419</a>
-              <div className="social-links">
-                {profileLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    aria-label={link.label}
-                    title={link.label}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                  >
-                    <Image src={link.iconSrc} width={23} height={23} alt="" />
-                  </a>
-                ))}
+              <div className="contact-details">
+                <span className="eyebrow">Get in touch</span>
+                <strong>Hemal Herath</strong>
+                <span>Full-Stack Software Engineer</span>
+                <span>Polgasowita, Kottawa · Sri Lanka</span>
+                <a href="tel:+94718850419">+94 71 885 0419</a>
+                <div className="social-links">
+                  {profileLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      aria-label={link.label}
+                      title={link.label}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                    >
+                      <ContactIcon name={link.label} />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
+            <div className="footer-wordmark" aria-hidden="true">
+              Hemal Herath<span>.</span>
+            </div>
+            <footer className="footer">
+              <span>© {new Date().getFullYear()} Hemal Herath</span>
+              <span>Full-Stack Software Engineer · Sri Lanka</span>
+              <a href="#about">Back to top ↑</a>
+            </footer>
           </div>
         </section>
       </main>
-      <footer className="shell footer">
-        <span>© {new Date().getFullYear()} Hemal Herath</span>
-        <span>Designed with intention. Engineered end to end.</span>
-        <a href="#about">Back to top ↑</a>
-      </footer>
     </>
   );
 }

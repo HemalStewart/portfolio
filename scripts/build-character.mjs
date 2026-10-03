@@ -17,14 +17,14 @@ scene.add(character);
 const materials = Object.fromEntries(
   Object.entries({
     skin: "#e7b58f",
-    jacket: "#ed7e49",
-    trouser: "#4d4269",
-    hair: "#28222a",
-    cream: "#fff3dd",
-    purple: "#ab8fcf",
+    jacket: "#e8e5dc",
+    trouser: "#252c3b",
+    hair: "#252627",
+    cream: "#f6f2e7",
+    purple: "#5270ba",
     dark: "#262838",
     silver: "#deded8",
-    green: "#99dcbd",
+    green: "#abc9ea",
     screen: "#23283d",
     white: "#ffffff",
   }).map(([key, color]) => [
@@ -75,7 +75,7 @@ function limb(name, start, end, radius, material) {
   mesh.castShadow = true;
   character.add(mesh);
 }
-box(character, "Seat", [0, 0.6, -0.1], [1.15, 1.05, 0.9], "purple", 0.12);
+box(character, "Seat", [0, 0.6, -0.1], [1.15, 1.05, 0.9], "silver", 0.12);
 box(
   character,
   "SeatInset",
@@ -229,6 +229,87 @@ for (let i = 0; i < 5; i++)
     i % 2 ? "purple" : "green",
     0.004,
   );
+const system = new THREE.Group();
+system.name = "ProductSurfaces";
+character.add(system);
+const browser = new THREE.Group();
+browser.name = "WebSurface";
+browser.position.set(-1.05, 2.15, -0.72);
+browser.rotation.set(-0.05, 0.16, -0.12);
+system.add(browser);
+box(browser, "BrowserFrame", [0, 0, 0], [1.28, 0.86, 0.085], "silver", 0.06);
+box(
+  browser,
+  "BrowserCanvas",
+  [0, -0.04, 0.05],
+  [1.17, 0.66, 0.035],
+  "cream",
+  0.025,
+);
+for (let i = 0; i < 3; i++)
+  ellipsoid(
+    browser,
+    "WindowDot",
+    [-0.5 + i * 0.1, 0.34, 0.05],
+    [0.025, 0.025, 0.02],
+    i === 0 ? "purple" : "dark",
+  );
+box(
+  browser,
+  "BrowserSidebar",
+  [-0.42, -0.04, 0.075],
+  [0.26, 0.56, 0.025],
+  "dark",
+  0.02,
+);
+for (let i = 0; i < 3; i++)
+  box(
+    browser,
+    "InterfaceLine",
+    [0.11, 0.12 - i * 0.15, 0.08],
+    [0.57 - i * 0.12, 0.034, 0.012],
+    "purple",
+    0.008,
+  );
+const phone = new THREE.Group();
+phone.name = "MobileSurface";
+phone.position.set(1.17, 1.73, -0.15);
+phone.rotation.set(0, -0.25, 0.12);
+system.add(phone);
+box(phone, "PhoneBody", [0, 0, 0], [0.6, 1.12, 0.09], "dark", 0.07);
+box(phone, "PhoneScreen", [0, 0, 0.06], [0.51, 0.99, 0.035], "cream", 0.05);
+box(phone, "PhoneNotch", [0, 0.42, 0.087], [0.2, 0.04, 0.014], "dark", 0.018);
+ellipsoid(phone, "PhoneApp", [0, 0.21, 0.085], [0.105, 0.105, 0.022], "purple");
+for (let i = 0; i < 3; i++)
+  box(
+    phone,
+    "MobileLine",
+    [0, -0.06 - i * 0.11, 0.085],
+    [0.31 - i * 0.04, 0.025, 0.012],
+    "silver",
+    0.008,
+  );
+const dataStack = new THREE.Group();
+dataStack.name = "DataStack";
+dataStack.position.set(-1.1, 0.57, 0.3);
+system.add(dataStack);
+for (let i = 0; i < 3; i++) {
+  box(
+    dataStack,
+    "ServiceLayer",
+    [0, i * 0.17, 0],
+    [0.67, 0.1, 0.59],
+    i === 1 ? "purple" : "silver",
+    0.03,
+  );
+  ellipsoid(
+    dataStack,
+    "ServiceIndicator",
+    [0.25, i * 0.17, 0.31],
+    [0.018, 0.018, 0.012],
+    "green",
+  );
+}
 scene.updateMatrixWorld(true);
 const data = await new GLTFExporter().parseAsync(scene, {
   binary: true,

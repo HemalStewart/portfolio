@@ -1,5 +1,4 @@
 import type { ExternalReference, ProjectExperience } from "../data/portfolio";
-import { ProductStudio } from "./ProductStudio";
 
 export function SectionHeading({
   number,
@@ -72,20 +71,11 @@ export function ProjectCard({
       id={`project-${project.slug}`}
       className={`project project-${project.slug} ${compact ? "project-compact" : "project-featured"}`}
     >
-      <div className="project-visual">
-        <div className="project-visual-heading">
-          <span>
-            {String(index + 1).padStart(2, "0")} /{" "}
-            {categories[project.slug] || project.platforms.join(" + ")}
-          </span>
-          <span aria-hidden="true">↗</span>
-        </div>
-        <ProductStudio slug={project.slug} />
-        <div className="project-visual-footer">
-          <span>{project.platforms.join(" / ")}</span>
-          <span>Product study</span>
-        </div>
-      </div>
+      {compact && (
+        <span className="project-number">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      )}
       <div className="project-copy">
         <span className="eyebrow">
           {categories[project.slug] || project.platforms.join(" / ")}

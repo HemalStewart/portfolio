@@ -15,27 +15,51 @@
     "colorMode": "light",
     "colors": {
       "--background": {
-        "value": "#f7f4ed",
+        "value": "#f2f1ec",
         "source": "app/globals.css"
       },
       "--foreground": {
-        "value": "#28252e",
+        "value": "#181c22",
         "source": "app/globals.css"
       },
       "--muted": {
-        "value": "#69626d",
+        "value": "#62656c",
         "source": "app/globals.css"
       },
       "--border": {
-        "value": "#ded8d4",
+        "value": "#d6d7d1",
+        "source": "app/globals.css"
+      },
+      "--border-ui": {
+        "value": "#8a8f96",
         "source": "app/globals.css"
       },
       "--accent": {
-        "value": "#705098",
+        "value": "#2852b6",
         "source": "app/globals.css"
       },
       "--accent-light": {
-        "value": "#e9dff5",
+        "value": "#e1e8f5",
+        "source": "app/globals.css"
+      },
+      "--card": {
+        "value": "#faf9f4",
+        "source": "app/globals.css"
+      },
+      "--scene-ground": {
+        "value": "#a4abb5",
+        "source": "app/globals.css"
+      },
+      "--scene-rim": {
+        "value": "#c5d5f2",
+        "source": "app/globals.css"
+      },
+      "--contact-background": {
+        "value": "#e2e8ed",
+        "source": "app/globals.css"
+      },
+      "--contact-border": {
+        "value": "#c2ccd4",
         "source": "app/globals.css"
       },
       "--color-background": {
@@ -57,11 +81,19 @@
       "--color-card": {
         "value": "var(--card)",
         "source": "app/globals.css"
+      },
+      "--study-accent": {
+        "value": "#6b878f",
+        "source": "app/globals.css"
       }
     },
     "typography": {
+      "--font-display": {
+        "value": "var(--font-mona-sans)",
+        "source": "app/globals.css"
+      },
       "--font-sans": {
-        "value": "var(--font-plus-jakarta-sans)",
+        "value": "var(--font-mona-sans)",
         "source": "app/globals.css"
       },
       "--font-mono": {
@@ -72,7 +104,12 @@
     "spacing": {},
     "radius": {},
     "shadows": {},
-    "motion": {},
+    "motion": {
+      "--ease-out": {
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "source": "app/globals.css"
+      }
+    },
     "density": "unknown"
   },
   "components": {
@@ -85,13 +122,15 @@
     "avoid": []
   },
   "decisions": [
-    "Warm ivory and charcoal with plum and restrained orange; no dark theme, glassmorphism, or neon.",
-    "Original real-time GLB engineer in the hero, not a raster avatar or third-party character.",
-    "Sticky top navigation; compact second navigation row on tablet/mobile.",
-    "Four distinct interactive product studies, six secondary architecture diagrams, and seven archive entries; all factual content and URLs preserved.",
-    "Product studies are explicitly illustrative, not screenshots of deployed applications. Production links remain separate from source references.",
-    "Rendering is demand-driven, paused offscreen/hidden, and reduced-motion aware. Semantic server-rendered content and text fallback remain usable without WebGL.",
-    "Illustration palettes and physical 3D lighting colors are intentionally local art direction; interface colors use semantic root tokens. 21st review reported informational hardcoded-color notices only."
+    "Light-only warm paper, charcoal, and restrained blue. No dark theme, asterisk logo, copied company identity, or vague human-touch slogan.",
+    "Full-screen editorial hero with Mona Sans and IBM Plex Mono, text-only identity, subtle grid, sticky top navigation, and a quiet numbered chapter rail.",
+    "Original interactive GLB engineer with web, mobile, and backend geometry, Solid/Mesh modes, keyboard/touch rotation, demand-driven rendering, and text fallback. Never a raster avatar.",
+    "Four featured projects use a compact numbered index and one complete case-study panel, with a large interactive product visual above factual delivery details. The index is sticky only on tall desktop screens; tablet/mobile use a two-column selector grid. Six secondary projects and seven archive entries remain compact.",
+    "Consistent borderless monochrome SVG contact icons replace the mixed PNG presentation at the user's request. Original PNG assets and all destinations are preserved.",
+    "All project data, production/source URLs, contact details, and resume are unchanged. Studies are labeled illustrative, not screenshots of deployed applications.",
+    "The supplied company website informed composition and navigation only. It is not a portfolio entry and none of its branding, code, assets, claims, or copy was imported.",
+    "Reduced-motion support, offscreen rendering suspension, visible keyboard focus, safe external links, and at least 44px controls.",
+    "Interface colors use semantic tokens. Illustration palettes and physical lighting retain deliberately local colors; the 21st review reported informational hardcoded-color notices only."
   ],
   "evidence": [
     {
@@ -123,5 +162,5 @@
       "source": "package.json"
     }
   ],
-  "generatedAt": "2026-10-03T04:22:37.490Z"
+  "generatedAt": "2026-10-03T07:35:39.853Z"
 }

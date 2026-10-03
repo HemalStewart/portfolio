@@ -1,140 +1,167 @@
 "use client";
-
 import { useState } from "react";
 
 const transfers = [
   {
     label: "Admin",
-    heading: "One operation. Every moving part.",
+    heading: "Every part of the operation.",
     items: [
       "Remitters & receivers",
       "Branch permissions",
       "Transfers & reporting",
     ],
+    stack: "Next.js / TypeScript",
   },
   {
     label: "Mobile",
     heading: "From onboarding to payment.",
     items: ["KYC & OTP", "Beneficiary management", "Payment flows"],
+    stack: "Flutter / Dart",
   },
   {
     label: "Backend",
-    heading: "A shared system beneath both.",
-    items: ["Controllers", "Service layer", "Models & persistence"],
+    heading: "The shared business logic.",
+    items: [
+      "Controllers & services",
+      "Models & persistence",
+      "Client integrations",
+    ],
+    stack: "PHP / CodeIgniter",
   },
 ];
-const modules: Record<string, string[]> = {
-  Academics: ["Attendance", "Examinations", "Library"],
-  People: ["HR", "Payroll", "Staff records"],
-  Finance: ["Accounting", "Payroll", "Operations"],
-};
-const blueprints: Record<
-  string,
-  { label: string; nodes: string[]; caption: string }
-> = {
-  "smart-guardian-pro": {
-    label: "Connected safety",
-    nodes: ["SOS", "Live location", "Safety circle"],
-    caption: "Location · Notifications · Sessions",
-  },
-  huddle: {
-    label: "A room, without the walls.",
-    nodes: ["Lobby", "Live call", "Recordings"],
-    caption: "Clerk + Stream Video SDK",
-  },
-  "scholar-desktop": {
-    label: "Read. Ask. Understand.",
-    nodes: ["Reader", "AI tutor", "Flashcards"],
-    caption: "Electron · Gemini / OpenAI",
-  },
-  papermind: {
-    label: "Give your documents a voice.",
-    nodes: ["OCR", "Context", "AI conversation"],
-    caption: "Multi-provider routing · Prisma",
-  },
-  "englishmind-ai": {
-    label: "Find your voice.",
-    nodes: ["Speech", "Whisper", "CEFR feedback"],
-    caption: "Cloud API / Offline self-hosted",
-  },
-  "sea-cloud-dalawella": {
-    label: "A place worth discovering.",
-    nodes: ["Discover", "Explore map", "Request a stay"],
-    caption: "Hotel marketing · Reservation flow",
-  },
-};
-
+const modules = [
+  { label: "Academics", items: ["Attendance", "Examinations", "Library"] },
+  { label: "People", items: ["HR", "Payroll", "Attendance"] },
+  { label: "Finance", items: ["Accounting", "Payroll"] },
+];
+function StudyTabs({
+  labels,
+  value,
+  onChange,
+  label,
+}: {
+  labels: string[];
+  value: number;
+  onChange: (value: number) => void;
+  label: string;
+}) {
+  return (
+    <div className="study-tabs" role="group" aria-label={label}>
+      {labels.map((name, i) => (
+        <button
+          type="button"
+          key={name}
+          aria-pressed={value === i}
+          onClick={() => onChange(i)}
+        >
+          {name}
+        </button>
+      ))}
+    </div>
+  );
+}
 export function ProductStudio({ slug }: { slug: string }) {
-  const [tab, setTab] = useState(0);
+  const [view, setView] = useState(0);
   const [scanned, setScanned] = useState(false);
   if (slug === "linkforex")
     return (
       <div className="product-study transfer-study">
-        <span className="study-brand">
-          LinkForex<span>Fintech ecosystem</span>
-        </span>
-        <div
-          className="study-tabs"
-          role="group"
-          aria-label="Explore LinkForex surfaces"
-        >
-          {transfers.map((item, i) => (
-            <button
-              key={item.label}
-              type="button"
-              aria-pressed={tab === i}
-              onClick={() => setTab(i)}
-            >
-              {item.label}
-            </button>
-          ))}
+        <div className="study-label">
+          <span>LinkForex</span>
+          <span>Fintech / 3 surfaces</span>
         </div>
-        <div className="transfer-paper">
-          <div className="paper-top">
-            <span className="tiny-mark">LF</span>
-            <span>System overview / {transfers[tab].label}</span>
-            <i aria-hidden="true">↗</i>
+        <div className="transfer-composition">
+          <div className="system-spine" aria-hidden="true">
+            <span>WEB</span>
+            <i />
+            <span>API</span>
+            <i />
+            <span>APP</span>
           </div>
-          <p className="study-title">{transfers[tab].heading}</p>
-          <div className="transfer-rows">
-            {transfers[tab].items.map((item, i) => (
-              <div key={item}>
-                <span className="node-number">0{i + 1}</span>
-                <span>{item}</span>
-                <span aria-hidden="true">↗</span>
+          <div className="transfer-window">
+            <div className="window-bar">
+              <span className="window-dots" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
+              <span>LinkForex / {transfers[view].label}</span>
+              <span aria-hidden="true">↗</span>
+            </div>
+            <div className="transfer-content">
+              <span className="eyebrow">End-to-end remittance system</span>
+              <p className="study-title">{transfers[view].heading}</p>
+              <div className="transfer-rows">
+                {transfers[view].items.map((item, i) => (
+                  <div key={item}>
+                    <span>0{i + 1}</span>
+                    <strong>{item}</strong>
+                    <span aria-hidden="true">↗</span>
+                  </div>
+                ))}
               </div>
-            ))}
+              <div className="window-foot">
+                <span>{transfers[view].stack}</span>
+                <span>Admin ↔ Backend ↔ Mobile</span>
+              </div>
+            </div>
           </div>
-          <div className="paper-foot">
-            Next.js <span>↔</span> CodeIgniter <span>↔</span> Flutter
-          </div>
+          <span className="system-badge">
+            Shared backend.
+            <br />
+            Connected clients.
+          </span>
         </div>
-        <span className="study-sticker">
-          Designed to
-          <br />
-          work together.
-        </span>
-        <span className="study-caption">
-          Interactive system study · not live application UI
-        </span>
+        <StudyTabs
+          labels={transfers.map((item) => item.label)}
+          value={view}
+          onChange={setView}
+          label="Explore LinkForex surfaces"
+        />
+        <p className="study-caption">
+          Interactive architecture study · not live application UI
+        </p>
       </div>
     );
   if (slug === "chatsoul-ai")
     return (
       <div className="product-study chat-study">
-        <span className="study-brand">
-          ChatSoul <em>/</em> VibeChat
-          <span>One codebase. Three platforms.</span>
-        </span>
-        <div className="phone-composition">
-          <div className="phone-device">
-            <div className="phone-notch" />
-            <div className="phone-title">
-              <span className="chat-orb" />
-              {tab === 0 ? "A little conversation." : "Your wallet."}
+        <div className="study-label">
+          <span>ChatSoul / VibeChat</span>
+          <span>Android · iOS · Web</span>
+        </div>
+        <div className="chat-composition">
+          <div className="platform-column" aria-hidden="true">
+            <span>
+              One Flutter
+              <br />
+              codebase.
+            </span>
+            <strong>3</strong>
+            <span>platforms</span>
+            <div>
+              Android
+              <br />
+              iOS
+              <br />
+              Web
             </div>
-            {tab === 0 ? (
+          </div>
+          <div className="phone-device">
+            <div className="phone-notch" aria-hidden="true" />
+            <div className="phone-header">
+              <span className="chat-orb" aria-hidden="true">
+                AI
+              </span>
+              <span>
+                ChatSoul<span>Feature overview</span>
+              </span>
+            </div>
+            {view === 0 ? (
               <div className="phone-messages">
+                <span className="phone-section-label">
+                  Conversation & discovery
+                </span>
                 <p className="chat-message mine">A fresh perspective?</p>
                 <p className="chat-message">Let’s make room for one.</p>
                 <div className="chat-suggestions">
@@ -142,70 +169,58 @@ export function ProductStudio({ slug }: { slug: string }) {
                   <span>Connect</span>
                 </div>
                 <div className="message-input">
-                  Start a conversation <span>↑</span>
+                  Example conversation<span aria-hidden="true">↑</span>
                 </div>
               </div>
             ) : (
               <div className="wallet-study">
-                <span>Wallet & subscriptions</span>
-                <strong>
+                <span className="phone-section-label">
+                  Wallet & subscriptions
+                </span>
+                <p>
                   A connected
                   <br />
                   experience.
-                </strong>
-                <div>Wallet</div>
-                <div>Subscriptions</div>
-                <div>Referrals</div>
+                </p>
+                {["Wallet", "Subscriptions", "Referrals"].map((item, i) => (
+                  <div key={item}>
+                    <span aria-hidden="true">0{i + 1}</span>
+                    {item}
+                    <span aria-hidden="true">↗</span>
+                  </div>
+                ))}
               </div>
             )}
-            <span className="phone-demo-label">Illustrative product study</span>
-          </div>
-          <div className="platform-ticket">
-            <span>Built once.</span>
-            <strong>
-              Android
-              <br />
-              iOS
-              <br />
-              Web
-            </strong>
-            <span>Flutter + backend APIs</span>
+            <span className="phone-demo-label">Illustrative feature study</span>
           </div>
         </div>
-        <div
-          className="study-tabs chat-switch"
-          role="group"
-          aria-label="Explore ChatSoul features"
-        >
-          {["Conversation", "Wallet"].map((label, i) => (
-            <button
-              key={label}
-              type="button"
-              aria-pressed={tab === i}
-              onClick={() => setTab(i)}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-        <span className="study-caption">
+        <StudyTabs
+          labels={["Conversation", "Wallet"]}
+          value={view}
+          onChange={setView}
+          label="Explore ChatSoul features"
+        />
+        <p className="study-caption">
           Interactive product study · not live application UI
-        </span>
+        </p>
       </div>
     );
   if (slug === "writescan")
     return (
       <div className="product-study scan-study">
-        <span className="study-brand">
-          WriteScan<span>From paper to possibility.</span>
-        </span>
+        <div className="study-label">
+          <span>WriteScan</span>
+          <span>Documents / Mobile AI</span>
+        </div>
         <div className={`scanner-composition ${scanned ? "is-scanned" : ""}`}>
           <div className="scan-paper">
             <span className="paper-kicker">SAMPLE DOCUMENT / 01</span>
             <p className="study-title">
-              Ideas don’t
+              Scan.
               <br />
-              belong on paper.
+              Extract.
+              <br />
+              Use the text.
             </p>
             <p>
               Capture the thought.
@@ -219,9 +234,11 @@ export function ProductStudio({ slug }: { slug: string }) {
               <i />
               <i />
             </div>
-            <span className="paper-signature">Notes, made useful.</span>
+            <span className="paper-signature">Text / Handwriting / CSV</span>
           </div>
-          <div className="scan-brackets" aria-hidden="true" />
+          <div className="scan-brackets" aria-hidden="true">
+            <span>Document boundary</span>
+          </div>
           <div className="extracted-paper" aria-hidden={!scanned}>
             <span>Extracted text</span>
             <p>
@@ -231,98 +248,78 @@ export function ProductStudio({ slug }: { slug: string }) {
               <br />
               Keep it close.
             </p>
-            <small>Illustrative OCR result</small>
+            <small>Illustrative extraction result</small>
           </div>
         </div>
         <div className="scanner-toolbar">
-          <span>ML Kit / SQLite</span>
+          <span>
+            ML Kit / SQLite
+            <br />
+            Offline-first storage
+          </span>
           <button
             type="button"
-            onClick={() => setScanned(!scanned)}
             aria-pressed={scanned}
+            onClick={() => setScanned(!scanned)}
           >
-            {scanned ? "Reset study ↶" : "Try the scan study ↗"}
+            {scanned ? "Reset study" : "Try extraction"}
+            <span aria-hidden="true">{scanned ? "↶" : "↗"}</span>
           </button>
         </div>
-        <span className="study-caption">
-          Illustrative workflow · no document upload or AI request
-        </span>
+        <p className="study-caption">
+          Illustrative workflow · no upload or AI request
+        </p>
       </div>
     );
   if (slug === "pdms")
     return (
       <div className="product-study school-study">
-        <span className="study-brand">
-          PDMS<span>The school behind the school.</span>
-        </span>
+        <div className="study-label">
+          <span>PDMS</span>
+          <span>Education / Operations</span>
+        </div>
         <div className="school-window">
-          <div className="school-window-bar">
+          <div className="window-bar">
+            <span className="window-dots" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
             <span>School operations</span>
-            <span aria-hidden="true">•••</span>
+            <span aria-hidden="true">↗</span>
           </div>
-          <p className="study-title">
-            Many departments.
-            <br />
-            One connected platform.
-          </p>
-          <div
-            className="study-tabs"
-            role="group"
-            aria-label="Explore PDMS modules"
-          >
-            {Object.keys(modules).map((label, i) => (
-              <button
-                key={label}
-                type="button"
-                aria-pressed={tab === i}
-                onClick={() => setTab(i)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-          <div className="module-tiles">
-            {modules[Object.keys(modules)[tab]].map((item, i) => (
-              <div key={item}>
-                <span aria-hidden="true">{["▥", "◷", "▤"][i]}</span>
-                <strong>{item}</strong>
-                <small>HMVC module</small>
-              </div>
-            ))}
-          </div>
-          <div className="school-window-foot">
-            CodeIgniter / HMVC <span>Ministry of Education, Sri Lanka</span>
+          <div className="school-content">
+            <span className="eyebrow">A modular HMVC platform</span>
+            <p className="study-title">
+              Many departments.
+              <br />
+              One connected system.
+            </p>
+            <StudyTabs
+              labels={modules.map((item) => item.label)}
+              value={view}
+              onChange={setView}
+              label="Explore PDMS modules"
+            />
+            <div className="module-tiles">
+              {modules[view].items.map((item, i) => (
+                <div key={item}>
+                  <span aria-hidden="true">0{i + 1}</span>
+                  <strong>{item}</strong>
+                  <small>HMVC module</small>
+                </div>
+              ))}
+            </div>
+            <div className="window-foot">
+              <span>CodeIgniter / HMVC</span>
+              <span>Ministry of Education, Sri Lanka</span>
+            </div>
           </div>
         </div>
-        <span className="study-caption">
+        <p className="study-caption">
           Interactive module study · not live application UI
-        </span>
+        </p>
       </div>
     );
-  const item = blueprints[slug];
-  if (!item) return null;
-  return (
-    <div className={`product-study blueprint-study blueprint-${slug}`}>
-      <span className="blueprint-kicker">
-        Product architecture / illustrative
-      </span>
-      <p className="study-title">{item.label}</p>
-      <div className="blueprint-path">
-        {item.nodes.map((node, i) => (
-          <div key={node}>
-            <span className="blueprint-node">
-              <i aria-hidden="true">{["◌", "◇", "↗"][i]}</i>
-              {node}
-            </span>
-            {i < 2 && (
-              <span className="blueprint-connector" aria-hidden="true">
-                →
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
-      <span className="blueprint-caption">{item.caption}</span>
-    </div>
-  );
+  return null;
 }

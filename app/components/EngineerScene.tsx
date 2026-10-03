@@ -7,10 +7,12 @@ export function EngineerScene() {
   const controller = useRef<{
     rotate: (delta: number) => void;
     reset: () => void;
+    wireframe: (enabled: boolean) => void;
   } | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "fallback">(
     "loading",
   );
+  const [meshView, setMeshView] = useState(false);
   useEffect(() => {
     let disposed = false;
     let cleanup = () => {};
@@ -43,7 +45,14 @@ export function EngineerScene() {
       const camera = new T.PerspectiveCamera(34, 1, 0.1, 50);
       camera.position.set(3.1, 2.65, 5.8);
       camera.lookAt(0, 1.5, 0);
-      scene.add(new T.HemisphereLight("#ffffff", "#a49cae", 2.4));
+      const palette = getComputedStyle(element);
+      scene.add(
+        new T.HemisphereLight(
+          "#ffffff",
+          palette.getPropertyValue("--scene-ground").trim(),
+          2.4,
+        ),
+      );
       const key = new T.DirectionalLight("#fff1df", 4);
       key.position.set(-3, 6, 4);
       key.castShadow = true;
@@ -54,12 +63,15 @@ export function EngineerScene() {
       key.shadow.camera.bottom = -2;
       key.shadow.normalBias = 0.03;
       scene.add(key);
-      const fill = new T.DirectionalLight("#cbb9f8", 2);
+      const fill = new T.DirectionalLight(
+        palette.getPropertyValue("--scene-rim").trim(),
+        2,
+      );
       fill.position.set(3, 4, -2);
       scene.add(fill);
       const ground = new T.Mesh(
         new T.PlaneGeometry(20, 20),
-        new T.ShadowMaterial({ opacity: 0.1 }),
+        new T.ShadowMaterial({ opacity: 0.06 }),
       );
       ground.rotation.x = -Math.PI / 2;
       ground.position.y = 0.02;
@@ -171,6 +183,22 @@ export function EngineerScene() {
       document.addEventListener("visibilitychange", onVisibility);
       reduced.addEventListener("change", invalidate);
       controller.current = {
+        wireframe: (enabled) => {
+          model?.traverse((object) => {
+            if (object instanceof T.Mesh) {
+              const list = Array.isArray(object.material)
+                ? object.material
+                : [object.material];
+              list.forEach((material) => {
+                if (material instanceof T.MeshStandardMaterial)
+                  material.wireframe = enabled;
+              });
+            }
+          });
+          renderer.shadowMap.enabled = !enabled;
+          ground.visible = !enabled;
+          invalidate();
+        },
         rotate: (delta) => {
           target += delta;
           invalidate();
@@ -259,15 +287,11 @@ export function EngineerScene() {
   }, []);
   return (
     <div className="engineer-scene" data-status={status}>
-      <div className="scene-orbit" aria-hidden="true" />
-      <span className="scene-word" aria-hidden="true">
-        BUILD.
-      </span>
       <div
         ref={mount}
         className="scene-canvas"
         role="img"
-        aria-label="Original interactive 3D engineer wearing headphones, seated with a laptop"
+        aria-label="Interactive 3D engineer with a laptop, web interface, mobile device, and backend layers"
       />
       {status !== "ready" && (
         <div className="scene-fallback">
@@ -283,13 +307,39 @@ export function EngineerScene() {
           </noscript>
         </div>
       )}
-      <span className="scene-badge">
-        A little curiosity.
-        <br />
-        <strong>A lot of engineering.</strong>
+      <span
+        className="scene-annotation scene-annotation-web"
+        aria-hidden="true"
+      >
+        01 / Web
+      </span>
+      <span
+        className="scene-annotation scene-annotation-mobile"
+        aria-hidden="true"
+      >
+        02 / Mobile
       </span>
       <div className="scene-controls">
-        <span>Explore the model</span>
+        <div
+          className="scene-modes"
+          role="group"
+          aria-label="3D model display mode"
+        >
+          {[false, true].map((mesh) => (
+            <button
+              key={String(mesh)}
+              type="button"
+              disabled={status !== "ready"}
+              aria-pressed={meshView === mesh}
+              onClick={() => {
+                setMeshView(mesh);
+                controller.current?.wireframe(mesh);
+              }}
+            >
+              {mesh ? "Mesh" : "Solid"}
+            </button>
+          ))}
+        </div>
         <button
           type="button"
           disabled={status !== "ready"}
