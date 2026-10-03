@@ -24,11 +24,10 @@ export type LightProject = {
 };
 
 export type ProfileLink = {
-  label: string;
+  label: "GitHub" | "LinkedIn" | "Email" | "Phone" | "CV";
   href: string;
-  iconSrc: string;
-  /** Dark-on-transparent logos (e.g. GitHub) need inverting on the dark theme. */
-  invertOnDark?: boolean;
+  /** Human-readable form of the link, e.g. the address or handle. */
+  display: string;
   external?: boolean;
 };
 
@@ -37,13 +36,21 @@ export type ProductionDeployment = {
   platform: string;
   href?: string;
   note?: string;
+  /** Slug of the matching case study in `selectedProjects`. */
+  project: string;
+};
+
+export type SkillGroup = {
+  title: string;
+  detail: string;
+  skills: string[];
 };
 
 export const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Production", href: "#production" },
+  { label: "Releases", href: "#releases" },
   { label: "Work", href: "#work" },
-  { label: "Projects", href: "#extras" },
+  { label: "Stack", href: "#stack" },
+  { label: "Side branches", href: "#side-branches" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -66,30 +73,29 @@ export const profileLinks: ProfileLink[] = [
   {
     label: "GitHub",
     href: "https://github.com/HemalStewart",
-    iconSrc: "/icons/github.png",
-    invertOnDark: true,
+    display: "github.com/HemalStewart",
     external: true,
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/hemal-herath-24a896131/",
-    iconSrc: "/icons/linkedin.png",
+    display: "in/hemal-herath",
     external: true,
   },
   {
     label: "Email",
     href: "mailto:nuwanhemal@gmail.com",
-    iconSrc: "/icons/email.png",
+    display: "nuwanhemal@gmail.com",
   },
   {
     label: "Phone",
     href: "tel:+94718850419",
-    iconSrc: "/icons/phone.png",
+    display: "+94 71 885 0419",
   },
   {
     label: "CV",
     href: "/resume.pdf",
-    iconSrc: "/icons/cv.png",
+    display: "resume.pdf",
     external: true,
   },
 ];
@@ -99,41 +105,87 @@ export const productionDeployments: ProductionDeployment[] = [
     name: "VibeChat AI",
     platform: "Android",
     href: "https://play.google.com/store/apps/details?id=com.appmixer.vibechatai",
+    project: "chatsoul-ai",
   },
   {
     name: "VibeChat AI",
     platform: "iOS",
     href: "https://apps.apple.com/us/app/vibechat-ai-vibe-your-chat/id6782503745",
+    project: "chatsoul-ai",
   },
   {
     name: "WriteScan",
     platform: "Android",
     href: "https://play.google.com/store/apps/details?id=com.appmixer.writescan",
+    project: "writescan",
   },
   {
     name: "ChatSoul AI",
     platform: "Web",
     href: "https://chatsoulai.com/",
+    project: "chatsoul-ai",
   },
   {
     name: "ChatSoul AI",
     platform: "iOS",
     href: "https://apps.apple.com/us/app/chatsoul-ai/id6756913536",
+    project: "chatsoul-ai",
   },
   {
     name: "PDMS",
     platform: "Ministry of Education, Sri Lanka",
     href: "https://pdms.moe.gov.lk/",
+    project: "pdms",
   },
   {
     name: "Smart Guardian Pro",
     platform: "Android",
     href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery",
+    project: "smart-guardian-pro",
   },
   {
     name: "Smart Guardian Pro",
     platform: "iOS",
     href: "https://apps.apple.com/us/app/smart-guardian-family-safety/id6769642500",
+    project: "smart-guardian-pro",
+  },
+];
+
+export const skillGroups: SkillGroup[] = [
+  {
+    title: "Frontend",
+    detail: "Web interfaces & application architecture",
+    skills: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+  },
+  {
+    title: "Backend",
+    detail: "Business logic & API integrations",
+    skills: ["PHP", "CodeIgniter / HMVC", "Laravel APIs", "FastAPI"],
+  },
+  {
+    title: "Data & AI",
+    detail: "Documents, retrieval & applied AI",
+    skills: [
+      "Prisma",
+      "MySQL",
+      "SQLite",
+      "OpenAI / Gemini",
+      "RAG",
+      "Whisper",
+      "ML Kit",
+    ],
+  },
+  {
+    title: "Mobile & Platform",
+    detail: "Cross-platform apps & desktop products",
+    skills: [
+      "Flutter",
+      "Dart",
+      "Riverpod",
+      "GoRouter",
+      "Electron",
+      "Stream Video SDK",
+    ],
   },
 ];
 
@@ -447,3 +499,25 @@ export const additionalProjects: LightProject[] = [
     },
   },
 ];
+
+export type Release = {
+  name: string;
+  project: string;
+  deployments: ProductionDeployment[];
+};
+
+/** Production deployments grouped per product, in first-seen order. */
+export const releases: Release[] = productionDeployments.reduce<Release[]>(
+  (groups, deployment) => {
+    const existing = groups.find((group) => group.name === deployment.name);
+    if (existing) existing.deployments.push(deployment);
+    else
+      groups.push({
+        name: deployment.name,
+        project: deployment.project,
+        deployments: [deployment],
+      });
+    return groups;
+  },
+  [],
+);
