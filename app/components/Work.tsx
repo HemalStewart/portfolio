@@ -1,6 +1,8 @@
 import Image from "next/image";
 import type { ExternalReference, ProjectExperience } from "../data/portfolio";
 import { ArrowIcon } from "./icons";
+import { DiffToggle } from "./motion/DiffToggle";
+import { Spotlight } from "./motion/Spotlight";
 
 export function SectionHead({
   id,
@@ -60,15 +62,30 @@ function Screenshot({
   project: ProjectExperience;
   sizes: string;
 }) {
+  if (project.screenshot === false)
+    return (
+      <div className="shot shot-placeholder" aria-hidden="true">
+        <div className="placeholder-window">
+          <span className="placeholder-bar">
+            <i />
+            <i />
+            <i />
+          </span>
+          <strong>{project.initials}</strong>
+          <code>{project.platforms.join(" · ")} · sign-in required</code>
+        </div>
+      </div>
+    );
   return (
     <div className="shot">
       <Image
-        src={`/projects/${project.slug}.png`}
-        alt={`${project.title} interface preview`}
+        src={`/projects/${project.slug}.webp`}
+        alt={`Illustrative preview of ${project.title}`}
         width={1586}
         height={1003}
         sizes={sizes}
       />
+      <span className="shot-label">illustrative preview</span>
     </div>
   );
 }
@@ -106,6 +123,7 @@ export function FeaturedCase({
       className="case reveal"
       aria-labelledby={`${project.slug}-title`}
     >
+      <Spotlight size={520} />
       <Screenshot
         project={project}
         sizes="(max-width: 900px) calc(100vw - 32px), 680px"
@@ -148,6 +166,7 @@ export function ProjectCard({ project }: { project: ProjectExperience }) {
       className="card reveal"
       aria-labelledby={`${project.slug}-title`}
     >
+      <Spotlight />
       <Screenshot
         project={project}
         sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1080px) 46vw, 380px"
@@ -159,15 +178,7 @@ export function ProjectCard({ project }: { project: ProjectExperience }) {
       <h3 id={`${project.slug}-title`}>{project.title}</h3>
       <p className="card-tagline">{project.tagline}</p>
       <Chips items={project.platforms} />
-      <details className="card-details">
-        <summary>
-          <span>View diff</span>
-          <span className="summary-count" aria-hidden="true">
-            +{project.highlights.length}
-          </span>
-        </summary>
-        <Diff lines={project.highlights} />
-      </details>
+      <DiffToggle lines={project.highlights} />
       <p className="stack-line">
         <span className="sr-only">Stack: </span>
         {project.techStack.join(" / ")}

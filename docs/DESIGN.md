@@ -57,9 +57,11 @@ command as the eyebrow (e.g. `$ git tag --list`).
 3. **Releases** — production deployments grouped per product with store/web links.
 4. **Merged branches** — four featured case studies (screenshot, highlights,
    stack, references) then six more projects in a compact grid.
-5. **Stack** — skill groups + the tech marquee.
-6. **Side branches** — additional projects as a log list.
-7. **Open a PR** — contact: email, phone, LinkedIn, GitHub, CV. Footer.
+5. **Experience** — roles from the CV as a `git log` timeline, with education and
+   recognition (IEEE paper, competitions) in a side panel.
+6. **Stack** — skill groups + the tech marquee.
+7. **Side branches** — additional projects as a log list.
+8. **Open a PR** — contact: email, phone, LinkedIn, GitHub, CV. Footer.
 
 ## Motion
 
@@ -72,8 +74,9 @@ All CSS, no animation library, no WebGL:
 - marquee is a transform-only CSS loop;
 - everything is disabled under `prefers-reduced-motion: reduce`.
 
-No JavaScript runs for the visuals: there are no client components and the
-page is fully static.
+No JavaScript runs for the visuals; the only client component is the contact
+section's copy-email button. The page is fully static, with an automatic dark
+theme via `prefers-color-scheme`.
 
 ## Performance & accessibility budget
 

@@ -1,4 +1,4 @@
-import { releases } from "../data/portfolio";
+import { formatDownloads, releases } from "../data/portfolio";
 
 const branchColors = [
   "var(--tea)",
@@ -29,6 +29,10 @@ export function BranchGraph() {
           const platforms = release.deployments.map((d) =>
             d.platform.startsWith("Ministry") ? "Web" : d.platform,
           );
+          const downloads = release.deployments.reduce(
+            (sum, d) => sum + (d.downloads ?? 0),
+            0,
+          );
           return (
             <li
               key={release.name}
@@ -46,7 +50,6 @@ export function BranchGraph() {
                 aria-hidden="true"
                 focusable="false"
               >
-                <path className="graph-main" d="M14 0V76" pathLength={1} />
                 <path
                   className="graph-branch"
                   d="M14 70C14 56 40 58 40 44V34C40 20 14 22 14 10"
@@ -66,6 +69,12 @@ export function BranchGraph() {
                 <strong>{release.name}</strong>
                 <span className="graph-platforms">
                   {[...new Set(platforms)].join(" · ")}
+                  {downloads ? (
+                    <span className="graph-downloads">
+                      {" "}
+                      · {formatDownloads(downloads)} downloads
+                    </span>
+                  ) : null}
                 </span>
               </div>
             </li>

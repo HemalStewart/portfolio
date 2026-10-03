@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { releases } from "./data/portfolio";
+import { formatDownloads, releases, totalDownloads } from "./data/portfolio";
 
 export const alt = "Hemal Herath — Software Engineer · Mobile, Web & AI";
 export const size = { width: 1200, height: 630 };
@@ -72,6 +72,17 @@ export default function OpenGraphImage() {
           </div>
           <div style={{ fontSize: 34, marginTop: 28, color: "#4f5e55" }}>
             Software engineer · mobile, web & AI · Colombo
+          </div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 30,
+              marginTop: 14,
+              color: "#0e5a43",
+            }}
+          >
+            {formatDownloads(totalDownloads)} Play Store downloads ·{" "}
+            {releases.length} live products
           </div>
         </div>
       </div>

@@ -1,5 +1,8 @@
-import Image from "next/image";
 import { BranchGraph } from "./components/BranchGraph";
+import { CopyButton } from "./components/CopyButton";
+import { Magnetic } from "./components/motion/Magnetic";
+import { NumberTicker } from "./components/motion/NumberTicker";
+import { ScrollProgress } from "./components/motion/ScrollProgress";
 import { ArrowIcon, LinkIcon } from "./components/icons";
 import {
   FeaturedCase,
@@ -9,6 +12,9 @@ import {
 } from "./components/Work";
 import {
   additionalProjects,
+  education,
+  experience,
+  recognition,
   marqueeItems,
   navLinks,
   productionDeployments,
@@ -16,6 +22,8 @@ import {
   releases,
   selectedProjects,
   skillGroups,
+  totalDownloads,
+  formatDownloads,
 } from "./data/portfolio";
 
 const email = profileLinks.find((link) => link.label === "Email")!;
@@ -47,15 +55,18 @@ export default function Home() {
               ))}
             </ul>
           </nav>
-          <a
-            className="button button-small"
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            CV <ArrowIcon />
-          </a>
+          <Magnetic strength={0.25}>
+            <a
+              className="button button-small"
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              CV <ArrowIcon />
+            </a>
+          </Magnetic>
         </div>
+        <ScrollProgress />
       </header>
 
       <main id="main">
@@ -64,15 +75,18 @@ export default function Home() {
           <div className="shell hero-grid">
             <div className="hero-copy">
               <div className="commit-head">
-                <Image
-                  className="avatar"
-                  src="/avatar.png"
-                  alt="Portrait of Hemal Herath"
-                  width={72}
-                  height={72}
-                  sizes="72px"
-                  preload
-                />
+                <span className="monogram" aria-hidden="true">
+                  <svg viewBox="0 0 72 72" focusable="false">
+                    <path className="monogram-rail" d="M24 8v56" />
+                    <path
+                      className="monogram-branch"
+                      d="M24 52c0-12 24-10 24-22V22"
+                    />
+                    <circle className="monogram-node" cx="24" cy="12" r="5" />
+                    <circle className="monogram-tip" cx="48" cy="20" r="5" />
+                    <circle className="monogram-node" cx="24" cy="60" r="5" />
+                  </svg>
+                </span>
                 <dl>
                   <div>
                     <dt>commit</dt>
@@ -111,12 +125,16 @@ export default function Home() {
               </p>
 
               <div className="hero-actions">
-                <a className="button" href={email.href}>
-                  Hire me <ArrowIcon direction="right" />
-                </a>
-                <a className="button button-ghost" href="#work">
-                  See the work <ArrowIcon direction="down" />
-                </a>
+                <Magnetic>
+                  <a className="button" href={email.href}>
+                    Hire me <ArrowIcon direction="right" />
+                  </a>
+                </Magnetic>
+                <Magnetic>
+                  <a className="button button-ghost" href="#work">
+                    See the work <ArrowIcon direction="down" />
+                  </a>
+                </Magnetic>
                 <a
                   className="text-link"
                   href="/resume.pdf"
@@ -130,15 +148,31 @@ export default function Home() {
               <dl className="hero-facts">
                 <div>
                   <dt>Live products</dt>
-                  <dd>{releases.length}</dd>
+                  <dd>
+                    <NumberTicker value={releases.length} />
+                  </dd>
+                </div>
+                <div>
+                  <dt>Play Store downloads</dt>
+                  <dd>
+                    <NumberTicker
+                      value={parseInt(formatDownloads(totalDownloads), 10)}
+                      suffix={formatDownloads(totalDownloads).replace(
+                        /^\d+/,
+                        "",
+                      )}
+                    />
+                  </dd>
                 </div>
                 <div>
                   <dt>Store & web releases</dt>
-                  <dd>{productionDeployments.length}</dd>
+                  <dd>
+                    <NumberTicker value={productionDeployments.length} />
+                  </dd>
                 </div>
                 <div>
-                  <dt>Case studies</dt>
-                  <dd>{selectedProjects.length}</dd>
+                  <dt>First commit</dt>
+                  <dd>{experience[experience.length - 1].start.slice(0, 4)}</dd>
                 </div>
               </dl>
             </div>
@@ -169,6 +203,17 @@ export default function Home() {
                   <div className="release-name">
                     <span className="tag">live</span>
                     <h3>{release.name}</h3>
+                    {release.deployments.some((d) => d.downloads) ? (
+                      <span className="release-stat">
+                        {formatDownloads(
+                          release.deployments.reduce(
+                            (sum, d) => sum + (d.downloads ?? 0),
+                            0,
+                          ),
+                        )}{" "}
+                        downloads
+                      </span>
+                    ) : null}
                   </div>
                   <ul
                     className="release-links"
@@ -227,6 +272,81 @@ export default function Home() {
               {more.map((project) => (
                 <ProjectCard key={project.slug} project={project} />
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Experience */}
+        <section
+          id="experience"
+          className="section"
+          aria-labelledby="experience-title"
+        >
+          <div className="shell">
+            <SectionHead
+              id="experience-title"
+              command='git log --author="Hemal Herath"'
+              title="Experience."
+              description="From a Laravel and React internship in 2017 to owning full-stack delivery for government and product clients."
+            />
+            <div className="experience-grid">
+              <ol className="timeline">
+                {experience.map((item) => (
+                  <li key={item.start} className="timeline-item reveal">
+                    <span className="timeline-node" aria-hidden="true" />
+                    <p className="timeline-meta">
+                      <time dateTime={item.start}>{item.period}</time>
+                      {item.current ? (
+                        <span className="tag tag-head">HEAD</span>
+                      ) : null}
+                    </p>
+                    <h3>{item.role}</h3>
+                    <p className="timeline-org">{item.org}</p>
+                    <ul className="timeline-points">
+                      {item.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ol>
+              <aside
+                className="credentials"
+                aria-label="Education and recognition"
+              >
+                <section
+                  className="credential reveal"
+                  aria-labelledby="education-title"
+                >
+                  <code className="command">
+                    <span aria-hidden="true">$ </span>cat education.md
+                  </code>
+                  <h3 id="education-title">{education.degree}</h3>
+                  <p>{education.school}</p>
+                  <p className="credential-period">{education.period}</p>
+                </section>
+                <section
+                  className="credential reveal"
+                  aria-labelledby="recognition-title"
+                >
+                  <code className="command">
+                    <span aria-hidden="true">$ </span>git tag --list
+                    &apos;award/*&apos;
+                  </code>
+                  <h3 id="recognition-title">Recognition</h3>
+                  <ul className="recognition">
+                    {recognition.map((item) => (
+                      <li key={item.title}>
+                        <strong>{item.title}</strong>
+                        <span>
+                          {item.detail}
+                          {item.year ? ` · ${item.year}` : ""}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              </aside>
             </div>
           </div>
         </section>
@@ -327,10 +447,13 @@ export default function Home() {
               full-time roles and contract work — let&apos;s talk about what
               you&apos;re shipping.
             </p>
-            <a className="contact-email" href={email.href}>
-              {email.display}
-              <ArrowIcon />
-            </a>
+            <div className="contact-email-row">
+              <a className="contact-email" href={email.href}>
+                {email.display}
+                <ArrowIcon />
+              </a>
+              <CopyButton value={email.display} label="Copy email" />
+            </div>
             <ul className="contact-links">
               {profileLinks
                 .filter((link) => link.label !== "Email")

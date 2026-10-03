@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
+import { MotionProvider } from "./components/motion/MotionProvider";
 import { profileLinks } from "./data/portfolio";
 import { siteUrl } from "./site";
 import "./globals.css";
@@ -7,7 +8,7 @@ import "./globals.css";
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin"],
-  axes: ["opsz", "wdth"],
+  axes: ["opsz"],
   display: "swap",
 });
 
@@ -22,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 const title = "Hemal Herath — Software Engineer · Mobile, Web & AI";
 const description =
-  "Hemal Herath is a software engineer in Colombo, Sri Lanka, shipping production mobile, web and AI products with Flutter, Next.js, TypeScript, PHP (CodeIgniter/Laravel) and FastAPI.";
+  "Hemal Herath is a software engineer in Colombo, Sri Lanka, shipping production mobile, web and AI products — 300K+ Play Store downloads across three apps — with Flutter, Next.js, TypeScript, PHP (CodeIgniter/Laravel) and FastAPI.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -59,8 +60,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f4f2ea",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f2ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c1712" },
+  ],
+  colorScheme: "light dark",
 };
 
 const personJsonLd = {
@@ -69,7 +73,7 @@ const personJsonLd = {
   name: "Hemal Herath",
   jobTitle: "Software Engineer",
   url: siteUrl,
-  image: `${siteUrl}/avatar.png`,
+  image: `${siteUrl}/opengraph-image`,
   email: "mailto:nuwanhemal@gmail.com",
   address: {
     "@type": "PostalAddress",
@@ -80,6 +84,10 @@ const personJsonLd = {
     .filter((link) => link.label === "GitHub" || link.label === "LinkedIn")
     .map((link) => link.href),
   knowsAbout: ["Flutter", "Next.js", "TypeScript", "PHP", "FastAPI", "AI"],
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "University of Westminster",
+  },
 };
 
 export default function RootLayout({
@@ -93,7 +101,7 @@ export default function RootLayout({
       className={`${bricolage.variable} ${jetbrainsMono.variable}`}
     >
       <body>
-        {children}
+        <MotionProvider>{children}</MotionProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

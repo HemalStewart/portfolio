@@ -14,6 +14,8 @@ export type ProjectExperience = {
   highlights: string[];
   references: ExternalReference[];
   featured?: boolean;
+  /** False when there is no `public/projects/<slug>.webp` yet. */
+  screenshot?: boolean;
 };
 
 export type LightProject = {
@@ -36,6 +38,8 @@ export type ProductionDeployment = {
   platform: string;
   href?: string;
   note?: string;
+  /** Store download count as shown on the listing (a lower bound, e.g. 100K+). */
+  downloads?: number;
   /** Slug of the matching case study in `selectedProjects`. */
   project: string;
 };
@@ -49,6 +53,7 @@ export type SkillGroup = {
 export const navLinks = [
   { label: "Releases", href: "#releases" },
   { label: "Work", href: "#work" },
+  { label: "Experience", href: "#experience" },
   { label: "Stack", href: "#stack" },
   { label: "Side branches", href: "#side-branches" },
   { label: "Contact", href: "#contact" },
@@ -105,6 +110,7 @@ export const productionDeployments: ProductionDeployment[] = [
     name: "VibeChat AI",
     platform: "Android",
     href: "https://play.google.com/store/apps/details?id=com.appmixer.vibechatai",
+    downloads: 100_000,
     project: "chatsoul-ai",
   },
   {
@@ -117,6 +123,7 @@ export const productionDeployments: ProductionDeployment[] = [
     name: "WriteScan",
     platform: "Android",
     href: "https://play.google.com/store/apps/details?id=com.appmixer.writescan",
+    downloads: 100_000,
     project: "writescan",
   },
   {
@@ -141,6 +148,7 @@ export const productionDeployments: ProductionDeployment[] = [
     name: "Smart Guardian Pro",
     platform: "Android",
     href: "https://play.google.com/store/apps/details?id=com.bytehub.textrecovery",
+    downloads: 100_000,
     project: "smart-guardian-pro",
   },
   {
@@ -148,6 +156,24 @@ export const productionDeployments: ProductionDeployment[] = [
     platform: "iOS",
     href: "https://apps.apple.com/us/app/smart-guardian-family-safety/id6769642500",
     project: "smart-guardian-pro",
+  },
+  {
+    name: "LinkForex",
+    platform: "Web admin",
+    href: "https://linkforex.vercel.app/admin/dashboard",
+    project: "linkforex",
+  },
+  {
+    name: "Novice Monk Registry",
+    platform: "Web admin",
+    href: "https://novice-monk-admin.vercel.app/admin",
+    project: "novice-monk-registry",
+  },
+  {
+    name: "Sea Cloud, Dalawella",
+    platform: "Web",
+    href: "https://hotel-kohl-ten.vercel.app/",
+    project: "sea-cloud-dalawella",
   },
 ];
 
@@ -208,6 +234,10 @@ export const selectedProjects: ProjectExperience[] = [
     ],
     references: [
       {
+        label: "Live admin",
+        href: "https://linkforex.vercel.app/admin/dashboard",
+      },
+      {
         label: "Admin repo",
         href: "https://github.com/HemalStewart/linkforex",
       },
@@ -233,7 +263,7 @@ export const selectedProjects: ProjectExperience[] = [
     highlights: [
       "Delivered auth, chat, discovery/matching, wallet & subscriptions, and referral flows across all three platforms from a single codebase.",
       "Structured the app into reusable feature, core, and data layers to keep parity across clients.",
-      "Live now on Google Play, the App Store, and the web.",
+      "Live now on Google Play, the App Store, and the web — VibeChat AI alone has passed 100K+ downloads on Google Play.",
     ],
     references: [
       {
@@ -268,6 +298,7 @@ export const selectedProjects: ProjectExperience[] = [
       "Built multi-mode scanning — text extraction, handwriting, CSV — with ML Kit and offline-first local storage.",
       "Added AI chat and bot-creation features on top of the scanning workflow.",
       "65 commits of iteration, the most mature Flutter codebase in this portfolio after LinkForex.",
+      "Passed 100K+ downloads on Google Play.",
     ],
     references: [
       {
@@ -292,6 +323,7 @@ export const selectedProjects: ProjectExperience[] = [
     highlights: [
       "Worked across academic, attendance, exam, HR, accounting, payroll, and library modules in a large HMVC codebase.",
       "Maintained controller, model, routing, and config layers spanning a multi-module system.",
+      "Serves the Division of Piriven Education with records for 7,000+ students, 5,600+ teachers, 5,600+ guardians and 1,300+ employees.",
       "In production at pdms.moe.gov.lk.",
     ],
     references: [
@@ -311,7 +343,7 @@ export const selectedProjects: ProjectExperience[] = [
     highlights: [
       'Built SOS, live-location sharing, and group/"circle" safety-network features end to end.',
       "Designed a service-driven architecture separating auth, location, notifications, and session handling.",
-      "Shipped and live on Google Play and the App Store.",
+      "Shipped and live on Google Play and the App Store, with 100K+ downloads on Google Play.",
     ],
     references: [
       {
@@ -327,6 +359,27 @@ export const selectedProjects: ProjectExperience[] = [
         href: "https://apps.apple.com/us/app/smart-guardian-family-safety/id6769642500",
       },
     ],
+  },
+  {
+    slug: "novice-monk-registry",
+    initials: "NM",
+    title: "Novice Monk Registry",
+    tagline:
+      "Application registry and review workflow for Sri Lanka's Division of Piriven Education.",
+    platforms: ["Web admin"],
+    techStack: ["MongoDB"],
+    highlights: [
+      "Built the review pipeline — draft, under review, returned, approved — scoped by district and zone.",
+      "Role-based access for central administration, districts, and piriven accounts, with user-access and system-status screens.",
+      "Overview dashboard with live application activity and review status, plus search and summary export.",
+    ],
+    references: [
+      {
+        label: "Live admin",
+        href: "https://novice-monk-admin.vercel.app/admin",
+      },
+    ],
+    screenshot: false,
   },
   {
     slug: "huddle",
@@ -423,11 +476,34 @@ export const selectedProjects: ProjectExperience[] = [
       "Scoped the build deliberately: public site first, admin panel and persistence staged for a later phase.",
       "A real client engagement, not a template.",
     ],
-    references: [{ label: "Source", note: "Code available on request" }],
+    references: [
+      { label: "Live site", href: "https://hotel-kohl-ten.vercel.app/" },
+      { label: "Source", note: "Code available on request" },
+    ],
   },
 ];
 
 export const additionalProjects: LightProject[] = [
+  {
+    title: "Piriven Education CMS",
+    tagline:
+      "Content management system for the Division of Piriven Education website: admin dashboard, REST APIs, and end-to-end deployment.",
+    techStack: "Next.js, Django, SQLite, Nginx, AlmaLinux",
+    reference: {
+      label: "Details on request",
+      note: "Code available on request",
+    },
+  },
+  {
+    title: "Energy Forecasting",
+    tagline:
+      "Regression-based electricity-consumption forecasting — the research behind an IEEE I2CT 2019 paper.",
+    techStack: "Python, Django, machine learning",
+    reference: {
+      label: "Details on request",
+      note: "Code available on request",
+    },
+  },
   {
     title: "Recall",
     tagline:
@@ -520,4 +596,97 @@ export const releases: Release[] = productionDeployments.reduce<Release[]>(
     return groups;
   },
   [],
+);
+
+// Experience, education and recognition below are taken from public/resume.pdf.
+
+export type Experience = {
+  role: string;
+  org: string;
+  period: string;
+  start: string;
+  current?: boolean;
+  points: string[];
+};
+
+export const experience: Experience[] = [
+  {
+    role: "Freelance Software Engineer",
+    org: "Independent",
+    period: "Jun 2025 – Present",
+    start: "2025-06",
+    current: true,
+    points: [
+      "Develop and deploy full-stack web apps with CodeIgniter, Django and Next.js.",
+      "Built PDMS for the Ministry of Education and a CMS-style website, hosted on AlmaLinux + Nginx with a focus on scalability and clean architecture.",
+      "Own the complete project lifecycle, from design to deployment.",
+    ],
+  },
+  {
+    role: "Freelance & E-commerce Work",
+    org: "Independent",
+    period: "Jan 2022 – May 2025",
+    start: "2022-01",
+    points: [
+      "Managed an online business end to end — ownership, planning and client-facing work.",
+      "Balanced multiple projects while keeping the focus on quality and delivery.",
+    ],
+  },
+  {
+    role: "Instructor",
+    org: "Cortex International (Pvt) Ltd",
+    period: "Aug 2020 – Jan 2021",
+    start: "2020-08",
+    points: [
+      "Delivered e-commerce and web-technology training and guided learners through project workflows.",
+    ],
+  },
+  {
+    role: "Software Engineering Intern",
+    org: "Crowderia (Pvt) Ltd",
+    period: "Jul 2017 – Jul 2018",
+    start: "2017-07",
+    points: [
+      "Contributed to web and mobile apps including Catchingo and KarmaMirror with Laravel, ReactJS and Firebase.",
+      "Assisted in development, testing and documentation within agile processes.",
+    ],
+  },
+];
+
+export const education = {
+  degree: "BEng (Hons) in Software Engineering",
+  school:
+    "University of Westminster (UK), through Informatics Institute of Technology, Sri Lanka",
+  period: "2015 – 2019",
+};
+
+export const recognition: { title: string; detail: string; year?: string }[] = [
+  {
+    title: "IEEE research publication",
+    detail:
+      "“Review on Electricity Consumption Forecasting Approaches” — IEEE 5th I2CT, India",
+    year: "2019",
+  },
+  {
+    title: "2nd place — Cutting Edge “Dhuthaya”",
+    detail: "Competition",
+  },
+  {
+    title: "Top 12 — IIT Hackathon",
+    detail:
+      "Elektra, a smart multi-plug IoT system (Python, Android, Firebase, Raspberry Pi)",
+  },
+];
+
+/** Formats a store download count the way listings do: 100000 -> "100K+". */
+export function formatDownloads(count: number) {
+  return count >= 1_000_000
+    ? `${count / 1_000_000}M+`
+    : `${Math.floor(count / 1_000)}K+`;
+}
+
+/** Sum of the lower-bound Play Store download counts across all releases. */
+export const totalDownloads = productionDeployments.reduce(
+  (sum, deployment) => sum + (deployment.downloads ?? 0),
+  0,
 );
