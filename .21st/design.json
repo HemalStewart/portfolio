@@ -3,48 +3,39 @@
   "project": {
     "name": "portfolio",
     "productType": null,
-    "stack": [
-      "nextjs",
-      "react",
-      "tailwind-v4"
-    ]
+    "stack": ["nextjs", "react", "tailwind-v4"]
   },
   "sources": {
-    "tokens": [
-      "app/globals.css"
-    ],
+    "tokens": ["app/globals.css"],
     "components": [],
     "assets": [],
-    "instructions": [
-      "AGENTS.md",
-      "CLAUDE.md"
-    ]
+    "instructions": ["AGENTS.md", "CLAUDE.md"]
   },
   "design": {
     "colorMode": "light",
     "colors": {
       "--background": {
-        "value": "#f4f3ed",
+        "value": "#f7f4ed",
         "source": "app/globals.css"
       },
       "--foreground": {
-        "value": "#172b2b",
+        "value": "#28252e",
         "source": "app/globals.css"
       },
       "--muted": {
-        "value": "#586361",
+        "value": "#69626d",
         "source": "app/globals.css"
       },
       "--border": {
-        "value": "#d7dcd3",
+        "value": "#ded8d4",
         "source": "app/globals.css"
       },
       "--accent": {
-        "value": "#246052",
+        "value": "#705098",
         "source": "app/globals.css"
       },
       "--accent-light": {
-        "value": "#dfe9db",
+        "value": "#e9dff5",
         "source": "app/globals.css"
       },
       "--color-background": {
@@ -94,11 +85,13 @@
     "avoid": []
   },
   "decisions": [
-    "Warm stone canvas and restrained deep-teal accent; no dark theme, glass, or neon.",
-    "Sticky top navigation with a compact second navigation row on tablet/mobile.",
-    "Project-led hero; four featured case studies, six secondary builds, seven archive entries.",
-    "Project imagery is explicitly illustrative; production URLs and repository references are kept distinct.",
-    "CSS-only restrained hero entrance and hover transforms, disabled for reduced motion; native details preserve no-JavaScript delivery content."
+    "Warm ivory and charcoal with plum and restrained orange; no dark theme, glassmorphism, or neon.",
+    "Original real-time GLB engineer in the hero, not a raster avatar or third-party character.",
+    "Sticky top navigation; compact second navigation row on tablet/mobile.",
+    "Four distinct interactive product studies, six secondary architecture diagrams, and seven archive entries; all factual content and URLs preserved.",
+    "Product studies are explicitly illustrative, not screenshots of deployed applications. Production links remain separate from source references.",
+    "Rendering is demand-driven, paused offscreen/hidden, and reduced-motion aware. Semantic server-rendered content and text fallback remain usable without WebGL.",
+    "Illustration palettes and physical 3D lighting colors are intentionally local art direction; interface colors use semantic root tokens. 21st review reported informational hardcoded-color notices only."
   ],
   "evidence": [
     {
@@ -130,5 +123,5 @@
       "source": "package.json"
     }
   ],
-  "generatedAt": "2026-10-03T03:15:44.465Z"
+  "generatedAt": "2026-10-03T04:22:37.490Z"
 }

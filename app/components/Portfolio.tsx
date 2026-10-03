@@ -1,5 +1,5 @@
 import type { ExternalReference, ProjectExperience } from "../data/portfolio";
-import { ProjectImage } from "./ProjectImage";
+import { ProductStudio } from "./ProductStudio";
 
 export function SectionHeading({
   number,
@@ -24,11 +24,20 @@ export function SectionHeading({
     </div>
   );
 }
-export function ReferenceLink({ reference }: { reference: ExternalReference }) {
+export function ReferenceLink({
+  reference,
+  projectTitle,
+}: {
+  reference: ExternalReference;
+  projectTitle?: string;
+}) {
   return reference.href ? (
     <a
       className="reference-link"
       href={reference.href}
+      aria-label={
+        projectTitle ? `${reference.label} — ${projectTitle}` : undefined
+      }
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -71,14 +80,10 @@ export function ProjectCard({
           </span>
           <span aria-hidden="true">↗</span>
         </div>
-        <ProjectImage
-          src={`/projects/${project.slug}.png`}
-          alt={`${project.title} illustrative interface preview`}
-          initials={project.initials}
-        />
+        <ProductStudio slug={project.slug} />
         <div className="project-visual-footer">
           <span>{project.platforms.join(" / ")}</span>
-          <span>Interface preview</span>
+          <span>Product study</span>
         </div>
       </div>
       <div className="project-copy">
@@ -115,6 +120,7 @@ export function ProjectCard({
             <ReferenceLink
               key={`${reference.label}-${i}`}
               reference={reference}
+              projectTitle={project.title}
             />
           ))}
         </div>

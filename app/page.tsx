@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { EngineerScene } from "./components/EngineerScene";
 import { TopNav } from "./components/TopNav";
 import {
   ProjectCard,
@@ -78,30 +79,27 @@ export default function Home() {
           <div className="hero-grid">
             <div className="hero-copy">
               <div className="intro-person">
-                <Image
-                  src="/engineer-character.png"
-                  width={52}
-                  height={52}
-                  alt="Custom 3D engineer character"
-                />
+                <span className="hello-mark" aria-hidden="true">
+                  ✳
+                </span>
                 <span>
-                  Hello, I’m Hemal.
+                  Full-Stack Software Engineer
                   <br />
-                  <small>Full-Stack Software Engineer</small>
+                  <small>Based in Sri Lanka. Building across platforms.</small>
                 </span>
               </div>
               <h1>
                 Hemal Herath
                 <span>
-                  Thoughtfully built.
+                  Software, with
                   <br />
-                  <em>Ready for the real world.</em>
+                  <em>a human touch.</em>
                 </span>
               </h1>
               <p className="hero-description">
-                I build web and mobile systems end to end. From the first
-                interface to the backend behind it—and the release that puts it
-                in people’s hands.
+                From the interface you touch to the systems you don’t see. I
+                build web, mobile, and applied-AI products—and take them all the
+                way to production.
               </p>
               <div className="hero-actions">
                 <a className="button primary" href="#work">
@@ -127,46 +125,7 @@ export default function Home() {
                 </span>
               </div>
             </div>
-            <a
-              className="hero-showcase"
-              href="#project-linkforex"
-              aria-label="Explore LinkForex, my featured fintech project"
-            >
-              <div className="showcase-heading">
-                <span className="eyebrow">Featured system / 01</span>
-                <span aria-hidden="true">↗</span>
-              </div>
-              <div className="showcase-title">
-                From interface
-                <br />
-                to infrastructure.
-              </div>
-              <div className="hero-screen">
-                <Image
-                  src="/projects/linkforex.png"
-                  alt="Illustrative preview of the LinkForex administration interface"
-                  fill
-                  sizes="(max-width: 650px) 90vw, 48vw"
-                  preload
-                />
-              </div>
-              <div className="system-path" aria-hidden="true">
-                <span>Web console</span>
-                <i>→</i>
-                <span>Backend</span>
-                <i>→</i>
-                <span>Mobile app</span>
-              </div>
-              <div className="showcase-foot">
-                <div>
-                  <strong>LinkForex</strong>
-                  <span>Fintech remittance ecosystem</span>
-                </div>
-                <span className="circle-arrow" aria-hidden="true">
-                  ↗
-                </span>
-              </div>
-            </a>
+            <EngineerScene />
           </div>
           <div className="hero-bottom">
             <span className="eyebrow">Selected work, real delivery</span>
@@ -217,8 +176,8 @@ export default function Home() {
             description="Fintech, mobile AI, document workflows, and education systems. A closer look at what I delivered and how it was built."
           />
           <p className="preview-note">
-            Project imagery is illustrative. Live links and source references
-            are provided with each project.
+            Explore the original interactive product studies below. These are
+            visual explanations, not screenshots of the live applications.
           </p>
           <div className="featured-list">
             {featured.map((project, index) => (
@@ -284,7 +243,10 @@ export default function Home() {
                   <p>{project.tagline}</p>
                   <span className="archive-stack">{project.techStack}</span>
                 </div>
-                <ReferenceLink reference={project.reference} />
+                <ReferenceLink
+                  reference={project.reference}
+                  projectTitle={project.title}
+                />
               </article>
             ))}
           </div>
@@ -308,12 +270,9 @@ export default function Home() {
               </a>
             </div>
             <div className="contact-details">
-              <Image
-                src="/engineer-character.png"
-                alt="Custom 3D engineer character holding a laptop"
-                width={150}
-                height={150}
-              />
+              <div className="contact-seal" aria-hidden="true">
+                ✳
+              </div>
               <strong>Hemal Herath</strong>
               <span>Full-Stack Software Engineer</span>
               <span>Polgasowita, Kottawa · Sri Lanka</span>

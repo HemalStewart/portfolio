@@ -1,5 +1,7 @@
 # Custom portfolio character
 
+Historical raster study only. This image is preserved but no longer displayed. The active character is an original real-time GLB model; see [interactive-studio.md](interactive-studio.md).
+
 Generated using the built-in image-generation tool. This is an original mascot, not a portrait or likeness of Hemal. The original profile photo is preserved on disk but is not displayed on the portfolio.
 
 Asset: `public/engineer-character.png`, with transparent alpha.

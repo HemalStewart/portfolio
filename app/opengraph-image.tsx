@@ -6,42 +6,40 @@ export const contentType = "image/png";
 
 export default function OpenGraphImage() {
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          background: "#f4f3ed",
-          color: "#172b2b",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "70px",
-        }}
-      >
-        <div style={{ display: "flex", fontSize: 23 }}>
-          Full-Stack Software Engineer · Sri Lanka
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        background: "#f7f4ed",
+        color: "#28252e",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "70px",
+      }}
+    >
+      <div style={{ display: "flex", fontSize: 23 }}>
+        Full-Stack Software Engineer · Sri Lanka
+      </div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ fontSize: 82, fontWeight: 700, letterSpacing: -4 }}>
+          Hemal Herath
         </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 82, fontWeight: 700, letterSpacing: -4 }}>
-            Hemal Herath
-          </div>
-          <div style={{ fontSize: 44, color: "#246052", marginTop: 15 }}>
-            Thoughtfully built. Ready for the real world.
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            borderTop: "1px solid #bfcbb9",
-            paddingTop: 25,
-            fontSize: 24,
-          }}
-        >
-          Web / Mobile / Applied AI
+        <div style={{ fontSize: 44, color: "#705098", marginTop: 15 }}>
+          Software, with a human touch.
         </div>
       </div>
-    ),
+      <div
+        style={{
+          display: "flex",
+          borderTop: "1px solid #d9d3de",
+          paddingTop: 25,
+          fontSize: 24,
+        }}
+      >
+        Web / Mobile / Applied AI
+      </div>
+    </div>,
     size,
   );
 }

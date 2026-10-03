@@ -29,7 +29,9 @@ export function TopNav({
     <header className="site-header">
       <div className="shell header-inner">
         <a className="wordmark" href="#about">
-          <Image src="/engineer-character.png" width={35} height={35} alt="" />
+          <span className="wordmark-symbol" aria-hidden="true">
+            ✳
+          </span>
           <span>
             Hemal Herath<span className="wordmark-dot">.</span>
           </span>
