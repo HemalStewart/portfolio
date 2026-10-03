@@ -75,7 +75,13 @@ function LensVisual({ project }: { project: ProjectExperience }) {
       <XRayLens
         title={project.title}
         interfaceLayer={<ProjectMockup slug={project.slug} />}
-        codeLayer={<CodeView file={sample.file} code={sample.code} />}
+        codeLayer={
+          <CodeView
+            file={sample.file}
+            code={sample.code}
+            theme={sample.theme}
+          />
+        }
       />
     </div>
   );

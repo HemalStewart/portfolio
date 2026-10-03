@@ -3,8 +3,12 @@
  * sketches of each codebase's shape (stack, structure, flows from the case
  * study) — not excerpts of client source, which stays private.
  */
-export const codeSamples: Record<string, { file: string; code: string }> = {
+export const codeSamples: Record<
+  string,
+  { file: string; code: string; theme: "dark" | "light" }
+> = {
   linkforex: {
+    theme: "dark",
     file: "app/admin/transfers/page.tsx",
     code: `// illustrative — real source on request
 export default async function TransfersPage({ searchParams }: Props) {
@@ -24,6 +28,7 @@ export default async function TransfersPage({ searchParams }: Props) {
 }`,
   },
   "chatsoul-ai": {
+    theme: "dark",
     file: "lib/features/chat/chat_screen.dart",
     code: `// illustrative — real source on request
 class ChatScreen extends StatefulWidget {
@@ -47,6 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
 }`,
   },
   writescan: {
+    theme: "light",
     file: "lib/features/scan/scan_controller.dart",
     code: `// illustrative — real source on request
 final scanProvider =
@@ -70,6 +76,7 @@ class ScanController extends AsyncNotifier<ScanResult?> {
 }`,
   },
   pdms: {
+    theme: "light",
     file: "modules/attendance/controllers/Attendance.php",
     code: `<?php // illustrative — real source on request
 class Attendance extends MX_Controller

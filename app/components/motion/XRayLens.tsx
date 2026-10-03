@@ -8,10 +8,10 @@ const R_SMALL = 96;
 const R_PRESSED = 175;
 const KEY_STEP = 24;
 const MASK =
-  "radial-gradient(circle var(--r) at var(--mx) var(--my), transparent 0 68%, black 100%)";
+  "radial-gradient(circle var(--r) at var(--mx) var(--my), transparent 0 calc(100% - 1px), black 100%)";
 
 /**
- * X-ray lens: the interface sits on top, masked by a soft circular hole that
+ * X-ray lens: the interface sits on top, masked by a crisp circular hole that
  * follows the pointer (eased), springs larger on press, moves on tap for touch
  * and with arrow keys when focused, and reveals the code layer underneath.
  * The animation loop only runs while the lens is still settling.
@@ -46,8 +46,8 @@ export function XRayLens({
       frame.style.setProperty("--mx", `${st.x.toFixed(1)}px`);
       frame.style.setProperty("--my", `${st.y.toFixed(1)}px`);
       frame.style.setProperty("--r", `${st.r.toFixed(1)}px`);
-      ring.style.transform = `translate3d(${st.x}px, ${st.y}px, 0) translate(-50%, -50%) scale(${(st.r * 0.8 * 2) / 200})`;
-      const o = st.r * 0.8 * Math.SQRT1_2;
+      ring.style.transform = `translate3d(${st.x}px, ${st.y}px, 0) translate(-50%, -50%) scale(${(st.r * 2) / 200})`;
+      const o = st.r * Math.SQRT1_2;
       label.style.transform = `translate3d(${st.x + o + 6}px, ${st.y + o}px, 0)`;
     };
 
@@ -76,8 +76,8 @@ export function XRayLens({
     };
 
     const reset = () => {
-      st.x = st.tx = frame.clientWidth * 0.64;
-      st.y = st.ty = frame.clientHeight * 0.46;
+      st.x = st.tx = frame.clientWidth * 0.42;
+      st.y = st.ty = frame.clientHeight * 0.5;
       st.r = small() ? R_SMALL : R_BASE;
       place();
     };

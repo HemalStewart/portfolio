@@ -4,6 +4,7 @@ import { Magnetic } from "./components/motion/Magnetic";
 import { KineticName } from "./components/KineticName";
 import { Odometer } from "./components/motion/Odometer";
 import { PinnedWork } from "./components/motion/PinnedWork";
+import { SiteHeader } from "./components/motion/SiteHeader";
 import { ScrubText } from "./components/ScrubText";
 import { TypeCommand } from "./components/motion/TypeCommand";
 import { ArrowIcon, LinkIcon } from "./components/icons";
@@ -42,35 +43,7 @@ export default function Home() {
         Skip to content
       </a>
 
-      <header className="site-header">
-        <div className="shell header-inner">
-          <a className="wordmark" href="#top">
-            <span className="wordmark-node" aria-hidden="true" />
-            hemal<span className="wordmark-slash">/</span>main
-            <span className="sr-only"> — Hemal Herath, back to top</span>
-          </a>
-          <nav aria-label="Sections" className="nav">
-            <ul>
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <Magnetic strength={0.25}>
-            <a
-              className="button button-small"
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              CV <ArrowIcon />
-            </a>
-          </Magnetic>
-        </div>
-        <div className="scroll-progress" aria-hidden="true" />
-      </header>
+      <SiteHeader links={navLinks} email={email.href} />
 
       <main id="main">
         {/* HEAD */}

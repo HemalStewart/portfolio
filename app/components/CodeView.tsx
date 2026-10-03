@@ -63,7 +63,15 @@ const escape = (text: string) =>
  * The highlighted lines are injected as one static HTML string, so React has
  * hundreds fewer nodes to hydrate.
  */
-export function CodeView({ file, code }: { file: string; code: string }) {
+export function CodeView({
+  file,
+  code,
+  theme = "dark",
+}: {
+  file: string;
+  code: string;
+  theme?: "dark" | "light";
+}) {
   const html = code
     .split("\n")
     .map(
@@ -80,7 +88,7 @@ export function CodeView({ file, code }: { file: string; code: string }) {
     )
     .join("");
   return (
-    <div className="code-view">
+    <div className={`code-view code-${theme}`}>
       <div className="code-tab">
         <span className="code-dot" aria-hidden="true" />
         {file}
