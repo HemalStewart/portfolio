@@ -79,10 +79,10 @@ export default function Home() {
             <div className="hero-copy">
               <div className="intro-person">
                 <Image
-                  src="/avatar.png"
+                  src="/engineer-character.png"
                   width={52}
                   height={52}
-                  alt="Hemal Herath"
+                  alt="Custom 3D engineer character"
                 />
                 <span>
                   Hello, I’m Hemal.
@@ -309,10 +309,10 @@ export default function Home() {
             </div>
             <div className="contact-details">
               <Image
-                src="/avatar.png"
-                alt="Hemal Herath"
-                width={110}
-                height={110}
+                src="/engineer-character.png"
+                alt="Custom 3D engineer character holding a laptop"
+                width={150}
+                height={150}
               />
               <strong>Hemal Herath</strong>
               <span>Full-Stack Software Engineer</span>

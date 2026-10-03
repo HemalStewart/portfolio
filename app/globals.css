@@ -108,8 +108,7 @@ em {
   white-space: nowrap;
 }
 .wordmark img {
-  border-radius: 50%;
-  background: var(--accent-light);
+  object-fit: contain;
 }
 .wordmark-dot {
   color: var(--accent);
@@ -199,8 +198,7 @@ em {
   margin-bottom: 25px;
 }
 .intro-person img {
-  border-radius: 50%;
-  background: #e0e7dd;
+  object-fit: contain;
 }
 .intro-person small {
   color: var(--muted);
@@ -777,9 +775,8 @@ em {
   line-height: 2;
 }
 .contact-details > img {
-  border-radius: 50%;
+  object-fit: contain;
   margin-bottom: 20px;
-  background: #d3dec9;
 }
 .contact-details strong {
   font-size: 17px;
@@ -1153,8 +1150,8 @@ em {
     padding-top: 28px;
   }
   .contact-details > img {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
   }
   .footer {
     font-size: 8px;
