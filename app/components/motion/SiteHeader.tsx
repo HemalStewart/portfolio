@@ -6,12 +6,11 @@ import { ArrowIcon } from "../icons";
 type Link = { label: string; href: string };
 
 /**
- * Floating pill header: hides while scrolling down and returns on scroll up,
- * tracks the section in view with a sliding highlight, and opens a
+ * Floating pill header that stays reachable at all times: it compacts once
+ * you scroll, tracks the section in view with a sliding highlight, and opens a
  * full-screen menu on small screens (Escape closes it, focus returns).
  */
 export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
-  const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -19,18 +18,12 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
   const pillRef = useRef<HTMLSpanElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
-  // Hide on scroll down, reveal on scroll up; compact once past the top.
+  // Compact once past the top.
   useEffect(() => {
-    let last = window.scrollY;
     let raf = 0;
     const update = () => {
       raf = 0;
-      const y = window.scrollY;
-      setScrolled(y > 24);
-      if (Math.abs(y - last) > 6) {
-        setHidden(y > last && y > 240);
-        last = y;
-      }
+      setScrolled(window.scrollY > 24);
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -94,7 +87,6 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
   return (
     <header
       className="site-header"
-      data-hidden={(hidden && !open) || undefined}
       data-scrolled={scrolled || undefined}
       data-open={open || undefined}
     >

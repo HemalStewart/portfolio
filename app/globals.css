@@ -248,9 +248,6 @@
     pointer-events: none;
     transition: transform 0.45s var(--ease);
   }
-  .site-header[data-hidden] {
-    transform: translateY(-140%);
-  }
   .header-pill {
     position: relative;
     z-index: 2;
@@ -464,7 +461,11 @@
   .hero {
     position: relative;
     isolation: isolate;
-    padding-block: calc(84px + clamp(28px, 6vw, 80px)) clamp(64px, 9vw, 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100svh;
+    padding-block: calc(84px + clamp(16px, 4vw, 48px)) clamp(28px, 4vw, 48px);
   }
   .hero::before {
     content: "";
@@ -482,83 +483,200 @@
   }
   .hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-    gap: clamp(32px, 6vw, 88px);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(24px, 4vw, 64px);
     align-items: center;
   }
-  .commit-head {
+  .hero-kicker {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 16px;
+    gap: 10px 14px;
     font-family: var(--font-mono);
     font-size: 0.82rem;
     color: var(--muted);
     animation: rise 0.8s var(--ease) both;
   }
-  .monogram {
+
+  /* The guide bot's home: a platform and orbiting stack chips. The 3D
+     canvas itself is fixed-position and aligned to this box by Guide. */
+  .hero-stage {
     position: relative;
-    display: grid;
-    place-items: center;
-    width: 72px;
-    height: 72px;
-    flex: none;
-    border-radius: 20px;
-    background: var(--on-signal);
-    box-shadow: 4px 4px 0 var(--signal);
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 1;
+    justify-self: center;
   }
-  .monogram svg {
+  .stage-platform {
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    bottom: 4%;
+    height: 22%;
+    border-radius: 50%;
+    background:
+      radial-gradient(closest-side, rgb(14 90 67 / 0.2), transparent),
+      radial-gradient(
+        closest-side,
+        transparent 92%,
+        var(--line) 93% 96%,
+        transparent 97%
+      );
+  }
+  .stage-platform::after {
+    content: "";
+    position: absolute;
+    inset: -28% -18%;
+    border-radius: 50%;
+    border: 1px dashed var(--line);
+  }
+  .stage-chips li {
+    position: absolute;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    box-shadow: 0 10px 24px -16px var(--shadow);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    white-space: nowrap;
+    animation: chip-float 5s ease-in-out calc(var(--i) * -0.8s) infinite
+      alternate;
+  }
+  .stage-chips li:nth-child(1) {
+    left: 0;
+    top: 18%;
+  }
+  .stage-chips li:nth-child(2) {
+    right: 2%;
+    top: 10%;
+  }
+  .stage-chips li:nth-child(3) {
+    left: -4%;
+    top: 52%;
+  }
+  .stage-chips li:nth-child(4) {
+    right: -2%;
+    top: 46%;
+  }
+  .stage-chips li:nth-child(5) {
+    left: 6%;
+    bottom: 12%;
+  }
+  .stage-chips li:nth-child(6) {
+    right: 4%;
+    bottom: 18%;
+  }
+  .stage-poster {
     position: absolute;
     inset: 0;
-    fill: none;
-    stroke-linecap: round;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.6s;
   }
-  .monogram-rail,
-  .monogram-branch {
-    stroke: var(--signal);
-    stroke-width: 4;
+  html[data-guide="ready"] .stage-poster {
+    opacity: 0;
   }
-  .monogram-node {
-    fill: var(--signal);
-  }
-  .monogram-tip {
-    fill: var(--on-signal);
-    stroke: var(--signal);
-    stroke-width: 3.5;
-  }
-  .commit-head dl {
-    display: grid;
-    gap: 4px;
-    min-width: 0;
-  }
-  .commit-head dl > div {
+  .hero-strip {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px 32px;
+    margin-top: clamp(24px, 5vh, 56px);
+  }
+  .scroll-cue {
+    display: inline-flex;
     align-items: center;
-    flex-wrap: wrap;
+    gap: 12px;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
   }
-  .commit-head dt {
-    color: var(--tea);
-    min-width: 4.6em;
+  .scroll-cue i {
+    position: relative;
+    width: 2px;
+    height: 36px;
+    overflow: hidden;
+    background: var(--line);
   }
-  .commit-head dd {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    min-width: 0;
-    overflow-wrap: anywhere;
-    color: var(--ink);
-  }
-  .commit-head dd a {
-    text-decoration: underline;
-    text-decoration-color: var(--line);
-    text-underline-offset: 3px;
-  }
-  .commit-head dd a:hover {
-    text-decoration-color: var(--tea);
+  .scroll-cue i::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--leaf);
+    animation: cue 1.8s var(--ease) infinite;
   }
 
+  /* --------------------------------------------------------- guide bot */
+  .guide-canvas {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 45;
+    width: 520px;
+    height: 520px;
+    transform-origin: 0 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s;
+  }
+  .guide-canvas[data-ready] {
+    opacity: 1;
+  }
+  .guide-hit {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 46;
+    display: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  html[data-guide="ready"] .guide-hit {
+    display: block;
+  }
+  .guide-bubble {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 47;
+    max-width: 250px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .guide-bubble[data-visible] {
+    opacity: 1;
+  }
+  .guide-bubble span {
+    display: block;
+    padding: 11px 14px;
+    border-radius: 16px 16px 4px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.35;
+    box-shadow: 0 16px 30px -18px var(--shadow);
+    transform-origin: bottom right;
+    animation: bubble-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @media (max-width: 640px) {
+    .guide-bubble:not([data-docked]) {
+      display: none;
+    }
+    .guide-bubble {
+      max-width: 210px;
+    }
+    .guide-bubble span {
+      font-size: 0.8rem;
+      padding: 9px 12px;
+    }
+  }
   .hero h1 {
-    margin-top: clamp(24px, 4vw, 40px);
+    margin-top: clamp(16px, 3vw, 28px);
     font-size: clamp(3.6rem, 11vw, 8.6rem);
     font-weight: 700;
     line-height: 0.88;
@@ -620,10 +738,7 @@
   .hero-facts {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px 36px;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
+    gap: 12px 40px;
     animation: rise 0.9s 0.32s var(--ease) both;
   }
   .hero-facts div {
@@ -641,119 +756,6 @@
     font-weight: 700;
     line-height: 1.1;
     font-variant-numeric: tabular-nums;
-  }
-
-  /* branch graph card */
-  .graph-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    box-shadow: 0 30px 60px -30px var(--shadow);
-    overflow: hidden;
-    animation: rise 1s 0.2s var(--ease) both;
-  }
-  .graph-bar {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--line);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
-  .graph-dots {
-    display: inline-flex;
-    gap: 6px;
-  }
-  .graph-dots i {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--line);
-  }
-  .graph-list {
-    padding: 10px 14px 14px 6px;
-  }
-  .graph-row {
-    display: grid;
-    position: relative;
-    grid-template-columns: 56px minmax(0, 1fr);
-    align-items: start;
-    min-height: 76px;
-  }
-  .graph-lane {
-    width: 56px;
-    height: 76px;
-    overflow: visible;
-    fill: none;
-    stroke-linecap: round;
-  }
-  /* The main rail spans the full row so wrapped text never breaks it. */
-  .graph-row::before {
-    content: "";
-    position: absolute;
-    left: 12.75px;
-    top: 0;
-    bottom: 0;
-    width: 2.5px;
-    background: var(--ink);
-  }
-  .graph-row:last-child::before {
-    background: linear-gradient(var(--ink) 70%, transparent);
-  }
-  .graph-row:first-child::before {
-    top: 10px;
-  }
-  .graph-lane {
-    position: relative;
-  }
-  .graph-branch {
-    stroke: var(--branch);
-    stroke-width: 2.5;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: draw 0.9s calc(0.45s + var(--i) * 0.14s) var(--ease) forwards;
-  }
-  .graph-commit {
-    fill: var(--card);
-    stroke: var(--branch);
-    stroke-width: 2.5;
-    opacity: 0;
-    animation: pop 0.4s calc(0.75s + var(--i) * 0.14s) var(--ease) forwards;
-  }
-  .graph-merge {
-    fill: var(--signal);
-    stroke: var(--ink);
-    stroke-width: 2.5;
-  }
-  .graph-row:first-child .graph-merge {
-    fill: var(--ink);
-    stroke: var(--signal);
-    stroke-width: 3;
-  }
-  .graph-text {
-    display: grid;
-    gap: 2px;
-    padding-top: 2px;
-    min-width: 0;
-  }
-  .graph-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted);
-  }
-  .graph-text strong {
-    font-size: 1.12rem;
-    line-height: 1.2;
-  }
-  .graph-platforms {
-    font-size: 0.85rem;
-    color: var(--muted);
   }
 
   /* ------------------------------------------------------------- sections */
@@ -846,10 +848,6 @@
     border: 1px solid var(--leaf);
     color: var(--tea);
     white-space: nowrap;
-  }
-  .graph-downloads {
-    color: var(--tea);
-    font-weight: 600;
   }
   .release-links {
     display: flex;
@@ -2095,6 +2093,9 @@
 }
 
 @media (max-width: 900px) {
+  .hero-stage {
+    max-width: 340px;
+  }
   .hero-grid,
   .case,
   .section-head,
@@ -2173,9 +2174,6 @@
   .hero-facts dd {
     font-size: 1.6rem;
   }
-  .hero-email {
-    display: none;
-  }
   .log-row {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -2187,17 +2185,6 @@
   .log-row .ref-muted {
     align-items: flex-start;
     text-align: left;
-  }
-  .commit-head {
-    align-items: flex-start;
-  }
-  .monogram {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-  }
-  .commit-head dt {
-    min-width: 0;
   }
   .hero-actions .magnetic {
     flex: 1 1 auto;
@@ -2248,11 +2235,25 @@
   }
 }
 
-.graph-commit {
-  transform-box: fill-box;
-  transform-origin: center;
+@keyframes chip-float {
+  to {
+    transform: translateY(-10px);
+  }
 }
-
+@keyframes cue {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+}
 @keyframes clip-up {
   from {
     clip-path: inset(0 0 100% 0);

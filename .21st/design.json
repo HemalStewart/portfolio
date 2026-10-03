@@ -3,16 +3,17 @@
   "project": {
     "name": "portfolio",
     "productType": "personal-portfolio",
-    "stack": ["nextjs", "react", "tailwind-v4", "motion", "lenis"]
+    "stack": ["nextjs", "react", "tailwind-v4", "motion", "lenis", "three"]
   },
   "sources": {
     "tokens": ["app/globals.css"],
     "components": [
       "app/components",
       "app/components/motion",
-      "app/components/mockups"
+      "app/components/mockups",
+      "app/components/guide"
     ],
-    "assets": ["public/resume.pdf"],
+    "assets": ["public/resume.pdf", "public/guide-poster.webp"],
     "instructions": ["AGENTS.md", "CLAUDE.md", "docs/DESIGN.md"]
   },
   "design": {
@@ -130,8 +131,10 @@
       "CodeView",
       "ScrubText",
       "KineticName",
-      "BranchGraph",
-      "CopyButton"
+      "CopyButton",
+      "guide/Guide",
+      "guide/scene (three.js bot)",
+      "motion/SiteHeader"
     ],
     "preferredPrimitives": [
       "m.* components (never motion.*) inside LazyMotion strict"
@@ -150,9 +153,9 @@
     "avoid": [
       "The SHIFENMEI identity (dark ink + cinnabar, 十, Mona Sans / Martian Mono / Instrument Serif).",
       "Raster avatars or portraits of Hemal (removed at the owner's request).",
-      "3D characters, mascots, three.js.",
       "Raster screenshots — project visuals are code-built mockups.",
-      "Container queries for mockup sizing (measured ~2x layout cost); use --mw."
+      "Container queries for mockup sizing (measured ~2x layout cost); use --mw.",
+      "Hiding the header on scroll — it must stay reachable."
     ]
   },
   "decisions": [
@@ -161,7 +164,8 @@
     "Motion (lazy features) drives magnetic CTAs and odometers; lens, pinned stage, typing and cursor are small vanilla loops; scroll effects are CSS scroll-driven.",
     "21st.dev-style components were written locally because 21st.dev is not reachable from the build environment.",
     "Project visuals are code-built mockups; the code under the X-ray lens is illustrative and labelled so.",
-    "Effects adapted from the SHIFENMEI site (lens, pinned showcase, odometer, cursor, Lenis) in this portfolio's own identity."
+    "Effects adapted from the SHIFENMEI site (lens, pinned showcase, odometer, cursor, Lenis) in this portfolio's own identity.",
+    "A code-modelled cartoon guide bot (three.js, lazy) leads visitors through the sections; it is generic, not a likeness of the owner."
   ],
   "generatedAt": "2026-10-03T12:00:00.000Z"
 }

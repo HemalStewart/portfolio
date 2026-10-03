@@ -5,7 +5,8 @@ Personal portfolio of Hemal Herath, software engineer in Colombo, Sri Lanka
 [`docs/DESIGN.md`](docs/DESIGN.md).
 
 Next.js 16 (App Router, fully static) · React 19 · Tailwind CSS 4 · Motion ·
-Lenis. Project visuals are code-built mockups (no images); effects include an
+Lenis · three.js (a code-modelled guide bot that walks visitors through the
+page). Project visuals are code-built mockups (no images); effects include an
 X-ray code lens, a pinned project showcase and CSS scroll-driven animations,
 all respecting `prefers-reduced-motion`.
 

@@ -50,11 +50,13 @@ command as the eyebrow (e.g. `$ git tag --list`).
 
 ## Sections
 
-1. **Header** — wordmark `hemal/main`, anchors, CV button. Mobile: the anchors
-   become a horizontally scrollable row under the bar (no JS).
-2. **Hero / HEAD** — commit header with a branch monogram, kinetic H1 name,
-   statement, CTAs, rolling facts; branch graph of every production release.
-   Then a scroll-inked `README.md` statement.
+1. **Header** — always-visible floating pill: wordmark `hemal/main`, anchors
+   with a sliding active-section highlight, CV + Hire me. Mobile: a menu button
+   opens a full-screen animated menu.
+2. **Hero** — "open to roles" kicker, kinetic H1 name, a statement grounded in
+   real numbers, CTAs; on the right the **guide bot** stands on a platform with
+   orbiting stack chips; rolling facts and a scroll cue below. Then a
+   scroll-inked `README.md` statement.
 3. **Releases** — production deployments grouped per product with store/web links.
 4. **Merged branches** — four featured case studies in a pinned stage (X-ray lens, highlights,
    stack, references) then six more projects in a compact grid.
@@ -63,6 +65,23 @@ command as the eyebrow (e.g. `$ git tag --list`).
 6. **Stack** — skill groups + the tech marquee.
 7. **Side branches** — additional projects as a log list.
 8. **Open a PR** — contact: email, phone, LinkedIn, GitHub, CV. Footer.
+
+## The guide bot ("Commit")
+
+A cartoon robot modelled in code with three.js (`app/components/guide/scene.ts`):
+rounded head with a dark visor and glowing eyes, a git-branch antenna, a
+tea-green body and arms. It hovers, blinks, follows the pointer and plays poses
+(wave, point, think, cheer).
+
+- It stands large in the hero's `.hero-stage`, then shrinks and docks in the
+  bottom-right corner as you scroll; each section gives it a pose and a short
+  speech bubble. Clicking it jumps to the next section.
+- One fixed 520px canvas, moved and scaled with a CSS transform (no canvas
+  resizing while scrolling); DPR capped at 1.5, no shadows or post-processing;
+  rendering stops when the tab is hidden; reduced motion renders still frames.
+- three.js loads only after the first interaction. Until then (and without
+  WebGL) the hero shows `public/guide-poster.webp`, a 24 KB still rendered
+  from the same scene.
 
 ## Motion
 
@@ -98,12 +117,14 @@ Every project visual is a code-built mockup (`app/components/mockups`): HTML,
 CSS and SVG sketches of the real product's layout and vocabulary (taken from
 the live app or store listing). Text sizes derive from the mockup's computed
 width (`--mw`), not container queries, which measured ~2× slower to lay out.
-The only binary asset left is `public/resume.pdf`.
+Binary assets: `public/resume.pdf` and the guide poster.
 
 ## Performance & accessibility budget
 
-- Static prerender, self-hosted fonts via `next/font`; no images at all.
-- No `three`. Motion features and Lenis load lazily after first paint.
+- Static prerender, self-hosted fonts via `next/font`; the only image is the
+  guide poster.
+- three.js (guide bot), Motion features and Lenis all load lazily after first
+  paint / first interaction.
 - Contrast AA for all text; visible focus rings; skip link; semantic landmarks.
 - Responsive 320–1920px with no horizontal overflow.
 - Metadata: title, description, canonical, Open Graph image, Twitter card,

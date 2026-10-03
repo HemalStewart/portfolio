@@ -1,4 +1,5 @@
-import { BranchGraph } from "./components/BranchGraph";
+import Image from "next/image";
+import { Guide, type GuideStop } from "./components/guide/Guide";
 import { CopyButton } from "./components/CopyButton";
 import { Magnetic } from "./components/motion/Magnetic";
 import { KineticName } from "./components/KineticName";
@@ -33,6 +34,49 @@ import {
 const email = profileLinks.find((link) => link.label === "Email")!;
 const phone = profileLinks.find((link) => link.label === "Phone")!;
 
+const heroChips = [
+  "Flutter",
+  "Next.js",
+  "TypeScript",
+  "FastAPI",
+  "Laravel",
+  "RAG Pipelines",
+];
+
+const guideStops: GuideStop[] = [
+  {
+    id: "top",
+    pose: "wave",
+    line: "Hi! I'm Commit, Hemal's guide bot. Scroll and I'll show you around.",
+  },
+  {
+    id: "releases",
+    pose: "point",
+    line: `These ${releases.length} products are live. Open any of them.`,
+  },
+  {
+    id: "work",
+    pose: "point",
+    line: "Move over a project to X-ray the code underneath.",
+  },
+  {
+    id: "experience",
+    pose: "think",
+    line: `Writing production code since ${experience[experience.length - 1].start.slice(0, 4)}.`,
+  },
+  { id: "stack", pose: "idle", line: "The toolchain behind everything above." },
+  {
+    id: "side-branches",
+    pose: "idle",
+    line: "Experiments and side projects live here.",
+  },
+  {
+    id: "contact",
+    pose: "cheer",
+    line: "Ready to merge? Hemal's inbox is open.",
+  },
+];
+
 export default function Home() {
   const featured = selectedProjects.filter((project) => project.featured);
   const more = selectedProjects.filter((project) => !project.featured);
@@ -44,58 +88,29 @@ export default function Home() {
       </a>
 
       <SiteHeader links={navLinks} email={email.href} />
+      <Guide stops={guideStops} />
 
       <main id="main">
         {/* HEAD */}
         <section id="top" className="hero" aria-labelledby="hero-title">
           <div className="shell hero-grid">
             <div className="hero-copy">
-              <div className="commit-head">
-                <span className="monogram" aria-hidden="true">
-                  <svg viewBox="0 0 72 72" focusable="false">
-                    <path className="monogram-rail" d="M24 8v56" />
-                    <path
-                      className="monogram-branch"
-                      d="M24 52c0-12 24-10 24-22V22"
-                    />
-                    <circle className="monogram-node" cx="24" cy="12" r="5" />
-                    <circle className="monogram-tip" cx="48" cy="20" r="5" />
-                    <circle className="monogram-node" cx="24" cy="60" r="5" />
-                  </svg>
-                </span>
-                <dl>
-                  <div>
-                    <dt>commit</dt>
-                    <dd>
-                      <span className="tag tag-head">HEAD → main</span>
-                      <span className="tag tag-open">open to roles</span>
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Author:</dt>
-                    <dd>
-                      <span>Hemal Herath</span>
-                      <span className="hero-email">
-                        &lt;<a href={email.href}>{email.display}</a>&gt;
-                      </span>
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Where:</dt>
-                    <dd>Colombo, Sri Lanka</dd>
-                  </div>
-                </dl>
-              </div>
+              <p className="hero-kicker">
+                <span className="tag tag-open">open to roles</span>
+                <span>Software engineer · Colombo, Sri Lanka</span>
+              </p>
 
               <h1 id="hero-title">
-                <span className="sr-only">Hemal Herath</span>
+                <span className="sr-only">Hemal Herath, software engineer</span>
                 <KineticName lines={["Hemal", "Herath"]} />
               </h1>
 
               <p className="hero-message">
-                Software engineer who <mark>ships to production</mark> — mobile,
-                web and applied AI, built end to end from the first screen to
-                the store release.
+                I build mobile, web and AI products end to end — and{" "}
+                <mark>ship them to real users</mark>:{" "}
+                {`${formatDownloads(totalDownloads)} Play Store downloads`}{" "}
+                across three apps, and systems running at Sri Lanka&apos;s
+                Ministry of Education.
               </p>
 
               <div className="hero-actions">
@@ -118,46 +133,70 @@ export default function Home() {
                   Download CV <ArrowIcon />
                 </a>
               </div>
-
-              <dl className="hero-facts">
-                <div>
-                  <dt>Live products</dt>
-                  <dd>
-                    <Odometer value={releases.length} />
-                  </dd>
-                </div>
-                <div>
-                  <dt>Play Store downloads</dt>
-                  <dd>
-                    <Odometer
-                      value={parseInt(formatDownloads(totalDownloads), 10)}
-                      suffix={formatDownloads(totalDownloads).replace(
-                        /^\d+/,
-                        "",
-                      )}
-                    />
-                  </dd>
-                </div>
-                <div>
-                  <dt>Store & web releases</dt>
-                  <dd>
-                    <Odometer value={productionDeployments.length} />
-                  </dd>
-                </div>
-                <div>
-                  <dt>First commit</dt>
-                  <dd>
-                    <Odometer
-                      value={Number(
-                        experience[experience.length - 1].start.slice(0, 4),
-                      )}
-                    />
-                  </dd>
-                </div>
-              </dl>
             </div>
 
-            <BranchGraph />
+            <div className="hero-stage" aria-hidden="true">
+              <span className="stage-platform" />
+              <ul className="stage-chips">
+                {heroChips.map((chip, index) => (
+                  <li
+                    key={chip}
+                    style={{ "--i": index } as React.CSSProperties}
+                  >
+                    {chip}
+                  </li>
+                ))}
+              </ul>
+              <Image
+                className="stage-poster"
+                src="/guide-poster.webp"
+                alt=""
+                width={520}
+                height={520}
+                sizes="(max-width: 900px) 320px, 560px"
+                loading="eager"
+              />
+            </div>
+          </div>
+
+          <div className="shell hero-strip">
+            <dl className="hero-facts">
+              <div>
+                <dt>Live products</dt>
+                <dd>
+                  <Odometer value={releases.length} />
+                </dd>
+              </div>
+              <div>
+                <dt>Play Store downloads</dt>
+                <dd>
+                  <Odometer
+                    value={parseInt(formatDownloads(totalDownloads), 10)}
+                    suffix={formatDownloads(totalDownloads).replace(/^\d+/, "")}
+                  />
+                </dd>
+              </div>
+              <div>
+                <dt>Store & web releases</dt>
+                <dd>
+                  <Odometer value={productionDeployments.length} />
+                </dd>
+              </div>
+              <div>
+                <dt>First commit</dt>
+                <dd>
+                  <Odometer
+                    value={Number(
+                      experience[experience.length - 1].start.slice(0, 4),
+                    )}
+                  />
+                </dd>
+              </div>
+            </dl>
+            <a className="scroll-cue" href="#releases">
+              <span>Scroll — the bot will show you around</span>
+              <i aria-hidden="true" />
+            </a>
           </div>
         </section>
 
