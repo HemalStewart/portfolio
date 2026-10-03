@@ -1,8 +1,11 @@
 import { BranchGraph } from "./components/BranchGraph";
 import { CopyButton } from "./components/CopyButton";
 import { Magnetic } from "./components/motion/Magnetic";
-import { NumberTicker } from "./components/motion/NumberTicker";
-import { ScrollProgress } from "./components/motion/ScrollProgress";
+import { KineticName } from "./components/KineticName";
+import { Odometer } from "./components/motion/Odometer";
+import { PinnedWork } from "./components/motion/PinnedWork";
+import { ScrubText } from "./components/ScrubText";
+import { TypeCommand } from "./components/motion/TypeCommand";
 import { ArrowIcon, LinkIcon } from "./components/icons";
 import {
   FeaturedCase,
@@ -66,7 +69,7 @@ export default function Home() {
             </a>
           </Magnetic>
         </div>
-        <ScrollProgress />
+        <div className="scroll-progress" aria-hidden="true" />
       </header>
 
       <main id="main">
@@ -112,10 +115,8 @@ export default function Home() {
               </div>
 
               <h1 id="hero-title">
-                Hemal
-                <br />
-                Herath
-                <span className="h1-cursor" aria-hidden="true" />
+                <span className="sr-only">Hemal Herath</span>
+                <KineticName lines={["Hemal", "Herath"]} />
               </h1>
 
               <p className="hero-message">
@@ -149,13 +150,13 @@ export default function Home() {
                 <div>
                   <dt>Live products</dt>
                   <dd>
-                    <NumberTicker value={releases.length} />
+                    <Odometer value={releases.length} />
                   </dd>
                 </div>
                 <div>
                   <dt>Play Store downloads</dt>
                   <dd>
-                    <NumberTicker
+                    <Odometer
                       value={parseInt(formatDownloads(totalDownloads), 10)}
                       suffix={formatDownloads(totalDownloads).replace(
                         /^\d+/,
@@ -167,17 +168,34 @@ export default function Home() {
                 <div>
                   <dt>Store & web releases</dt>
                   <dd>
-                    <NumberTicker value={productionDeployments.length} />
+                    <Odometer value={productionDeployments.length} />
                   </dd>
                 </div>
                 <div>
                   <dt>First commit</dt>
-                  <dd>{experience[experience.length - 1].start.slice(0, 4)}</dd>
+                  <dd>
+                    <Odometer
+                      value={Number(
+                        experience[experience.length - 1].start.slice(0, 4),
+                      )}
+                    />
+                  </dd>
                 </div>
               </dl>
             </div>
 
             <BranchGraph />
+          </div>
+        </section>
+
+        {/* README */}
+        <section className="readme" aria-labelledby="readme-title">
+          <div className="shell">
+            <h2 id="readme-title" className="sr-only">
+              About
+            </h2>
+            <TypeCommand text="cat README.md" />
+            <ScrubText text="I build the whole thing — the interface, the API, the database and the server it runs on — and I own it from the first design to the deployment. Flutter and Next.js up front; CodeIgniter, Laravel, Django and FastAPI behind them. Shipped to Google Play, the App Store, and Sri Lanka's Ministry of Education." />
           </div>
         </section>
 
@@ -256,7 +274,7 @@ export default function Home() {
               title="Merged branches."
               description="Four larger builds, from fintech operations to multi-platform AI and school administration — then six more."
             />
-            <div className="cases">
+            <PinnedWork titles={featured.map((project) => project.title)}>
               {featured.map((project, index) => (
                 <FeaturedCase
                   key={project.slug}
@@ -264,7 +282,7 @@ export default function Home() {
                   index={index}
                 />
               ))}
-            </div>
+            </PinnedWork>
             <h3 className="subhead reveal">
               <code>+{more.length}</code> more engineering work
             </h3>
@@ -318,9 +336,7 @@ export default function Home() {
                   className="credential reveal"
                   aria-labelledby="education-title"
                 >
-                  <code className="command">
-                    <span aria-hidden="true">$ </span>cat education.md
-                  </code>
+                  <TypeCommand text="cat education.md" />
                   <h3 id="education-title">{education.degree}</h3>
                   <p>{education.school}</p>
                   <p className="credential-period">{education.period}</p>
@@ -329,10 +345,7 @@ export default function Home() {
                   className="credential reveal"
                   aria-labelledby="recognition-title"
                 >
-                  <code className="command">
-                    <span aria-hidden="true">$ </span>git tag --list
-                    &apos;award/*&apos;
-                  </code>
+                  <TypeCommand text="git tag --list 'award/*'" />
                   <h3 id="recognition-title">Recognition</h3>
                   <ul className="recognition">
                     {recognition.map((item) => (
@@ -436,9 +449,7 @@ export default function Home() {
           aria-labelledby="contact-title"
         >
           <div className="shell">
-            <code className="command">
-              <span aria-hidden="true">$ </span>gh pr create --base hemal/main
-            </code>
+            <TypeCommand text="gh pr create --base hemal/main" />
             <h2 id="contact-title" className="reveal">
               Open a pull request.
             </h2>

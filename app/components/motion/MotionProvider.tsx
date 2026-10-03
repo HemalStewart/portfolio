@@ -1,14 +1,17 @@
 "use client";
 
-import { LazyMotion, MotionConfig, domAnimation } from "motion/react";
+import { LazyMotion, MotionConfig } from "motion/react";
+
+// Motion's animation features load in their own chunk after first paint.
+const loadFeatures = () => import("./features").then((mod) => mod.default);
 
 /**
- * Loads only Motion's DOM animation features (via `m` components) and makes
- * every animation honour the visitor's reduced-motion setting.
+ * Lazily loads Motion's DOM animation features (used via `m` components) and
+ * makes every animation honour the visitor's reduced-motion setting.
  */
 export function MotionProvider({ children }: { children: React.ReactNode }) {
   return (
-    <LazyMotion features={domAnimation} strict>
+    <LazyMotion features={loadFeatures} strict>
       <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </LazyMotion>
   );

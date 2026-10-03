@@ -14,8 +14,6 @@ export type ProjectExperience = {
   highlights: string[];
   references: ExternalReference[];
   featured?: boolean;
-  /** False when there is no `public/projects/<slug>.webp` yet. */
-  screenshot?: boolean;
 };
 
 export type LightProject = {
@@ -379,7 +377,6 @@ export const selectedProjects: ProjectExperience[] = [
         href: "https://novice-monk-admin.vercel.app/admin",
       },
     ],
-    screenshot: false,
   },
   {
     slug: "huddle",

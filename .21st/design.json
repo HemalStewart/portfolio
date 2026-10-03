@@ -3,12 +3,16 @@
   "project": {
     "name": "portfolio",
     "productType": "personal-portfolio",
-    "stack": ["nextjs", "react", "tailwind-v4", "motion"]
+    "stack": ["nextjs", "react", "tailwind-v4", "motion", "lenis"]
   },
   "sources": {
     "tokens": ["app/globals.css"],
-    "components": ["app/components", "app/components/motion"],
-    "assets": ["public/projects", "public/resume.pdf"],
+    "components": [
+      "app/components",
+      "app/components/motion",
+      "app/components/mockups"
+    ],
+    "assets": ["public/resume.pdf"],
     "instructions": ["AGENTS.md", "CLAUDE.md", "docs/DESIGN.md"]
   },
   "design": {
@@ -49,8 +53,14 @@
         "dark": "#5cc08a",
         "source": "app/globals.css"
       },
-      "--signal": { "value": "#d9f99d", "source": "app/globals.css" },
-      "--on-signal": { "value": "#0f2219", "source": "app/globals.css" },
+      "--signal": {
+        "value": "#d9f99d",
+        "source": "app/globals.css"
+      },
+      "--on-signal": {
+        "value": "#0f2219",
+        "source": "app/globals.css"
+      },
       "--clay": {
         "value": "#b4532a",
         "dark": "#e3906a",
@@ -78,13 +88,27 @@
       }
     },
     "spacing": {
-      "--gutter": { "value": "clamp(16px, 4vw, 40px)" },
-      "--shell": { "value": "1240px" }
+      "--gutter": {
+        "value": "clamp(16px, 4vw, 40px)"
+      },
+      "--shell": {
+        "value": "1240px"
+      }
     },
-    "radius": { "--radius": { "value": "14px" } },
-    "shadows": { "--shadow": { "value": "rgb(15 34 25 / 0.28)" } },
+    "radius": {
+      "--radius": {
+        "value": "14px"
+      }
+    },
+    "shadows": {
+      "--shadow": {
+        "value": "rgb(15 34 25 / 0.28)"
+      }
+    },
     "motion": {
-      "--ease": { "value": "cubic-bezier(0.2, 0.7, 0.1, 1)" },
+      "--ease": {
+        "value": "cubic-bezier(0.2, 0.7, 0.1, 1)"
+      },
       "library": {
         "value": "motion/react via LazyMotion(domAnimation) + MotionConfig reducedMotion=user"
       }
@@ -93,11 +117,19 @@
   },
   "components": {
     "installed": [
-      "motion/ScrollProgress",
-      "motion/NumberTicker",
+      "motion/XRayLens",
+      "motion/PinnedWork",
+      "motion/TypeCommand",
+      "motion/Odometer",
       "motion/Magnetic",
-      "motion/Spotlight",
+      "motion/Cursor",
+      "motion/SmoothScroll",
+      "motion/SpotlightTracker",
       "motion/DiffToggle",
+      "mockups/ProjectMockup",
+      "CodeView",
+      "ScrubText",
+      "KineticName",
       "BranchGraph",
       "CopyButton"
     ],
@@ -118,15 +150,18 @@
     "avoid": [
       "The SHIFENMEI identity (dark ink + cinnabar, 十, Mona Sans / Martian Mono / Instrument Serif).",
       "Raster avatars or portraits of Hemal (removed at the owner's request).",
-      "3D characters, mascots, three.js."
+      "3D characters, mascots, three.js.",
+      "Raster screenshots — project visuals are code-built mockups.",
+      "Container queries for mockup sizing (measured ~2x layout cost); use --mw."
     ]
   },
   "decisions": [
     "Concept 'Merged to main': the portfolio is a git history. See docs/DESIGN.md.",
     "Tea-estate paper palette with automatic dark theme; Bricolage Grotesque + JetBrains Mono.",
-    "Project images in public/projects are illustrative previews, labelled as such on the page.",
-    "Motion is used for interaction only (magnetic CTAs, spotlight cards, number tickers, scroll progress, diff expanders); scroll reveals stay CSS scroll-driven for performance.",
-    "21st.dev-style components were written locally because 21st.dev is not reachable from the build environment."
+    "Motion (lazy features) drives magnetic CTAs and odometers; lens, pinned stage, typing and cursor are small vanilla loops; scroll effects are CSS scroll-driven.",
+    "21st.dev-style components were written locally because 21st.dev is not reachable from the build environment.",
+    "Project visuals are code-built mockups; the code under the X-ray lens is illustrative and labelled so.",
+    "Effects adapted from the SHIFENMEI site (lens, pinned showcase, odometer, cursor, Lenis) in this portfolio's own identity."
   ],
   "generatedAt": "2026-10-03T12:00:00.000Z"
 }

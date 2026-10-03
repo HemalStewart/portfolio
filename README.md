@@ -4,15 +4,17 @@ Personal portfolio of Hemal Herath, software engineer in Colombo, Sri Lanka
 (mobile, web & AI). The concept, palette, type and motion rules live in
 [`docs/DESIGN.md`](docs/DESIGN.md).
 
-Next.js 16 (App Router, fully static) · React 19 · Tailwind CSS 4. No client
-JavaScript is used for visuals; motion is CSS only and respects
-`prefers-reduced-motion`.
+Next.js 16 (App Router, fully static) · React 19 · Tailwind CSS 4 · Motion ·
+Lenis. Project visuals are code-built mockups (no images); effects include an
+X-ray code lens, a pinned project showcase and CSS scroll-driven animations,
+all respecting `prefers-reduced-motion`.
 
 ## Editing content
 
 All content (releases, case studies, side projects, skills, links) is in
-[`app/data/portfolio.ts`](app/data/portfolio.ts). Project screenshots are
-`public/projects/<slug>.png`; the CV is `public/resume.pdf`.
+[`app/data/portfolio.ts`](app/data/portfolio.ts). Project mockups live in
+`app/components/mockups`, lens code samples in `app/data/code.ts`; the CV is
+`public/resume.pdf`.
 
 ## Commands
 

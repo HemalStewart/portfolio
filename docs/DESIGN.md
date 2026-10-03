@@ -52,10 +52,11 @@ command as the eyebrow (e.g. `$ git tag --list`).
 
 1. **Header** — wordmark `hemal/main`, anchors, CV button. Mobile: the anchors
    become a horizontally scrollable row under the bar (no JS).
-2. **Hero / HEAD** — commit header with avatar as author, H1 name, statement,
-   CTAs; branch graph SVG of the five production products.
+2. **Hero / HEAD** — commit header with a branch monogram, kinetic H1 name,
+   statement, CTAs, rolling facts; branch graph of every production release.
+   Then a scroll-inked `README.md` statement.
 3. **Releases** — production deployments grouped per product with store/web links.
-4. **Merged branches** — four featured case studies (screenshot, highlights,
+4. **Merged branches** — four featured case studies in a pinned stage (X-ray lens, highlights,
    stack, references) then six more projects in a compact grid.
 5. **Experience** — roles from the CV as a `git log` timeline, with education and
    recognition (IEEE paper, competitions) in a side panel.
@@ -65,24 +66,44 @@ command as the eyebrow (e.g. `$ git tag --list`).
 
 ## Motion
 
-All CSS, no animation library, no WebGL:
+The site should feel alive, but the effects come from CSS wherever possible
+and JavaScript only where the interaction needs it:
 
-- branch graph strokes draw in on load (`stroke-dashoffset`), and a single
-  "commit" dot travels along `main` via `offset-path`;
-- section rows reveal with scroll-driven animations (`animation-timeline: view()`)
-  inside `@supports`, so unsupported browsers just show content;
-- marquee is a transform-only CSS loop;
-- everything is disabled under `prefers-reduced-motion: reduce`.
+- **X-ray lens** (`XRayLens`) on each featured case: the code-built interface is
+  masked by a soft circle that follows the pointer (eased, springs larger on
+  press, tap to move on touch, arrow keys when focused) and reveals an
+  illustrative code layer for that stack. A "Show code" toggle swaps layers.
+- **Pinned showcase** (`PinnedWork`): on desktop the four featured cases share a
+  sticky full-height stage, one viewport of scroll each; text lines slide and
+  the visual wipes between projects. Small/short screens and reduced motion get
+  the same cases stacked.
+- **Typed commands** (`TypeCommand`): each section's `$ git …` line types itself
+  out when it scrolls into view.
+- **Rolling digits** (`Odometer`, Motion) on the hero facts; **magnetic CTAs**
+  (`Magnetic`, Motion); a trailing **cursor ring** that labels outbound links.
+- **Lenis smooth scrolling**, loaded after hydration.
+- CSS scroll-driven animations (`animation-timeline: view()/scroll()`): the
+  README paragraph inks word by word, headings clip up, the experience rail
+  draws, mockup parts build in (charts draw, KPIs rise, bars grow), card
+  visuals drift, the top progress bar fills.
+- CSS-only: kinetic hero letters (rise + hover hop), branch graph draw-in,
+  marquee, pointer spotlight on cards (one delegated listener).
 
-No JavaScript runs for the visuals; the only client component is the contact
-section's copy-email button. The page is fully static, with an automatic dark
-theme via `prefers-color-scheme`.
+Everything honours `prefers-reduced-motion`. Looping animations use only
+transform/opacity so they stay on the compositor.
+
+## Visuals: no raster assets
+
+Every project visual is a code-built mockup (`app/components/mockups`): HTML,
+CSS and SVG sketches of the real product's layout and vocabulary (taken from
+the live app or store listing). Text sizes derive from the mockup's computed
+width (`--mw`), not container queries, which measured ~2× slower to lay out.
+The only binary asset left is `public/resume.pdf`.
 
 ## Performance & accessibility budget
 
-- Static prerender, self-hosted fonts via `next/font`, `next/image` for all
-  screenshots (lazy-loaded; only the 72px avatar is preloaded).
-- No `three`, no `framer-motion`.
+- Static prerender, self-hosted fonts via `next/font`; no images at all.
+- No `three`. Motion features and Lenis load lazily after first paint.
 - Contrast AA for all text; visible focus rings; skip link; semantic landmarks.
 - Responsive 320–1920px with no horizontal overflow.
 - Metadata: title, description, canonical, Open Graph image, Twitter card,

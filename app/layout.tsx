@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
+import { Cursor } from "./components/motion/Cursor";
 import { MotionProvider } from "./components/motion/MotionProvider";
+import { SmoothScroll } from "./components/motion/SmoothScroll";
+import { SpotlightTracker } from "./components/motion/SpotlightTracker";
 import { profileLinks } from "./data/portfolio";
 import { siteUrl } from "./site";
 import "./globals.css";
@@ -101,7 +104,12 @@ export default function RootLayout({
       className={`${bricolage.variable} ${jetbrainsMono.variable}`}
     >
       <body>
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          <SmoothScroll />
+          <Cursor />
+          <SpotlightTracker />
+          {children}
+        </MotionProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

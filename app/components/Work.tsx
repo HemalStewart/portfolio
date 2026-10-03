@@ -1,8 +1,11 @@
-import Image from "next/image";
 import type { ExternalReference, ProjectExperience } from "../data/portfolio";
+import { codeSamples } from "../data/code";
+import { CodeView } from "./CodeView";
 import { ArrowIcon } from "./icons";
+import { ProjectMockup } from "./mockups/Mockups";
+import { TypeCommand } from "./motion/TypeCommand";
+import { XRayLens } from "./motion/XRayLens";
 import { DiffToggle } from "./motion/DiffToggle";
-import { Spotlight } from "./motion/Spotlight";
 
 export function SectionHead({
   id,
@@ -17,10 +20,7 @@ export function SectionHead({
 }) {
   return (
     <header className="section-head reveal">
-      <code className="command">
-        <span aria-hidden="true">$ </span>
-        {command}
-      </code>
+      <TypeCommand text={command} />
       <h2 id={id}>{title}</h2>
       {description ? <p>{description}</p> : null}
     </header>
@@ -55,37 +55,28 @@ export function ReferenceLink({
   );
 }
 
-function Screenshot({
-  project,
-  sizes,
-}: {
-  project: ProjectExperience;
-  sizes: string;
-}) {
-  if (project.screenshot === false)
-    return (
-      <div className="shot shot-placeholder" aria-hidden="true">
-        <div className="placeholder-window">
-          <span className="placeholder-bar">
-            <i />
-            <i />
-            <i />
-          </span>
-          <strong>{project.initials}</strong>
-          <code>{project.platforms.join(" · ")} · sign-in required</code>
-        </div>
-      </div>
-    );
+function Visual({ project }: { project: ProjectExperience }) {
   return (
-    <div className="shot">
-      <Image
-        src={`/projects/${project.slug}.webp`}
-        alt={`Illustrative preview of ${project.title}`}
-        width={1586}
-        height={1003}
-        sizes={sizes}
+    <div
+      className="shot"
+      role="img"
+      aria-label={`Interface sketch of ${project.title}`}
+    >
+      <ProjectMockup slug={project.slug} />
+    </div>
+  );
+}
+
+function LensVisual({ project }: { project: ProjectExperience }) {
+  const sample = codeSamples[project.slug];
+  if (!sample) return <Visual project={project} />;
+  return (
+    <div className="shot shot-lens">
+      <XRayLens
+        title={project.title}
+        interfaceLayer={<ProjectMockup slug={project.slug} />}
+        codeLayer={<CodeView file={sample.file} code={sample.code} />}
       />
-      <span className="shot-label">illustrative preview</span>
     </div>
   );
 }
@@ -123,11 +114,7 @@ export function FeaturedCase({
       className="case reveal"
       aria-labelledby={`${project.slug}-title`}
     >
-      <Spotlight size={520} />
-      <Screenshot
-        project={project}
-        sizes="(max-width: 900px) calc(100vw - 32px), 680px"
-      />
+      <LensVisual project={project} />
       <div className="case-body">
         <code className="branch-label">
           <span className="branch-dot" aria-hidden="true" />
@@ -166,11 +153,7 @@ export function ProjectCard({ project }: { project: ProjectExperience }) {
       className="card reveal"
       aria-labelledby={`${project.slug}-title`}
     >
-      <Spotlight />
-      <Screenshot
-        project={project}
-        sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1080px) 46vw, 380px"
-      />
+      <Visual project={project} />
       <code className="branch-label">
         <span className="branch-dot" aria-hidden="true" />
         feature/{project.slug}
