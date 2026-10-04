@@ -13,6 +13,8 @@ gimmick terminal theme:
 - live deployments are **releases**;
 - case studies are **merged branches**;
 - smaller experiments are **side branches**;
+- websites built for brands live on a **`web/` branch**, with a 3D fly-through
+  at `/showcase`;
 - the contact section asks you to **open a pull request** (send an email).
 
 It is personal, not agency: one author, one history, real artifacts only.
@@ -60,11 +62,15 @@ command as the eyebrow (e.g. `$ git tag --list`).
 3. **Releases** — production deployments grouped per product with store/web links.
 4. **Merged branches** — four featured case studies in a pinned stage (X-ray lens, highlights,
    stack, references) then six more projects in a compact grid.
-5. **Experience** — roles from the CV as a `git log` timeline, with education and
+5. **3D websites** (`#showcase`) — a dark lead panel into the 3D fly-through
+   at `/showcase` (static pages in `public/showcase`, routed by rewrites in
+   `next.config.ts`), then one card per site plus a "your brand, next" card.
+   Phones get a swipeable row.
+6. **Experience** — roles from the CV as a `git log` timeline, with education and
    recognition (IEEE paper, competitions) in a side panel.
-6. **Stack** — skill groups + the tech marquee.
-7. **Side branches** — additional projects as a log list.
-8. **Open a PR** — contact: email, phone, LinkedIn, GitHub, CV. Footer.
+7. **Stack** — skill groups + the tech marquee.
+8. **Side branches** — additional projects as a log list.
+9. **Open a PR** — contact: email, phone, LinkedIn, GitHub, CV. Footer.
 
 ## The guide bot ("Commit")
 
@@ -117,7 +123,10 @@ Every project visual is a code-built mockup (`app/components/mockups`): HTML,
 CSS and SVG sketches of the real product's layout and vocabulary (taken from
 the live app or store listing). Text sizes derive from the mockup's computed
 width (`--mw`), not container queries, which measured ~2× slower to lay out.
-Binary assets: `public/resume.pdf` and the guide poster.
+Binary assets: `public/resume.pdf` and the guide poster. The one exception is
+the 3D websites section, which shows real screenshots
+(`public/showcase/thumbs/*.jpg`, lazy-loaded through `next/image`) because
+those sites are visual work.
 
 ## Performance & accessibility budget
 

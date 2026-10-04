@@ -7,6 +7,11 @@ import { Odometer } from "./components/motion/Odometer";
 import { PinnedWork } from "./components/motion/PinnedWork";
 import { SiteHeader } from "./components/motion/SiteHeader";
 import { ScrubText } from "./components/ScrubText";
+import {
+  NextSiteCard,
+  ShowcaseFeature,
+  SiteCard,
+} from "./components/Showcase";
 import { TypeCommand } from "./components/motion/TypeCommand";
 import { ArrowIcon, LinkIcon } from "./components/icons";
 import {
@@ -26,6 +31,8 @@ import {
   profileLinks,
   releases,
   selectedProjects,
+  showcaseSites,
+  showcaseUrl,
   skillGroups,
   totalDownloads,
   formatDownloads,
@@ -58,6 +65,11 @@ const guideStops: GuideStop[] = [
     id: "work",
     pose: "point",
     line: "Move over a project to X-ray the code underneath.",
+  },
+  {
+    id: "showcase",
+    pose: "point",
+    line: "Want a website like these? Fly through all seven in 3D.",
   },
   {
     id: "experience",
@@ -131,6 +143,9 @@ export default function Home() {
                   rel="noopener noreferrer"
                 >
                   Download CV <ArrowIcon />
+                </a>
+                <a className="text-link" href={showcaseUrl}>
+                  3D web showcase <ArrowIcon />
                 </a>
               </div>
             </div>
@@ -302,6 +317,29 @@ export default function Home() {
               {more.map((project) => (
                 <ProjectCard key={project.slug} project={project} />
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Web showcase */}
+        <section
+          id="showcase"
+          className="section"
+          aria-labelledby="showcase-title"
+        >
+          <div className="shell">
+            <SectionHead
+              id="showcase-title"
+              command="git checkout web/showcase"
+              title="3D websites."
+              description="Five concept sites for Sri Lankan tea, travel, gems, coffee and surf, plus a live studio site and an unofficial redesign. Each one is built around real-time 3D or a scroll story."
+            />
+            <ShowcaseFeature />
+            <div className="site-grid reveal">
+              {showcaseSites.map((site) => (
+                <SiteCard key={site.slug} site={site} />
+              ))}
+              <NextSiteCard />
             </div>
           </div>
         </section>

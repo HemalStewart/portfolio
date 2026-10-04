@@ -48,9 +48,21 @@ export type SkillGroup = {
   skills: string[];
 };
 
+export type ShowcaseSite = {
+  slug: string;
+  name: string;
+  kind: string;
+  line: string;
+  stack: string[];
+  /** Concept sites live under /showcase; the live builds link out. */
+  href: string;
+  status: "concept" | "live";
+};
+
 export const navLinks = [
   { label: "Releases", href: "#releases" },
   { label: "Work", href: "#work" },
+  { label: "Showcase", href: "#showcase" },
   { label: "Experience", href: "#experience" },
   { label: "Stack", href: "#stack" },
   { label: "Side branches", href: "#side-branches" },
@@ -570,6 +582,78 @@ export const additionalProjects: LightProject[] = [
       label: "Details on request",
       note: "Code available on request",
     },
+  },
+];
+
+/** The 3D website showcase, static pages in public/showcase (see next.config.ts). */
+export const showcaseUrl = "/showcase";
+
+export const showcaseWhatsApp =
+  "https://wa.me/94718850419?text=Hi%20Hemal%2C%20I%20saw%20your%203D%20showcase%20and%20I%27d%20like%20a%20website.";
+
+export const showcaseSites: ShowcaseSite[] = [
+  {
+    slug: "tea",
+    name: "Mistline",
+    kind: "Ceylon tea",
+    line: "A liquid-glass 3D hero that refracts drifting highland mist.",
+    stack: ["Three.js", "GLSL", "GSAP"],
+    href: "/showcase/tea",
+    status: "concept",
+  },
+  {
+    slug: "villa",
+    name: "Saffron Reef",
+    kind: "Tangalle villa",
+    line: "An AI drone film that plays frame by frame as you scroll.",
+    stack: ["Canvas", "GSAP", "AI video"],
+    href: "/showcase/villa",
+    status: "concept",
+  },
+  {
+    slug: "sapphire",
+    name: "Nīla Atelier",
+    kind: "Ceylon sapphires",
+    line: "A real-time faceted sapphire with light dispersion and bloom.",
+    stack: ["Three.js", "PBR glass", "Bloom"],
+    href: "/showcase/sapphire",
+    status: "concept",
+  },
+  {
+    slug: "coffee",
+    name: "Ninth Lane",
+    kind: "Colombo coffee",
+    line: "140 3D coffee beans that scatter away from your cursor.",
+    stack: ["Three.js", "Instancing", "Kinetic type"],
+    href: "/showcase/coffee",
+    status: "concept",
+  },
+  {
+    slug: "surf",
+    name: "Swellhouse",
+    kind: "Weligama surf camp",
+    line: "A GPU ocean at sunrise, built from Gerstner waves.",
+    stack: ["GLSL", "ScrollTrigger"],
+    href: "/showcase/surf",
+    status: "concept",
+  },
+  {
+    slug: "shifenmei",
+    name: "Shifenmei",
+    kind: "Software studio",
+    line: "A studio site with floating 3D glyphs and a ten-chapter scroll story.",
+    stack: ["Next.js", "Three.js"],
+    href: "https://shifenmei.vercel.app/",
+    status: "live",
+  },
+  {
+    slug: "guetta",
+    name: "David Guetta",
+    kind: "Unofficial redesign",
+    line: "An editorial concept for a global DJ: tours, releases, store and awards.",
+    stack: ["Next.js", "Motion"],
+    href: "https://david-guetta-redesign.vercel.app/",
+    status: "concept",
   },
 ];
 
