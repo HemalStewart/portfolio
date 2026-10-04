@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><base href="/showcase/surf/"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Swellhouse Weligama Surf Camp</title>
+<meta name="description" content="Swellhouse: surf camp on Weligama bay, Sri Lanka. Concept website by <a href="/showcase" style="text-decoration:underline">Hemal Herath</a>.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* Layout: a live WebGL ocean at sunrise behind giant condensed type; a pinned horizontal scroller for packages; sandy sections after */
+:root{
+  --deep:#08303b; --teal:#0f6f7a; --aqua:#3fd0c9; --peach:#ffb48a; --coral:#ff5a36; --sand:#f7efe3; --sand-2:#efe3d0; --ink:#0d1a20; --mute:#5c6b70; --line:rgba(13,26,32,.14);
+  --display:"Anton",Impact,sans-serif; --sans:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--deep)}
+body{margin:0;color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:20px clamp(16px,4vw,48px);color:#fff;font-weight:600;font-size:14px}
+.nav .brand{font:400 28px/1 var(--display);letter-spacing:.02em;text-transform:uppercase}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.nav .book{background:var(--coral);color:#fff;padding:12px 20px;border-radius:999px}
+.hero{position:relative;height:100vh;height:100svh;overflow:hidden;background:linear-gradient(#f6c39d,#3fa6b7)}
+#gl{position:absolute;inset:0;width:100%;height:100%}
+.hero::before{content:"";position:absolute;inset:0 0 auto 0;height:40%;z-index:1;background:linear-gradient(rgba(8,48,59,.55),rgba(8,48,59,0));pointer-events:none}
+.hero .copy{position:absolute;left:0;right:0;top:24vh;text-align:center;color:#fff;z-index:2;padding:0 16px;pointer-events:none}
+.hero .kicker{font-weight:700;font-size:13px;letter-spacing:.3em;text-transform:uppercase;text-shadow:0 2px 14px rgba(8,48,59,.7)}
+.hero h1{font:400 clamp(84px,17vw,300px)/.84 var(--display);text-transform:uppercase;margin:14px 0 0;letter-spacing:.005em;text-shadow:0 6px 30px rgba(8,48,59,.45)}
+.hero h1 span{display:inline-block}
+.hero .bottom{position:absolute;left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);bottom:28px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;color:#fff;font-weight:600}
+.hero .bottom p{margin:0;max-width:34ch;text-shadow:0 2px 14px rgba(0,0,0,.25)}
+.chip{background:rgba(255,255,255,.18);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:10px 16px;font-size:13px}
+.marquee{background:var(--coral);color:#fff;overflow:hidden;white-space:nowrap}
+.marquee div{display:inline-flex;gap:40px;padding:16px 0;font:400 clamp(28px,3.6vw,52px)/1 var(--display);text-transform:uppercase;animation:mq 22s linear infinite}
+.marquee span::after{content:"~";margin-left:40px}
+@keyframes mq{to{transform:translateX(-50%)}}
+.wrap{max-width:1300px;margin:0 auto;padding-inline:clamp(16px,4vw,48px)}
+.tag{font-weight:700;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--coral)}
+h2{font:400 clamp(54px,8.5vw,140px)/.88 var(--display);text-transform:uppercase;margin:14px 0 0}
+.packs{background:var(--sand);overflow:hidden}
+.packs-pin{height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;gap:34px}
+.packs-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-inline:clamp(16px,4vw,48px)}
+.packs-head p{max-width:34ch;margin:0;color:var(--mute)}
+.rail{display:flex;gap:22px;padding-inline:clamp(16px,4vw,48px);will-change:transform}
+.pack{flex:0 0 min(78vw,520px);border-radius:28px;padding:30px;min-height:min(56vh,440px);display:flex;flex-direction:column;justify-content:space-between;color:#fff;position:relative;overflow:hidden}
+.pack::after{content:"";position:absolute;right:-60px;bottom:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.12)}
+.pack .lvl{font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+.pack h3{font:400 clamp(48px,5vw,76px)/.9 var(--display);text-transform:uppercase;margin:12px 0}
+.pack ul{list-style:none;padding:0;margin:0;display:grid;gap:6px;font-weight:500}
+.pack li::before{content:"→ ";opacity:.7}
+.pack .price{display:flex;justify-content:space-between;align-items:flex-end;margin-top:24px;position:relative;z-index:1}
+.pack .price b{font:400 52px/1 var(--display)}
+.pack .price span{font-size:13px;opacity:.85}
+.p1{background:linear-gradient(150deg,#14808a,#0a4a55)}.p2{background:linear-gradient(150deg,#ff6a3d,#c83a1c)}.p3{background:linear-gradient(150deg,#e9a24a,#b36a12)}.p4{background:linear-gradient(150deg,#1d2f3a,#0d1a20)}
+.bay{background:var(--sand);padding-block:clamp(80px,11vw,150px)}
+.bay-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:clamp(24px,4vw,56px);align-items:end}
+.bay-grid img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:28px}
+.bay p{color:var(--mute);font-size:17px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.facts div{background:#fff;border-radius:18px;padding:16px}
+.facts b{display:block;font:400 34px/1 var(--display);color:var(--teal)}
+.facts span{font-size:13px;color:var(--mute)}
+.day{background:var(--deep);color:var(--sand);padding-block:clamp(80px,11vw,150px)}
+.day .tag{color:var(--peach)}
+.day-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,80px);align-items:center}
+.day-grid img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:28px}
+.timeline{list-style:none;padding:0;margin:30px 0 0}
+.timeline li{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:18px 0;border-top:1px solid rgba(247,239,227,.15)}
+.timeline b{font:400 30px/1 var(--display);color:var(--aqua)}
+.timeline strong{display:block;font-size:17px}
+.timeline span{color:#a9c2c6;font-size:14.5px}
+.cta{background:var(--peach);padding-block:clamp(90px,12vw,160px);text-align:center}
+.cta h2{max-width:11ch;margin-inline:auto}
+.cta p{max-width:40ch;margin:18px auto 30px;font-size:18px;color:#5a3a26}
+.cta button{background:var(--ink);color:#fff;border:0;border-radius:999px;font:700 15px var(--sans);padding:18px 30px;cursor:pointer}
+.cta .note{min-height:1.5em;margin-top:14px;color:#5a3a26}
+footer{background:var(--ink);color:#8fa3a8;padding-block:30px;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.rv{opacity:0;transform:translateY(40px)}
+@media (max-width:860px){
+  .nav ul{display:none}
+  .packs-head{flex-direction:column;align-items:flex-start}
+  .bay-grid,.day-grid{grid-template-columns:1fr}
+  .facts b{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.marquee div{animation:none}}
+</style>
+
+<nav class="nav"><a class="brand" href="#">Swellhouse</a><ul><li>Camps</li><li>The bay</li><li>A day here</li><li>Stay</li></ul><a class="book" href="#book">Book a week</a></nav>
+
+<header class="hero">
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="copy"><div class="kicker">Surf camp · Weligama bay · Sri Lanka</div><h1><span>Ride</span> <span>the</span> <span>south</span></h1></div>
+  <div class="bottom"><p>Seven-night surf camps on the gentlest bay in Sri Lanka, from your first pop-up to your first reef break.</p><span class="chip">Season: November to April</span></div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div><span>Surf</span><span>Yoga</span><span>Eat</span><span>Repeat</span><span>Surf</span><span>Yoga</span><span>Eat</span><span>Repeat</span><span>Surf</span><span>Yoga</span><span>Eat</span><span>Repeat</span></div></div>
+
+<main>
+  <section class="packs" id="packs">
+    <div class="packs-pin">
+      <div class="packs-head"><div><span class="tag">The camps</span><h2>Pick your wave</h2></div><p>Every camp includes your board, daily lessons with video feedback, breakfast and dinner, and a bed a minute from the water.</p></div>
+      <div class="rail" id="rail">
+        <article class="pack p1"><div><span class="lvl">Beginner · 7 nights</span><h3>First Wave</h3><ul><li>2 lessons a day on Weligama's sandy bay</li><li>Soft-top boards and rash vest</li><li>Video review every evening</li></ul></div><div class="price"><b>$590</b><span>per person, shared room</span></div></article>
+        <article class="pack p2"><div><span class="lvl">Intermediate · 7 nights</span><h3>Reef Breaks</h3><ul><li>Guided sessions at Midigama and Mirissa</li><li>Tuk-tuk transfers to the best tide</li><li>Turns and line coaching</li></ul></div><div class="price"><b>$690</b><span>per person, shared room</span></div></article>
+        <article class="pack p3"><div><span class="lvl">All levels · 10 nights</span><h3>Surf &amp; Yoga</h3><ul><li>Morning surf, sunset yoga in the shala</li><li>Ayurvedic massage included</li><li>Private room upgrade available</li></ul></div><div class="price"><b>$940</b><span>per person, shared room</span></div></article>
+        <article class="pack p4"><div><span class="lvl">Groups · flexible</span><h3>Crew Week</h3><ul><li>Book the whole house for 8 to 12 friends</li><li>Private coach and photographer</li><li>Beach barbecue night</li></ul></div><div class="price"><b>Ask</b><span>custom quote</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bay">
+    <div class="wrap bay-grid">
+      <img src="img/aerial.jpg" alt="Surfer riding a wave in Weligama bay at sunrise" class="rv">
+      <div>
+        <span class="tag rv">The bay</span>
+        <h2 class="rv">Made for learning</h2>
+        <p class="rv">Weligama's long, sandy bay breaks soft and slow, so beginners stand up on day one. Ten minutes down the coast, the reefs wait for when you're ready.</p>
+        <div class="facts rv"><div><b>27°C</b><span>water, all year</span></div><div><b>1 min</b><span>bed to beach</span></div><div><b>6</b><span>guests per coach</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="wrap day-grid">
+      <img src="img/camp.jpg" alt="Surf camp cabanas and boards at sunset" class="rv">
+      <div>
+        <span class="tag rv">A day at Swellhouse</span>
+        <h2 class="rv" style="color:var(--sand)">Salt, sun, sleep</h2>
+        <ol class="timeline">
+          <li class="rv"><b>6:00</b><div><strong>Dawn session</strong><span>Glassy water before the wind picks up.</span></div></li>
+          <li class="rv"><b>9:00</b><div><strong>Big breakfast</strong><span>Hoppers, fruit and real coffee.</span></div></li>
+          <li class="rv"><b>12:00</b><div><strong>Video review</strong><span>Your waves on the big screen, with notes.</span></div></li>
+          <li class="rv"><b>16:30</b><div><strong>Sunset surf or yoga</strong><span>Your call, every day.</span></div></li>
+          <li class="rv"><b>19:30</b><div><strong>Dinner together</strong><span>Rice and curry or the catch of the day.</span></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="book">
+    <div class="wrap">
+      <span class="tag">This season</span>
+      <h2 class="rv">Your board is waiting</h2>
+      <p class="rv">Weeks start every Saturday from November to April. Pick a week and we'll hold your bed for 48 hours.</p>
+      <button id="bookBtn">Check this season's weeks</button>
+      <p class="note" id="note" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <footer><div class="wrap"><span>Swellhouse · Weligama, Sri Lanka</span><span>Concept website by Hemal Herath · real-time ocean in WebGL</span></div></footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"}}</script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  if (window.Lenis && !reduce){ const lenis = new Lenis({lerp:0.09}); if (window.ScrollTrigger) lenis.on('scroll', ScrollTrigger.update); if (window.gsap){ gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);} }
+  document.getElementById('bookBtn').addEventListener('click', () => document.getElementById('note').textContent = 'Concept site: on the real site this opens the week picker and deposit.');
+  if (!window.gsap || reduce){ document.querySelectorAll('.rv').forEach(e=>{e.style.opacity=1;e.style.transform='none'}); return; }
+  gsap.from('.hero h1 span',{yPercent:100,opacity:0,duration:1.3,stagger:.12,ease:'expo.out',delay:.2});
+  gsap.to('.hero .copy',{yPercent:-40,opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+  const rail = document.getElementById('rail');
+  const dist = () => Math.max(0, rail.scrollWidth - innerWidth);
+  gsap.to(rail,{x:() => -dist(),ease:'none',scrollTrigger:{trigger:'.packs',start:'top top',end:() => '+=' + dist(),pin:'.packs-pin',scrub:0.6,invalidateOnRefresh:true}});
+  document.querySelectorAll('.rv').forEach(el => gsap.to(el,{opacity:1,y:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
+})();
+</script>
+<script type="module">
+import * as THREE from 'three';
+const canvas = document.getElementById('gl');
+let renderer; try { renderer = new THREE.WebGLRenderer({canvas, antialias:true}); } catch(e){ canvas.remove(); throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 2000); camera.position.set(0, 4.2, 18);
+const sunDir = new THREE.Vector3(0.0, 0.12, -1).normalize();
+
+// Sky dome: sunrise gradient with a sun glow
+const sky = new THREE.Mesh(new THREE.SphereGeometry(900, 32, 16), new THREE.ShaderMaterial({ side:THREE.BackSide, depthWrite:false, uniforms:{uSun:{value:sunDir}},
+  vertexShader:`varying vec3 vDir; void main(){ vDir = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+  fragmentShader:`varying vec3 vDir; uniform vec3 uSun; void main(){ float h = clamp(vDir.y,0.0,1.0);
+    vec3 top = vec3(0.30,0.62,0.78), mid = vec3(0.98,0.74,0.58), hor = vec3(1.0,0.82,0.62);
+    vec3 col = mix(hor, mid, smoothstep(0.0,0.08,h)); col = mix(col, top, smoothstep(0.06,0.55,h));
+    float s = max(dot(normalize(vDir), uSun), 0.0); col += vec3(1.0,0.72,0.45)*pow(s, 180.0)*2.2 + vec3(1.0,0.6,0.35)*pow(s, 8.0)*0.35;
+    gl_FragColor = vec4(col,1.0); }`}));
+scene.add(sky);
+
+// Ocean: sum of Gerstner-style waves with analytic normals, foam on crests, fresnel sky reflection
+const oceanMat = new THREE.ShaderMaterial({
+  side:THREE.DoubleSide,
+  uniforms:{ uTime:{value:0}, uSun:{value:sunDir}, uCam:{value:camera.position} },
+  vertexShader:`
+    uniform float uTime; varying vec3 vPos; varying vec3 vNormal; varying float vCrest;
+    vec3 gerstner(vec2 dir, float steep, float wl, vec3 p, inout vec3 tan, inout vec3 bin, float speedMul){
+      float k = 6.28318/wl; float c = sqrt(9.8/k)*speedMul; vec2 d = normalize(dir); float f = k*(dot(d,p.xz) - c*uTime); float a = steep/k;
+      tan += vec3(-d.x*d.x*steep*sin(f), d.x*steep*cos(f), -d.x*d.y*steep*sin(f));
+      bin += vec3(-d.x*d.y*steep*sin(f), d.y*steep*cos(f), -d.y*d.y*steep*sin(f));
+      return vec3(d.x*a*cos(f), a*sin(f), d.y*a*cos(f));
+    }
+    void main(){
+      vec3 p = vec3(position.x, 0.0, -position.y); vec3 tan = vec3(1.0,0.0,0.0), bin = vec3(0.0,0.0,1.0); vec3 g = p;
+      g += gerstner(vec2(0.0,1.0), 0.22, 26.0, p, tan, bin, 0.55);
+      g += gerstner(vec2(0.35,1.0), 0.18, 14.0, p, tan, bin, 0.6);
+      g += gerstner(vec2(-0.4,1.0), 0.14, 8.0, p, tan, bin, 0.65);
+      g += gerstner(vec2(0.8,0.6), 0.08, 4.5, p, tan, bin, 0.7);
+      g += gerstner(vec2(-0.7,0.4), 0.05, 2.6, p, tan, bin, 0.8);
+      vNormal = normalize(cross(bin, tan)); vPos = g; vCrest = g.y;
+      gl_Position = projectionMatrix*viewMatrix*vec4(g,1.0);
+    }`,
+  fragmentShader:`
+    uniform vec3 uSun; uniform vec3 uCam; uniform float uTime; varying vec3 vPos; varying vec3 vNormal; varying float vCrest;
+    float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+    float noise(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y); }
+    void main(){
+      vec3 n = normalize(vNormal); vec3 v = normalize(uCam - vPos);
+      float fres = pow(1.0 - max(dot(n,v),0.0), 5.0)*0.75;
+      vec3 deep = vec3(0.01,0.16,0.22), shallow = vec3(0.06,0.55,0.60);
+      vec3 water = mix(deep, shallow, clamp(vCrest*0.9+0.45,0.0,1.0));
+      vec3 skyc = mix(vec3(1.0,0.80,0.62), vec3(0.45,0.70,0.82), clamp(reflect(-v,n).y*3.0,0.0,1.0));
+      vec3 col = mix(water, skyc, clamp(fres*0.9+0.08,0.0,1.0));
+      vec3 h = normalize(uSun + v); float spec = pow(max(dot(n,h),0.0), 220.0)*3.0 + pow(max(dot(n,h),0.0), 30.0)*0.25;
+      col += vec3(1.0,0.78,0.55)*spec;
+      float foam = smoothstep(0.62, 1.05, vCrest + noise(vPos.xz*1.6 + uTime*0.4)*0.35);
+      col = mix(col, vec3(0.96,0.98,0.97), foam*0.85);
+      float d = length(vPos.xz - uCam.xz); float fog = smoothstep(90.0, 520.0, d);
+      col = mix(col, vec3(1.0,0.82,0.64), fog);
+      gl_FragColor = vec4(col,1.0);
+    }`
+});
+const seg = innerWidth < 760 ? 220 : 320;
+const ocean = new THREE.Mesh(new THREE.PlaneGeometry(700, 700, seg, seg), oceanMat);
+ocean.frustumCulled = false; scene.add(ocean);
+
+function resize(){ const w=canvas.clientWidth||innerWidth, h=canvas.clientHeight||innerHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+addEventListener('resize', resize); resize();
+const m = new THREE.Vector2(), tm = new THREE.Vector2();
+addEventListener('pointermove', e => tm.set((e.clientX/innerWidth)*2-1, -(e.clientY/innerHeight)*2+1));
+let sp = 0; addEventListener('scroll', () => { sp = Math.min(1, scrollY/innerHeight); }, {passive:true});
+const clock = new THREE.Clock(), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tick(){
+  const t = reduce ? 3 : clock.getElapsedTime(); m.lerp(tm, 0.04);
+  oceanMat.uniforms.uTime.value = t;
+  camera.position.set(m.x*2.0, 8.5 + Math.sin(t*0.7)*0.3 + m.y*0.8 + sp*4.0, 18 - sp*6.0);
+  camera.lookAt(m.x*3.0, -1.5 + m.y*0.8 - sp*2.0, -34);
+  camera.rotation.z += Math.sin(t*0.5)*0.008;
+  oceanMat.uniforms.uCam.value.copy(camera.position);
+  renderer.render(scene, camera); requestAnimationFrame(tick);
+}
+tick();
+</script>
+
+</html>

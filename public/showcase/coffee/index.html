@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><base href="/showcase/coffee/"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ninth Lane Roasters Colombo</title>
+<meta name="description" content="Ninth Lane Roasters: Sri Lankan highland coffee, roasted in Colombo every week. Concept website by <a href="/showcase" style="text-decoration:underline">Hemal Herath</a>.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* Layout: full-screen 3D bean field behind a huge condensed headline, then warm editorial blocks with a marquee and a subscription box */
+:root{
+  --espresso:#120b07; --roast:#2a1910; --copper:#d2733b; --crema:#e9c9a1; --cream:#f6ede0; --ink:#1c120c; --mute:#a68b74; --line:rgba(233,201,161,.16);
+  --display:"Big Shoulders Display",Impact,sans-serif; --mono:"DM Mono",ui-monospace,monospace; --sans:"Hanken Grotesk",ui-sans-serif,system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--espresso)}
+body{margin:0;color:var(--cream);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:20px clamp(16px,4vw,48px);font:500 13px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em}
+.nav .brand{font:900 26px/1 var(--display);letter-spacing:.02em}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.nav .cart{background:var(--copper);color:var(--espresso);padding:11px 16px;border-radius:999px}
+.hero{position:relative;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 60%,#3a2214 0%,var(--espresso) 65%)}
+#gl{position:absolute;inset:0;width:100%;height:100%}
+.hero .title{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;pointer-events:none;z-index:2}
+.hero h1{font:900 clamp(78px,17vw,290px)/.82 var(--display);margin:0;text-transform:uppercase;letter-spacing:-.01em;color:var(--cream);mix-blend-mode:difference}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln span{display:inline-block}
+.hero .sub{position:absolute;left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);bottom:30px;z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;font:400 13px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--crema)}
+.hero .sub p{margin:0;max-width:34ch}
+.marquee{background:var(--copper);color:var(--espresso);overflow:hidden;white-space:nowrap;border-block:1px solid #b45e2c}
+.marquee .track{display:inline-flex;gap:46px;padding:18px 0;font:900 clamp(26px,3.4vw,48px)/1 var(--display);text-transform:uppercase;animation:mq 26s linear infinite}
+.marquee .track span::after{content:"✦";margin-left:46px;font-size:.6em;vertical-align:middle}
+@keyframes mq{to{transform:translateX(-50%)}}
+.wrap{max-width:1300px;margin:0 auto;padding-inline:clamp(16px,4vw,48px)}
+.tag{font:500 12px/1 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--copper)}
+h2{font:900 clamp(52px,8vw,128px)/.88 var(--display);text-transform:uppercase;margin:16px 0 0;letter-spacing:-.005em}
+.beans{padding-block:clamp(80px,11vw,150px);background:var(--espresso)}
+.beans-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:46px}
+.beans-head p{max-width:36ch;margin:0;color:var(--mute)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.bag{position:relative;border-radius:22px;padding:26px;min-height:420px;display:flex;flex-direction:column;justify-content:space-between;color:var(--ink);overflow:hidden;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.bag:hover{transform:translateY(-8px) rotate(-.6deg)}
+.bag .no{font:500 12px/1 var(--mono);letter-spacing:.1em}
+.bag h3{font:900 64px/.85 var(--display);text-transform:uppercase;margin:0}
+.bag .notes{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+.bag .notes span{border:1.5px solid currentColor;border-radius:999px;padding:5px 11px;font:500 12px/1 var(--mono);text-transform:uppercase}
+.bag .foot{display:flex;justify-content:space-between;align-items:center;margin-top:22px;font:500 13px/1 var(--mono);text-transform:uppercase}
+.bag .add{background:var(--ink);color:var(--cream);border-radius:999px;padding:11px 16px}
+.b1{background:#e9b98e}.b2{background:#cfe0c3}.b3{background:#f0d36f}
+.roastery{background:var(--cream);color:var(--ink);padding-block:clamp(80px,11vw,150px)}
+.roastery .tag{color:#b45e2c}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:center}
+.split img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:22px}
+.roastery p{color:#5b4636;font-size:18px;max-width:44ch}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px;border-top:2px solid var(--ink);padding-top:22px}
+.stats b{display:block;font:900 56px/.9 var(--display)}
+.stats span{font:500 12px/1.4 var(--mono);text-transform:uppercase;color:#7a5f4b}
+.cafe{background:var(--roast);padding-block:clamp(80px,11vw,150px)}
+.cafe .split img{aspect-ratio:4/5}
+.hours{margin-top:30px;font:400 14px/2 var(--mono);text-transform:uppercase;color:var(--crema);border-top:1px solid var(--line);padding-top:18px}
+.hours div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line)}
+.sub-box{background:var(--copper);color:var(--espresso);padding-block:clamp(80px,10vw,140px);text-align:center}
+.sub-box h2{max-width:12ch;margin-inline:auto}
+.sub-box p{max-width:40ch;margin:18px auto 30px;font-size:18px}
+.sub-box button{background:var(--espresso);color:var(--cream);border:0;border-radius:999px;font:500 14px var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:18px 28px;cursor:pointer}
+.sub-box .note{min-height:1.5em;margin-top:16px;font:400 13px var(--mono)}
+footer{background:var(--espresso);padding-block:30px;font:400 12px/1.6 var(--mono);text-transform:uppercase;color:var(--mute);border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.rv{opacity:0;transform:translateY(40px)}
+@media (max-width:860px){
+  .nav ul{display:none}
+  .grid3,.split{grid-template-columns:1fr}
+  .bag{min-height:300px}
+  .stats b{font-size:42px}
+}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.marquee .track{animation:none}}
+</style>
+
+<nav class="nav"><a class="brand" href="#">Ninth Lane</a><ul><li>Coffee</li><li>Roastery</li><li>Café</li><li>Subscribe</li></ul><a class="cart" href="#subscribe">Bag (0)</a></nav>
+
+<header class="hero">
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="title"><h1><span class="ln"><span>Roasted</span></span><span class="ln"><span>on Ninth</span></span><span class="ln"><span>Lane</span></span></h1></div>
+  <div class="sub"><p>Sri Lankan highland coffee, roasted in small batches in Colombo every Tuesday and Friday.</p><p>Move your cursor ↔ the beans</p></div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="track"><span>Single origin</span><span>Sri Lankan highlands</span><span>Roasted this week</span><span>Colombo</span><span>Single origin</span><span>Sri Lankan highlands</span><span>Roasted this week</span><span>Colombo</span></div></div>
+
+<main>
+  <section class="beans">
+    <div class="wrap">
+      <div class="beans-head rv"><div><span class="tag">The coffee</span><h2>Three bags, all island-grown</h2></div><p>Grown on small farms in the hills of Badulla and Kandy, roasted light enough that you can taste where they came from.</p></div>
+      <div class="grid3">
+        <article class="bag b1 rv"><span class="no">No. 01 · Natural</span><div><h3>Badulla</h3><div class="notes"><span>Jackfruit</span><span>Cocoa</span><span>Raisin</span></div><div class="foot"><span>250 g · Rs 2,900</span><span class="add">Add</span></div></div></article>
+        <article class="bag b2 rv"><span class="no">No. 02 · Washed</span><div><h3>Kandy Hills</h3><div class="notes"><span>Lime</span><span>Jaggery</span><span>Black tea</span></div><div class="foot"><span>250 g · Rs 2,700</span><span class="add">Add</span></div></div></article>
+        <article class="bag b3 rv"><span class="no">No. 03 · House blend</span><div><h3>Lane Espresso</h3><div class="notes"><span>Toffee</span><span>Kithul</span><span>Orange</span></div><div class="foot"><span>500 g · Rs 4,800</span><span class="add">Add</span></div></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="roastery">
+    <div class="wrap split">
+      <img src="img/roastery.jpg" alt="Drum roaster with fresh beans cooling" class="rv">
+      <div>
+        <span class="tag rv">The roastery</span>
+        <h2 class="rv">Small drum, big flavour</h2>
+        <p class="rv">Every batch goes through our 12-kilo cast-iron drum by hand. We roast twice a week and ship within two days, so your beans are never older than your milk.</p>
+        <div class="stats rv"><div><b>12kg</b><span>per batch</span></div><div><b>2×</b><span>roasts a week</span></div><div><b>48h</b><span>roast to doorstep</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cafe">
+    <div class="wrap split">
+      <div>
+        <span class="tag rv">The café</span>
+        <h2 class="rv">Come for a flat white</h2>
+        <p class="rv" style="color:var(--mute);font-size:18px;max-width:42ch">Our tasting bar sits next to the roaster on Ninth Lane, Colombo 7. Sit at the counter and taste this week's roast before you buy.</p>
+        <div class="hours rv"><div><span>Mon–Fri</span><span>7:00 – 18:00</span></div><div><span>Sat–Sun</span><span>8:00 – 16:00</span></div></div>
+      </div>
+      <img src="img/pour.jpg" alt="Barista pouring latte art" class="rv">
+    </div>
+  </section>
+
+  <section class="sub-box" id="subscribe">
+    <div class="wrap">
+      <span class="tag" style="color:var(--espresso)">Subscription</span>
+      <h2 class="rv">Fresh beans every fortnight</h2>
+      <p class="rv">A new 250 g bag delivered anywhere in Colombo every two weeks. Pause or cancel whenever you like.</p>
+      <button id="subBtn">Start for Rs 2,700</button>
+      <p class="note" id="note" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <footer><div class="wrap"><span>Ninth Lane Roasters · Colombo 7</span><span>Concept website by Hemal Herath · 3D beans in Three.js</span></div></footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  if (window.Lenis && !reduce){ const lenis = new Lenis({lerp:0.09}); if (window.ScrollTrigger) lenis.on('scroll', ScrollTrigger.update); if (window.gsap){ gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);} }
+  document.getElementById('subBtn').addEventListener('click', () => document.getElementById('note').textContent = 'Concept site: on the real site this opens checkout.');
+  if (!window.gsap || reduce){ document.querySelectorAll('.rv').forEach(e=>{e.style.opacity=1;e.style.transform='none'}); return; }
+  gsap.from('.hero h1 .ln span',{yPercent:110,duration:1.3,stagger:.12,ease:'expo.out',delay:.15});
+  gsap.to('.hero h1',{yPercent:-30,opacity:.15,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+  document.querySelectorAll('.rv').forEach(el => gsap.to(el,{opacity:1,y:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
+})();
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const canvas = document.getElementById('gl');
+let renderer; try { renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true}); } catch(e){ canvas.remove(); throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100); camera.position.set(0,0,12);
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.35;
+
+// Coffee bean: squashed ellipsoid with an S-shaped crease on the flat side
+function beanGeometry(){
+  const g = new THREE.SphereGeometry(1, 64, 48);
+  const p = g.attributes.position, v = new THREE.Vector3();
+  for (let i=0;i<p.count;i++){
+    v.fromBufferAttribute(p, i);
+    v.x *= 0.72; v.y *= 0.5; v.z *= 1.0;
+    if (v.y > 0){ v.y *= 0.62; // flatter top side
+      const cx = 0.07*Math.sin(v.z*3.2);
+      const d = (v.x - cx);
+      v.y -= 0.17*Math.exp(-(d*d)/0.006) * Math.min(1, v.y*6 + 0.2) * (1 - Math.pow(Math.abs(v.z),6));
+    }
+    p.setXYZ(i, v.x, v.y, v.z);
+  }
+  g.computeVertexNormals(); return g;
+}
+const COUNT = innerWidth < 760 ? 70 : 140;
+const mat = new THREE.MeshPhysicalMaterial({ color:0xffffff, roughness:0.38, metalness:0, clearcoat:0.7, clearcoatRoughness:0.35, sheen:0.4, sheenColor:new THREE.Color('#ffb98a') });
+const beans = new THREE.InstancedMesh(beanGeometry(), mat, COUNT);
+const palette = ['#3b2214','#4a2b19','#5a341d','#2e1a10','#6b3f22','#7d4b28'].map(c => new THREE.Color(c));
+const data = [];
+for (let i=0;i<COUNT;i++){
+  const home = new THREE.Vector3((Math.random()-.5)*20, (Math.random()-.5)*12, -Math.random()*9 + 2);
+  data.push({ home, off:new THREE.Vector3(), rot:new THREE.Euler(Math.random()*6, Math.random()*6, Math.random()*6), spin:new THREE.Vector3((Math.random()-.5)*.6,(Math.random()-.5)*.6,(Math.random()-.5)*.6), s:0.32 + Math.random()*0.32, f:Math.random()*10 });
+  beans.setColorAt(i, Math.random() < 0.06 ? new THREE.Color('#9aa36a') : palette[(Math.random()*palette.length)|0]);
+}
+scene.add(beans);
+scene.add(new THREE.HemisphereLight(0xffd7b0, 0x1a0d06, 0.6));
+const key = new THREE.DirectionalLight(0xffb070, 3.2); key.position.set(5,6,8); scene.add(key);
+const rim = new THREE.DirectionalLight(0xff7a2f, 2.4); rim.position.set(-8,-2,-4); scene.add(rim);
+
+function resize(){ const w=canvas.clientWidth||innerWidth, h=canvas.clientHeight||innerHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+addEventListener('resize', resize); resize();
+
+const ndc = new THREE.Vector2(9,9), ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0,0,1), 0), hit = new THREE.Vector3();
+addEventListener('pointermove', e => { const r = canvas.getBoundingClientRect(); ndc.set(((e.clientX-r.left)/r.width)*2-1, -((e.clientY-r.top)/r.height)*2+1); });
+let sp = 0; addEventListener('scroll', () => { sp = Math.min(1, scrollY/innerHeight); }, {passive:true});
+const dummy = new THREE.Object3D(), clock = new THREE.Clock(), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let last = 0;
+function tick(){
+  const t = clock.getElapsedTime(), dt = Math.min(0.05, t - last); last = t;
+  ray.setFromCamera(ndc, camera); ray.ray.intersectPlane(plane, hit);
+  for (let i=0;i<COUNT;i++){
+    const d = data[i];
+    const bob = reduce ? 0 : Math.sin(t*0.6 + d.f)*0.25;
+    const base = new THREE.Vector3(d.home.x, d.home.y + bob + sp*6*(0.5 + d.s), d.home.z);
+    // push away from cursor projected onto each bean's depth
+    const dx = base.x - hit.x, dy = base.y - hit.y, dist = Math.hypot(dx, dy);
+    const R = 3.2;
+    if (dist < R && hit.lengthSq() < 400){ const k = (1 - dist/R)*2.2; d.off.x += (dx/dist*k - d.off.x)*0.12; d.off.y += (dy/dist*k - d.off.y)*0.12; }
+    else { d.off.multiplyScalar(0.94); }
+    if (!reduce){ d.rot.x += d.spin.x*dt*(1+sp*3); d.rot.y += d.spin.y*dt*(1+sp*3); d.rot.z += d.spin.z*dt; }
+    dummy.position.copy(base).add(d.off); dummy.rotation.copy(d.rot); dummy.scale.setScalar(d.s);
+    dummy.updateMatrix(); beans.setMatrixAt(i, dummy.matrix);
+  }
+  beans.instanceMatrix.needsUpdate = true;
+  camera.position.x += ((ndc.x < 2 ? ndc.x : 0)*0.6 - camera.position.x)*0.03; camera.lookAt(0,0,0);
+  renderer.render(scene, camera); requestAnimationFrame(tick);
+}
+tick();
+</script>
+
+</html>

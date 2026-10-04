@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><base href="/showcase/sapphire/"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nīla Atelier Ceylon Sapphires</title>
+<meta name="description" content="Nīla Atelier: ethically mined Ceylon sapphires, cut and set by hand in Colombo. Concept website by <a href="/showcase" style="text-decoration:underline">Hemal Herath</a>.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* Layout: fixed WebGL gem behind a dark editorial page; the gem drifts aside as sections scroll over it */
+:root{
+  --night:#04060d; --night-2:#0a0f1e; --sapphire:#2f5bff; --cornflower:#7d9bff; --platinum:#dfe3ec; --mute:#8a93a8; --gold:#b9965c; --line:rgba(223,227,236,.12);
+  --display:"Italiana",Didot,serif; --sans:"Outfit",ui-sans-serif,system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--night)}
+body{margin:0;color:var(--platinum);font:300 16px/1.7 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:24px clamp(16px,4vw,48px)}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute)}
+.nav .brand{font:400 30px/1 var(--display);letter-spacing:.16em;text-transform:uppercase}
+.nav .right{justify-self:end;font-size:12px;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:4px}
+.hero{position:relative;z-index:2;height:100vh;height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 clamp(16px,4vw,48px)}
+.hero .copy{max-width:520px}
+.eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--cornflower)}
+h1{font:400 clamp(52px,7.6vw,118px)/.95 var(--display);margin:22px 0 26px;letter-spacing:-.005em}
+h1 span{display:block;color:var(--cornflower)}
+.hero p{color:var(--mute);font-size:17px;max-width:38ch;margin:0 0 34px}
+.btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn{font:500 12px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;padding:18px 26px;border:1px solid var(--platinum)}
+.btn.solid{background:var(--platinum);color:var(--night)}
+.hero .spec{position:absolute;right:clamp(16px,4vw,48px);bottom:34px;text-align:right;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);line-height:2}
+.hero .spec b{color:var(--platinum);font-weight:500}
+main{position:relative;z-index:3}
+section{position:relative}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:clamp(16px,4vw,48px)}
+.label{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+h2{font:400 clamp(40px,5.4vw,84px)/1 var(--display);margin:18px 0 0;text-wrap:balance}
+.collection{background:linear-gradient(180deg,rgba(4,6,13,0) 0,var(--night) 160px);padding-block:clamp(140px,16vw,220px) clamp(80px,10vw,140px)}
+.coll-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:56px}
+.coll-head p{max-width:38ch;margin:0;color:var(--mute)}
+.pieces{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+.piece{position:relative;overflow:hidden;background:var(--night-2);border:1px solid var(--line)}
+.piece img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.piece:hover img{transform:scale(1.06)}
+.piece .cap{position:absolute;left:0;right:0;bottom:0;padding:26px;background:linear-gradient(180deg,transparent,rgba(4,6,13,.92));display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.piece h3{font:400 32px/1.05 var(--display);margin:0}
+.piece small{display:block;color:var(--mute);font-size:13px;margin-top:6px}
+.piece .price{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--cornflower);white-space:nowrap}
+.piece.tall{aspect-ratio:4/5}
+.stack{display:grid;gap:22px}
+.stack .piece{aspect-ratio:3/2}
+.bespoke{display:flex;flex-direction:column;justify-content:space-between;padding:30px;background:radial-gradient(circle at 80% 10%,rgba(47,91,255,.35),transparent 55%),var(--night-2)}
+.bespoke h3{font:400 34px/1.05 var(--display);margin:12px 0 0}
+.bespoke p{color:var(--mute);margin:12px 0 0}
+.journey{padding-block:clamp(90px,12vw,170px);border-top:1px solid var(--line);background:var(--night)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:60px;border-top:1px solid var(--line)}
+.step{padding:30px 26px 0 0;border-right:1px solid var(--line);margin-right:26px}
+.step:last-child{border-right:0;margin-right:0}
+.step b{font:400 54px/1 var(--display);color:var(--cornflower)}
+.step h4{font:500 15px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;margin:18px 0 10px}
+.step p{color:var(--mute);font-size:15px;margin:0 0 30px}
+.facts{padding-block:clamp(80px,10vw,140px);background:var(--night);border-top:1px solid var(--line)}
+.facts-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center}
+.facts-grid img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.facts dl{margin:30px 0 0;display:grid;gap:0}
+.facts dl div{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--line)}
+.facts dt{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.facts dd{margin:0;color:var(--platinum)}
+.viewing{padding-block:clamp(100px,13vw,180px);text-align:center;background:radial-gradient(ellipse at 50% 120%,rgba(47,91,255,.35),transparent 60%),var(--night);border-top:1px solid var(--line)}
+.viewing h2{max-width:16ch;margin-inline:auto}
+.viewing p{color:var(--mute);max-width:44ch;margin:20px auto 34px}
+.viewing .note{min-height:1.6em;color:var(--cornflower);font-size:14px;margin-top:18px}
+footer{background:var(--night);border-top:1px solid var(--line);padding-block:30px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.rv{opacity:0;transform:translateY(40px)}
+@media (max-width:860px){
+  .nav{grid-template-columns:1fr auto}.nav ul{display:none}.nav .brand{font-size:24px}
+  .hero{grid-template-columns:1fr;align-items:end;padding-bottom:110px}
+  .hero .copy{max-width:none}
+  .hero .spec{display:none}
+  .pieces,.facts-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .step{border-right:0;margin-right:0}
+  .facts dl div{grid-template-columns:110px 1fr}
+}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+</style>
+
+<canvas id="gl" aria-hidden="true"></canvas>
+<nav class="nav">
+  <ul><li>Collection</li><li>Provenance</li><li>Bespoke</li></ul>
+  <a class="brand" href="#">Nīla</a>
+  <a class="right" href="#viewing">Private viewing</a>
+</nav>
+
+<header class="hero">
+  <div class="copy">
+    <span class="eyebrow">Ceylon sapphires · Since 1962</span>
+    <h1>Born blue <span>in Ratnapura.</span></h1>
+    <p>Sapphires mined by hand in Sri Lanka's gem country, then cut, polished and set in our Colombo atelier. Every stone comes with its story.</p>
+    <div class="btns"><a class="btn solid" href="#collection">The collection</a><a class="btn" href="#viewing">Book a viewing</a></div>
+  </div>
+  <div class="spec">Cornflower sapphire<br><b>3.08 ct · Oval brilliant</b><br>Unheated · Ratnapura</div>
+</header>
+
+<main>
+  <section class="collection" id="collection">
+    <div class="wrap">
+      <div class="coll-head rv"><div><span class="label">The collection</span><h2>Blue, in every light</h2></div><p>Each piece is made around a single stone. When it's gone, it's gone.</p></div>
+      <div class="pieces">
+        <article class="piece tall rv"><img src="img/ring.jpg" alt="Cornflower sapphire ring with diamond halo on black velvet"><div class="cap"><div><h3>The Cornflower Halo</h3><small>3.08 ct unheated sapphire, platinum, diamond halo</small></div><span class="price">On request</span></div></article>
+        <div class="stack">
+          <article class="piece rv"><img src="img/raw.jpg" alt="Rough sapphire crystals in a gem-washing basket"><div class="cap"><div><h3>From the river gravel</h3><small>Every stone begins as rough in a Ratnapura washing basket</small></div></div></article>
+          <article class="piece bespoke rv"><span class="label">Bespoke</span><div><h3>Choose your own stone</h3><p>Sit with our gemmologist, compare loose sapphires side by side, and design the setting together.</p></div></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="journey">
+    <div class="wrap">
+      <span class="label rv">Provenance</span>
+      <h2 class="rv">From river gravel to your hand</h2>
+      <div class="steps">
+        <div class="step rv"><b>I</b><h4>Mined</h4><p>Gem gravel is lifted from shallow pits in Ratnapura by small family crews.</p></div>
+        <div class="step rv"><b>II</b><h4>Washed</h4><p>The gravel is swirled in woven baskets until the heavy crystals settle out.</p></div>
+        <div class="step rv"><b>III</b><h4>Cut</h4><p>Our cutters study each rough stone for days before the first facet.</p></div>
+        <div class="step rv"><b>IV</b><h4>Set</h4><p>Platinum or gold, made by hand in the atelier around that one stone.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="facts">
+    <div class="wrap facts-grid">
+      <img src="img/raw.jpg" alt="Rough blue sapphires" class="rv">
+      <div>
+        <span class="label rv">Why Ceylon</span>
+        <h2 class="rv">The blue the world asks for</h2>
+        <dl class="rv">
+          <div><dt>Colour</dt><dd>Ceylon sapphires are prized for a bright cornflower blue that stays lively in candlelight.</dd></div>
+          <div><dt>Hardness</dt><dd>9 on the Mohs scale, second only to diamond, so it lasts for generations.</dd></div>
+          <div><dt>History</dt><dd>Sri Lanka has been trading sapphires for over two thousand years.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="viewing" id="viewing">
+    <div class="wrap">
+      <span class="label">Colombo atelier</span>
+      <h2 class="rv">Book a private viewing</h2>
+      <p class="rv">An hour with our gemmologist, a tray of loose stones and a cup of tea. No obligation.</p>
+      <a class="btn solid" href="#viewing" id="viewBtn">Request an appointment</a>
+      <p class="note" id="note" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <footer><div class="wrap"><span>Nīla Atelier · Colombo</span><span>Concept website by Hemal Herath · real-time 3D with Three.js</span></div></footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  if (window.Lenis && !reduce){ const lenis = new Lenis({lerp:0.08}); if (window.ScrollTrigger) lenis.on('scroll', ScrollTrigger.update); if (window.gsap){ gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);} }
+  document.getElementById('viewBtn').addEventListener('click', e => { e.preventDefault(); document.getElementById('note').textContent = 'This is a concept site. On the real site this opens a booking calendar.'; });
+  if (!window.gsap || reduce){ document.querySelectorAll('.rv').forEach(e=>{e.style.opacity=1;e.style.transform='none'}); return; }
+  document.querySelectorAll('.rv').forEach(el => gsap.to(el,{opacity:1,y:0,duration:1.3,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
+  gsap.from('.hero .copy > *',{opacity:0,y:30,duration:1.4,stagger:.12,ease:'expo.out',delay:.2});
+})();
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const canvas = document.getElementById('gl');
+let renderer; try { renderer = new THREE.WebGLRenderer({canvas, antialias:true}); } catch(e){ canvas.remove(); throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#04060d');
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100); camera.position.set(0, 0.35, 7.2);
+const pmrem = new THREE.PMREMGenerator(renderer);
+const envScene = new RoomEnvironment(); scene.environment = pmrem.fromScene(envScene, 0.02).texture;
+
+// Brilliant-cut profile: table → crown → girdle → pavilion → culet
+const pts = [ [0,0.42],[0.52,0.42],[0.82,0.24],[1.0,0.06],[1.0,0.0],[0.6,-0.42],[0.0,-0.88] ].map(([x,y]) => new THREE.Vector2(x,y));
+const geo = new THREE.LatheGeometry(pts, 16);
+geo.computeVertexNormals();
+const gemMat = new THREE.MeshPhysicalMaterial({
+  color:new THREE.Color('#3d63ff'), metalness:0, roughness:0, transmission:1, thickness:1.3, ior:1.77,
+  attenuationColor:new THREE.Color('#1636e6'), attenuationDistance:0.4, specularIntensity:1, specularColor:new THREE.Color('#ffffff'),
+  envMapIntensity:1.5, clearcoat:1, clearcoatRoughness:0, flatShading:true, dispersion:4, iridescence:0.15, emissive:new THREE.Color('#0a1f8f'), emissiveIntensity:0.45
+});
+// blue glow card behind the gem so the transmission refracts sapphire light instead of black
+const gc = document.createElement('canvas'); gc.width = gc.height = 512; const gx = gc.getContext('2d');
+const rg = gx.createRadialGradient(256,256,0,256,256,256); rg.addColorStop(0,'rgba(90,130,255,1)'); rg.addColorStop(0.35,'rgba(40,80,255,0.85)'); rg.addColorStop(0.7,'rgba(20,40,160,0.35)'); rg.addColorStop(1,'rgba(4,6,13,0)');
+gx.fillStyle = rg; gx.fillRect(0,0,512,512);
+const glowTex = new THREE.CanvasTexture(gc); glowTex.colorSpace = THREE.SRGBColorSpace;
+const glow = new THREE.Mesh(new THREE.PlaneGeometry(6,6), new THREE.MeshBasicMaterial({map:glowTex, transparent:true, depthWrite:false, toneMapped:false}));
+glow.position.z = -2.2;
+const gem = new THREE.Mesh(geo, gemMat);
+gem.scale.setScalar(1.25); gem.rotation.x = 0.35;
+const holder = new THREE.Group(); holder.add(glow); holder.add(gem); scene.add(holder);
+
+// faceted outline sparkle edges
+const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 1), new THREE.LineBasicMaterial({color:0x9fb3ff, transparent:true, opacity:0.18}));
+gem.add(edges);
+
+// glittering dust
+const N = 900, pos = new Float32Array(N*3), seeds = new Float32Array(N);
+for (let i=0;i<N;i++){ const r = 3 + Math.random()*9, th = Math.random()*Math.PI*2, ph = Math.acos(2*Math.random()-1); pos[i*3]=r*Math.sin(ph)*Math.cos(th); pos[i*3+1]=r*Math.cos(ph)*0.7; pos[i*3+2]=r*Math.sin(ph)*Math.sin(th)-4; seeds[i]=Math.random()*100; }
+const pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pos,3)); pg.setAttribute('seed', new THREE.BufferAttribute(seeds,1));
+const pmat = new THREE.ShaderMaterial({ transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, uniforms:{uTime:{value:0}, uPx:{value:renderer.getPixelRatio()}},
+  vertexShader:`attribute float seed; uniform float uTime; uniform float uPx; varying float vA; void main(){ vec4 mv = modelViewMatrix*vec4(position,1.0); gl_Position = projectionMatrix*mv; float tw = 0.5+0.5*sin(uTime*1.7+seed*6.28); vA = tw*tw; gl_PointSize = (1.5+3.0*tw)*uPx*(6.0/-mv.z); }`,
+  fragmentShader:`varying float vA; void main(){ vec2 c = gl_PointCoord-0.5; float d = length(c); float a = smoothstep(0.5,0.0,d)*vA; gl_FragColor = vec4(0.62,0.72,1.0,a); }` });
+scene.add(new THREE.Points(pg, pmat));
+
+const l1 = new THREE.PointLight(0x6f93ff, 90, 30); l1.position.set(3,3,4); scene.add(l1);
+const l2 = new THREE.PointLight(0xffffff, 40, 30); l2.position.set(-3,1,3); scene.add(l2);
+const l3 = new THREE.SpotLight(0xffffff, 120, 30, 0.4, 0.6); l3.position.set(0,6,3); scene.add(l3);
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(1,1), 0.55, 0.6, 0.82); composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+function resize(){ const w=innerWidth,h=innerHeight; renderer.setSize(w,h,false); composer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+addEventListener('resize', resize); resize();
+
+const m = new THREE.Vector2(), tm = new THREE.Vector2();
+addEventListener('pointermove', e => tm.set((e.clientX/innerWidth)*2-1, -(e.clientY/innerHeight)*2+1));
+let sp = 0; addEventListener('scroll', () => { sp = Math.min(1, scrollY/(innerHeight*1.2)); }, {passive:true});
+const clock = new THREE.Clock(), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tick(){
+  const t = reduce ? 2 : clock.getElapsedTime(); m.lerp(tm, 0.05);
+  const mobile = innerWidth < 860;
+  const baseX = mobile ? 0 : 1.55, baseY = mobile ? 0.75 : 0.05;
+  holder.position.set(THREE.MathUtils.lerp(baseX, mobile?0:2.2, sp), THREE.MathUtils.lerp(baseY, 0.6, sp), -sp*1.5);
+  holder.scale.setScalar((mobile?0.7:1) * (1 - sp*0.25));
+  gem.rotation.y = t*0.35 + m.x*0.8; gem.rotation.x = 0.35 + Math.sin(t*0.4)*0.12 - m.y*0.35; gem.rotation.z = Math.sin(t*0.3)*0.06;
+  l1.position.x = 3*Math.cos(t*0.6); l1.position.z = 4*Math.sin(t*0.6)+1;
+  pmat.uniforms.uTime.value = t;
+  composer.render(); requestAnimationFrame(tick);
+}
+tick();
+</script>
+
+</html>
