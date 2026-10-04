@@ -1,258 +1,1038 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><base href="/showcase/surf/"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Swellhouse Weligama Surf Camp</title>
-<meta name="description" content="Swellhouse: surf camp on Weligama bay, Sri Lanka. Concept website by Hemal Herath.">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/showcase/surf/">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Swellhouse — Surf camps on Weligama bay</title>
+<meta name="description" content="Swellhouse: seven-night surf camps on Weligama bay, Sri Lanka. A concept website designed and built by Hemal Herath.">
+<meta name="theme-color" content="#0d2f35">
+<meta property="og:title" content="Swellhouse — Surf camps on Weligama bay">
+<meta property="og:image" content="/showcase/surf/media/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/showcase/_engine/engine.css">
 <style>
+:root {
+  --bg: #f2e9da;
+  --foam: #fbf7f0;
+  --fg: #0d2f35;
+  --muted: #4f6a6c;
+  --line: rgb(13 47 53 / 0.16);
+  --accent: #ff6a4a;
+  --sun: #ffc247;
+  --loader-bg: #ff6a4a;
+  --loader-fg: #0d2f35;
+  --menu-bg: #0d2f35;
+  --menu-fg: #f2e9da;
+  --cursor-bg: #ff6a4a;
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-body: "Switzer", system-ui, sans-serif;
+  --grain: 0.05;
+}
+.tag {
+  justify-self: start;
+  align-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.big {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 26px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--fg);
+  font-weight: 600;
+  font-size: 15px;
+  transition: background 0.4s, color 0.4s;
+}
+.pill:hover {
+  background: var(--fg);
+  color: var(--foam);
+}
+.pill i {
+  font-style: normal;
+  transition: transform 0.6s var(--ease-out);
+}
+.pill:hover i {
+  transform: translateX(4px) rotate(-45deg);
+}
 
-/* Layout: a live WebGL ocean at sunrise behind giant condensed type; a pinned horizontal scroller for packages; sandy sections after */
-:root{
-  --deep:#08303b; --teal:#0f6f7a; --aqua:#3fd0c9; --peach:#ffb48a; --coral:#ff5a36; --sand:#f7efe3; --sand-2:#efe3d0; --ink:#0d1a20; --mute:#5c6b70; --line:rgba(13,26,32,.14);
-  --display:"Anton",Impact,sans-serif; --sans:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
-  color-scheme:light;
+/* ---------------------------------------------------------------- header */
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 18px var(--pad);
+  color: var(--fg);
+  transition: transform 0.9s var(--ease-out), color 0.4s;
 }
-*{box-sizing:border-box}
-html,body{background:var(--deep)}
-body{margin:0;color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-.nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:20px clamp(16px,4vw,48px);color:#fff;font-weight:600;font-size:14px}
-.nav .brand{font:400 28px/1 var(--display);letter-spacing:.02em;text-transform:uppercase}
-.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
-.nav .book{background:var(--coral);color:#fff;padding:12px 20px;border-radius:999px}
-.hero{position:relative;height:100vh;height:100svh;overflow:hidden;background:linear-gradient(#f6c39d,#3fa6b7)}
-#gl{position:absolute;inset:0;width:100%;height:100%}
-.hero::before{content:"";position:absolute;inset:0 0 auto 0;height:40%;z-index:1;background:linear-gradient(rgba(8,48,59,.55),rgba(8,48,59,0));pointer-events:none}
-.hero .copy{position:absolute;left:0;right:0;top:24vh;text-align:center;color:#fff;z-index:2;padding:0 16px;pointer-events:none}
-.hero .kicker{font-weight:700;font-size:13px;letter-spacing:.3em;text-transform:uppercase;text-shadow:0 2px 14px rgba(8,48,59,.7)}
-.hero h1{font:400 clamp(84px,17vw,300px)/.84 var(--display);text-transform:uppercase;margin:14px 0 0;letter-spacing:.005em;text-shadow:0 6px 30px rgba(8,48,59,.45)}
-.hero h1 span{display:inline-block}
-.hero .bottom{position:absolute;left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);bottom:28px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;color:#fff;font-weight:600}
-.hero .bottom p{margin:0;max-width:34ch;text-shadow:0 2px 14px rgba(0,0,0,.25)}
-.chip{background:rgba(255,255,255,.18);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:10px 16px;font-size:13px}
-.marquee{background:var(--coral);color:#fff;overflow:hidden;white-space:nowrap}
-.marquee div{display:inline-flex;gap:40px;padding:16px 0;font:400 clamp(28px,3.6vw,52px)/1 var(--display);text-transform:uppercase;animation:mq 22s linear infinite}
-.marquee span::after{content:"~";margin-left:40px}
-@keyframes mq{to{transform:translateX(-50%)}}
-.wrap{max-width:1300px;margin:0 auto;padding-inline:clamp(16px,4vw,48px)}
-.tag{font-weight:700;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--coral)}
-h2{font:400 clamp(54px,8.5vw,140px)/.88 var(--display);text-transform:uppercase;margin:14px 0 0}
-.packs{background:var(--sand);overflow:hidden}
-.packs-pin{height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;gap:34px}
-.packs-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-inline:clamp(16px,4vw,48px)}
-.packs-head p{max-width:34ch;margin:0;color:var(--mute)}
-.rail{display:flex;gap:22px;padding-inline:clamp(16px,4vw,48px);will-change:transform}
-.pack{flex:0 0 min(78vw,520px);border-radius:28px;padding:30px;min-height:min(56vh,440px);display:flex;flex-direction:column;justify-content:space-between;color:#fff;position:relative;overflow:hidden}
-.pack::after{content:"";position:absolute;right:-60px;bottom:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.12)}
-.pack .lvl{font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
-.pack h3{font:400 clamp(48px,5vw,76px)/.9 var(--display);text-transform:uppercase;margin:12px 0}
-.pack ul{list-style:none;padding:0;margin:0;display:grid;gap:6px;font-weight:500}
-.pack li::before{content:"→ ";opacity:.7}
-.pack .price{display:flex;justify-content:space-between;align-items:flex-end;margin-top:24px;position:relative;z-index:1}
-.pack .price b{font:400 52px/1 var(--display)}
-.pack .price span{font-size:13px;opacity:.85}
-.p1{background:linear-gradient(150deg,#14808a,#0a4a55)}.p2{background:linear-gradient(150deg,#ff6a3d,#c83a1c)}.p3{background:linear-gradient(150deg,#e9a24a,#b36a12)}.p4{background:linear-gradient(150deg,#1d2f3a,#0d1a20)}
-.bay{background:var(--sand);padding-block:clamp(80px,11vw,150px)}
-.bay-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:clamp(24px,4vw,56px);align-items:end}
-.bay-grid img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:28px}
-.bay p{color:var(--mute);font-size:17px}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
-.facts div{background:#fff;border-radius:18px;padding:16px}
-.facts b{display:block;font:400 34px/1 var(--display);color:var(--teal)}
-.facts span{font-size:13px;color:var(--mute)}
-.day{background:var(--deep);color:var(--sand);padding-block:clamp(80px,11vw,150px)}
-.day .tag{color:var(--peach)}
-.day-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,80px);align-items:center}
-.day-grid img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:28px}
-.timeline{list-style:none;padding:0;margin:30px 0 0}
-.timeline li{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:18px 0;border-top:1px solid rgba(247,239,227,.15)}
-.timeline b{font:400 30px/1 var(--display);color:var(--aqua)}
-.timeline strong{display:block;font-size:17px}
-.timeline span{color:#a9c2c6;font-size:14.5px}
-.cta{background:var(--peach);padding-block:clamp(90px,12vw,160px);text-align:center}
-.cta h2{max-width:11ch;margin-inline:auto}
-.cta p{max-width:40ch;margin:18px auto 30px;font-size:18px;color:#5a3a26}
-.cta button{background:var(--ink);color:#fff;border:0;border-radius:999px;font:700 15px var(--sans);padding:18px 30px;cursor:pointer}
-.cta .note{min-height:1.5em;margin-top:14px;color:#5a3a26}
-footer{background:var(--ink);color:#8fa3a8;padding-block:30px;font-size:13px}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.rv{opacity:0;transform:translateY(40px)}
-@media (max-width:860px){
-  .nav ul{display:none}
-  .packs-head{flex-direction:column;align-items:flex-start}
-  .bay-grid,.day-grid{grid-template-columns:1fr}
-  .facts b{font-size:28px}
+.header.is-dark {
+  color: var(--foam);
 }
-@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.marquee div{animation:none}}
+.header.is-hidden {
+  transform: translateY(-110%);
+}
+.logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.logo span {
+  color: var(--accent);
+}
+.nav {
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  list-style: none;
+  border-radius: 999px;
+  background: rgb(13 47 53 / 0.08);
+  backdrop-filter: blur(12px);
+  font-size: 14px;
+  font-weight: 500;
+}
+.header.is-dark .nav {
+  background: rgb(251 247 240 / 0.12);
+}
+.nav a {
+  display: block;
+  padding: 9px 16px;
+  border-radius: 999px;
+  transition: background 0.3s, color 0.3s;
+}
+.nav a:hover {
+  background: var(--accent);
+  color: var(--fg);
+}
+.header__right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.header__right .pill {
+  height: 44px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+.menu-btn {
+  display: none;
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ hero */
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 660px;
+  overflow: hidden;
+  color: var(--foam);
+  background: #0e5c63;
+}
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+.hero__media > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(6 32 36 / 0.5) 0%, rgb(6 32 36 / 0) 26%),
+    linear-gradient(0deg, rgb(6 32 36 / 0.62) 0%, rgb(6 32 36 / 0) 50%);
+}
+.hero__title {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  bottom: 78px;
+  /* "THE SOUTH" is ~6.95em wide: fill the row */
+  font-size: calc((100vw - 2 * var(--pad)) / 7.15);
+}
+.hero__title span {
+  display: block;
+}
+.hero__title .t2 {
+  color: var(--sun);
+}
+.hero__kicker {
+  position: absolute;
+  left: var(--pad);
+  top: 110px;
+  max-width: 300px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.surf {
+  position: absolute;
+  right: var(--pad);
+  top: 104px;
+  width: min(340px, 40vw);
+  padding: 22px;
+  border: 1px solid rgb(251 247 240 / 0.3);
+  border-radius: 22px;
+  background: rgb(6 32 36 / 0.32);
+  backdrop-filter: blur(16px);
+}
+.surf__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.surf__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.surf__live::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6cf2a6;
+  box-shadow: 0 0 0 0 rgb(108 242 166 / 0.6);
+  animation: pulse 1.8s infinite;
+}
+@keyframes pulse {
+  70% { box-shadow: 0 0 0 9px rgb(108 242 166 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(108 242 166 / 0); }
+}
+.surf dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+}
+.surf dt {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.surf dd {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+}
+.surf dd small {
+  font-size: 0.55em;
+  margin-left: 3px;
+  letter-spacing: 0;
+}
+
+/* ------------------------------------------------------------- marquee */
+.band {
+  position: relative;
+  z-index: 2;
+  margin: -34px -2vw 0;
+  padding: 22px 0;
+  background: var(--accent);
+  color: var(--fg);
+  transform: rotate(-2deg);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(34px, 5vw, 84px);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+}
+.band span {
+  padding-right: 0.5em;
+}
+.band span::after {
+  content: "✳";
+  margin-left: 0.5em;
+  color: var(--foam);
+}
+
+/* ----------------------------------------------------------------- intro */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: var(--gap);
+  padding: clamp(130px, 16vw, 230px) var(--pad) clamp(90px, 11vw, 160px);
+}
+.intro p {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 54px);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+/* ----------------------------------------------------------------- camps */
+.camps {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--fg);
+  color: var(--foam);
+}
+.camps .h-track {
+  gap: clamp(16px, 2vw, 28px);
+  padding: 0 var(--pad);
+  align-items: stretch;
+}
+.camps__intro,
+.camp {
+  flex-shrink: 0;
+}
+.camps__intro {
+  display: grid;
+  align-content: space-between;
+  width: clamp(280px, 28vw, 420px);
+  padding: 10px 0;
+}
+.camps__intro h2 {
+  font-size: clamp(54px, 6.4vw, 118px);
+}
+.camps__intro p {
+  max-width: 30ch;
+  font-size: 16px;
+  line-height: 1.55;
+  opacity: 0.8;
+}
+.camps__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sun);
+}
+.camp {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: clamp(300px, 28vw, 420px);
+  border-radius: 24px;
+  background: var(--foam);
+  color: var(--fg);
+  overflow: hidden;
+}
+.camp__media {
+  aspect-ratio: 4 / 3.4;
+}
+.camp__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out);
+}
+.camp:hover .camp__media img {
+  transform: scale(1.06);
+}
+.camp__body {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  padding: 24px;
+}
+.camp h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 30px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.camp ul {
+  display: grid;
+  gap: 6px;
+  list-style: none;
+  font-size: 14px;
+  color: var(--muted);
+}
+.camp li::before {
+  content: "→ ";
+  color: var(--accent);
+}
+.camp__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.camp__price {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 34px;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+.camp__price small {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+.camp .pill {
+  height: 44px;
+  padding: 0 18px;
+  font-size: 14px;
+}
+
+/* ----------------------------------------------------------------- stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+  padding: clamp(80px, 10vw, 150px) var(--pad);
+}
+.stat {
+  display: grid;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 2px solid var(--fg);
+}
+.stat strong {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(54px, 6vw, 108px);
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+.stat strong small {
+  font-size: 0.42em;
+  letter-spacing: -0.02em;
+  margin-left: 4px;
+}
+.stat > span {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------------ grow */
+.grow {
+  position: relative;
+  height: 115vh;
+}
+.grow__media {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.grow__media > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.grow__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(6 32 36 / 0.3);
+}
+.grow__title {
+  position: absolute;
+  inset: 0 var(--pad);
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--foam);
+  pointer-events: none;
+}
+.grow__title h2 {
+  font-size: clamp(48px, 8vw, 150px);
+}
+.grow__title h2 em {
+  font-style: normal;
+  color: var(--sun);
+}
+
+/* ------------------------------------------------------------------- day */
+.day {
+  padding: clamp(110px, 14vw, 200px) var(--pad);
+}
+.day__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: clamp(40px, 6vw, 80px);
+}
+.day__head h2 {
+  font-size: clamp(50px, 7vw, 128px);
+}
+.day__head p {
+  max-width: 32ch;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.times {
+  list-style: none;
+  border-top: 2px solid var(--fg);
+}
+.times li {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 6fr) minmax(0, 4fr);
+  gap: var(--gap);
+  align-items: center;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.4s, padding 0.6s var(--ease-out);
+}
+.times li:hover {
+  background: var(--sun);
+  padding-left: 18px;
+}
+.times time {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(22px, 2vw, 32px);
+  letter-spacing: -0.04em;
+}
+.times h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 3.6vw, 62px);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.times p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ----------------------------------------------------------------- house */
+.house {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(26px, 5vw, 90px);
+  align-items: center;
+  padding: 0 var(--pad) clamp(110px, 14vw, 200px);
+}
+.house__media {
+  aspect-ratio: 4 / 5;
+  border-radius: 28px;
+}
+.house h2 {
+  font-size: clamp(42px, 5vw, 92px);
+  margin: 22px 0 26px;
+}
+.house p {
+  max-width: 46ch;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+  list-style: none;
+}
+.chips li {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--foam);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------------- book */
+.book {
+  position: relative;
+  padding: clamp(110px, 14vw, 200px) var(--pad);
+  background: var(--accent);
+  color: var(--fg);
+  overflow: hidden;
+}
+.book h2 {
+  font-size: clamp(60px, 11vw, 210px);
+}
+.weeks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: clamp(40px, 5vw, 70px) 0 30px;
+  list-style: none;
+}
+.weeks button {
+  height: 48px;
+  padding: 0 20px;
+  border: 1.5px solid var(--fg);
+  border-radius: 999px;
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s;
+}
+.weeks button:hover,
+.weeks button[aria-pressed="true"] {
+  background: var(--fg);
+  color: var(--foam);
+}
+.book .pill {
+  background: var(--fg);
+  color: var(--foam);
+  height: 60px;
+  padding: 0 32px;
+  font-size: 16px;
+}
+.book .pill:hover {
+  background: var(--foam);
+  color: var(--fg);
+}
+.book__walk {
+  position: absolute;
+  right: var(--pad);
+  bottom: clamp(60px, 9vw, 140px);
+  width: clamp(180px, 22vw, 340px);
+  aspect-ratio: 4 / 5;
+  border-radius: 200px 200px 24px 24px;
+  transform: rotate(4deg);
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 80;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--fg);
+  color: var(--foam);
+  font-size: 14px;
+  transform: translate(-50%, 160%);
+  transition: transform 0.7s var(--ease-out);
+}
+.toast.is-on {
+  transform: translate(-50%, 0);
+}
+
+/* ---------------------------------------------------------------- footer */
+.footer {
+  padding: clamp(80px, 10vw, 140px) var(--pad) 26px;
+  background: var(--fg);
+  color: var(--foam);
+}
+.footer__top {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.footer__top b {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sun);
+}
+.footer__top a {
+  border-bottom: 1px solid rgb(251 247 240 / 0.4);
+}
+.footer__word {
+  margin: clamp(60px, 8vw, 120px) 0 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  /* "SWELLHOUSE" is ~8.5em wide */
+  font-size: calc((100vw - 2 * var(--pad)) / 8.75);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+}
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 22px;
+  border-top: 1px solid rgb(251 247 240 / 0.2);
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.menu__close {
+  position: absolute;
+  left: var(--pad);
+  top: 26px;
+  z-index: 2;
+  font-weight: 600;
+}
+.menu__links a {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  font-size: clamp(36px, 5.6vw, 92px);
+  transition: color 0.3s, transform 0.8s var(--ease-out);
+}
+.menu__links a:hover {
+  color: var(--accent);
+  transform: translateX(14px);
+}
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 900px) {
+  .header {
+    grid-template-columns: 1fr auto;
+  }
+  .nav {
+    display: none;
+  }
+  .header__right .pill {
+    display: none;
+  }
+  .menu-btn {
+    display: inline-block;
+  }
+  .hero__title {
+    bottom: 200px;
+  }
+  .surf {
+    left: var(--pad);
+    right: var(--pad);
+    top: auto;
+    bottom: 26px;
+    width: auto;
+  }
+  .surf dl {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .surf dd {
+    font-size: 18px;
+  }
+  .intro {
+    grid-template-columns: 1fr;
+  }
+  .camps {
+    height: auto;
+    padding: 90px 0 60px;
+  }
+  .camps .h-track {
+    padding-right: var(--pad);
+  }
+  .camps__intro {
+    width: 82vw;
+    gap: 30px;
+  }
+  .camp {
+    width: 82vw;
+  }
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 40px;
+  }
+  .day__head {
+    flex-direction: column;
+    align-items: start;
+  }
+  .times li {
+    grid-template-columns: auto 1fr;
+  }
+  .times p {
+    grid-column: 2;
+  }
+  .house {
+    grid-template-columns: 1fr;
+  }
+  .house__media {
+    width: 86%;
+  }
+  .book__walk {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 56%;
+    margin: 50px 0 0 auto;
+  }
+  .footer__top {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 36px;
+  }
+  .footer__bottom {
+    flex-direction: column;
+  }
+}
 </style>
+</head>
+<body>
 
-<nav class="nav"><a class="brand" href="#">Swellhouse</a><ul><li>Camps</li><li>The bay</li><li>A day here</li><li>Stay</li></ul><a class="book" href="#book">Book a week</a></nav>
+<div class="loader" aria-hidden="true">
+  <p class="loader__brand" style="font-weight: 800; letter-spacing: -0.02em">SWELL<span style="color: #fbf7f0">HOUSE</span></p>
+  <div class="loader__row">
+    <p class="loader__note">Waxing boards in Weligama<br>5°58′N 80°25′E</p>
+    <p class="loader__count" style="font-weight: 800; letter-spacing: -0.06em">000</p>
+  </div>
+  <span class="loader__bar"></span>
+</div>
+<div class="grain" aria-hidden="true"></div>
 
-<header class="hero">
-  <canvas id="gl" aria-hidden="true"></canvas>
-  <div class="copy"><div class="kicker">Surf camp · Weligama bay · Sri Lanka</div><h1><span>Ride</span> <span>the</span> <span>south</span></h1></div>
-  <div class="bottom"><p>Seven-night surf camps on the gentlest bay in Sri Lanka, from your first pop-up to your first reef break.</p><span class="chip">Season: November to April</span></div>
+<header class="header" data-header>
+  <a class="logo" href="#top" aria-label="Swellhouse, back to top">Swell<span>house</span></a>
+  <ul class="nav">
+    <li><a href="#camps">Camps</a></li>
+    <li><a href="#bay">The bay</a></li>
+    <li><a href="#day">A day</a></li>
+    <li><a href="#house">Stay</a></li>
+  </ul>
+  <div class="header__right">
+    <a class="pill" href="#book" data-magnetic="0.25">Book a week <i>→</i></a>
+    <button class="menu-btn roll" type="button" data-menu-open><span data-text="Menu">Menu</span></button>
+  </div>
 </header>
 
-<div class="marquee" aria-hidden="true"><div><span>Surf</span><span>Yoga</span><span>Eat</span><span>Repeat</span><span>Surf</span><span>Yoga</span><span>Eat</span><span>Repeat</span><span>Surf</span><span>Yoga</span><span>Eat</span><span>Repeat</span></div></div>
+<nav class="menu" aria-label="Site menu">
+  <button class="menu__close roll" type="button" data-menu-close><span data-text="Close">Close</span></button>
+  <ul class="menu__links">
+    <li><a href="#camps"><small>01</small>Camps</a></li>
+    <li><a href="#bay"><small>02</small>The bay</a></li>
+    <li><a href="#day"><small>03</small>A day here</a></li>
+    <li><a href="#house"><small>04</small>The house</a></li>
+    <li><a href="#book"><small>05</small>Book a week</a></li>
+  </ul>
+  <div class="menu__media" aria-hidden="true">
+    <img src="media/lesson.jpg" alt="">
+    <img src="media/ride.jpg" alt="">
+    <img src="media/yoga.jpg" alt="">
+    <img src="media/camp.jpg" alt="">
+    <img src="media/crew.jpg" alt="">
+  </div>
+</nav>
 
 <main>
-  <section class="packs" id="packs">
-    <div class="packs-pin">
-      <div class="packs-head"><div><span class="tag">The camps</span><h2>Pick your wave</h2></div><p>Every camp includes your board, daily lessons with video feedback, breakfast and dinner, and a bed a minute from the water.</p></div>
-      <div class="rail" id="rail">
-        <article class="pack p1"><div><span class="lvl">Beginner · 7 nights</span><h3>First Wave</h3><ul><li>2 lessons a day on Weligama's sandy bay</li><li>Soft-top boards and rash vest</li><li>Video review every evening</li></ul></div><div class="price"><b>$590</b><span>per person, shared room</span></div></article>
-        <article class="pack p2"><div><span class="lvl">Intermediate · 7 nights</span><h3>Reef Breaks</h3><ul><li>Guided sessions at Midigama and Mirissa</li><li>Tuk-tuk transfers to the best tide</li><li>Turns and line coaching</li></ul></div><div class="price"><b>$690</b><span>per person, shared room</span></div></article>
-        <article class="pack p3"><div><span class="lvl">All levels · 10 nights</span><h3>Surf &amp; Yoga</h3><ul><li>Morning surf, sunset yoga in the shala</li><li>Ayurvedic massage included</li><li>Private room upgrade available</li></ul></div><div class="price"><b>$940</b><span>per person, shared room</span></div></article>
-        <article class="pack p4"><div><span class="lvl">Groups · flexible</span><h3>Crew Week</h3><ul><li>Book the whole house for 8 to 12 friends</li><li>Private coach and photographer</li><li>Beach barbecue night</li></ul></div><div class="price"><b>Ask</b><span>custom quote</span></div></article>
+  <section class="hero" id="top" data-theme="dark">
+    <div class="hero__media">
+      <img src="media/hero.jpg" alt="" data-preload>
+      <video src="media/hero.mp4" poster="media/hero.jpg" muted playsinline loop autoplay preload="auto" data-autoplay></video>
+    </div>
+    <div class="hero__shade"></div>
+    <p class="hero__kicker" data-intro>Seven-night surf camps on the gentlest bay in Sri Lanka, from your first pop-up to your first reef break.</p>
+    <h1 class="hero__title big" data-intro><span class="t1">Ride</span><span class="t2">the south</span></h1>
+    <aside class="surf" data-intro aria-label="Today's surf in Weligama">
+      <div class="surf__head"><span class="surf__live">Weligama now</span><span data-clock="Asia/Colombo">06:00</span></div>
+      <dl>
+        <div><dt>Swell</dt><dd>1.2<small>m</small></dd></div>
+        <div><dt>Period</dt><dd>11<small>s</small></dd></div>
+        <div><dt>Wind</dt><dd>6<small>kn off</small></dd></div>
+        <div><dt>Water</dt><dd>28<small>°C</small></dd></div>
+      </dl>
+    </aside>
+  </section>
+
+  <div class="band marquee" data-marquee aria-hidden="true">
+    <div class="marquee__track"><span>Surf</span><span>Yoga</span><span>Eat</span><span>Sleep</span><span>Repeat</span></div>
+  </div>
+
+  <section class="intro" id="bay">
+    <span class="tag" data-fade>The bay</span>
+    <p data-split="fill">Weligama’s long, sandy bay breaks soft and slow. Beginners stand up on day one, longboarders get peeling rights all season, and the reefs at Midigama are a tuk-tuk away.</p>
+  </section>
+
+  <section class="camps" id="camps" data-horizontal data-theme="dark">
+    <div class="h-track">
+      <div class="camps__intro">
+        <h2 class="big" data-split>Pick your wave</h2>
+        <div>
+          <p>Every camp includes your board, two lessons a day with video feedback, a bed by the beach and three meals.</p>
+          <p class="camps__hint" style="margin-top: 26px">Scroll sideways →</p>
+        </div>
       </div>
+      <article class="camp">
+        <div class="camp__media"><img src="media/lesson.jpg" alt="An instructor teaching a surfer to pop up on the sand"></div>
+        <div class="camp__body">
+          <span class="tag">Beginner · 7 nights</span>
+          <h3>First Wave</h3>
+          <ul><li>Two lessons a day on the sand bar</li><li>Soft-top board and rash vest</li><li>Video review every evening</li></ul>
+          <div class="camp__foot"><p class="camp__price">$590<small>per person, shared room</small></p><a class="pill" href="#book">Book</a></div>
+        </div>
+      </article>
+      <article class="camp">
+        <div class="camp__media"><img src="media/ride.jpg" alt="A surfer riding a small wave"></div>
+        <div class="camp__body">
+          <span class="tag">Intermediate · 7 nights</span>
+          <h3>Reef Breaks</h3>
+          <ul><li>Guided sessions at Midigama and Mirissa</li><li>Tuk-tuk to the best tide</li><li>Turns and line coaching</li></ul>
+          <div class="camp__foot"><p class="camp__price">$690<small>per person, shared room</small></p><a class="pill" href="#book">Book</a></div>
+        </div>
+      </article>
+      <article class="camp">
+        <div class="camp__media"><img src="media/yoga.jpg" alt="Yoga at sunset under a palm tree"></div>
+        <div class="camp__body">
+          <span class="tag">All levels · 10 nights</span>
+          <h3>Surf &amp; Yoga</h3>
+          <ul><li>Morning surf, sunset yoga in the shala</li><li>One Ayurvedic massage</li><li>Private room upgrade</li></ul>
+          <div class="camp__foot"><p class="camp__price">$940<small>per person, shared room</small></p><a class="pill" href="#book">Book</a></div>
+        </div>
+      </article>
+      <article class="camp">
+        <div class="camp__media"><img src="media/crew.jpg" alt="A group of surfers carrying boards to the water"></div>
+        <div class="camp__body">
+          <span class="tag">Groups · flexible</span>
+          <h3>Crew Week</h3>
+          <ul><li>The whole house for 8 to 12 friends</li><li>Private coach and photographer</li><li>Beach barbecue night</li></ul>
+          <div class="camp__foot"><p class="camp__price">Ask<small>custom quote</small></p><a class="pill" href="#book">Ask</a></div>
+        </div>
+      </article>
     </div>
   </section>
 
-  <section class="bay">
-    <div class="wrap bay-grid">
-      <img src="img/aerial.jpg" alt="Surfer riding a wave in Weligama bay at sunrise" class="rv">
-      <div>
-        <span class="tag rv">The bay</span>
-        <h2 class="rv">Made for learning</h2>
-        <p class="rv">Weligama's long, sandy bay breaks soft and slow, so beginners stand up on day one. Ten minutes down the coast, the reefs wait for when you're ready.</p>
-        <div class="facts rv"><div><b>27°C</b><span>water, all year</span></div><div><b>1 min</b><span>bed to beach</span></div><div><b>6</b><span>guests per coach</span></div></div>
-      </div>
+  <section class="stats" aria-label="Swellhouse in numbers">
+    <div class="stat" data-fade><strong><span data-count="28">28</span><small>°C</small></strong><span>Water, all year</span></div>
+    <div class="stat" data-fade data-delay="0.08"><strong><span data-count="1">1</span><small>min</small></strong><span>From bed to the beach</span></div>
+    <div class="stat" data-fade data-delay="0.16"><strong><span data-count="6">6</span></strong><span>Guests per coach, never more</span></div>
+    <div class="stat" data-fade data-delay="0.24"><strong><span data-count="180">180</span><small>days</small></strong><span>Of clean surf a season</span></div>
+  </section>
+
+  <section class="grow" data-theme="dark" aria-label="Fishermen launching boats at dawn">
+    <div class="grow__media media" data-grow>
+      <img src="media/dawn.jpg" alt="">
+      <video src="media/dawn.mp4" poster="media/dawn.jpg" muted playsinline loop preload="none" data-autoplay></video>
+    </div>
+    <div class="grow__title big"><h2 data-split>Weligama wakes<br><em>before the waves</em></h2></div>
+  </section>
+
+  <section class="day" id="day">
+    <div class="day__head">
+      <h2 class="big" data-split>Salt, sun, sleep</h2>
+      <p data-fade>Days follow the tide, not the clock. This is roughly how one goes.</p>
+    </div>
+    <ul class="times" data-follow>
+      <li data-img="media/ride.jpg"><time>06:00</time><h3>Dawn session</h3><p>Glassy water before the wind picks up.</p></li>
+      <li data-img="media/lesson.jpg"><time>09:30</time><h3>Theory &amp; video</h3><p>Your waves on the big screen, with notes.</p></li>
+      <li data-img="media/boards.jpg"><time>13:00</time><h3>Hammock hours</h3><p>Rice and curry, then nothing at all.</p></li>
+      <li data-img="media/yoga.jpg"><time>17:00</time><h3>Sunset yoga</h3><p>Or another surf. Your call, every day.</p></li>
+      <li data-img="media/camp.jpg"><time>19:30</time><h3>Dinner together</h3><p>The catch of the day at one long table.</p></li>
+    </ul>
+  </section>
+
+  <section class="house" id="house">
+    <div class="house__media media" data-reveal data-parallax="12"><img src="media/boards.jpg" alt="Surfboards leaning under palm trees"></div>
+    <div>
+      <span class="tag" data-fade>The house</span>
+      <h2 class="big" data-split>Sixty steps from the sand</h2>
+      <p data-fade>Eight rooms around a garden of palms, a board rack that never runs out and a kitchen that feeds hungry surfers four times a day.</p>
+      <ul class="chips" data-fade>
+        <li>Board storage</li><li>Fast Wi-Fi</li><li>Yoga shala</li><li>Airport pick-up</li><li>Laundry</li><li>Tuk-tuk on call</li>
+      </ul>
     </div>
   </section>
 
-  <section class="day">
-    <div class="wrap day-grid">
-      <img src="img/camp.jpg" alt="Surf camp cabanas and boards at sunset" class="rv">
-      <div>
-        <span class="tag rv">A day at Swellhouse</span>
-        <h2 class="rv" style="color:var(--sand)">Salt, sun, sleep</h2>
-        <ol class="timeline">
-          <li class="rv"><b>6:00</b><div><strong>Dawn session</strong><span>Glassy water before the wind picks up.</span></div></li>
-          <li class="rv"><b>9:00</b><div><strong>Big breakfast</strong><span>Hoppers, fruit and real coffee.</span></div></li>
-          <li class="rv"><b>12:00</b><div><strong>Video review</strong><span>Your waves on the big screen, with notes.</span></div></li>
-          <li class="rv"><b>16:30</b><div><strong>Sunset surf or yoga</strong><span>Your call, every day.</span></div></li>
-          <li class="rv"><b>19:30</b><div><strong>Dinner together</strong><span>Rice and curry or the catch of the day.</span></div></li>
-        </ol>
-      </div>
-    </div>
+  <section class="book" id="book">
+    <span class="tag" data-fade>Season · November to April</span>
+    <h2 class="big" data-split style="margin-top: 28px">Your board<br>is waiting</h2>
+    <ul class="weeks" data-fade aria-label="Pick a week">
+      <li><button type="button" aria-pressed="true">8 Nov</button></li>
+      <li><button type="button" aria-pressed="false">15 Nov</button></li>
+      <li><button type="button" aria-pressed="false">22 Nov</button></li>
+      <li><button type="button" aria-pressed="false">6 Dec</button></li>
+      <li><button type="button" aria-pressed="false">3 Jan</button></li>
+      <li><button type="button" aria-pressed="false">7 Feb</button></li>
+    </ul>
+    <button class="pill book__go" type="button" data-magnetic="0.25">Check this week <i>→</i></button>
+    <div class="book__walk media" data-reveal="up"><img src="media/walk.jpg" alt="A surfer walking out of the sea with a longboard at sunrise"></div>
   </section>
-
-  <section class="cta" id="book">
-    <div class="wrap">
-      <span class="tag">This season</span>
-      <h2 class="rv">Your board is waiting</h2>
-      <p class="rv">Weeks start every Saturday from November to April. Pick a week and we'll hold your bed for 48 hours.</p>
-      <button id="bookBtn">Check this season's weeks</button>
-      <p class="note" id="note" aria-live="polite"></p>
-    </div>
-  </section>
-
-  <footer><div class="wrap"><span>Swellhouse · Weligama, Sri Lanka</span><span>Concept website by <a href="/showcase" style="text-decoration:underline">Hemal Herath</a> · real-time ocean in WebGL</span></div></footer>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"}}</script>
+<footer class="footer" data-theme="dark">
+  <div class="footer__top">
+    <div><b>Find us</b><p>On the beach road<br>Weligama, Sri Lanka</p></div>
+    <div><b>Local time</b><p><span data-clock="Asia/Colombo">06:00</span> in Weligama</p></div>
+    <div><b>Photography</b><p>Footage and photos<br>via Pexels</p></div>
+    <div><b>Concept</b><p>Designed and built by<br><a href="/showcase">Hemal Herath</a></p></div>
+  </div>
+  <p class="footer__word" data-split="chars" aria-hidden="true">Swellhouse</p>
+  <div class="footer__bottom">
+    <span>Swellhouse is a fictional surf camp — a concept website.</span>
+    <a href="#top">Back to the top ↑</a>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite">Concept site: bookings are switched off.</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+<script src="/showcase/_engine/engine.js"></script>
 <script>
-(function(){
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-  if (window.Lenis && !reduce){ const lenis = new Lenis({lerp:0.09}); if (window.ScrollTrigger) lenis.on('scroll', ScrollTrigger.update); if (window.gsap){ gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);} }
-  document.getElementById('bookBtn').addEventListener('click', () => document.getElementById('note').textContent = 'Concept site: on the real site this opens the week picker and deposit.');
-  if (!window.gsap || reduce){ document.querySelectorAll('.rv').forEach(e=>{e.style.opacity=1;e.style.transform='none'}); return; }
-  gsap.from('.hero h1 span',{yPercent:100,opacity:0,duration:1.3,stagger:.12,ease:'expo.out',delay:.2});
-  gsap.to('.hero .copy',{yPercent:-40,opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
-  const rail = document.getElementById('rail');
-  const dist = () => Math.max(0, rail.scrollWidth - innerWidth);
-  gsap.to(rail,{x:() => -dist(),ease:'none',scrollTrigger:{trigger:'.packs',start:'top top',end:() => '+=' + dist(),pin:'.packs-pin',scrub:0.6,invalidateOnRefresh:true}});
-  document.querySelectorAll('.rv').forEach(el => gsap.to(el,{opacity:1,y:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
+(() => {
+  const { $, $$ } = SE;
+
+  SE.init({
+    intro(tl, reduce) {
+      if (reduce) return;
+      const title = SE.split($(".hero__title"), "chars");
+      tl.from(".hero__media > *", { scale: 1.25, duration: 2.4, ease: "expo.out" }, 0.2)
+        .from(title.chars, { yPercent: 115, duration: 1.3, stagger: 0.035 }, 0.65)
+        .fromTo([".hero__kicker", ".surf"], { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 1.4, stagger: 0.12 }, 1.1)
+        .from(".header", { autoAlpha: 0, duration: 1.2, ease: "power2.out", clearProps: "opacity,visibility" }, 0.95);
+
+      const out = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
+      gsap.to(".hero__title", { yPercent: -35, ease: "none", scrollTrigger: out });
+      gsap.to(".hero__media", { yPercent: 18, ease: "none", scrollTrigger: { ...out } });
+    },
+  });
+
+  const toast = $(".toast");
+  const say = (text) => {
+    toast.textContent = text;
+    toast.classList.add("is-on");
+    clearTimeout(toast.t);
+    toast.t = setTimeout(() => toast.classList.remove("is-on"), 2600);
+  };
+  $$(".weeks button").forEach((b) =>
+    b.addEventListener("click", () => $$(".weeks button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)))),
+  );
+  $(".book__go").addEventListener("click", () => {
+    const week = $('.weeks [aria-pressed="true"]').textContent;
+    say(`Week of ${week}: this is a concept site, so bookings are off.`);
+  });
 })();
 </script>
-<script type="module">
-import * as THREE from 'three';
-const canvas = document.getElementById('gl');
-let renderer; try { renderer = new THREE.WebGLRenderer({canvas, antialias:true}); } catch(e){ canvas.remove(); throw e; }
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 2000); camera.position.set(0, 4.2, 18);
-const sunDir = new THREE.Vector3(0.0, 0.12, -1).normalize();
-
-// Sky dome: sunrise gradient with a sun glow
-const sky = new THREE.Mesh(new THREE.SphereGeometry(900, 32, 16), new THREE.ShaderMaterial({ side:THREE.BackSide, depthWrite:false, uniforms:{uSun:{value:sunDir}},
-  vertexShader:`varying vec3 vDir; void main(){ vDir = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
-  fragmentShader:`varying vec3 vDir; uniform vec3 uSun; void main(){ float h = clamp(vDir.y,0.0,1.0);
-    vec3 top = vec3(0.30,0.62,0.78), mid = vec3(0.98,0.74,0.58), hor = vec3(1.0,0.82,0.62);
-    vec3 col = mix(hor, mid, smoothstep(0.0,0.08,h)); col = mix(col, top, smoothstep(0.06,0.55,h));
-    float s = max(dot(normalize(vDir), uSun), 0.0); col += vec3(1.0,0.72,0.45)*pow(s, 180.0)*2.2 + vec3(1.0,0.6,0.35)*pow(s, 8.0)*0.35;
-    gl_FragColor = vec4(col,1.0); }`}));
-scene.add(sky);
-
-// Ocean: sum of Gerstner-style waves with analytic normals, foam on crests, fresnel sky reflection
-const oceanMat = new THREE.ShaderMaterial({
-  side:THREE.DoubleSide,
-  uniforms:{ uTime:{value:0}, uSun:{value:sunDir}, uCam:{value:camera.position} },
-  vertexShader:`
-    uniform float uTime; varying vec3 vPos; varying vec3 vNormal; varying float vCrest;
-    vec3 gerstner(vec2 dir, float steep, float wl, vec3 p, inout vec3 tan, inout vec3 bin, float speedMul){
-      float k = 6.28318/wl; float c = sqrt(9.8/k)*speedMul; vec2 d = normalize(dir); float f = k*(dot(d,p.xz) - c*uTime); float a = steep/k;
-      tan += vec3(-d.x*d.x*steep*sin(f), d.x*steep*cos(f), -d.x*d.y*steep*sin(f));
-      bin += vec3(-d.x*d.y*steep*sin(f), d.y*steep*cos(f), -d.y*d.y*steep*sin(f));
-      return vec3(d.x*a*cos(f), a*sin(f), d.y*a*cos(f));
-    }
-    void main(){
-      vec3 p = vec3(position.x, 0.0, -position.y); vec3 tan = vec3(1.0,0.0,0.0), bin = vec3(0.0,0.0,1.0); vec3 g = p;
-      g += gerstner(vec2(0.0,1.0), 0.22, 26.0, p, tan, bin, 0.55);
-      g += gerstner(vec2(0.35,1.0), 0.18, 14.0, p, tan, bin, 0.6);
-      g += gerstner(vec2(-0.4,1.0), 0.14, 8.0, p, tan, bin, 0.65);
-      g += gerstner(vec2(0.8,0.6), 0.08, 4.5, p, tan, bin, 0.7);
-      g += gerstner(vec2(-0.7,0.4), 0.05, 2.6, p, tan, bin, 0.8);
-      vNormal = normalize(cross(bin, tan)); vPos = g; vCrest = g.y;
-      gl_Position = projectionMatrix*viewMatrix*vec4(g,1.0);
-    }`,
-  fragmentShader:`
-    uniform vec3 uSun; uniform vec3 uCam; uniform float uTime; varying vec3 vPos; varying vec3 vNormal; varying float vCrest;
-    float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
-    float noise(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y); }
-    void main(){
-      vec3 n = normalize(vNormal); vec3 v = normalize(uCam - vPos);
-      float fres = pow(1.0 - max(dot(n,v),0.0), 5.0)*0.75;
-      vec3 deep = vec3(0.01,0.16,0.22), shallow = vec3(0.06,0.55,0.60);
-      vec3 water = mix(deep, shallow, clamp(vCrest*0.9+0.45,0.0,1.0));
-      vec3 skyc = mix(vec3(1.0,0.80,0.62), vec3(0.45,0.70,0.82), clamp(reflect(-v,n).y*3.0,0.0,1.0));
-      vec3 col = mix(water, skyc, clamp(fres*0.9+0.08,0.0,1.0));
-      vec3 h = normalize(uSun + v); float spec = pow(max(dot(n,h),0.0), 220.0)*3.0 + pow(max(dot(n,h),0.0), 30.0)*0.25;
-      col += vec3(1.0,0.78,0.55)*spec;
-      float foam = smoothstep(0.62, 1.05, vCrest + noise(vPos.xz*1.6 + uTime*0.4)*0.35);
-      col = mix(col, vec3(0.96,0.98,0.97), foam*0.85);
-      float d = length(vPos.xz - uCam.xz); float fog = smoothstep(90.0, 520.0, d);
-      col = mix(col, vec3(1.0,0.82,0.64), fog);
-      gl_FragColor = vec4(col,1.0);
-    }`
-});
-const seg = innerWidth < 760 ? 220 : 320;
-const ocean = new THREE.Mesh(new THREE.PlaneGeometry(700, 700, seg, seg), oceanMat);
-ocean.frustumCulled = false; scene.add(ocean);
-
-function resize(){ const w=canvas.clientWidth||innerWidth, h=canvas.clientHeight||innerHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
-addEventListener('resize', resize); resize();
-const m = new THREE.Vector2(), tm = new THREE.Vector2();
-addEventListener('pointermove', e => tm.set((e.clientX/innerWidth)*2-1, -(e.clientY/innerHeight)*2+1));
-let sp = 0; addEventListener('scroll', () => { sp = Math.min(1, scrollY/innerHeight); }, {passive:true});
-const clock = new THREE.Clock(), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-function tick(){
-  const t = reduce ? 3 : clock.getElapsedTime(); m.lerp(tm, 0.04);
-  oceanMat.uniforms.uTime.value = t;
-  camera.position.set(m.x*2.0, 8.5 + Math.sin(t*0.7)*0.3 + m.y*0.8 + sp*4.0, 18 - sp*6.0);
-  camera.lookAt(m.x*3.0, -1.5 + m.y*0.8 - sp*2.0, -34);
-  camera.rotation.z += Math.sin(t*0.5)*0.008;
-  oceanMat.uniforms.uCam.value.copy(camera.position);
-  renderer.render(scene, camera); requestAnimationFrame(tick);
-}
-tick();
-</script>
-
+</body>
 </html>

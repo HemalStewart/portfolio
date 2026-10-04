@@ -1115,7 +1115,7 @@ body {
       tl.from(".hero__media > *", { scale: 1.28, duration: 2.6, ease: "expo.out" }, 0.25)
         .from(title.lines, { yPercent: 118, duration: 1.7, stagger: 0.12 }, 0.7)
         .fromTo([".hero__aside", ".hero__foot"], { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 1.5, stagger: 0.12 }, 1.05)
-        .from(".header", { yPercent: -120, duration: 1.4, clearProps: "transform" }, 0.95);
+        .from(".header", { autoAlpha: 0, duration: 1.2, ease: "power2.out", clearProps: "opacity,visibility" }, 0.95);
 
       // the hero settles back as you leave it
       const out = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
