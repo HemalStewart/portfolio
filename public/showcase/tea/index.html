@@ -1,366 +1,1060 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><base href="/showcase/tea/"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Mistline Ceylon Tea</title>
-<meta name="description" content="Mistline: high-grown Ceylon tea from 1,800 metres. Concept website by Hemal Herath.">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/showcase/tea/">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mistline — Ceylon tea grown above the clouds</title>
+<meta name="description" content="Mistline: single-estate Ceylon tea from 1,868 metres in Nuwara Eliya. A concept website designed and built by Hemal Herath.">
+<meta name="theme-color" content="#1e3329">
+<meta property="og:title" content="Mistline — Ceylon tea grown above the clouds">
+<meta property="og:image" content="/showcase/tea/media/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/showcase/_engine/engine.css">
 <style>
+:root {
+  --bg: #e8ebe5;
+  --paper: #f3f4ef;
+  --fg: #1e3329;
+  --muted: #5d6d64;
+  --line: rgb(30 51 41 / 0.16);
+  --accent: #a8874e;
+  --leaf: #3f6b4e;
+  --mist: #f6f7f3;
+  --loader-bg: #e8ebe5;
+  --loader-fg: #1e3329;
+  --menu-bg: #1e3329;
+  --menu-fg: #e8ebe5;
+  --cursor: #1e3329;
+  --cursor-bg: #3f6b4e;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "General Sans", system-ui, sans-serif;
+  --grain: 0.05;
+}
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.label::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+}
+.display em {
+  font-style: italic;
+  font-weight: 300;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 54px;
+  padding: 0 28px;
+  border-radius: 999px;
+  background: var(--fg);
+  color: var(--mist);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.5s var(--ease-out), color 0.5s;
+}
+.btn:hover {
+  background: var(--leaf);
+}
+.btn--ghost {
+  background: rgb(246 247 243 / 0.14);
+  color: var(--mist);
+  border: 1px solid rgb(246 247 243 / 0.45);
+  backdrop-filter: blur(10px);
+}
+.btn--ghost:hover {
+  background: var(--mist);
+  color: var(--fg);
+}
+.btn i {
+  font-style: normal;
+  transition: transform 0.6s var(--ease-out);
+}
+.btn:hover i {
+  transform: translateX(4px);
+}
 
-/* Layout: a fixed full-screen WebGL hero (liquid glass over mist), then editorial sections that scroll over it */
-:root{
-  --forest:#0b1a13; --forest-2:#12261c; --mist:#e8eee8; --sage:#9db69f; --leaf:#4f7a5a; --gold:#c8a65a; --line:rgba(232,238,232,.14);
-  --display:"Instrument Serif",Georgia,serif; --sans:"Geist",ui-sans-serif,system-ui,sans-serif;
-  color-scheme:dark;
+/* ---------------------------------------------------------------- header */
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 20px var(--pad);
+  color: var(--fg);
+  transition: transform 0.9s var(--ease-out), color 0.5s;
 }
-*{box-sizing:border-box}
-html,body{background:var(--forest)}
-body{margin:0;color:var(--mist);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-::selection{background:var(--gold);color:var(--forest)}
-#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
-.fallback{position:fixed;inset:0;background:url(img/hills.jpg) center/cover;z-index:0}
-.nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:22px clamp(16px,4vw,48px);mix-blend-mode:difference;color:#fff}
-.nav .brand{font:400 26px/1 var(--display);letter-spacing:.02em}
-.nav ul{display:flex;gap:32px;list-style:none;margin:0;padding:0;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
-.nav .cta{font-size:13px;letter-spacing:.14em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:10px 18px}
-.hero{position:relative;z-index:2;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 clamp(16px,4vw,48px) 40px;pointer-events:none}
-.hero .row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
-.hero p{margin:0;max-width:30ch;font-size:15px;color:rgba(232,238,232,.82)}
-.hero .scroll{font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:12px}
-.hero .scroll i{display:block;width:1px;height:46px;background:linear-gradient(var(--mist),transparent);animation:drip 2.2s ease-in-out infinite}
-@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-main{position:relative;z-index:3}
-.panel{background:var(--forest);position:relative}
-.wrap{max-width:1280px;margin:0 auto;padding-inline:clamp(16px,4vw,48px)}
-.intro{padding-block:clamp(90px,14vw,180px)}
-.label{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--sage)}
-.statement{font:400 clamp(34px,5.2vw,76px)/1.06 var(--display);margin:22px 0 0;max-width:20ch;text-wrap:balance}
-.statement em{color:var(--gold)}
-.statement .w{display:inline-block;opacity:.12;transition:opacity .2s}
-.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:clamp(56px,8vw,110px);border-top:1px solid var(--line);padding-top:28px}
-.facts b{display:block;font:400 clamp(40px,4.4vw,64px)/1 var(--display);color:var(--mist)}
-.facts span{font-size:13.5px;color:var(--sage)}
-.teas{padding-block:clamp(70px,10vw,140px);border-top:1px solid var(--line)}
-.teas-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:48px}
-h2{font:400 clamp(38px,5vw,72px)/1.02 var(--display);margin:14px 0 0;text-wrap:balance}
-.teas-head p{max-width:36ch;margin:0;color:rgba(232,238,232,.75)}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{position:relative;border:1px solid var(--line);border-radius:22px;padding:28px;min-height:440px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,255,255,0));transform-style:preserve-3d;transition:border-color .4s}
-.card:hover{border-color:rgba(200,166,90,.6)}
-.card .dot{width:120px;height:120px;border-radius:50%;filter:blur(.5px);box-shadow:inset -12px -18px 30px rgba(0,0,0,.35),0 30px 60px -20px rgba(0,0,0,.6)}
-.card h3{font:400 38px/1 var(--display);margin:0}
-.card .notes{color:rgba(232,238,232,.72);font-size:14.5px;margin:10px 0 0}
-.card .meta{display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);border-top:1px solid var(--line);padding-top:16px;margin-top:22px}
-.band{position:relative;height:120vh;overflow:hidden}
-.band img{position:absolute;inset:-10% 0;width:100%;height:120%;object-fit:cover;will-change:transform}
-.band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--forest) 0%,rgba(11,26,19,.15) 30%,rgba(11,26,19,.25) 70%,var(--forest) 100%)}
-.band blockquote{position:absolute;inset:auto 0 18%;z-index:2;margin:0;text-align:center;font:400 italic clamp(34px,5vw,74px)/1.08 var(--display);padding-inline:16px;text-wrap:balance}
-.band blockquote small{display:block;font:500 12px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--sage);margin-top:22px;font-style:normal}
-.ritual{padding-block:clamp(80px,11vw,150px)}
-.ritual-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center}
-.ritual img{border-radius:24px;aspect-ratio:4/5;object-fit:cover;width:100%}
-.steps{list-style:none;padding:0;margin:34px 0 0;display:grid;gap:0}
-.steps li{display:grid;grid-template-columns:90px 1fr;gap:18px;padding:22px 0;border-top:1px solid var(--line)}
-.steps b{font:400 40px/1 var(--display);color:var(--gold)}
-.steps strong{display:block;font-weight:500;font-size:17px}
-.steps span{color:rgba(232,238,232,.7);font-size:14.5px}
-.final{padding-block:clamp(90px,13vw,170px);text-align:center;border-top:1px solid var(--line)}
-.final h2{max-width:14ch;margin-inline:auto}
-.final form{margin:40px auto 0;display:flex;gap:10px;max-width:460px;border:1px solid var(--line);border-radius:999px;padding:6px}
-.final input{flex:1;min-width:0;background:transparent;border:0;color:var(--mist);font:15px var(--sans);padding:12px 18px;outline:none}
-.final button{background:var(--mist);color:var(--forest);border:0;border-radius:999px;font:600 14px var(--sans);padding:12px 22px;cursor:pointer}
-.final .ok{margin-top:16px;color:var(--sage);font-size:14px;min-height:1.4em}
-footer{border-top:1px solid var(--line);padding-block:30px;font-size:13px;color:var(--sage)}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.reveal{opacity:0;transform:translateY(40px)}
-@media (max-width:860px){
-  .nav ul{display:none}
-  .facts{grid-template-columns:1fr 1fr}
-  .cards{grid-template-columns:1fr}
-  .card{min-height:320px}
-  .ritual-grid{grid-template-columns:1fr}
-  .band{height:80vh}
+.header.is-dark {
+  color: var(--mist);
 }
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.statement .w{opacity:1}.hero .scroll i{animation:none}}
+.header.is-hidden {
+  transform: translateY(-110%);
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.nav {
+  display: flex;
+  gap: 34px;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 18px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+.cart b {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+}
+.menu-btn {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ hero */
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 640px;
+  overflow: hidden;
+  color: var(--mist);
+  background: #4b5a52;
+}
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+.hero__media > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(18 30 24 / 0.5) 0%, rgb(18 30 24 / 0) 30%),
+    radial-gradient(80% 60% at 50% 55%, rgb(18 30 24 / 0.32), rgb(18 30 24 / 0) 70%),
+    linear-gradient(0deg, rgb(18 30 24 / 0.45) 0%, rgb(18 30 24 / 0) 35%);
+}
+.hero__center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 30px;
+  padding: 0 var(--pad);
+  text-align: center;
+}
+.hero__title {
+  font-size: clamp(60px, 11.2vw, 210px);
+  line-height: 0.9;
+}
+.hero__title em {
+  display: block;
+}
+.hero__sub {
+  max-width: 34ch;
+  font-size: 17px;
+  line-height: 1.55;
+}
+.hero__foot {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  bottom: 26px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------- statement */
+.statement {
+  display: grid;
+  justify-items: center;
+  gap: 40px;
+  padding: clamp(120px, 16vw, 240px) var(--pad) clamp(110px, 14vw, 200px);
+  text-align: center;
+}
+.statement p {
+  max-width: 21em;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(32px, 4.1vw, 70px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+/* -------------------------------------------------------------- altitude */
+.alt {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  color: var(--mist);
+  background: #23362c;
+}
+.alt__media {
+  position: absolute;
+  inset: -6% 0;
+}
+.alt__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: 50% 70%;
+}
+.alt__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(18 30 24 / 0.72) 0%, rgb(18 30 24 / 0.25) 55%, rgb(18 30 24 / 0.1) 100%);
+}
+.alt__inner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(24px, 4vw, 70px);
+  align-items: center;
+  padding: 110px var(--pad) 70px;
+}
+.alt__scale {
+  position: relative;
+  width: 64px;
+  height: 64vh;
+  border-left: 1px solid rgb(246 247 243 / 0.4);
+}
+.alt__scale span {
+  position: absolute;
+  left: 0;
+  width: 10px;
+  border-top: 1px solid rgb(246 247 243 / 0.5);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+.alt__scale span::after {
+  content: attr(data-m);
+  position: absolute;
+  left: 16px;
+  top: -7px;
+  opacity: 0.6;
+}
+.alt__marker {
+  position: absolute;
+  left: -6px;
+  bottom: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px rgb(168 135 78 / 0.25);
+}
+.alt__count {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(90px, 13vw, 240px);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.alt__count small {
+  font-size: 0.3em;
+  letter-spacing: 0;
+  margin-left: 8px;
+}
+.alt__lede {
+  margin-top: 22px;
+  max-width: 30ch;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+.alt__grades {
+  position: relative;
+  min-height: 260px;
+  list-style: none;
+}
+.alt__grades li {
+  position: absolute;
+  inset: 0 0 auto;
+  display: grid;
+  gap: 12px;
+  padding: 28px;
+  border: 1px solid rgb(246 247 243 / 0.28);
+  border-radius: 18px;
+  background: rgb(18 30 24 / 0.32);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.alt__grades li.is-on {
+  opacity: 1;
+  transform: none;
+}
+.alt__grades b {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d9c08f;
+}
+.alt__grades h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(30px, 2.8vw, 46px);
+  line-height: 1;
+}
+.alt__grades p {
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* ---------------------------------------------------------------- people */
+.people {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(30px, 6vw, 110px);
+  align-items: center;
+  padding: clamp(120px, 15vw, 220px) var(--pad);
+}
+.people__media {
+  aspect-ratio: 4 / 5;
+  border-radius: 240px 240px 0 0;
+}
+.people__quote {
+  font-size: clamp(44px, 5.6vw, 100px);
+  line-height: 0.98;
+}
+.people__body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 46px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------ collection */
+.shop {
+  padding: clamp(110px, 14vw, 200px) var(--pad);
+  background: var(--paper);
+}
+.shop__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: clamp(50px, 7vw, 100px);
+}
+.shop__head h2 {
+  font-size: clamp(50px, 7.4vw, 136px);
+}
+.shop__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(30px, 5vw, 90px);
+  align-items: start;
+}
+.shop__media {
+  position: sticky;
+  top: 100px;
+  aspect-ratio: 4 / 5;
+  border-radius: 18px;
+}
+.teas {
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.tea {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 24px 30px;
+  align-items: start;
+  padding: 38px 0;
+  border-bottom: 1px solid var(--line);
+}
+.tea__n {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--accent);
+}
+.tea h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(36px, 3.6vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.tea p {
+  margin-top: 12px;
+  max-width: 40ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  list-style: none;
+}
+.notes li {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+}
+.tea__buy {
+  display: grid;
+  justify-items: end;
+  gap: 14px;
+  text-align: right;
+}
+.tea__price {
+  font-family: var(--font-display);
+  font-size: 26px;
+}
+.tea__price small {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--muted);
+}
+.add {
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--fg);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.4s, color 0.4s;
+}
+.add:hover,
+.add.is-added {
+  background: var(--fg);
+  color: var(--mist);
+}
+
+/* ---------------------------------------------------------------- ritual */
+.ritual {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(30px, 6vw, 110px);
+  align-items: center;
+  padding: clamp(110px, 14vw, 200px) var(--pad);
+}
+.ritual h2 {
+  margin: 26px 0 50px;
+  font-size: clamp(48px, 6vw, 108px);
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.steps li {
+  display: grid;
+  gap: 10px;
+  padding: 26px 20px 0 0;
+}
+.steps li + li {
+  padding-left: 20px;
+  border-left: 1px solid var(--line);
+}
+.steps strong,
+.alt__count,
+.tea__price {
+  font-variant-numeric: lining-nums;
+}
+.steps strong {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(50px, 5vw, 86px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+.steps strong small {
+  font-size: 0.38em;
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+.steps span {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.ritual__media {
+  aspect-ratio: 4 / 5;
+  border-radius: 0 0 240px 240px;
+}
+
+/* ------------------------------------------------------------------ grow */
+.grow {
+  position: relative;
+  height: 115vh;
+}
+.grow__media {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.grow__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.grow__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(18 30 24 / 0.3);
+}
+.grow__title h2 {
+  font: inherit;
+}
+.grow__title {
+  position: absolute;
+  inset: 0 var(--pad);
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: clamp(54px, 9vw, 170px);
+  color: var(--mist);
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------ taste box */
+.box {
+  display: grid;
+  justify-items: center;
+  gap: 30px;
+  padding: clamp(120px, 15vw, 220px) var(--pad);
+  text-align: center;
+}
+.box h2 {
+  font-size: clamp(50px, 7vw, 128px);
+  max-width: 11em;
+}
+.box p {
+  max-width: 44ch;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.signup {
+  display: flex;
+  width: min(520px, 100%);
+  margin-top: 14px;
+  padding: 6px;
+  border: 1px solid var(--fg);
+  border-radius: 999px;
+}
+.signup input {
+  flex: 1;
+  min-width: 0;
+  padding: 0 20px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  color: var(--fg);
+  outline: none;
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 80;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--fg);
+  color: var(--mist);
+  font-size: 13px;
+  transform: translate(-50%, 160%);
+  transition: transform 0.7s var(--ease-out);
+}
+.toast.is-on {
+  transform: translate(-50%, 0);
+}
+
+/* ---------------------------------------------------------------- footer */
+.footer {
+  padding: clamp(80px, 10vw, 140px) var(--pad) 26px;
+  background: var(--fg);
+  color: var(--mist);
+}
+.footer__top {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.footer__top .label {
+  margin-bottom: 14px;
+  opacity: 0.6;
+}
+.footer__top a {
+  border-bottom: 1px solid rgb(246 247 243 / 0.4);
+}
+.footer__word {
+  margin: clamp(60px, 8vw, 120px) 0 6px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  /* "Mistline" is ~3.9em wide in italic */
+  font-size: calc((100vw - 2 * var(--pad)) / 4.15);
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  text-align: center;
+  white-space: nowrap;
+}
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 22px;
+  border-top: 1px solid rgb(246 247 243 / 0.18);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.menu__close {
+  position: absolute;
+  left: var(--pad);
+  top: 26px;
+  z-index: 2;
+  font-size: 14px;
+  font-weight: 500;
+}
+.menu__links a {
+  font-weight: 300;
+  transition: color 0.4s, transform 0.8s var(--ease-out);
+}
+.menu__links a:hover {
+  color: #d9c08f;
+  transform: translateX(14px);
+}
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 900px) {
+  .nav,
+  .cart span {
+    display: none;
+  }
+  .menu-btn {
+    display: inline-block;
+  }
+  .logo {
+    font-size: 26px;
+  }
+  .hero__sub {
+    font-size: 15px;
+  }
+  .hero__foot > span:last-child {
+    display: none;
+  }
+  .alt__inner {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    padding-top: 96px;
+  }
+  .alt__scale {
+    grid-row: 1 / span 2;
+    height: 70vh;
+    width: 30px;
+  }
+  .alt__scale span::after {
+    display: none;
+  }
+  .alt__grades {
+    align-self: end;
+    min-height: 230px;
+  }
+  .alt__grades li {
+    padding: 22px;
+  }
+  .people,
+  .shop__grid,
+  .ritual {
+    grid-template-columns: 1fr;
+  }
+  .people__media {
+    width: 86%;
+  }
+  .people__body {
+    grid-template-columns: 1fr;
+  }
+  .shop__head {
+    flex-direction: column;
+    align-items: start;
+  }
+  .shop__media {
+    position: relative;
+    top: 0;
+    width: 86%;
+  }
+  .tea {
+    grid-template-columns: auto 1fr;
+  }
+  .tea__buy {
+    grid-column: 2;
+    justify-items: start;
+    text-align: left;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .steps {
+    grid-template-columns: 1fr;
+  }
+  .steps li + li {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    margin-top: 20px;
+  }
+  .ritual__media {
+    width: 86%;
+  }
+  .footer__top {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 36px;
+  }
+  .footer__bottom {
+    flex-direction: column;
+  }
+}
 </style>
+</head>
+<body>
 
-<canvas id="gl" aria-hidden="true"></canvas>
-<nav class="nav">
-  <a class="brand" href="#">Mistline</a>
-  <ul><li>Teas</li><li>Estate</li><li>Ritual</li><li>Journal</li></ul>
-  <a class="cta" href="#taste">Taste box</a>
-</nav>
+<div class="loader" aria-hidden="true">
+  <p class="loader__brand" style="font-style: italic; letter-spacing: 0; text-transform: none; font-size: 26px">Mistline</p>
+  <div class="loader__row">
+    <p class="loader__note">Nuwara Eliya, Sri Lanka<br>Ascending to 1,868 m</p>
+    <p class="loader__count">000</p>
+  </div>
+  <span class="loader__bar"></span>
+</div>
+<div class="grain" aria-hidden="true"></div>
 
-<header class="hero">
-  <div class="row">
-    <p>High-grown Ceylon tea, picked by hand on the misty slopes above Nuwara Eliya and sealed within a day of the harvest.</p>
-    <span class="scroll"><i></i>Scroll</span>
+<header class="header" data-header>
+  <a class="logo" href="#top" aria-label="Mistline, back to top">Mistline</a>
+  <ul class="nav">
+    <li><a class="roll" href="#estate"><span data-text="Estate">Estate</span></a></li>
+    <li><a class="roll" href="#people"><span data-text="Pluckers">Pluckers</span></a></li>
+    <li><a class="roll" href="#teas"><span data-text="Teas">Teas</span></a></li>
+    <li><a class="roll" href="#ritual"><span data-text="Ritual">Ritual</span></a></li>
+  </ul>
+  <div class="header__right">
+    <a class="cart" href="#teas" data-magnetic="0.25"><span>Cart</span><b class="cart__n">0</b></a>
+    <button class="menu-btn roll" type="button" data-menu-open><span data-text="Menu">Menu</span></button>
   </div>
 </header>
 
+<nav class="menu" aria-label="Site menu">
+  <button class="menu__close roll" type="button" data-menu-close><span data-text="Close">Close</span></button>
+  <ul class="menu__links">
+    <li><a href="#estate"><small>01</small>The estate</a></li>
+    <li><a href="#people"><small>02</small>The pluckers</a></li>
+    <li><a href="#teas"><small>03</small>Our teas</a></li>
+    <li><a href="#ritual"><small>04</small>The ritual</a></li>
+    <li><a href="#box"><small>05</small>Taste box</a></li>
+  </ul>
+  <div class="menu__media" aria-hidden="true">
+    <img src="media/hills.jpg" alt="">
+    <img src="media/plucker.jpg" alt="">
+    <img src="media/tins.jpg" alt="">
+    <img src="media/cup.jpg" alt="">
+    <img src="media/leaves.jpg" alt="">
+  </div>
+</nav>
+
 <main>
-  <section class="panel intro">
-    <div class="wrap">
-      <span class="label">The estate</span>
-      <p class="statement" id="statement">At 1,800 metres the clouds roll through the tea every morning. The leaves grow slowly, and slow leaves taste <em>brighter.</em></p>
-      <div class="facts reveal">
-        <div><b>1,800m</b><span>above sea level</span></div>
-        <div><b>2</b><span>leaves and a bud, plucked by hand</span></div>
-        <div><b>24h</b><span>from bush to sealed tin</span></div>
-        <div><b>0</b><span>blending with lowland leaf</span></div>
-      </div>
+  <section class="hero" id="top" data-theme="dark">
+    <div class="hero__media">
+      <img src="media/hero.jpg" alt="" data-preload>
+      <video src="media/hero.mp4" poster="media/hero.jpg" muted playsinline loop autoplay preload="auto" data-autoplay></video>
+    </div>
+    <div class="hero__shade"></div>
+    <div class="hero__center">
+      <h1 class="hero__title display" data-intro>Grown above <em>the clouds</em></h1>
+      <p class="hero__sub" data-intro>Single-estate Ceylon tea from 1,868 metres, picked by hand in the Nuwara Eliya mist.</p>
+      <a class="btn btn--ghost" href="#teas" data-intro data-magnetic="0.3">Shop the harvest <i>→</i></a>
+    </div>
+    <div class="hero__foot" data-intro>
+      <span>Nuwara Eliya · <span data-clock="Asia/Colombo">06:00</span></span>
+      <span>Scroll to climb</span>
+      <span>6°58′N 80°46′E</span>
     </div>
   </section>
 
-  <section class="panel teas">
-    <div class="wrap">
-      <div class="teas-head reveal">
-        <div><span class="label">The collection</span><h2>Three teas, one mountain</h2></div>
-        <p>Each tea comes from a single slope and a single season, so every tin tastes of where and when it was picked.</p>
-      </div>
-      <div class="cards">
-        <article class="card reveal"><span class="dot" style="background:radial-gradient(circle at 35% 30%,#f3dc9b,#c8a65a 55%,#8a6a22)"></span><div><h3>Dawn Pekoe</h3><p class="notes">Golden, floral and light, with a finish of white peach.</p><div class="meta"><span>Morning</span><span>100 g</span></div></div></article>
-        <article class="card reveal"><span class="dot" style="background:radial-gradient(circle at 35% 30%,#f4f1e6,#cfd6c8 55%,#8fa08c)"></span><div><h3>Silver Tips</h3><p class="notes">Only the unopened buds, sun-dried and silvery. Delicate and sweet.</p><div class="meta"><span>Rare</span><span>50 g</span></div></div></article>
-        <article class="card reveal"><span class="dot" style="background:radial-gradient(circle at 35% 30%,#d07b45,#8e3c19 55%,#3e1608)"></span><div><h3>Highland Black</h3><p class="notes">Bold and brisk, made for a splash of milk and a long afternoon.</p><div class="meta"><span>All day</span><span>200 g</span></div></div></article>
-      </div>
-    </div>
+  <section class="statement" id="estate">
+    <span class="label" data-fade>The estate</span>
+    <p data-split="fill">At 1,868 metres the clouds roll through the tea every morning. The leaf grows slowly in the cold, and slow leaf makes a brighter, more fragrant cup.</p>
   </section>
 
-  <section class="panel band" aria-label="Tea leaves">
-    <img src="img/leaves.jpg" alt="Fresh tea leaves with morning dew" id="bandImg">
-    <blockquote>"Two leaves and a bud, nothing more."<small>The plucker's rule since 1867</small></blockquote>
-  </section>
-
-  <section class="panel ritual">
-    <div class="wrap ritual-grid">
-      <img src="img/cup.jpg" alt="A glass cup of amber tea on slate" class="reveal">
+  <section class="alt" data-theme="dark" aria-label="How altitude changes the tea">
+    <div class="alt__media"><img src="media/hills.jpg" alt="Tea terraces in the mist above Nuwara Eliya"></div>
+    <div class="alt__shade"></div>
+    <div class="alt__inner">
+      <div class="alt__scale" aria-hidden="true">
+        <span data-m="1,868" style="bottom: 100%"></span>
+        <span data-m="1,200" style="bottom: 64%"></span>
+        <span data-m="600" style="bottom: 32%"></span>
+        <span data-m="0" style="bottom: 0"></span>
+        <i class="alt__marker"></i>
+      </div>
       <div>
-        <span class="label">The ritual</span>
-        <h2 class="reveal">Brew it like the estate does</h2>
-        <ol class="steps">
-          <li class="reveal"><b>01</b><div><strong>Water just off the boil</strong><span>90°C for Dawn Pekoe and Silver Tips, a rolling boil for Highland Black.</span></div></li>
-          <li class="reveal"><b>02</b><div><strong>One spoon, 2.5 grams</strong><span>Per cup. Let the leaves open fully in the pot.</span></div></li>
-          <li class="reveal"><b>03</b><div><strong>Three minutes, then pour</strong><span>Drink it plain first. Add milk only to the black.</span></div></li>
-        </ol>
+        <p class="label">Altitude</p>
+        <p class="alt__count"><span class="alt__m">0</span><small>m</small></p>
+        <p class="alt__lede">Scroll to climb the estate. The higher the garden, the slower the leaf and the lighter the cup.</p>
+      </div>
+      <ol class="alt__grades">
+        <li><b>0 – 600 m · Low-grown</b><h3>Bold and malty</h3><p>Fast, warm growth gives a dark, heavy liquor. Made for milk and sugar.</p></li>
+        <li><b>600 – 1,200 m · Mid-grown</b><h3>Rounded and coppery</h3><p>Cooler nights soften the leaf: a smooth, honeyed cup with body.</p></li>
+        <li><b>1,200 m + · High-grown</b><h3>Bright and floral</h3><p>Mist and cold slow everything down. The cup turns golden and fragrant, like ours.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="people" id="people">
+    <div class="people__media media" data-reveal data-parallax="12"><img src="media/plucker.jpg" alt="A tea plucker in a red saree with a basket, among the tea at dawn"></div>
+    <div>
+      <span class="label" data-fade>The pluckers</span>
+      <p class="people__quote display" data-split style="margin-top: 26px">“Two leaves and a bud, <em>nothing more.</em>”</p>
+      <div class="people__body">
+        <p data-fade>Every leaf in a Mistline tin is picked by hand, before the sun burns off the mist. Our pluckers choose only the two youngest leaves and the bud.</p>
+        <p data-fade data-delay="0.1">It is slow work, and it is the reason the cup tastes the way it does. We pay above the estate rate and share every auction premium.</p>
       </div>
     </div>
   </section>
 
-  <section class="panel final" id="taste">
-    <div class="wrap">
-      <span class="label">Taste box</span>
-      <h2 class="reveal">Taste the highlands at home</h2>
-      <form id="tasteForm" class="reveal"><label for="email" class="sr" style="position:absolute;left:-9999px">Email</label><input id="email" type="email" placeholder="Your email" required><button type="submit">Send me a box</button></form>
-      <p class="ok" id="ok" aria-live="polite"></p>
+  <section class="shop" id="teas">
+    <div class="shop__head">
+      <h2 class="display" data-split>Three teas, <em>one slope</em></h2>
+      <p class="label" data-fade>Harvest of 2026</p>
+    </div>
+    <div class="shop__grid">
+      <div class="shop__media media" data-reveal data-parallax="10"><img src="media/tins.jpg" alt="Three ceramic tea tins on wet slate with fresh leaves"></div>
+      <ol class="teas">
+        <li class="tea" data-fade>
+          <span class="tea__n">i.</span>
+          <div>
+            <h3>Dawn Pekoe</h3>
+            <p>Golden and light, from the first flush of the morning. A finish of white peach.</p>
+            <ul class="notes"><li>Floral</li><li>White peach</li><li>Morning</li></ul>
+          </div>
+          <div class="tea__buy"><p class="tea__price">Rs 3,400<small>100 g tin</small></p><button class="add" type="button">Add to cart</button></div>
+        </li>
+        <li class="tea" data-fade>
+          <span class="tea__n">ii.</span>
+          <div>
+            <h3>Silver Tips</h3>
+            <p>Only the unopened buds, dried in the sun until they turn silver. Rare and delicate.</p>
+            <ul class="notes"><li>Honey</li><li>Hay</li><li>Rare</li></ul>
+          </div>
+          <div class="tea__buy"><p class="tea__price">Rs 6,900<small>50 g tin</small></p><button class="add" type="button">Add to cart</button></div>
+        </li>
+        <li class="tea" data-fade>
+          <span class="tea__n">iii.</span>
+          <div>
+            <h3>Highland Black</h3>
+            <p>Bright and brisk, with enough body for a splash of milk on a long afternoon.</p>
+            <ul class="notes"><li>Brisk</li><li>Citrus</li><li>All day</li></ul>
+          </div>
+          <div class="tea__buy"><p class="tea__price">Rs 2,600<small>200 g tin</small></p><button class="add" type="button">Add to cart</button></div>
+        </li>
+      </ol>
     </div>
   </section>
 
-  <footer class="panel"><div class="wrap"><span>Mistline Ceylon Tea · Nuwara Eliya</span><span>Concept website by <a href="/showcase" style="text-decoration:underline">Hemal Herath</a> · Three.js + GSAP</span></div></footer>
+  <section class="ritual" id="ritual">
+    <div>
+      <span class="label" data-fade>The ritual</span>
+      <h2 class="display" data-split>Brew it the way <em>the estate does</em></h2>
+      <ol class="steps">
+        <li data-fade><strong><span data-count="90">90</span><small>°C</small></strong><span>Water just off the boil. A rolling boil for Highland Black.</span></li>
+        <li data-fade data-delay="0.1"><strong><span data-count="2.5">2.5</span><small>g</small></strong><span>One level spoon per cup. Let the leaves open fully.</span></li>
+        <li data-fade data-delay="0.2"><strong><span data-count="3">3</span><small>min</small></strong><span>Then pour. Taste it plain before adding anything.</span></li>
+      </ol>
+    </div>
+    <div class="ritual__media media" data-reveal="down" data-parallax="12"><img src="media/cup.jpg" alt="A cup of golden Ceylon tea"></div>
+  </section>
+
+  <section class="grow" data-theme="dark" aria-label="Fresh tea leaves">
+    <div class="grow__media media" data-grow><img src="media/leaves.jpg" alt="Fresh tea leaves and buds"></div>
+    <div class="grow__title display"><h2 data-split>Picked at dawn,<br><em>sealed by dusk</em></h2></div>
+  </section>
+
+  <section class="box" id="box">
+    <span class="label" data-fade>Taste box</span>
+    <h2 class="display" data-split>Taste the highlands <em>at home</em></h2>
+    <p data-fade>Three small tins, a brewing card and a note from the estate, every second month. Pause or stop whenever you like.</p>
+    <form class="signup" data-fade>
+      <label class="sr-only" for="email">Email</label>
+      <input id="email" type="email" placeholder="Your email" autocomplete="off">
+      <button class="btn" type="submit" data-magnetic="0.2">Send me a box <i>→</i></button>
+    </form>
+  </section>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<footer class="footer" data-theme="dark">
+  <div class="footer__top">
+    <div><span class="label">Estate</span><p>Above Nuwara Eliya<br>Central Province, Sri Lanka</p></div>
+    <div><span class="label">Local time</span><p><span data-clock="Asia/Colombo">06:00</span> on the estate</p></div>
+    <div><span class="label">Shop</span><p>Dawn Pekoe<br>Silver Tips<br>Highland Black</p></div>
+    <div><span class="label">Concept</span><p>Designed and built by<br><a href="/showcase">Hemal Herath</a></p></div>
+  </div>
+  <p class="footer__word" data-split="chars" aria-hidden="true">Mistline</p>
+  <div class="footer__bottom">
+    <span>Mistline is a fictional tea brand — a concept website.</span>
+    <a href="#top">Back to the top ↑</a>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite">Concept site: the shop is switched off.</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+<script src="/showcase/_engine/engine.js"></script>
 <script>
-// Smooth scroll + reveals (works even if WebGL is unavailable)
-(function(){
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-  if (window.Lenis && !reduce){
-    const lenis = new Lenis({lerp:0.085});
-    window.__lenis = lenis;
-    if (window.ScrollTrigger) lenis.on('scroll', ScrollTrigger.update);
-    if (window.gsap){ gsap.ticker.add(t => lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0); }
-    else { const raf = t => { lenis.raf(t); requestAnimationFrame(raf); }; requestAnimationFrame(raf); }
-  }
-  // split statement into words that light up as you scroll
-  const st = document.getElementById('statement');
-  const walk = n => { [...n.childNodes].forEach(c => {
-    if (c.nodeType === 3){ const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach(w => { if (!w.trim()) f.append(w); else { const s=document.createElement('span'); s.className='w'; s.textContent=w; f.append(s);} }); c.replaceWith(f); }
-    else walk(c); }); };
-  walk(st);
-  if (!window.gsap || reduce){ document.querySelectorAll('.reveal').forEach(e=>{e.style.opacity=1;e.style.transform='none'}); document.querySelectorAll('.w').forEach(w=>w.style.opacity=1); return; }
-  gsap.to('#statement .w',{opacity:1,stagger:.08,ease:'none',scrollTrigger:{trigger:'#statement',start:'top 80%',end:'bottom 45%',scrub:true}});
-  document.querySelectorAll('.reveal').forEach(el => gsap.to(el,{opacity:1,y:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
-  gsap.fromTo('#bandImg',{yPercent:-8,scale:1.12},{yPercent:8,scale:1,ease:'none',scrollTrigger:{trigger:'.band',start:'top bottom',end:'bottom top',scrub:true}});
-  // gentle 3D tilt on cards
-  document.querySelectorAll('.card').forEach(c => {
-    c.addEventListener('pointermove', e => { const r=c.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5; gsap.to(c,{rotateY:x*8,rotateX:-y*8,duration:.6,ease:'power3.out',transformPerspective:900}); });
-    c.addEventListener('pointerleave', () => gsap.to(c,{rotateY:0,rotateX:0,duration:.8,ease:'power3.out'}));
+(() => {
+  const { $, $$ } = SE;
+
+  SE.init({
+    intro(tl, reduce) {
+      if (reduce) return;
+      const title = SE.split($(".hero__title"), "lines");
+      tl.from(".hero__media > *", { scale: 1.3, duration: 2.8, ease: "expo.out" }, 0.2)
+        .from(title.lines, { yPercent: 118, duration: 1.7, stagger: 0.14 }, 0.7)
+        .fromTo([".hero__sub", ".hero__center .btn", ".hero__foot"], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 1.4, stagger: 0.1 }, 1.15)
+        .from(".header", { yPercent: -120, duration: 1.4, clearProps: "transform" }, 1);
+
+      const out = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
+      gsap.to(".hero__center", { yPercent: -28, autoAlpha: 0, ease: "none", scrollTrigger: out });
+      gsap.to(".hero__media", { yPercent: 20, ease: "none", scrollTrigger: { ...out } });
+    },
   });
-  document.getElementById('tasteForm').addEventListener('submit', e => { e.preventDefault(); document.getElementById('ok').textContent = 'Thank you. This is a concept site, so no box is on its way, but your taste is excellent.'; });
+
+  // Altitude: pin the hills, climb from 0 to 1,868 m and switch the grade cards.
+  const m = $(".alt__m");
+  const marker = $(".alt__marker");
+  const grades = $$(".alt__grades li");
+  const fmt = new Intl.NumberFormat("en-GB");
+  const setGrade = (i) => grades.forEach((g, j) => g.classList.toggle("is-on", j === i));
+  setGrade(0);
+  if (SE.reduce) {
+    m.textContent = "1,868";
+    setGrade(2);
+  } else {
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".alt",
+        start: "top top",
+        end: "+=220%",
+        pin: true,
+        scrub: 0.6,
+        onUpdate(self) {
+          const metres = Math.round(self.progress * 1868);
+          m.textContent = fmt.format(metres);
+          setGrade(metres < 600 ? 0 : metres < 1200 ? 1 : 2);
+        },
+      },
+    })
+      .fromTo(marker, { bottom: "0%" }, { bottom: "100%", ease: "none" }, 0)
+      .fromTo(".alt__media img", { scale: 1.25, yPercent: 6 }, { scale: 1, yPercent: -6, ease: "none" }, 0)
+      .fromTo(".alt__shade", { opacity: 1 }, { opacity: 0.55, ease: "none" }, 0);
+  }
+
+  // Concept shop: buttons count up a cart and say the shop is off.
+  const toast = $(".toast");
+  const say = (text) => {
+    toast.textContent = text;
+    toast.classList.add("is-on");
+    clearTimeout(toast.t);
+    toast.t = setTimeout(() => toast.classList.remove("is-on"), 2600);
+  };
+  let items = 0;
+  $$(".add").forEach((b) =>
+    b.addEventListener("click", () => {
+      items += 1;
+      $(".cart__n").textContent = items;
+      b.classList.add("is-added");
+      b.textContent = "Added";
+      gsap.fromTo(".cart b", { scale: 1.6 }, { scale: 1, duration: 0.8, ease: "elastic.out(1, 0.4)" });
+      say("Added — this is a concept shop, so nothing is charged.");
+    }),
+  );
+  $(".signup").addEventListener("submit", (e) => {
+    e.preventDefault();
+    say("Concept site: the taste box is switched off.");
+  });
 })();
 </script>
-<script type="module">
-import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-
-const canvas = document.getElementById('gl');
-let renderer;
-try { renderer = new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:'high-performance'}); }
-catch(e){ canvas.remove(); const f=document.createElement('div'); f.className='fallback'; document.body.prepend(f); throw e; }
-
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.0;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-camera.position.set(0, 0, 8);
-const pmrem = new THREE.PMREMGenerator(renderer);
-scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-
-// --- Backdrop: mist video (or still) + the wordmark, drawn into one canvas so the glass refracts both
-const bg = document.createElement('canvas'); const bctx = bg.getContext('2d');
-const still = new Image(); still.src = 'img/hills.jpg';
-const video = document.createElement('video');
-Object.assign(video, {src:'img/mist.mp4', muted:true, loop:true, playsInline:true, autoplay:true, crossOrigin:'anonymous'});
-video.setAttribute('muted',''); video.setAttribute('playsinline','');
-let videoReady = false;
-video.addEventListener('playing', () => videoReady = true);
-video.play().catch(()=>{});
-const bgTex = new THREE.CanvasTexture(bg); bgTex.colorSpace = THREE.SRGBColorSpace;
-const bgMat = new THREE.MeshBasicMaterial({map:bgTex, toneMapped:false});
-const bgMesh = new THREE.Mesh(new THREE.PlaneGeometry(1,1), bgMat);
-bgMesh.position.z = -4; scene.add(bgMesh);
-
-function drawBackdrop(){
-  const W = bg.width, H = bg.height; if (!W) return;
-  const src = videoReady ? video : (still.complete ? still : null);
-  bctx.fillStyle = '#0b1a13'; bctx.fillRect(0,0,W,H);
-  if (src){
-    const sw = src.videoWidth || src.naturalWidth, sh = src.videoHeight || src.naturalHeight;
-    if (sw && sh){ const s = Math.max(W/sw, H/sh); const dw = sw*s, dh = sh*s; bctx.drawImage(src, (W-dw)/2, (H-dh)/2, dw, dh); }
-  }
-  const g = bctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'rgba(11,26,19,.55)'); g.addColorStop(.45,'rgba(11,26,19,.15)'); g.addColorStop(1,'rgba(11,26,19,.85)');
-  bctx.fillStyle = g; bctx.fillRect(0,0,W,H);
-  // wordmark
-  const fs = Math.min(W*0.215, H*0.42);
-  bctx.font = `400 ${fs}px "Instrument Serif", Georgia, serif`;
-  bctx.textAlign = 'center'; bctx.textBaseline = 'middle';
-  bctx.fillStyle = 'rgba(232,238,232,0.96)';
-  bctx.fillText('Mistline', W/2, H*0.47);
-  bctx.font = `500 ${Math.max(11, fs*0.07)}px Geist, system-ui, sans-serif`;
-  bctx.fillStyle = 'rgba(232,238,232,0.8)';
-  if ('letterSpacing' in bctx) bctx.letterSpacing = `${fs*0.03}px`;
-  bctx.fillText('CEYLON HIGH-GROWN TEA  ·  EST. ON THE MIST LINE', W/2, H*0.47 + fs*0.62);
-  if ('letterSpacing' in bctx) bctx.letterSpacing = '0px';
-  bgTex.needsUpdate = true;
-}
-
-// --- Liquid glass blob
-const noiseGLSL = `
-vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
-vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
-float snoise(vec3 v){
-  const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);
-  vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);
-  vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);
-  vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy; i=mod289(i);
-  vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));
-  float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx; vec4 j=p-49.0*floor(p*ns.z*ns.z);
-  vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_); vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);
-  vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw); vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));
-  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
-  vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);
-  vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3))); p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
-  vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;
-  return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
-}
-uniform float uTime; uniform float uAmp; uniform float uFreq;
-vec3 displaceP(vec3 p, vec3 n){
-  float d = snoise(p*uFreq + vec3(uTime*0.22, uTime*0.17, -uTime*0.12)) * uAmp
-          + snoise(p*uFreq*2.3 - vec3(uTime*0.11)) * uAmp*0.35;
-  return p + n*d;
-}`;
-
-const glassMat = new THREE.MeshPhysicalMaterial({
-  color:0xffffff, metalness:0, roughness:0.03, transmission:1, thickness:1.6, ior:1.42,
-  clearcoat:1, clearcoatRoughness:0.04, iridescence:0.45, iridescenceIOR:1.3, iridescenceThicknessRange:[120,480],
-  attenuationColor:new THREE.Color('#d9f0dc'), attenuationDistance:4.5, specularIntensity:1, envMapIntensity:1.15, dispersion:0.25
-});
-const uniforms = { uTime:{value:0}, uAmp:{value:0.26}, uFreq:{value:0.95} };
-glassMat.onBeforeCompile = (shader) => {
-  Object.assign(shader.uniforms, uniforms);
-  shader.vertexShader = shader.vertexShader
-    .replace('#include <common>', '#include <common>\n' + noiseGLSL)
-    .replace('#include <beginnormal_vertex>', `
-      vec3 tangentV = normalize(abs(normal.y) > 0.99 ? cross(normal, vec3(1.0,0.0,0.0)) : cross(normal, vec3(0.0,1.0,0.0)));
-      vec3 bitangentV = normalize(cross(normal, tangentV));
-      float eps = 0.012;
-      vec3 dispPos = displaceP(position, normal);
-      vec3 pA = displaceP(position + tangentV*eps, normal);
-      vec3 pB = displaceP(position + bitangentV*eps, normal);
-      vec3 objectNormal = normalize(cross(pA - dispPos, pB - dispPos));
-      #ifdef USE_TANGENT
-        vec3 objectTangent = vec3( tangent.xyz );
-      #endif`)
-    .replace('#include <begin_vertex>', 'vec3 transformed = dispPos;');
-};
-const blob = new THREE.Mesh(new THREE.IcosahedronGeometry(1.25, 96), glassMat);
-scene.add(blob);
-
-// small satellite drops
-const drops = new THREE.Group();
-for (let i=0;i<5;i++){
-  const m = new THREE.Mesh(new THREE.SphereGeometry(0.12 + Math.random()*0.12, 48, 48), glassMat.clone());
-  m.material.onBeforeCompile = () => {}; // plain glass for drops
-  m.userData = { r: 2.0 + Math.random()*0.9, s: 0.18 + Math.random()*0.22, o: Math.random()*Math.PI*2, y: (Math.random()-.5)*1.6 };
-  drops.add(m);
-}
-scene.add(drops);
-
-const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(3,4,5); scene.add(key);
-const rim = new THREE.PointLight(0xc8a65a, 30, 20); rim.position.set(-3,-1,2); scene.add(rim);
-
-// --- Sizing
-function resize(){
-  const w = innerWidth, h = innerHeight;
-  renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix();
-  const dist = camera.position.z - bgMesh.position.z;
-  const vh = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov/2)) * dist, vw = vh * camera.aspect;
-  bgMesh.scale.set(vw*1.06, vh*1.06, 1);
-  const dpr = Math.min(devicePixelRatio, 2);
-  bg.width = Math.round(Math.min(w*dpr, 2400)); bg.height = Math.round(bg.width * (vh/vw));
-  const small = w < 760; blob.scale.setScalar(small ? 0.55 : 1);
-  drawBackdrop();
-}
-addEventListener('resize', resize);
-(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(resize);
-still.onload = drawBackdrop; resize();
-
-// --- Interaction
-const mouse = new THREE.Vector2(), target = new THREE.Vector2();
-addEventListener('pointermove', e => { target.set((e.clientX/innerWidth)*2-1, -(e.clientY/innerHeight)*2+1); });
-let scrollP = 0;
-const onScroll = () => { scrollP = Math.min(1, scrollY / innerHeight); };
-addEventListener('scroll', onScroll, {passive:true});
-
-const clock = new THREE.Clock();
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-function tick(){
-  const t = reduce ? 4 : clock.getElapsedTime();
-  uniforms.uTime.value = t;
-  mouse.lerp(target, 0.05);
-  blob.rotation.y = t*0.12 + mouse.x*0.5;
-  blob.rotation.x = Math.sin(t*0.2)*0.15 - mouse.y*0.35;
-  blob.position.x = mouse.x*0.35;
-  blob.position.y = mouse.y*0.2 + scrollP*1.6 - (innerWidth < 760 ? 0.55 : 0);
-  const s = (innerWidth < 760 ? 0.55 : 1) * (1 - scrollP*0.35);
-  blob.scale.setScalar(s);
-  drops.children.forEach((m,i) => { const u=m.userData; const a=u.o + t*u.s; m.position.set(Math.cos(a)*u.r*(innerWidth<760?0.6:1) + mouse.x*0.2, u.y + Math.sin(a*1.3)*0.25 + scrollP*1.2, Math.sin(a)*0.8); });
-  rim.position.x = -3 + mouse.x*2;
-  if (videoReady) drawBackdrop();
-  renderer.render(scene, camera);
-  requestAnimationFrame(tick);
-}
-tick();
-</script>
-
+</body>
 </html>

@@ -451,6 +451,9 @@ body {
   inset: 0;
   background: radial-gradient(70% 60% at 50% 50%, rgb(15 12 9 / 0.34), rgb(15 12 9 / 0.12));
 }
+.grow__title h2 {
+  font: inherit;
+}
 .grow__title {
   position: absolute;
   inset: 0 var(--pad);
@@ -806,7 +809,7 @@ body {
     height: 44px;
     padding: 0 16px;
   }
-  .hero__foot span:last-child {
+  .hero__foot > span:last-child {
     display: none;
   }
   .intro__head,
@@ -1008,7 +1011,7 @@ body {
     <div class="grow__media media" data-grow>
       <video src="media/hero.mp4" muted playsinline loop preload="none" data-autoplay></video>
     </div>
-    <h2 class="grow__title" data-split="words">Where the jungle<br>meets the sea</h2>
+    <div class="grow__title"><h2 data-split>Where the jungle<br>meets the sea</h2></div>
   </section>
 
   <section class="day" id="day" data-swap>
