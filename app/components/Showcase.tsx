@@ -9,6 +9,21 @@ import { ArrowIcon } from "./icons";
 
 const isExternal = (href: string) => /^https?:/.test(href);
 
+const countWords = [
+  "zero",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+  "ten",
+];
+const countWord = (n: number) => countWords[n] ?? String(n);
+
 /** Back to front: the three screens fanned out in depth on the lead panel. */
 const fan = ["sapphire", "coffee", "tea"];
 
@@ -21,7 +36,7 @@ export function ShowcaseFeature() {
           <span className="tag">new</span>
           <span>{showcaseSites.length} sites · one 3D scene</span>
         </p>
-        <h3>Fly through all seven in 3D.</h3>
+        <h3>Fly through all {countWord(showcaseSites.length)} in 3D.</h3>
         <p>
           Scroll, and a camera glides past each site in turn. Click any screen
           to open the real thing.
@@ -62,7 +77,7 @@ export function SiteCard({ site }: { site: ShowcaseSite }) {
           alt=""
           width={1280}
           height={800}
-          sizes="(max-width: 640px) 78vw, (max-width: 1080px) 46vw, 280px"
+          sizes="(max-width: 640px) 78vw, (max-width: 1080px) 46vw, 400px"
         />
       </div>
       <code className="branch-label">

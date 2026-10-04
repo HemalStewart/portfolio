@@ -638,6 +638,15 @@ export const showcaseSites: ShowcaseSite[] = [
     status: "concept",
   },
   {
+    slug: "seacloud",
+    name: "Sea Cloud",
+    kind: "Dalawella hotel",
+    line: "A boutique hotel site with an aerial reef film and thin serif type.",
+    stack: ["Next.js", "Video", "Booking"],
+    href: "https://hotel-kohl-ten.vercel.app/",
+    status: "live",
+  },
+  {
     slug: "shifenmei",
     name: "Shifenmei",
     kind: "Software studio",
