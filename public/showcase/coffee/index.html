@@ -1,232 +1,959 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><base href="/showcase/coffee/"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Ninth Lane Roasters Colombo</title>
-<meta name="description" content="Ninth Lane Roasters: Sri Lankan highland coffee, roasted in Colombo every week. Concept website by Hemal Herath.">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/showcase/coffee/">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ninth Lane — Coffee roasted in Colombo</title>
+<meta name="description" content="Ninth Lane Roasters: Sri Lankan highland coffee, roasted every week in Colombo. A concept website designed and built by Hemal Herath.">
+<meta name="theme-color" content="#1a100a">
+<meta property="og:title" content="Ninth Lane — Coffee roasted in Colombo">
+<meta property="og:image" content="/showcase/coffee/media/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/showcase/_engine/engine.css">
 <style>
+:root {
+  --bg: #f3e7d3;
+  --paper: #fff8ee;
+  --fg: #1a100a;
+  --muted: #6d5a4b;
+  --line: rgb(26 16 10 / 0.16);
+  --accent: #e8622c;
+  --pista: #c2cc97;
+  --loader-bg: #1a100a;
+  --loader-fg: #f3e7d3;
+  --menu-bg: #e8622c;
+  --menu-fg: #1a100a;
+  --cursor-bg: #e8622c;
+  --cursor-fg: #1a100a;
+  --font-display: "Clash Display", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --grain: 0.06;
+}
+.big {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  /* Clash's space is narrow: give words room at display sizes */
+  word-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 26px;
+  border-radius: 999px;
+  background: var(--fg);
+  color: var(--paper);
+  font-weight: 500;
+  font-size: 15px;
+  transition: background 0.35s, color 0.35s, transform 0.35s var(--ease-out);
+}
+.btn:hover {
+  background: var(--accent);
+  color: var(--fg);
+}
+.btn--orange {
+  background: var(--accent);
+  color: var(--fg);
+}
+.btn--orange:hover {
+  background: var(--paper);
+}
+.btn i {
+  font-style: normal;
+  transition: transform 0.5s var(--ease-out);
+}
+.btn:hover i {
+  transform: rotate(-45deg);
+}
 
-/* Layout: full-screen 3D bean field behind a huge condensed headline, then warm editorial blocks with a marquee and a subscription box */
-:root{
-  --espresso:#120b07; --roast:#2a1910; --copper:#d2733b; --crema:#e9c9a1; --cream:#f6ede0; --ink:#1c120c; --mute:#a68b74; --line:rgba(233,201,161,.16);
-  --display:"Big Shoulders Display",Impact,sans-serif; --mono:"DM Mono",ui-monospace,monospace; --sans:"Hanken Grotesk",ui-sans-serif,system-ui,sans-serif;
-  color-scheme:dark;
+/* ---------------------------------------------------------------- header */
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 18px var(--pad);
+  color: var(--fg);
+  transition: transform 0.8s var(--ease-out), color 0.4s;
 }
-*{box-sizing:border-box}
-html,body{background:var(--espresso)}
-body{margin:0;color:var(--cream);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-.nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:20px clamp(16px,4vw,48px);font:500 13px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em}
-.nav .brand{font:900 26px/1 var(--display);letter-spacing:.02em}
-.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
-.nav .cart{background:var(--copper);color:var(--espresso);padding:11px 16px;border-radius:999px}
-.hero{position:relative;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 60%,#3a2214 0%,var(--espresso) 65%)}
-#gl{position:absolute;inset:0;width:100%;height:100%}
-.hero .title{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;pointer-events:none;z-index:2}
-.hero h1{font:900 clamp(78px,17vw,290px)/.82 var(--display);margin:0;text-transform:uppercase;letter-spacing:-.01em;color:var(--cream);mix-blend-mode:difference}
-.hero h1 .ln{display:block;overflow:hidden}
-.hero h1 .ln span{display:inline-block}
-.hero .sub{position:absolute;left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);bottom:30px;z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;font:400 13px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--crema)}
-.hero .sub p{margin:0;max-width:34ch}
-.marquee{background:var(--copper);color:var(--espresso);overflow:hidden;white-space:nowrap;border-block:1px solid #b45e2c}
-.marquee .track{display:inline-flex;gap:46px;padding:18px 0;font:900 clamp(26px,3.4vw,48px)/1 var(--display);text-transform:uppercase;animation:mq 26s linear infinite}
-.marquee .track span::after{content:"✦";margin-left:46px;font-size:.6em;vertical-align:middle}
-@keyframes mq{to{transform:translateX(-50%)}}
-.wrap{max-width:1300px;margin:0 auto;padding-inline:clamp(16px,4vw,48px)}
-.tag{font:500 12px/1 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--copper)}
-h2{font:900 clamp(52px,8vw,128px)/.88 var(--display);text-transform:uppercase;margin:16px 0 0;letter-spacing:-.005em}
-.beans{padding-block:clamp(80px,11vw,150px);background:var(--espresso)}
-.beans-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:46px}
-.beans-head p{max-width:36ch;margin:0;color:var(--mute)}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.bag{position:relative;border-radius:22px;padding:26px;min-height:420px;display:flex;flex-direction:column;justify-content:space-between;color:var(--ink);overflow:hidden;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.bag:hover{transform:translateY(-8px) rotate(-.6deg)}
-.bag .no{font:500 12px/1 var(--mono);letter-spacing:.1em}
-.bag h3{font:900 64px/.85 var(--display);text-transform:uppercase;margin:0}
-.bag .notes{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
-.bag .notes span{border:1.5px solid currentColor;border-radius:999px;padding:5px 11px;font:500 12px/1 var(--mono);text-transform:uppercase}
-.bag .foot{display:flex;justify-content:space-between;align-items:center;margin-top:22px;font:500 13px/1 var(--mono);text-transform:uppercase}
-.bag .add{background:var(--ink);color:var(--cream);border-radius:999px;padding:11px 16px}
-.b1{background:#e9b98e}.b2{background:#cfe0c3}.b3{background:#f0d36f}
-.roastery{background:var(--cream);color:var(--ink);padding-block:clamp(80px,11vw,150px)}
-.roastery .tag{color:#b45e2c}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);align-items:center}
-.split img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:22px}
-.roastery p{color:#5b4636;font-size:18px;max-width:44ch}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px;border-top:2px solid var(--ink);padding-top:22px}
-.stats b{display:block;font:900 56px/.9 var(--display)}
-.stats span{font:500 12px/1.4 var(--mono);text-transform:uppercase;color:#7a5f4b}
-.cafe{background:var(--roast);padding-block:clamp(80px,11vw,150px)}
-.cafe .split img{aspect-ratio:4/5}
-.hours{margin-top:30px;font:400 14px/2 var(--mono);text-transform:uppercase;color:var(--crema);border-top:1px solid var(--line);padding-top:18px}
-.hours div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line)}
-.sub-box{background:var(--copper);color:var(--espresso);padding-block:clamp(80px,10vw,140px);text-align:center}
-.sub-box h2{max-width:12ch;margin-inline:auto}
-.sub-box p{max-width:40ch;margin:18px auto 30px;font-size:18px}
-.sub-box button{background:var(--espresso);color:var(--cream);border:0;border-radius:999px;font:500 14px var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:18px 28px;cursor:pointer}
-.sub-box .note{min-height:1.5em;margin-top:16px;font:400 13px var(--mono)}
-footer{background:var(--espresso);padding-block:30px;font:400 12px/1.6 var(--mono);text-transform:uppercase;color:var(--mute);border-top:1px solid var(--line)}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.rv{opacity:0;transform:translateY(40px)}
-@media (max-width:860px){
-  .nav ul{display:none}
-  .grid3,.split{grid-template-columns:1fr}
-  .bag{min-height:300px}
-  .stats b{font-size:42px}
+.header.is-dark {
+  color: var(--paper);
 }
-@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.marquee .track{animation:none}}
+.header.is-hidden {
+  transform: translateY(-110%);
+}
+.logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.logo b {
+  color: var(--accent);
+}
+.nav {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  font-weight: 500;
+  font-size: 15px;
+}
+.header__right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.bag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--fg);
+  font-weight: 500;
+}
+.menu-btn {
+  display: none;
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------ hero */
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 640px;
+  overflow: hidden;
+  background: #070403;
+  color: var(--paper);
+}
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+.hero__media > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 50%;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 180px;
+  background: linear-gradient(180deg, rgb(7 4 3 / 0.75), rgb(7 4 3 / 0));
+  pointer-events: none;
+}
+.hero__title,
+.hero__aside,
+.badge {
+  z-index: 2;
+}
+.hero__title {
+  position: absolute;
+  left: var(--pad);
+  bottom: 40px;
+  font-size: clamp(64px, 11.6vw, 220px);
+}
+.hero__title span {
+  display: block;
+}
+.hero__title .t2 {
+  color: var(--accent);
+}
+.hero__aside {
+  position: absolute;
+  right: var(--pad);
+  top: 120px;
+  display: grid;
+  gap: 22px;
+  justify-items: end;
+  max-width: 300px;
+  text-align: right;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.badge {
+  position: absolute;
+  right: var(--pad);
+  bottom: 44px;
+  width: clamp(120px, 12vw, 180px);
+  aspect-ratio: 1;
+  color: var(--paper);
+}
+.badge svg {
+  width: 100%;
+  height: 100%;
+  animation: spin 14s linear infinite;
+}
+.badge text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: 0.18em;
+  fill: currentColor;
+}
+.badge__core {
+  position: absolute;
+  inset: 30%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(16px, 1.6vw, 24px);
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ----------------------------------------------------------- marquees */
+.bands {
+  background: var(--accent);
+  color: var(--fg);
+  padding: 14px 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(30px, 4.2vw, 70px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+.bands .marquee + .marquee {
+  color: var(--paper);
+}
+.bands span {
+  padding-right: 0.45em;
+}
+.bands span::after {
+  content: "●";
+  margin-left: 0.45em;
+  font-size: 0.4em;
+  vertical-align: 0.35em;
+}
+
+/* ----------------------------------------------------------------- intro */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: var(--gap);
+  padding: clamp(120px, 15vw, 220px) var(--pad);
+}
+.intro .label {
+  align-self: start;
+}
+.intro p {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(30px, 3.6vw, 62px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+/* ----------------------------------------------------------- the cards */
+.coffees {
+  padding: 0 var(--pad) clamp(80px, 10vw, 140px);
+}
+.coffees__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+.coffees__head h2 {
+  font-size: clamp(56px, 8vw, 150px);
+}
+.card {
+  position: sticky;
+  top: calc(96px + var(--i) * 26px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(20px, 4vw, 60px);
+  min-height: min(76vh, 660px);
+  margin-bottom: 9vh;
+  padding: clamp(24px, 3.4vw, 50px);
+  border-radius: 32px;
+  transform-origin: 50% 0;
+  overflow: hidden;
+}
+.card:nth-child(1) {
+  background: var(--accent);
+}
+.card:nth-child(2) {
+  background: var(--pista);
+}
+.card:nth-child(3) {
+  background: var(--fg);
+  color: var(--paper);
+}
+.card__body {
+  display: grid;
+  align-content: space-between;
+  gap: 30px;
+}
+.card__no {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+}
+.card h3 {
+  margin-top: 14px;
+  font-size: clamp(54px, 7vw, 132px);
+}
+.card__origin {
+  margin-top: 16px;
+  font-size: 17px;
+  opacity: 0.8;
+}
+.notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+.notes li {
+  padding: 8px 14px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.card__buy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+}
+.card__price,
+.card__buy .btn {
+  white-space: nowrap;
+}
+.card__price {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 34px;
+  letter-spacing: -0.02em;
+}
+.card__price small {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0;
+  opacity: 0.75;
+}
+.card:nth-child(3) .btn {
+  background: var(--accent);
+  color: var(--fg);
+}
+.card__media {
+  border-radius: 22px;
+  min-height: 300px;
+}
+.card__media img {
+  transition: transform 1.2s var(--ease-out);
+}
+.card:hover .card__media img {
+  transform: scale(1.05);
+}
+
+/* -------------------------------------------------------------- roastery */
+.roast {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: clamp(26px, 5vw, 90px);
+  align-items: center;
+  padding: clamp(80px, 10vw, 150px) var(--pad);
+}
+.roast__media {
+  aspect-ratio: 5 / 4;
+  border-radius: 32px;
+}
+.roast h2 {
+  margin: 20px 0 24px;
+  font-size: clamp(48px, 5.6vw, 104px);
+}
+.roast p {
+  max-width: 44ch;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.nums {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+  list-style: none;
+}
+.nums li {
+  padding: 18px;
+  border-radius: 20px;
+  background: var(--paper);
+}
+.nums strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 3.6vw, 64px);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.nums li > span {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------------ café */
+.cafe {
+  position: relative;
+  height: 115vh;
+}
+.cafe__media {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.cafe__media > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cafe__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(10 6 4 / 0.7), rgb(10 6 4 / 0.15));
+}
+.cafe__copy {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 30px;
+  padding-bottom: 60px;
+  color: var(--paper);
+  pointer-events: none;
+}
+.cafe__copy h2 {
+  font-size: clamp(56px, 9vw, 170px);
+}
+.hours {
+  pointer-events: auto;
+  min-width: 280px;
+  padding: 26px;
+  border-radius: 24px;
+  background: var(--paper);
+  color: var(--fg);
+}
+.hours dl {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px 26px;
+  margin: 16px 0 20px;
+  font-size: 16px;
+}
+.hours dt {
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------ subscribe */
+.sub {
+  padding: clamp(110px, 14vw, 200px) var(--pad);
+}
+.sub__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(30px, 5vw, 80px);
+  align-items: end;
+  padding: clamp(30px, 5vw, 70px);
+  border-radius: 36px;
+  background: var(--fg);
+  color: var(--paper);
+}
+.sub h2 {
+  font-size: clamp(52px, 7vw, 130px);
+}
+.sub h2 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.opts {
+  display: grid;
+  gap: 18px;
+}
+.opt {
+  display: grid;
+  gap: 10px;
+}
+.opt b {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.seg {
+  display: flex;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgb(255 248 238 / 0.1);
+}
+.seg button {
+  flex: 1;
+  height: 44px;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: background 0.3s, color 0.3s;
+}
+.seg button[aria-pressed="true"] {
+  background: var(--paper);
+  color: var(--fg);
+}
+.sub__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-top: 8px;
+  padding-top: 18px;
+  border-top: 1px solid rgb(255 248 238 / 0.2);
+}
+.sub__total strong {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: -0.03em;
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 80;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--fg);
+  font-weight: 500;
+  transform: translate(-50%, 160%);
+  transition: transform 0.7s var(--ease-out);
+}
+.toast.is-on {
+  transform: translate(-50%, 0);
+}
+
+/* ---------------------------------------------------------------- footer */
+.footer {
+  padding: clamp(70px, 9vw, 130px) var(--pad) 26px;
+  background: var(--accent);
+  color: var(--fg);
+}
+.footer__top {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.footer__top b {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.footer__top a {
+  border-bottom: 1.5px solid currentColor;
+}
+.footer__word {
+  margin: clamp(50px, 7vw, 100px) 0 4px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  /* "NINTH LANE" is ~5.75em wide (plus word spacing) */
+  font-size: calc((100vw - 2 * var(--pad)) / 6);
+  word-spacing: 0.12em;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+}
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 20px;
+  border-top: 1.5px solid var(--fg);
+  font-size: 14px;
+}
+
+.menu__close {
+  position: absolute;
+  left: var(--pad);
+  top: 24px;
+  z-index: 2;
+  font-weight: 500;
+}
+.menu__links a {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  transition: color 0.3s, transform 0.8s var(--ease-out);
+}
+.menu__links a:hover {
+  color: var(--paper);
+  transform: translateX(14px);
+}
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 900px) {
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .nav {
+    display: none;
+  }
+  .menu-btn {
+    display: inline-block;
+  }
+  .hero__media > * {
+    object-position: 45% 50%;
+  }
+  .hero__aside {
+    left: var(--pad);
+    right: var(--pad);
+    top: auto;
+    bottom: 40px;
+    justify-items: start;
+    text-align: left;
+    max-width: none;
+    font-size: 15px;
+  }
+  .hero__title {
+    bottom: 200px;
+  }
+  .badge {
+    top: 100px;
+    bottom: auto;
+    width: 110px;
+  }
+  .intro,
+  .roast {
+    grid-template-columns: 1fr;
+  }
+  .coffees__head {
+    flex-direction: column;
+    align-items: start;
+  }
+  .card {
+    grid-template-columns: 1fr;
+    top: calc(76px + var(--i) * 16px);
+    min-height: 0;
+    border-radius: 24px;
+  }
+  .card__media {
+    min-height: 220px;
+    aspect-ratio: 4 / 3;
+  }
+  .nums {
+    grid-template-columns: 1fr;
+  }
+  .cafe__copy {
+    grid-template-columns: 1fr;
+  }
+  .hours {
+    min-width: 0;
+  }
+  .sub__inner {
+    grid-template-columns: 1fr;
+  }
+  .footer__top {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 30px;
+  }
+  .footer__bottom {
+    flex-direction: column;
+  }
+}
 </style>
+</head>
+<body>
 
-<nav class="nav"><a class="brand" href="#">Ninth Lane</a><ul><li>Coffee</li><li>Roastery</li><li>Café</li><li>Subscribe</li></ul><a class="cart" href="#subscribe">Bag (0)</a></nav>
+<div class="loader" aria-hidden="true">
+  <p class="loader__brand" style="font-weight: 700; letter-spacing: -0.01em">Ninth <span style="color: #e8622c">Lane</span></p>
+  <div class="loader__row">
+    <p class="loader__note">Warming the drum<br>Colombo 07</p>
+    <p class="loader__count" style="font-weight: 700; letter-spacing: -0.05em">000</p>
+  </div>
+  <span class="loader__bar"></span>
+</div>
+<div class="grain" aria-hidden="true"></div>
 
-<header class="hero">
-  <canvas id="gl" aria-hidden="true"></canvas>
-  <div class="title"><h1><span class="ln"><span>Roasted</span></span><span class="ln"><span>on Ninth</span></span><span class="ln"><span>Lane</span></span></h1></div>
-  <div class="sub"><p>Sri Lankan highland coffee, roasted in small batches in Colombo every Tuesday and Friday.</p><p>Move your cursor ↔ the beans</p></div>
+<header class="header" data-header>
+  <a class="logo" href="#top" aria-label="Ninth Lane, back to top">Ninth <b>Lane</b></a>
+  <ul class="nav">
+    <li><a class="roll" href="#coffee"><span data-text="Coffee">Coffee</span></a></li>
+    <li><a class="roll" href="#roastery"><span data-text="Roastery">Roastery</span></a></li>
+    <li><a class="roll" href="#cafe"><span data-text="Café">Café</span></a></li>
+    <li><a class="roll" href="#subscribe"><span data-text="Subscribe">Subscribe</span></a></li>
+  </ul>
+  <div class="header__right">
+    <a class="bag" href="#coffee" data-magnetic="0.3"><span>Bag</span> (<b class="bag__n">0</b>)</a>
+    <button class="menu-btn roll" type="button" data-menu-open><span data-text="Menu">Menu</span></button>
+  </div>
 </header>
 
-<div class="marquee" aria-hidden="true"><div class="track"><span>Single origin</span><span>Sri Lankan highlands</span><span>Roasted this week</span><span>Colombo</span><span>Single origin</span><span>Sri Lankan highlands</span><span>Roasted this week</span><span>Colombo</span></div></div>
+<nav class="menu" aria-label="Site menu">
+  <button class="menu__close roll" type="button" data-menu-close><span data-text="Close">Close</span></button>
+  <ul class="menu__links">
+    <li><a href="#coffee"><small>01</small>Coffee</a></li>
+    <li><a href="#roastery"><small>02</small>Roastery</a></li>
+    <li><a href="#cafe"><small>03</small>Café</a></li>
+    <li><a href="#subscribe"><small>04</small>Subscribe</a></li>
+  </ul>
+  <div class="menu__media" aria-hidden="true">
+    <img src="media/bag.jpg" alt="">
+    <img src="media/roastery.jpg" alt="">
+    <img src="media/cafe.jpg" alt="">
+    <img src="media/beans.jpg" alt="">
+  </div>
+</nav>
 
 <main>
-  <section class="beans">
-    <div class="wrap">
-      <div class="beans-head rv"><div><span class="tag">The coffee</span><h2>Three bags, all island-grown</h2></div><p>Grown on small farms in the hills of Badulla and Kandy, roasted light enough that you can taste where they came from.</p></div>
-      <div class="grid3">
-        <article class="bag b1 rv"><span class="no">No. 01 · Natural</span><div><h3>Badulla</h3><div class="notes"><span>Jackfruit</span><span>Cocoa</span><span>Raisin</span></div><div class="foot"><span>250 g · Rs 2,900</span><span class="add">Add</span></div></div></article>
-        <article class="bag b2 rv"><span class="no">No. 02 · Washed</span><div><h3>Kandy Hills</h3><div class="notes"><span>Lime</span><span>Jaggery</span><span>Black tea</span></div><div class="foot"><span>250 g · Rs 2,700</span><span class="add">Add</span></div></div></article>
-        <article class="bag b3 rv"><span class="no">No. 03 · House blend</span><div><h3>Lane Espresso</h3><div class="notes"><span>Toffee</span><span>Kithul</span><span>Orange</span></div><div class="foot"><span>500 g · Rs 4,800</span><span class="add">Add</span></div></div></article>
+  <section class="hero" id="top" data-theme="dark">
+    <div class="hero__media">
+      <img src="media/hero.jpg" alt="" data-preload>
+      <video src="media/hero.mp4" poster="media/hero.jpg" muted playsinline loop autoplay preload="auto" data-autoplay></video>
+    </div>
+    <h1 class="hero__title big" data-intro><span>Roasted</span><span class="t2">on Ninth</span><span>Lane.</span></h1>
+    <div class="hero__aside" data-intro>
+      <p>Sri Lankan highland coffee, roasted in small batches in Colombo every single week.</p>
+      <a class="btn btn--orange" href="#coffee" data-magnetic="0.25">Shop the beans <i>↗</i></a>
+    </div>
+    <div class="badge" data-intro aria-hidden="true">
+      <svg viewBox="0 0 200 200"><defs><path id="ring" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><text><textPath href="#ring">ROASTED THIS WEEK • COLOMBO 07 • SINCE 2019 •</textPath></text></svg>
+      <span class="badge__core">9th</span>
+    </div>
+  </section>
+
+  <div class="bands" aria-hidden="true">
+    <div class="marquee" data-marquee><div class="marquee__track"><span>Jackfruit</span><span>Kithul</span><span>Cocoa</span><span>Lime</span><span>Jaggery</span><span>Raisin</span></div></div>
+    <div class="marquee" data-marquee="right"><div class="marquee__track"><span>Badulla</span><span>Kandy</span><span>Haputale</span><span>Nuwara Eliya</span><span>Ella</span></div></div>
+  </div>
+
+  <section class="intro">
+    <span class="label" data-fade>Since 2019</span>
+    <p data-split="fill">Sri Lankan highland coffee, roasted on a twelve-kilo drum on Ninth Lane, Colombo 7. Every bag you buy was roasted this week, never last month.</p>
+  </section>
+
+  <section class="coffees" id="coffee">
+    <div class="coffees__head">
+      <h2 class="big" data-split>Three bags,<br>all island-grown</h2>
+      <p class="label" data-fade>Roasted every Tuesday &amp; Friday</p>
+    </div>
+    <div class="cards">
+      <article class="card" style="--i: 0">
+        <div class="card__body">
+          <div>
+            <span class="card__no">No. 01 · Natural</span>
+            <h3 class="big">Badulla</h3>
+            <p class="card__origin">Grown at 1,300 m on small family farms, dried whole in the cherry.</p>
+          </div>
+          <ul class="notes"><li>Jackfruit</li><li>Cocoa</li><li>Raisin</li></ul>
+          <div class="card__buy"><p class="card__price">Rs 2,900<small>250 g · whole bean</small></p><button class="btn add" type="button">Add to bag</button></div>
+        </div>
+        <div class="card__media media"><img src="media/bag.jpg" alt="A kraft coffee pouch with an orange band, beans and a glass of coffee"></div>
+      </article>
+      <article class="card" style="--i: 1">
+        <div class="card__body">
+          <div>
+            <span class="card__no">No. 02 · Washed</span>
+            <h3 class="big">Kandy Hills</h3>
+            <p class="card__origin">Washed and sun-dried above Kandy. Clean, bright and gentle.</p>
+          </div>
+          <ul class="notes"><li>Lime</li><li>Jaggery</li><li>Black tea</li></ul>
+          <div class="card__buy"><p class="card__price">Rs 2,700<small>250 g · whole bean</small></p><button class="btn add" type="button">Add to bag</button></div>
+        </div>
+        <div class="card__media media"><img src="media/beans.jpg" alt="Freshly roasted coffee beans"></div>
+      </article>
+      <article class="card" style="--i: 2">
+        <div class="card__body">
+          <div>
+            <span class="card__no">No. 03 · House blend</span>
+            <h3 class="big">Lane Espresso</h3>
+            <p class="card__origin">Our blend for milk drinks: chocolatey, round and forgiving.</p>
+          </div>
+          <ul class="notes"><li>Toffee</li><li>Kithul</li><li>Orange</li></ul>
+          <div class="card__buy"><p class="card__price">Rs 4,800<small>500 g · whole bean</small></p><button class="btn add" type="button">Add to bag</button></div>
+        </div>
+        <div class="card__media media"><img src="media/pour.jpg" alt="Coffee being poured into a cup"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="roast" id="roastery">
+    <div class="roast__media media" data-reveal data-parallax="12"><img src="media/roastery.jpg" alt="The roaster and sacks of green coffee in the roastery"></div>
+    <div>
+      <span class="label" data-fade>The roastery</span>
+      <h2 class="big" data-split>Small drum,<br>big flavour</h2>
+      <p data-fade>Every batch goes through our cast-iron drum by hand, by ear and by nose. We roast lighter than most, so you taste the farm, not the fire.</p>
+      <ul class="nums">
+        <li data-fade><strong><span data-count="12">12</span>kg</strong><span>Per batch, never more</span></li>
+        <li data-fade data-delay="0.08"><strong><span data-count="2">2</span>×</strong><span>Roast days a week</span></li>
+        <li data-fade data-delay="0.16"><strong><span data-count="48">48</span>h</strong><span>From drum to your door</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cafe" id="cafe" data-theme="dark" aria-label="The café">
+    <div class="cafe__media media" data-grow>
+      <img src="media/barista.jpg" alt="">
+      <video src="media/barista.mp4" poster="media/barista.jpg" muted playsinline loop preload="none" data-autoplay></video>
+    </div>
+    <div class="cafe__copy">
+      <h2 class="big" data-split>Come for<br>a flat white</h2>
+      <div class="hours" data-fade>
+        <span class="label">The bar on Ninth Lane</span>
+        <dl><dt>Mon – Fri</dt><dd>7:00 – 18:00</dd><dt>Sat – Sun</dt><dd>8:00 – 16:00</dd></dl>
+        <a class="btn" href="#subscribe">Get directions <i>↗</i></a>
       </div>
     </div>
   </section>
 
-  <section class="roastery">
-    <div class="wrap split">
-      <img src="img/roastery.jpg" alt="Drum roaster with fresh beans cooling" class="rv">
+  <section class="sub" id="subscribe">
+    <div class="sub__inner">
       <div>
-        <span class="tag rv">The roastery</span>
-        <h2 class="rv">Small drum, big flavour</h2>
-        <p class="rv">Every batch goes through our 12-kilo cast-iron drum by hand. We roast twice a week and ship within two days, so your beans are never older than your milk.</p>
-        <div class="stats rv"><div><b>12kg</b><span>per batch</span></div><div><b>2×</b><span>roasts a week</span></div><div><b>48h</b><span>roast to doorstep</span></div></div>
+        <span class="label" data-fade style="color: var(--accent)">Subscription</span>
+        <h2 class="big" data-split style="margin-top: 20px">Fresh beans<br><em>every fortnight</em></h2>
+      </div>
+      <div class="opts" data-fade>
+        <div class="opt"><b>Size</b><div class="seg" data-seg="size"><button type="button" aria-pressed="true" data-price="2700">250 g</button><button type="button" aria-pressed="false" data-price="4800">500 g</button></div></div>
+        <div class="opt"><b>Grind</b><div class="seg" data-seg="grind"><button type="button" aria-pressed="true">Whole bean</button><button type="button" aria-pressed="false">Ground</button></div></div>
+        <div class="sub__total"><span>Per delivery, free in Colombo</span><strong class="sub__price">Rs 2,700</strong></div>
+        <button class="btn btn--orange sub__go" type="button" data-magnetic="0.2">Start my subscription <i>↗</i></button>
       </div>
     </div>
   </section>
-
-  <section class="cafe">
-    <div class="wrap split">
-      <div>
-        <span class="tag rv">The café</span>
-        <h2 class="rv">Come for a flat white</h2>
-        <p class="rv" style="color:var(--mute);font-size:18px;max-width:42ch">Our tasting bar sits next to the roaster on Ninth Lane, Colombo 7. Sit at the counter and taste this week's roast before you buy.</p>
-        <div class="hours rv"><div><span>Mon–Fri</span><span>7:00 – 18:00</span></div><div><span>Sat–Sun</span><span>8:00 – 16:00</span></div></div>
-      </div>
-      <img src="img/pour.jpg" alt="Barista pouring latte art" class="rv">
-    </div>
-  </section>
-
-  <section class="sub-box" id="subscribe">
-    <div class="wrap">
-      <span class="tag" style="color:var(--espresso)">Subscription</span>
-      <h2 class="rv">Fresh beans every fortnight</h2>
-      <p class="rv">A new 250 g bag delivered anywhere in Colombo every two weeks. Pause or cancel whenever you like.</p>
-      <button id="subBtn">Start for Rs 2,700</button>
-      <p class="note" id="note" aria-live="polite"></p>
-    </div>
-  </section>
-
-  <footer><div class="wrap"><span>Ninth Lane Roasters · Colombo 7</span><span>Concept website by <a href="/showcase" style="text-decoration:underline">Hemal Herath</a> · 3D beans in Three.js</span></div></footer>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<footer class="footer">
+  <div class="footer__top">
+    <div><b>The bar</b><p>Ninth Lane<br>Colombo 07, Sri Lanka</p></div>
+    <div><b>Local time</b><p><span data-clock="Asia/Colombo">07:00</span> in Colombo</p></div>
+    <div><b>Images</b><p>Film via Pexels,<br>studio shots generated</p></div>
+    <div><b>Concept</b><p>Designed and built by<br><a href="/showcase">Hemal Herath</a></p></div>
+  </div>
+  <p class="footer__word" data-split="chars" aria-hidden="true">Ninth Lane</p>
+  <div class="footer__bottom">
+    <span>Ninth Lane Roasters is a fictional coffee brand — a concept website.</span>
+    <a href="#top">Back to the top ↑</a>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite">Concept site: the shop is switched off.</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+<script src="/showcase/_engine/engine.js"></script>
 <script>
-(function(){
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-  if (window.Lenis && !reduce){ const lenis = new Lenis({lerp:0.09}); if (window.ScrollTrigger) lenis.on('scroll', ScrollTrigger.update); if (window.gsap){ gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);} }
-  document.getElementById('subBtn').addEventListener('click', () => document.getElementById('note').textContent = 'Concept site: on the real site this opens checkout.');
-  if (!window.gsap || reduce){ document.querySelectorAll('.rv').forEach(e=>{e.style.opacity=1;e.style.transform='none'}); return; }
-  gsap.from('.hero h1 .ln span',{yPercent:110,duration:1.3,stagger:.12,ease:'expo.out',delay:.15});
-  gsap.to('.hero h1',{yPercent:-30,opacity:.15,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
-  document.querySelectorAll('.rv').forEach(el => gsap.to(el,{opacity:1,y:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
+(() => {
+  const { $, $$ } = SE;
+
+  SE.init({
+    intro(tl, reduce) {
+      if (reduce) return;
+      const title = SE.split($(".hero__title"), "chars");
+      tl.from(".hero__media > *", { scale: 1.2, duration: 2.4, ease: "expo.out" }, 0.2)
+        .from(title.chars, { yPercent: 118, duration: 1.2, stagger: 0.03 }, 0.6)
+        .fromTo([".hero__aside", ".badge"], { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 1.3, stagger: 0.12 }, 1.05)
+        .from(".header", { autoAlpha: 0, duration: 1.2, ease: "power2.out", clearProps: "opacity,visibility" }, 0.95);
+      const out = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
+      gsap.to(".hero__title", { yPercent: -30, ease: "none", scrollTrigger: out });
+      gsap.to(".hero__media", { yPercent: 18, ease: "none", scrollTrigger: { ...out } });
+    },
+  });
+
+  // Stacking cards: each card settles back as the next one lands on it.
+  if (!SE.reduce) {
+    const cards = $$(".card");
+    cards.forEach((card, i) => {
+      const next = cards[i + 1];
+      if (!next) return;
+      gsap.fromTo(card, { scale: 1, filter: "brightness(1)" }, {
+        scale: 0.94,
+        filter: "brightness(0.82)",
+        ease: "none",
+        scrollTrigger: { trigger: next, start: "top bottom", end: "top 30%", scrub: true },
+      });
+    });
+  }
+
+  const toast = $(".toast");
+  const say = (text) => {
+    toast.textContent = text;
+    toast.classList.add("is-on");
+    clearTimeout(toast.t);
+    toast.t = setTimeout(() => toast.classList.remove("is-on"), 2600);
+  };
+  let n = 0;
+  $$(".add").forEach((b) =>
+    b.addEventListener("click", () => {
+      n += 1;
+      $(".bag__n").textContent = n;
+      b.textContent = "Added ✓";
+      gsap.fromTo(".bag", { scale: 1.25 }, { scale: 1, duration: 0.8, ease: "elastic.out(1, 0.4)" });
+      say("Added — this is a concept shop, so nothing is charged.");
+    }),
+  );
+  const fmt = new Intl.NumberFormat("en-GB");
+  $$(".seg").forEach((seg) =>
+    seg.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      $$("button", seg).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      if (b.dataset.price) $(".sub__price").textContent = "Rs " + fmt.format(+b.dataset.price);
+    }),
+  );
+  $(".sub__go").addEventListener("click", () => say("Concept site: subscriptions are switched off."));
 })();
 </script>
-<script type="module">
-import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-
-const canvas = document.getElementById('gl');
-let renderer; try { renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true}); } catch(e){ canvas.remove(); throw e; }
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100); camera.position.set(0,0,12);
-scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-scene.environmentIntensity = 0.35;
-
-// Coffee bean: squashed ellipsoid with an S-shaped crease on the flat side
-function beanGeometry(){
-  const g = new THREE.SphereGeometry(1, 64, 48);
-  const p = g.attributes.position, v = new THREE.Vector3();
-  for (let i=0;i<p.count;i++){
-    v.fromBufferAttribute(p, i);
-    v.x *= 0.72; v.y *= 0.5; v.z *= 1.0;
-    if (v.y > 0){ v.y *= 0.62; // flatter top side
-      const cx = 0.07*Math.sin(v.z*3.2);
-      const d = (v.x - cx);
-      v.y -= 0.17*Math.exp(-(d*d)/0.006) * Math.min(1, v.y*6 + 0.2) * (1 - Math.pow(Math.abs(v.z),6));
-    }
-    p.setXYZ(i, v.x, v.y, v.z);
-  }
-  g.computeVertexNormals(); return g;
-}
-const COUNT = innerWidth < 760 ? 70 : 140;
-const mat = new THREE.MeshPhysicalMaterial({ color:0xffffff, roughness:0.38, metalness:0, clearcoat:0.7, clearcoatRoughness:0.35, sheen:0.4, sheenColor:new THREE.Color('#ffb98a') });
-const beans = new THREE.InstancedMesh(beanGeometry(), mat, COUNT);
-const palette = ['#3b2214','#4a2b19','#5a341d','#2e1a10','#6b3f22','#7d4b28'].map(c => new THREE.Color(c));
-const data = [];
-for (let i=0;i<COUNT;i++){
-  const home = new THREE.Vector3((Math.random()-.5)*20, (Math.random()-.5)*12, -Math.random()*9 + 2);
-  data.push({ home, off:new THREE.Vector3(), rot:new THREE.Euler(Math.random()*6, Math.random()*6, Math.random()*6), spin:new THREE.Vector3((Math.random()-.5)*.6,(Math.random()-.5)*.6,(Math.random()-.5)*.6), s:0.32 + Math.random()*0.32, f:Math.random()*10 });
-  beans.setColorAt(i, Math.random() < 0.06 ? new THREE.Color('#9aa36a') : palette[(Math.random()*palette.length)|0]);
-}
-scene.add(beans);
-scene.add(new THREE.HemisphereLight(0xffd7b0, 0x1a0d06, 0.6));
-const key = new THREE.DirectionalLight(0xffb070, 3.2); key.position.set(5,6,8); scene.add(key);
-const rim = new THREE.DirectionalLight(0xff7a2f, 2.4); rim.position.set(-8,-2,-4); scene.add(rim);
-
-function resize(){ const w=canvas.clientWidth||innerWidth, h=canvas.clientHeight||innerHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
-addEventListener('resize', resize); resize();
-
-const ndc = new THREE.Vector2(9,9), ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0,0,1), 0), hit = new THREE.Vector3();
-addEventListener('pointermove', e => { const r = canvas.getBoundingClientRect(); ndc.set(((e.clientX-r.left)/r.width)*2-1, -((e.clientY-r.top)/r.height)*2+1); });
-let sp = 0; addEventListener('scroll', () => { sp = Math.min(1, scrollY/innerHeight); }, {passive:true});
-const dummy = new THREE.Object3D(), clock = new THREE.Clock(), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let last = 0;
-function tick(){
-  const t = clock.getElapsedTime(), dt = Math.min(0.05, t - last); last = t;
-  ray.setFromCamera(ndc, camera); ray.ray.intersectPlane(plane, hit);
-  for (let i=0;i<COUNT;i++){
-    const d = data[i];
-    const bob = reduce ? 0 : Math.sin(t*0.6 + d.f)*0.25;
-    const base = new THREE.Vector3(d.home.x, d.home.y + bob + sp*6*(0.5 + d.s), d.home.z);
-    // push away from cursor projected onto each bean's depth
-    const dx = base.x - hit.x, dy = base.y - hit.y, dist = Math.hypot(dx, dy);
-    const R = 3.2;
-    if (dist < R && hit.lengthSq() < 400){ const k = (1 - dist/R)*2.2; d.off.x += (dx/dist*k - d.off.x)*0.12; d.off.y += (dy/dist*k - d.off.y)*0.12; }
-    else { d.off.multiplyScalar(0.94); }
-    if (!reduce){ d.rot.x += d.spin.x*dt*(1+sp*3); d.rot.y += d.spin.y*dt*(1+sp*3); d.rot.z += d.spin.z*dt; }
-    dummy.position.copy(base).add(d.off); dummy.rotation.copy(d.rot); dummy.scale.setScalar(d.s);
-    dummy.updateMatrix(); beans.setMatrixAt(i, dummy.matrix);
-  }
-  beans.instanceMatrix.needsUpdate = true;
-  camera.position.x += ((ndc.x < 2 ? ndc.x : 0)*0.6 - camera.position.x)*0.03; camera.lookAt(0,0,0);
-  renderer.render(scene, camera); requestAnimationFrame(tick);
-}
-tick();
-</script>
-
+</body>
 </html>
