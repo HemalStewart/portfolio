@@ -1,224 +1,1135 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><base href="/showcase/villa/"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Saffron Reef Tangalle</title>
-<meta name="description" content="Saffron Reef: six private suites on the shore at Tangalle. Concept website by Hemal Herath.">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<base href="/showcase/villa/">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Saffron Reef — A private shore in Tangalle</title>
+<meta name="description" content="Saffron Reef: six suites on a private shore east of Tangalle, Sri Lanka. A concept website designed and built by Hemal Herath.">
+<meta name="theme-color" content="#1c1915">
+<meta property="og:title" content="Saffron Reef — A private shore in Tangalle">
+<meta property="og:image" content="/showcase/villa/media/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/showcase/_engine/engine.css">
 <style>
+:root {
+  --bg: #ede7dc;
+  --paper: #f5f1e9;
+  --fg: #1c1915;
+  --muted: #6e665b;
+  --line: rgb(28 25 21 / 0.16);
+  --accent: #b5652e;
+  --sea: #1d3936;
+  --cream: #f3ede3;
+  --loader-bg: #1c1915;
+  --loader-fg: #ede7dc;
+  --menu-bg: #1c1915;
+  --menu-fg: #ede7dc;
+  --cursor-bg: #b5652e;
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "Satoshi", system-ui, sans-serif;
+  --grain: 0.06;
+}
 
-/* Layout: a pinned scroll-driven film (canvas image sequence) with staged headlines, then warm sand-toned editorial sections */
-:root{
-  --ocean:#0c2a31; --ocean-2:#123a43; --saffron:#e3a23e; --coral:#cf5d36; --sand:#f4ecdd; --sand-2:#eadfca; --ink:#1d2326; --muted:#5d6a6c; --line:rgba(29,35,38,.14);
-  --display:"Bodoni Moda",Didot,Georgia,serif; --sans:"Manrope",ui-sans-serif,system-ui,sans-serif;
-  color-scheme:light;
+body {
+  font-size: 16px;
 }
-*{box-sizing:border-box}
-html,body{background:var(--ocean)}
-body{margin:0;color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-.nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(16px,4vw,48px);color:#fff;transition:background .4s,color .4s}
-.nav.solid{background:rgba(244,236,221,.92);color:var(--ink);backdrop-filter:blur(10px)}
-.nav .brand{font:400 24px/1 var(--display);letter-spacing:.01em}
-.nav .brand i{color:var(--saffron)}
-.nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
-.nav .cta{font-size:13px;letter-spacing:.16em;text-transform:uppercase;background:var(--saffron);color:var(--ocean);padding:11px 18px;border-radius:2px;font-weight:600}
-.film{position:relative;height:100vh;height:100svh;overflow:hidden;background:var(--ocean)}
-.film canvas{position:absolute;inset:0;width:100%;height:100%}
-.film .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,42,49,.45) 0%,rgba(12,42,49,0) 30%,rgba(12,42,49,0) 60%,rgba(12,42,49,.6) 100%);pointer-events:none}
-.stage{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#fff;padding:0 16px;pointer-events:none}
-.stage > div{opacity:0}
-.stage .kicker{font:600 12px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--sand)}
-.stage h1,.stage h2{font:400 clamp(44px,8vw,120px)/.98 var(--display);margin:18px 0 0;text-shadow:0 10px 40px rgba(0,0,0,.25);text-wrap:balance}
-.stage h1 i,.stage h2 i{color:var(--saffron)}
-.stage .btn{pointer-events:auto;display:inline-block;margin-top:30px;background:var(--saffron);color:var(--ocean);font:600 13px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;padding:17px 26px;border-radius:2px}
-.progress{position:absolute;left:clamp(16px,4vw,48px);right:clamp(16px,4vw,48px);bottom:28px;display:flex;align-items:center;gap:16px;color:#fff;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
-.progress .track{flex:1;height:1px;background:rgba(255,255,255,.3);position:relative}
-.progress .track i{position:absolute;inset:0;background:#fff;transform-origin:left;transform:scaleX(0)}
-.loader{position:absolute;right:clamp(16px,4vw,48px);top:84px;color:rgba(255,255,255,.75);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
-.sand{background:var(--sand)}
-.wrap{max-width:1280px;margin:0 auto;padding-inline:clamp(16px,4vw,48px)}
-.label{font:600 12px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--coral)}
-h3.big{font:400 clamp(38px,5.4vw,78px)/1.02 var(--display);margin:16px 0 0;text-wrap:balance}
-h3.big i{color:var(--coral)}
-.welcome{padding-block:clamp(90px,13vw,170px)}
-.welcome-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,6vw,90px);align-items:end}
-.welcome p{color:var(--muted);font-size:18px;max-width:46ch;margin:0}
-.suites{padding-block:0 clamp(90px,12vw,160px)}
-.suite-row{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(24px,4vw,56px);align-items:center}
-.suite-row figure{margin:0;overflow:hidden;border-radius:4px}
-.suite-row figure img{width:100%;aspect-ratio:3/2;object-fit:cover;transform:scale(1.15)}
-.suite-row dl{display:grid;grid-template-columns:auto 1fr;gap:12px 22px;margin:28px 0 0;font-size:15px}
-.suite-row dt{color:var(--muted)}
-.suite-row dd{margin:0;font-weight:600}
-.evening{background:var(--ocean);color:var(--sand)}
-.evening-inner{position:relative;min-height:110vh;display:flex;align-items:flex-end}
-.evening-inner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.evening-inner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,42,49,.1),rgba(12,42,49,.85))}
-.evening-copy{position:relative;z-index:2;padding-bottom:clamp(50px,8vw,110px)}
-.evening .label{color:var(--saffron)}
-.evening p{max-width:44ch;color:#d9e2df;font-size:17px}
-.exp{padding-block:clamp(90px,12vw,160px)}
-.exp-list{margin-top:44px;border-top:1px solid var(--line)}
-.exp-item{display:grid;grid-template-columns:80px 1fr 1.2fr auto;gap:24px;align-items:baseline;padding:30px 0;border-bottom:1px solid var(--line);transition:padding .4s}
-.exp-item:hover{padding-left:16px}
-.exp-item b{font:400 18px/1 var(--display);color:var(--coral)}
-.exp-item h4{font:400 clamp(26px,2.6vw,38px)/1.1 var(--display);margin:0}
-.exp-item p{margin:0;color:var(--muted)}
-.exp-item span{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.book{background:var(--sand-2);padding-block:clamp(70px,9vw,120px)}
-.book-bar{margin-top:34px;display:grid;grid-template-columns:repeat(3,1fr) auto;background:#fff;border-radius:4px;box-shadow:0 30px 60px -40px rgba(12,42,49,.45)}
-.book-bar div{padding:20px 24px;border-right:1px solid var(--line)}
-.book-bar small{display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.book-bar b{font:400 22px/1.4 var(--display)}
-.book-bar button{border:0;background:var(--ocean);color:var(--sand);font:600 13px var(--sans);letter-spacing:.16em;text-transform:uppercase;padding:0 34px;cursor:pointer}
-.book .note{margin-top:14px;color:var(--muted);font-size:14px;min-height:1.5em}
-footer{background:var(--ocean);color:#a9bcbc;padding-block:34px;font-size:13px}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-footer b{color:var(--sand)}
-.rv{opacity:0;transform:translateY(36px)}
-@media (max-width:860px){
-  .nav ul{display:none}
-  .welcome-grid,.suite-row{grid-template-columns:1fr}
-  .exp-item{grid-template-columns:44px 1fr;gap:10px 16px}
-  .exp-item p{grid-column:2}
-  .exp-item span{grid-column:2}
-  .book-bar{grid-template-columns:1fr 1fr}
-  .book-bar div:nth-child(2){border-right:0}
-  .book-bar div:nth-child(3){grid-column:1/-1;border-top:1px solid var(--line);border-right:0}
-  .book-bar button{grid-column:1/-1;padding:18px}
+.label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
-@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(42px, 5.6vw, 96px);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+.h2 em,
+.reserve__title em,
+.hero__title em {
+  font-style: italic;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+  padding: 0 26px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 0.5s var(--ease-out), color 0.5s var(--ease-out), border-color 0.5s;
+}
+.btn i {
+  font-style: normal;
+  transition: transform 0.6s var(--ease-out);
+}
+.btn:hover i {
+  transform: translateX(4px);
+}
+.btn--light:hover {
+  background: var(--cream);
+  color: var(--fg);
+  border-color: var(--cream);
+}
+.btn--solid {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.btn--solid:hover {
+  background: var(--cream);
+  border-color: var(--cream);
+  color: var(--fg);
+}
+.link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform 0.8s var(--ease-out);
+}
+.link:hover::after {
+  transform: scaleX(0);
+}
+
+/* ---------------------------------------------------------------- header */
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 22px var(--pad);
+  color: var(--fg);
+  transition: transform 0.9s var(--ease-out), color 0.5s;
+}
+.header.is-dark {
+  color: var(--cream);
+}
+.header.is-hidden {
+  transform: translateY(-110%);
+}
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.header__time {
+  opacity: 0.7;
+}
+.logo {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  text-align: center;
+}
+.logo__word {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-right: -0.32em;
+}
+.logo__sub {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.header__cta {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background 0.4s, color 0.4s;
+}
+.header__cta:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------ hero */
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  color: var(--cream);
+  background: #0f0d0b;
+}
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+.hero__media video,
+.hero__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(15 12 9 / 0.62) 0%, rgb(15 12 9 / 0.22) 16%, rgb(15 12 9 / 0) 34%),
+    linear-gradient(0deg, rgb(15 12 9 / 0.62) 0%, rgb(15 12 9 / 0) 58%);
+}
+.hero__title {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  bottom: clamp(190px, 25vh, 250px);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(54px, 10.4vw, 192px);
+  line-height: 0.86;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+.hero__title span {
+  display: block;
+}
+.hero__title .hero__l2 {
+  padding-left: 12vw;
+}
+.hero__aside {
+  position: absolute;
+  right: var(--pad);
+  bottom: 96px;
+  display: grid;
+  grid-template-columns: minmax(0, 300px) auto;
+  gap: 32px;
+  align-items: end;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.hero__foot {
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 1px solid rgb(243 237 227 / 0.28);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero__scroll i {
+  width: 1px;
+  height: 26px;
+  background: currentColor;
+  transform-origin: top;
+  animation: drip 2.4s var(--ease-io) infinite;
+}
+@keyframes drip {
+  0% { transform: scaleY(0); }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ----------------------------------------------------------------- intro */
+.intro {
+  padding: clamp(110px, 16vw, 230px) var(--pad) clamp(90px, 12vw, 180px);
+}
+.intro__head {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: var(--gap);
+}
+.intro__lead {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(30px, 3.7vw, 62px);
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+}
+.intro__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gap);
+  margin-top: clamp(80px, 11vw, 170px);
+  align-items: start;
+}
+.fig figcaption {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.fig--a {
+  grid-column: 1 / span 5;
+}
+.fig--a .media {
+  aspect-ratio: 4 / 5;
+}
+.intro__copy {
+  grid-column: 7 / span 4;
+  display: grid;
+  gap: 30px;
+  justify-items: start;
+  padding-top: 8vw;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.fig--b {
+  grid-column: 6 / span 7;
+  margin-top: clamp(40px, 6vw, 90px);
+}
+.fig--b .media {
+  aspect-ratio: 16 / 10;
+}
+
+/* ----------------------------------------------------------------- stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 var(--pad);
+  border-top: 1px solid var(--line);
+}
+.stat {
+  display: grid;
+  gap: 10px;
+  padding: 34px 20px 46px 0;
+}
+.stat + .stat {
+  padding-left: 22px;
+  border-left: 1px solid var(--line);
+}
+.stat__n {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(56px, 6.4vw, 110px);
+  line-height: 0.9;
+}
+.stat__n small {
+  font-size: 0.4em;
+  margin-left: 4px;
+}
+.stat__l {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- suites */
+.suite {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(28px, 5vw, 90px);
+  align-items: end;
+  padding: clamp(110px, 14vw, 200px) var(--pad);
+}
+.suite__media {
+  aspect-ratio: 5 / 4;
+}
+.suite__body {
+  display: grid;
+  gap: 28px;
+  padding-bottom: 6px;
+}
+.suite__body p {
+  max-width: 42ch;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--line);
+}
+.specs div {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.specs dt {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.specs dd {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: 26px;
+}
+
+/* ------------------------------------------------------------ marquee */
+.band {
+  padding: 26px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(34px, 4.6vw, 76px);
+  line-height: 1;
+}
+.band .marquee__track span {
+  padding-right: 0.6em;
+}
+.band .marquee__track span::after {
+  content: "✺";
+  margin-left: 0.6em;
+  font-style: normal;
+  font-size: 0.42em;
+  vertical-align: 0.35em;
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------------------ grow */
+.grow {
+  position: relative;
+  height: 115vh;
+  margin-top: clamp(90px, 12vw, 180px);
+}
+.grow__media {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.grow__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.grow__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 60% at 50% 50%, rgb(15 12 9 / 0.34), rgb(15 12 9 / 0.12));
+}
+.grow__title {
+  position: absolute;
+  inset: 0 var(--pad);
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(46px, 8.6vw, 156px);
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-shadow: 0 2px 40px rgb(0 0 0 / 0.25);
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------- day */
+.day {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  padding: clamp(110px, 14vw, 200px) var(--pad) 0;
+}
+.day__intro {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--gap);
+  margin-bottom: clamp(60px, 8vw, 120px);
+}
+.day__media {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 90px 0 40px;
+}
+.day__frame {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+.day__frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  clip-path: inset(100% 0% 0% 0%);
+  transform: scale(1.12);
+  transition: clip-path 1.3s var(--ease-io), transform 2.2s var(--ease-out);
+}
+.day__frame img.is-on {
+  clip-path: inset(0% 0% 0% 0%);
+  transform: scale(1);
+}
+.day__steps {
+  list-style: none;
+  padding-left: clamp(30px, 6vw, 110px);
+}
+.day__step {
+  display: grid;
+  align-content: center;
+  gap: 18px;
+  min-height: 92vh;
+  opacity: 0.22;
+  transition: opacity 0.8s var(--ease-out);
+}
+.day__step.is-on {
+  opacity: 1;
+}
+.day__time {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(76px, 9vw, 160px);
+  line-height: 0.85;
+  font-variant-numeric: lining-nums;
+}
+.day__step h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(28px, 2.6vw, 42px);
+}
+.day__step p {
+  max-width: 38ch;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------- moments */
+.moments {
+  padding: clamp(110px, 14vw, 200px) var(--pad);
+}
+.moments__head {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: var(--gap);
+  margin-bottom: clamp(50px, 7vw, 100px);
+}
+.moments__list {
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.moments__list li {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 7fr) minmax(0, 2fr);
+  gap: var(--gap);
+  align-items: baseline;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: default;
+}
+.moments__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--fg);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s var(--ease-out);
+}
+.moments__list li:hover::before {
+  transform: scaleX(1);
+}
+.m-n,
+.m-k {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.m-k {
+  justify-self: end;
+}
+.m-t {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(30px, 3.6vw, 60px);
+  line-height: 1;
+  transition: transform 0.8s var(--ease-out), color 0.5s;
+}
+.moments__list li:hover .m-t {
+  transform: translateX(18px);
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------------------ host */
+.host {
+  display: grid;
+  justify-items: center;
+  gap: 34px;
+  padding: clamp(80px, 10vw, 150px) var(--pad) clamp(110px, 14vw, 200px);
+  text-align: center;
+}
+.host blockquote {
+  max-width: 17em;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(36px, 4.6vw, 80px);
+  line-height: 1.04;
+}
+.host__by {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------- reserve */
+.reserve {
+  position: relative;
+  padding: clamp(110px, 14vw, 210px) var(--pad);
+  background: var(--sea);
+  color: var(--cream);
+  overflow: hidden;
+}
+.reserve__title {
+  margin-top: 26px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(54px, 9vw, 168px);
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+.booking {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 0;
+  align-items: stretch;
+  margin-top: clamp(50px, 7vw, 100px);
+  border: 1px solid rgb(243 237 227 / 0.3);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.booking__field {
+  display: grid;
+  gap: 2px;
+  padding: 18px 30px;
+  text-align: left;
+  border-right: 1px solid rgb(243 237 227 / 0.3);
+  transition: background 0.4s;
+}
+.booking__field:hover {
+  background: rgb(243 237 227 / 0.06);
+}
+.booking__field span {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.booking__field strong {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+}
+.booking .btn {
+  height: auto;
+  margin: 8px;
+  padding: 0 34px;
+}
+.reserve__note {
+  margin-top: 26px;
+  font-size: 13px;
+  opacity: 0.66;
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 80;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--fg);
+  color: var(--cream);
+  font-size: 13px;
+  transform: translate(-50%, 160%);
+  transition: transform 0.7s var(--ease-out);
+}
+.toast.is-on {
+  transform: translate(-50%, 0);
+}
+
+/* ---------------------------------------------------------------- footer */
+.footer {
+  padding: clamp(80px, 10vw, 140px) var(--pad) 26px;
+  background: var(--fg);
+  color: var(--cream);
+}
+.footer__top {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.footer__top .label {
+  margin-bottom: 14px;
+  opacity: 0.5;
+}
+.footer__top a {
+  border-bottom: 1px solid rgb(243 237 227 / 0.4);
+}
+.footer__word {
+  margin: clamp(70px, 9vw, 140px) 0 10px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  /* "SAFFRON REEF" is ~6.54 em wide: fill the row exactly */
+  font-size: calc((100vw - 2 * var(--pad)) / 6.6);
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: center;
+}
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 22px;
+  border-top: 1px solid rgb(243 237 227 / 0.18);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+/* -------------------------------------------------------------- the menu */
+.menu__close {
+  position: absolute;
+  left: var(--pad);
+  top: 26px;
+  z-index: 2;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.menu__links {
+  font-weight: 300;
+}
+.menu__links a {
+  font-weight: 300;
+  transition: color 0.4s, transform 0.8s var(--ease-out);
+}
+.menu__links a:hover {
+  color: var(--accent);
+  transform: translateX(14px);
+}
+
+/* ------------------------------------------------------------ responsive */
+@media (max-width: 900px) {
+  .header {
+    grid-template-columns: auto 1fr auto;
+    padding: 16px var(--pad);
+  }
+  .header__time {
+    display: none;
+  }
+  .logo {
+    justify-items: center;
+  }
+  .logo__word {
+    font-size: 17px;
+    letter-spacing: 0.26em;
+  }
+  .header__cta {
+    height: 36px;
+    padding: 0 14px;
+  }
+  .hero__title {
+    bottom: 230px;
+    font-size: clamp(46px, 13.4vw, 120px);
+  }
+  .hero__title .hero__l2 {
+    padding-left: 0;
+  }
+  .hero__aside {
+    left: var(--pad);
+    right: var(--pad);
+    bottom: 86px;
+    max-width: none;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    font-size: 14px;
+  }
+  .hero__aside .btn {
+    height: 44px;
+    padding: 0 16px;
+  }
+  .hero__foot span:last-child {
+    display: none;
+  }
+  .intro__head,
+  .moments__head,
+  .day__intro {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .intro__lead .indent {
+    display: none;
+  }
+  .intro__grid {
+    grid-template-columns: 1fr;
+    gap: 46px;
+  }
+  .fig--a,
+  .intro__copy,
+  .fig--b {
+    grid-column: 1;
+  }
+  .fig--a {
+    width: 82%;
+  }
+  .intro__copy {
+    padding-top: 0;
+  }
+  .fig--b {
+    margin-top: 0;
+  }
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stat:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .stat:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+  .suite {
+    grid-template-columns: 1fr;
+  }
+  .day {
+    grid-template-columns: 1fr;
+  }
+  .day__media {
+    top: 0;
+    z-index: 1;
+    height: 52vh;
+    padding: 64px 0 14px;
+    background: var(--bg);
+  }
+  .day__steps {
+    padding-left: 0;
+  }
+  .day__step {
+    min-height: 62vh;
+  }
+  .moments__list li {
+    grid-template-columns: auto 1fr;
+  }
+  .m-k {
+    display: none;
+  }
+  .booking {
+    grid-template-columns: 1fr;
+    border-radius: 24px;
+  }
+  .booking__field {
+    border-right: 0;
+    border-bottom: 1px solid rgb(243 237 227 / 0.3);
+  }
+  .booking .btn {
+    height: 56px;
+    justify-content: center;
+  }
+  .footer__top {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 36px;
+  }
+  .footer__bottom {
+    flex-direction: column;
+  }
+}
 </style>
+</head>
+<body>
 
-<nav class="nav" id="nav">
-  <a class="brand" href="#">Saffron <i>Reef</i></a>
-  <ul><li>Suites</li><li>Dining</li><li>Experiences</li><li>Journal</li></ul>
-  <a class="cta" href="#book">Reserve</a>
+<div class="loader" aria-hidden="true">
+  <p class="loader__brand">Saffron Reef</p>
+  <div class="loader__row">
+    <p class="loader__note">A private shore east of Tangalle<br>6°01′N 80°47′E</p>
+    <p class="loader__count">000</p>
+  </div>
+  <span class="loader__bar"></span>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="header" data-header>
+  <div class="header__left">
+    <button class="roll" type="button" data-menu-open aria-label="Open menu"><span data-text="Menu">Menu</span></button>
+    <span class="header__time">Tangalle <span data-clock="Asia/Colombo">06:00</span></span>
+  </div>
+  <a class="logo" href="#top" aria-label="Saffron Reef, back to top">
+    <span class="logo__word">Saffron Reef</span>
+    <span class="logo__sub">Tangalle · Sri Lanka</span>
+  </a>
+  <a class="header__cta" href="#reserve" data-magnetic="0.25">Reserve</a>
+</header>
+
+<nav class="menu" aria-label="Site menu">
+  <button class="menu__close roll" type="button" data-menu-close><span data-text="Close">Close</span></button>
+  <ul class="menu__links">
+    <li><a href="#villa"><small>01</small>The villa</a></li>
+    <li><a href="#suites"><small>02</small>Suites</a></li>
+    <li><a href="#day"><small>03</small>A day here</a></li>
+    <li><a href="#moments"><small>04</small>Included</a></li>
+    <li><a href="#reserve"><small>05</small>Reserve</a></li>
+  </ul>
+  <div class="menu__media" aria-hidden="true">
+    <img src="media/pool.jpg" alt="">
+    <img src="media/bedroom.jpg" alt="">
+    <img src="media/breakfast.jpg" alt="">
+    <img src="media/dinner.jpg" alt="">
+    <img src="media/aerial.jpg" alt="">
+  </div>
 </nav>
 
-<section class="film" id="film">
-  <canvas id="seq" aria-label="Drone film flying over Saffron Reef toward the ocean"></canvas>
-  <div class="shade"></div>
-  <div class="stage">
-    <div id="s1"><span class="kicker">Tangalle · Southern Sri Lanka</span><h1>A private shore, <i>yours</i> alone.</h1></div>
-  </div>
-  <div class="stage"><div id="s2"><span class="kicker">Six suites · One ocean</span><h2>Where the jungle <i>meets</i> the sea.</h2></div></div>
-  <div class="stage"><div id="s3"><span class="kicker">Welcome to</span><h2>Saffron <i>Reef</i></h2><a class="btn" href="#book">Reserve your dates</a></div></div>
-  <div class="loader" id="loader">Loading film 0%</div>
-  <div class="progress"><span>Scroll</span><span class="track"><i id="bar"></i></span><span id="pct">00</span></div>
-</section>
-
 <main>
-  <section class="sand welcome">
-    <div class="wrap welcome-grid">
-      <div><span class="label rv">The villa</span><h3 class="big rv">Six suites on two acres of <i>coconut</i> garden, a few steps from the sand.</h3></div>
-      <p class="rv">Saffron Reef sits on a quiet bay east of Tangalle. Mornings start with the sound of the surf, evenings end with dinner on the beach, and in between there is the pool, the garden and as little as you like.</p>
+  <section class="hero" id="top" data-theme="dark">
+    <div class="hero__media">
+      <img class="hero__poster" src="media/hero.jpg" alt="" data-preload>
+      <video src="media/hero.mp4" poster="media/hero.jpg" muted playsinline loop autoplay preload="auto" data-autoplay></video>
+    </div>
+    <div class="hero__shade"></div>
+    <h1 class="hero__title" data-intro>
+      <span class="hero__l1">A private shore,</span>
+      <span class="hero__l2"><em>yours</em> alone.</span>
+    </h1>
+    <div class="hero__aside" data-intro>
+      <p>Six suites on two acres of coconut garden, a few steps from the Indian Ocean at Tangalle.</p>
+      <a class="btn btn--light" href="#villa" data-magnetic="0.3">Explore <i>↓</i></a>
+    </div>
+    <div class="hero__foot" data-intro>
+      <span>6°01′N 80°47′E</span>
+      <span class="hero__scroll"><i></i>Scroll</span>
+      <span>Six suites · One ocean</span>
     </div>
   </section>
 
-  <section class="sand suites">
-    <div class="wrap suite-row">
-      <figure class="rv"><img src="img/bedroom.jpg" alt="Ocean suite with four-poster bed and sea view" id="suiteImg"></figure>
-      <div>
-        <span class="label rv">The suites</span>
-        <h3 class="big rv">Ocean suite</h3>
-        <p class="rv" style="color:var(--muted)">A four-poster bed facing the sea, a polished concrete floor that stays cool all day, and doors that fold away completely.</p>
-        <dl class="rv"><dt>Size</dt><dd>68 m²</dd><dt>Guests</dt><dd>2 adults</dd><dt>View</dt><dd>Indian Ocean</dd><dt>Bath</dt><dd>Outdoor rain shower</dd></dl>
+  <section class="intro" id="villa">
+    <div class="intro__head">
+      <span class="label">(01) The villa</span>
+      <p class="intro__lead" data-split="fill"><span class="indent" aria-hidden="true"></span>Saffron Reef sits on a quiet bay east of Tangalle, where the jungle runs down to the sand. Six suites, one long pool, and a kitchen that cooks whatever the boats bring in at dawn.</p>
+    </div>
+    <div class="intro__grid">
+      <figure class="fig fig--a">
+        <div class="media" data-reveal data-parallax="16"><img src="media/roofs.jpg" alt="Terracotta roofs and the long pool above the bay at first light" style="object-position: 38% 50%"></div>
+        <figcaption>Fig. 1 — Terracotta roofs above the bay</figcaption>
+      </figure>
+      <div class="intro__copy">
+        <p data-split>Mornings start with king coconut on the veranda. Afternoons belong to the pool, the hammocks and the slow turn of the tide. In the evening the table is set where the waves stop.</p>
+        <a class="link" href="#day">A day at Saffron Reef</a>
+      </div>
+      <figure class="fig fig--b" data-drift="50">
+        <div class="media" data-reveal="right" data-parallax="12"><img src="media/aerial.jpg" alt="The villa, its terracotta roofs and the pool from above, with the bay beyond"></div>
+        <figcaption>Fig. 2 — Two acres between the jungle and the sea</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="The villa in numbers">
+    <div class="stat" data-fade><span class="stat__n" data-count="6">6</span><span class="stat__l">Suites, every one facing the sea</span></div>
+    <div class="stat" data-fade data-delay="0.08"><span class="stat__n"><span data-count="40">40</span><small>m</small></span><span class="stat__l">From your door to the sand</span></div>
+    <div class="stat" data-fade data-delay="0.16"><span class="stat__n"><span data-count="2">2</span><small>acres</small></span><span class="stat__l">Of coconut garden</span></div>
+    <div class="stat" data-fade data-delay="0.24"><span class="stat__n"><span data-count="28">28</span><small>°C</small></span><span class="stat__l">Water, all year round</span></div>
+  </section>
+
+  <section class="suite" id="suites">
+    <div class="suite__media media" data-reveal data-parallax="12" data-cursor="Suites"><img src="media/bedroom.jpg" alt="Ocean suite with a four-poster bed facing the sea"></div>
+    <div class="suite__body">
+      <span class="label">(02) The suites</span>
+      <h2 class="h2" data-split>Six rooms, <em>one</em> view</h2>
+      <p data-split>A four-poster bed that faces the water, polished concrete floors that stay cool at noon, and an outdoor rain shower under the frangipani.</p>
+      <dl class="specs" data-fade>
+        <div><dt>Size</dt><dd>68 m²</dd></div>
+        <div><dt>Sleeps</dt><dd>2 adults</dd></div>
+        <div><dt>View</dt><dd>Indian Ocean</dd></div>
+        <div><dt>Bath</dt><dd>Open-air shower</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="band marquee" data-marquee aria-hidden="true">
+    <div class="marquee__track"><span>Tangalle</span><span>Rekawa</span><span>Mulkirigala</span><span>Goyambokka</span><span>Mawella</span><span>Hummanaya</span></div>
+  </div>
+
+  <section class="grow" data-theme="dark" aria-label="The bay from the air">
+    <div class="grow__media media" data-grow>
+      <video src="media/hero.mp4" muted playsinline loop preload="none" data-autoplay></video>
+    </div>
+    <h2 class="grow__title" data-split="words">Where the jungle<br>meets the sea</h2>
+  </section>
+
+  <section class="day" id="day" data-swap>
+    <div class="day__intro">
+      <span class="label">(03) A day here</span>
+      <h2 class="h2" data-split>Slow days, <em>long</em> evenings</h2>
+    </div>
+    <div class="day__media">
+      <div class="day__frame" data-swap-media>
+        <img src="media/hero.jpg" alt="First light over the bay and the villa">
+        <img src="media/breakfast.jpg" alt="Breakfast of king coconut, hoppers and fruit on the veranda">
+        <img src="media/pool.jpg" alt="A guest walks along the long pool in the late afternoon">
+        <img src="media/dinner.jpg" alt="A table set on the sand for dinner at dusk">
       </div>
     </div>
+    <ol class="day__steps">
+      <li class="day__step" data-swap-step>
+        <span class="day__time">06:00</span>
+        <h3>First light</h3>
+        <p>The bay turns gold before the village wakes. Take a coffee down to the sand and watch the fishing boats come in.</p>
+      </li>
+      <li class="day__step" data-swap-step>
+        <span class="day__time">08:30</span>
+        <h3>Breakfast on the veranda</h3>
+        <p>King coconut, egg hoppers, papaya and pol sambol, served whenever you surface. Nobody here owns an alarm clock.</p>
+      </li>
+      <li class="day__step" data-swap-step>
+        <span class="day__time">16:00</span>
+        <h3>The long pool</h3>
+        <p>Thirty metres of water above the ocean, warm from the afternoon sun. Tea and short eats arrive at your lounger.</p>
+      </li>
+      <li class="day__step" data-swap-step>
+        <span class="day__time">19:30</span>
+        <h3>Dinner where the waves stop</h3>
+        <p>Our cook shops at the Tangalle fish market each morning. At night the table is laid on the sand, lit by lanterns.</p>
+      </li>
+    </ol>
   </section>
 
-  <section class="evening">
-    <div class="evening-inner">
-      <img src="img/dinner.jpg" alt="Candlelit dinner on the beach at dusk">
-      <div class="wrap evening-copy">
-        <span class="label">Evenings</span>
-        <h3 class="big rv" style="color:var(--sand)">Dinner where the <i style="color:var(--saffron)">tide</i> comes in</h3>
-        <p class="rv">Our cook shops at the Tangalle fish market each morning. At dusk the table goes down on the sand, lanterns are lit, and the menu is whatever the boats brought in.</p>
-      </div>
+  <section class="moments" id="moments">
+    <div class="moments__head">
+      <span class="label">(04) Included</span>
+      <h2 class="h2" data-split>Nothing here runs to a schedule, <em>except</em> the tide</h2>
     </div>
+    <ul class="moments__list" data-follow>
+      <li data-img="media/breakfast.jpg"><span class="m-n">01</span><span class="m-t">Breakfast at any hour</span><span class="m-k">Daily</span></li>
+      <li data-img="media/pool.jpg"><span class="m-n">02</span><span class="m-t">A thirty-metre pool</span><span class="m-k">Always open</span></li>
+      <li data-img="media/dinner.jpg"><span class="m-n">03</span><span class="m-t">Dinner on the sand</span><span class="m-k">Low tide</span></li>
+      <li data-img="media/bedroom.jpg"><span class="m-n">04</span><span class="m-t">Suites that open to the sea</span><span class="m-k">Six only</span></li>
+      <li data-img="media/aerial.jpg"><span class="m-n">05</span><span class="m-t">Airport transfer by road</span><span class="m-k">Included</span></li>
+    </ul>
   </section>
 
-  <section class="sand exp">
-    <div class="wrap">
-      <span class="label rv">Around the bay</span>
-      <h3 class="big rv">Days worth getting up for</h3>
-      <div class="exp-list">
-        <div class="exp-item rv"><b>01</b><h4>Turtles at Rekawa</h4><p>Watch green turtles come ashore to nest on the beach at night, with a local guide.</p><span>Evening</span></div>
-        <div class="exp-item rv"><b>02</b><h4>Mulkirigala rock temple</h4><p>Climb past cave shrines and murals to a view across the southern plains.</p><span>Morning</span></div>
-        <div class="exp-item rv"><b>03</b><h4>Ayurveda in the garden</h4><p>Oil massages and herbal baths in our open-air pavilion.</p><span>Any time</span></div>
-        <div class="exp-item rv"><b>04</b><h4>Blue whales from Mirissa</h4><p>A dawn boat trip in season, December to April.</p><span>Full day</span></div>
-      </div>
-    </div>
+  <section class="host">
+    <blockquote data-split>“We kept it to six suites so we can remember every guest’s name.”</blockquote>
+    <p class="host__by" data-fade>Anoma &amp; Ravi — your hosts</p>
   </section>
 
-  <section class="book" id="book">
-    <div class="wrap">
-      <span class="label">Book direct</span>
-      <h3 class="big">Your dates at Saffron Reef</h3>
-      <form class="book-bar" id="bookForm">
-        <div><small>Arrive</small><b>18 Dec</b></div>
-        <div><small>Depart</small><b>26 Dec</b></div>
-        <div><small>Guests</small><b>2 adults · 1 suite</b></div>
-        <button type="submit">Check availability</button>
-      </form>
-      <p class="note" id="note" aria-live="polite"></p>
-    </div>
+  <section class="reserve" id="reserve" data-theme="dark">
+    <span class="label" data-fade>(05) Book direct</span>
+    <h2 class="reserve__title" data-split>Reserve<br><em>your dates</em></h2>
+    <form class="booking" data-fade>
+      <button class="booking__field" type="button"><span>Arrive</span><strong>18 Dec</strong></button>
+      <button class="booking__field" type="button"><span>Depart</span><strong>26 Dec</strong></button>
+      <button class="booking__field" type="button"><span>Guests</span><strong>2 adults</strong></button>
+      <button class="btn btn--solid" type="submit" data-magnetic="0.2">Check availability <i>→</i></button>
+    </form>
+    <p class="reserve__note" data-fade>Best rate when you book direct · Transfer from Colombo or Mattala included</p>
   </section>
-
-  <footer><div class="wrap"><span><b>Saffron Reef</b> · Tangalle, Sri Lanka</span><span>Concept website by <a href="/showcase" style="text-decoration:underline">Hemal Herath</a> · scroll film made with AI</span></div></footer>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<footer class="footer" data-theme="dark">
+  <div class="footer__top">
+    <div><span class="label">Visit</span><p>On the coast east of Tangalle<br>Southern Province, Sri Lanka</p></div>
+    <div><span class="label">Local time</span><p><span data-clock="Asia/Colombo">06:00</span> in Tangalle</p></div>
+    <div><span class="label">Season</span><p>Calm seas from<br>November to April</p></div>
+    <div><span class="label">Concept</span><p>Designed and built by<br><a href="/showcase">Hemal Herath</a></p></div>
+  </div>
+  <p class="footer__word" data-split="chars" aria-hidden="true">Saffron Reef</p>
+  <div class="footer__bottom">
+    <span>Saffron Reef is a fictional villa — a concept website.</span>
+    <a href="#top">Back to the top ↑</a>
+  </div>
+</footer>
+
+<div class="toast" role="status" aria-live="polite">Concept site: bookings are switched off.</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+<script src="/showcase/_engine/engine.js"></script>
 <script>
-(function(){
-  const FRAMES = 91, path = i => `frames/f${String(i).padStart(3,'0')}.jpg`;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const canvas = document.getElementById('seq'), ctx = canvas.getContext('2d');
-  const imgs = new Array(FRAMES); let loaded = 0, current = 0;
-  const loader = document.getElementById('loader');
-  function size(){ const d = Math.min(devicePixelRatio,2); canvas.width = innerWidth*d; canvas.height = innerHeight*d; draw(current); }
-  function draw(i){
-    let img = imgs[i]; let k = i;
-    while ((!img || !img.complete || !img.naturalWidth) && k > 0){ k--; img = imgs[k]; }
-    if (!img || !img.naturalWidth) return;
-    const W = canvas.width, H = canvas.height, s = Math.max(W/img.naturalWidth, H/img.naturalHeight);
-    const w = img.naturalWidth*s, h = img.naturalHeight*s;
-    ctx.drawImage(img, (W-w)/2, (H-h)/2, w, h);
-  }
-  // load first frame immediately, then the rest in order
-  function load(i){ return new Promise(res => { const im = new Image(); im.decoding='async'; im.onload = im.onerror = () => { loaded++; loader.textContent = loaded < FRAMES ? `Loading film ${Math.round(loaded/FRAMES*100)}%` : ''; res(); }; im.src = path(i); imgs[i] = im; }); }
-  load(0).then(() => { size(); (async () => { for (let i=1;i<FRAMES;i+=6){ const batch=[]; for(let j=i;j<Math.min(i+6,FRAMES);j++) batch.push(load(j)); await Promise.all(batch); draw(current);} })(); });
-  addEventListener('resize', size);
+(() => {
+  const { $, $$ } = SE;
 
-  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-  if (window.Lenis && !reduce){
-    const lenis = new Lenis({lerp:0.08});
-    if (window.ScrollTrigger) lenis.on('scroll', ScrollTrigger.update);
-    if (window.gsap){ gsap.ticker.add(t => lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0); }
-  }
-  const nav = document.getElementById('nav');
-  addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > innerHeight*3.6), {passive:true});
-  if (!window.gsap){ ['s1','s2','s3'].forEach(id=>document.getElementById(id).style.opacity=1); document.querySelectorAll('.rv').forEach(e=>{e.style.opacity=1;e.style.transform='none'}); return; }
+  SE.init({
+    intro(tl, reduce) {
+      if (reduce) return;
+      const title = SE.split($(".hero__title"), "lines");
+      tl.from(".hero__media > *", { scale: 1.28, duration: 2.6, ease: "expo.out" }, 0.25)
+        .from(title.lines, { yPercent: 118, duration: 1.7, stagger: 0.12 }, 0.7)
+        .fromTo([".hero__aside", ".hero__foot"], { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 1.5, stagger: 0.12 }, 1.05)
+        .from(".header", { yPercent: -120, duration: 1.4, clearProps: "transform" }, 0.95);
 
-  const state = {f:0};
-  const tl = gsap.timeline({defaults:{ease:'none'}, scrollTrigger:{trigger:'#film', start:'top top', end:'+=320%', scrub:reduce?true:0.6, pin:true,
-    onUpdate: self => { document.getElementById('bar').style.transform = `scaleX(${self.progress})`; document.getElementById('pct').textContent = String(Math.round(self.progress*100)).padStart(2,'0'); }}});
-  tl.to(state,{f:FRAMES-1,duration:1,onUpdate:()=>{ const i=Math.round(state.f); if(i!==current){ current=i; draw(i);} }},0)
-    .fromTo('#s1',{opacity:1,y:0},{opacity:0,y:-40,duration:.18},.1)
-    .fromTo('#s2',{opacity:0,y:40},{opacity:1,y:0,duration:.12},.36)
-    .to('#s2',{opacity:0,y:-40,duration:.12},.58)
-    .fromTo('#s3',{opacity:0,y:40},{opacity:1,y:0,duration:.14},.78);
-  gsap.set('#s1',{opacity:1});
-  document.querySelectorAll('.rv').forEach(el => gsap.to(el,{opacity:1,y:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
-  gsap.to('#suiteImg',{scale:1,ease:'none',scrollTrigger:{trigger:'#suiteImg',start:'top bottom',end:'bottom top',scrub:true}});
-  gsap.fromTo('.evening-inner img',{yPercent:-6,scale:1.1},{yPercent:6,scale:1,ease:'none',scrollTrigger:{trigger:'.evening',start:'top bottom',end:'bottom top',scrub:true}});
-  document.getElementById('bookForm').addEventListener('submit', e => { e.preventDefault(); document.getElementById('note').textContent = 'This is a concept site, so bookings are not live. On a real site this opens availability and payment.'; });
+      // the hero settles back as you leave it
+      const out = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
+      gsap.to(".hero__title", { yPercent: -40, autoAlpha: 0, ease: "none", scrollTrigger: out });
+      gsap.to(".hero__media", { yPercent: 22, ease: "none", scrollTrigger: { ...out } });
+    },
+  });
+
+  // Concept site: the booking form only says so.
+  const toast = $(".toast");
+  $(".booking").addEventListener("submit", (e) => {
+    e.preventDefault();
+    toast.classList.add("is-on");
+    clearTimeout(toast.t);
+    toast.t = setTimeout(() => toast.classList.remove("is-on"), 2600);
+  });
 })();
 </script>
-
+</body>
 </html>
