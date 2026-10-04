@@ -56,7 +56,7 @@ export type ShowcaseSite = {
   stack: string[];
   /** Concept sites live under /showcase; the live builds link out. */
   href: string;
-  status: "concept" | "live";
+  status: "concept" | "live" | "preview";
 };
 
 export const navLinks = [
@@ -636,6 +636,15 @@ export const showcaseSites: ShowcaseSite[] = [
     stack: ["GSAP", "Video", "ScrollTrigger"],
     href: "/showcase/surf",
     status: "concept",
+  },
+  {
+    slug: "lakmini",
+    name: "Lakmini International",
+    kind: "Software company",
+    line: "Its logo rebuilt from 5,000 WebGL pixels, with pixel-wipe page transitions.",
+    stack: ["Three.js", "GSAP", "Vite"],
+    href: "/showcase/lakmini",
+    status: "preview",
   },
   {
     slug: "seacloud",

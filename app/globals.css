@@ -1550,6 +1550,23 @@
   .site-next .site-open {
     margin-top: auto;
   }
+  @media (min-width: 1081px) {
+    /* nine sites fill three rows; the closing card becomes a full-width band */
+    .site-next {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto;
+      align-items: center;
+      gap: 10px 40px;
+    }
+    .site-next .branch-label {
+      grid-column: 1 / -1;
+    }
+    .site-next h3,
+    .site-next .site-open {
+      margin-top: 0;
+    }
+  }
 
   /* experience */
   .experience-grid {

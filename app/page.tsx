@@ -332,7 +332,7 @@ export default function Home() {
               id="showcase-title"
               command="git checkout web/showcase"
               title="3D websites."
-              description="Five concept sites for Sri Lankan tea, travel, gems, coffee and surf, plus a live hotel, a studio site and an unofficial redesign. Each one is built around real-time 3D, film or a scroll story."
+              description="Five concept sites for Sri Lankan tea, travel, gems, coffee and surf, plus the new Lakmini International site, a live hotel, a studio site and an unofficial redesign. Each one is built around real-time 3D, film or a scroll story."
             />
             <ShowcaseFeature />
             <div className="site-grid reveal">

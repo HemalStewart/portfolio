@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         source: "/showcase/:site(tea|villa|sapphire|coffee|surf)",
         destination: "/showcase/:site/index.html",
       },
+      // Multi-page preview of the Lakmini International redesign.
+      { source: "/showcase/lakmini", destination: "/showcase/lakmini/index.html" },
+      {
+        source: "/showcase/lakmini/:page(about|services|contact)",
+        destination: "/showcase/lakmini/:page/index.html",
+      },
     ];
   },
 };
