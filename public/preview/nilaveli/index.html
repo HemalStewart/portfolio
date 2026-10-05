@@ -567,34 +567,46 @@
 
 /* ------------------------------------------------------------ things to do */
 .todo {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(30px, 6vw, 110px);
+  align-items: center;
   padding: clamp(110px, 14vw, 200px) var(--pad);
 }
-.todo__grid {
+.todo__media {
+  justify-self: center;
+  width: min(100%, 460px);
+  aspect-ratio: 3 / 4;
+  border-radius: 240px 240px 18px 18px;
+}
+.todo__list {
+  margin-top: clamp(30px, 4vw, 50px);
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.todo__list li {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
-  margin-top: clamp(40px, 6vw, 80px);
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 16px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
 }
-.todo__card {
-  display: grid;
-  gap: 14px;
+.todo__list small {
+  padding-top: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--accent);
 }
-.todo__card .media {
-  aspect-ratio: 4 / 5;
-  border-radius: 18px;
-}
-.todo__card img {
-  transition: transform 1.2s var(--ease-out);
-}
-.todo__card:hover img {
-  transform: scale(1.05);
-}
-.todo__card h3 {
+.todo__list h3 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 30px;
+  font-size: clamp(26px, 2.2vw, 34px);
+  line-height: 1.1;
 }
-.todo__card p {
+.todo__list p {
+  max-width: 46ch;
+  margin-top: 6px;
   font-size: 15px;
   line-height: 1.6;
   color: var(--muted);
@@ -816,12 +828,13 @@
     display: grid;
     gap: 4px;
   }
-  .todo__grid,
+  .todo,
   .ways {
     grid-template-columns: 1fr;
   }
-  .todo__card .media {
-    aspect-ratio: 4 / 3;
+  .todo__media {
+    justify-self: start;
+    width: 86%;
   }
   .hh-preview {
     bottom: 10px;
@@ -874,7 +887,7 @@
     <img src="media/room-royal.jpg" alt="">
     <img src="media/pool.jpg" alt="">
     <img src="media/ayurveda.jpg" alt="">
-    <img src="media/snorkel.jpg" alt="">
+    <img src="media/palms.jpg" alt="">
     <img src="media/beach.jpg" alt="">
     <img src="media/evening.jpg" alt="">
   </div>
@@ -1025,24 +1038,16 @@
   </section>
 
   <section class="todo" id="todo">
-    <span class="label" data-fade>Things to do</span>
-    <h2 class="serif" data-split style="margin-top: 18px">Slow days on the <em>east coast</em></h2>
-    <div class="todo__grid">
-      <article class="todo__card" data-fade>
-        <div class="media"><img src="media/snorkel.jpg" alt="A snorkeller swimming over a coral reef"></div>
-        <h3>Pigeon Island</h3>
-        <p>Snorkel with reef fish and turtles at the marine park just off Nilaveli beach.</p>
-      </article>
-      <article class="todo__card" data-fade data-delay="0.08">
-        <div class="media"><img src="media/daybed.jpg" alt="A white canopy daybed on the sand under palm trees"></div>
-        <h3>Yoga on the beach</h3>
-        <p>Start the day with yoga on the beach, with the sound of the waves all around you.</p>
-      </article>
-      <article class="todo__card" data-fade data-delay="0.16">
-        <div class="media"><img src="media/bay.jpg" alt="Fishing boats in a turquoise bay from above"></div>
-        <h3>Whales &amp; dolphins</h3>
-        <p>Boat trips from Trincomalee in season, plus Koneswaram temple and the old town.</p>
-      </article>
+    <div class="todo__media media" data-reveal data-parallax="8"><img src="media/palms.jpg" alt="Coconut palms over the pool and a thatched pavilion"></div>
+    <div>
+      <span class="label" data-fade>Things to do</span>
+      <h2 class="serif" data-split style="margin-top: 18px">Slow days on the<br> <em>east coast</em></h2>
+      <ol class="todo__list">
+        <li data-fade><small>01</small><div><h3>Pigeon Island</h3><p>Snorkel with reef fish and turtles at the marine park just off Nilaveli beach.</p></div></li>
+        <li data-fade><small>02</small><div><h3>Yoga on the beach</h3><p>Start the day with yoga on the sand, with the sound of the waves all around you.</p></div></li>
+        <li data-fade><small>03</small><div><h3>Whales &amp; dolphins</h3><p>Boat trips from Trincomalee to see whales and dolphins in season.</p></div></li>
+        <li data-fade><small>04</small><div><h3>Trincomalee</h3><p>Koneswaram temple on the cliffs, the old town and the great natural harbour.</p></div></li>
+      </ol>
     </div>
   </section>
 
@@ -1075,7 +1080,7 @@
   <p class="footer__word" data-split="chars" aria-hidden="true">Nilaveli</p>
   <div class="footer__bottom">
     <span>© 2026 Nilaveli Beach Resort · Km 19, Nilaveli Road, Trincomalee</span>
-    <span>Resort photos: Nilaveli Beach Resort · activity photos via Pexels · Design by Hemal Herath</span>
+    <span>Photos: Nilaveli Beach Resort · Design by Hemal Herath</span>
   </div>
 </footer>
 
