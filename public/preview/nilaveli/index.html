@@ -1505,7 +1505,7 @@
         <ul class="chips" data-fade><li>Private balcony</li><li>Sea view</li><li>Free Wi-Fi</li><li>Check-in from 3 pm</li></ul>
       </div>
     </div>
-    <div class="cabanas__media media" data-reveal="up" ><img loading="lazy" decoding="async" src="media/cabanas.jpg" alt="Two-storey wooden cabanas with thatched roofs in a row under coconut palms"></div>
+    <div class="cabanas__media media" data-reveal="up" data-parallax="10" ><img loading="lazy" decoding="async" src="media/cabanas.jpg" alt="Two-storey wooden cabanas with thatched roofs in a row under coconut palms"></div>
   </section>
 
   <section class="rooms" id="rooms">
@@ -1609,7 +1609,7 @@
   </section>
 
   <section class="ayur" id="ayurveda">
-    <div class="ayur__media media" data-reveal="up" ><img loading="lazy" decoding="async" src="media/ayurveda.jpg" alt="An Ayurvedic herbal compress massage"></div>
+    <div class="ayur__media media" data-reveal="up" data-parallax="8" ><img loading="lazy" decoding="async" src="media/ayurveda.jpg" alt="An Ayurvedic herbal compress massage"></div>
     <div>
       <p class="label" data-fade>Ayurveda</p>
       <h2 class="h2 serif" data-split>Ayurveda <em>by the sea</em></h2>
@@ -1650,7 +1650,7 @@
   </section>
 
   <section class="grow" data-theme="dark" aria-label="A white-sand beach with a boat and an island on the horizon">
-    <div class="grow__media media" >
+    <div class="grow__media media" data-grow>
       <img loading="lazy" decoding="async" src="media/coast.jpg" alt="">
     </div>
     <div class="grow__title serif"><h2 data-split>Calm water,<br><em>warm all year</em></h2></div>
@@ -1740,21 +1740,35 @@
 <script>
 (() => {
   const { $, $$ } = SE;
+  let navigationTween;
+  const cancelNavigation = () => navigationTween?.kill();
+  ['wheel', 'touchstart', 'pointerdown'].forEach(type =>
+    window.addEventListener(type, cancelNavigation, { passive: true }));
+  window.addEventListener('keydown', event => {
+    if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) cancelNavigation();
+  });
   SE.scrollTo = (value) => {
     const target = typeof value === 'string' ? document.querySelector(value) : value;
     if (!target) return;
-    gsap.getTweensOf(document.querySelector(".menu")).forEach(tween => tween.duration(0.2));
-    // Navigation moves straight to its destination; natural scrolling keeps reveals.
+    cancelNavigation();
+    gsap.getTweensOf(document.querySelector('.menu')).forEach(tween => tween.duration(0.6));
     const top = Math.max(0, target.getBoundingClientRect().top + scrollY - 92);
-    window.scrollTo({ top, behavior: 'instant' });
-    ScrollTrigger.update();
-    requestAnimationFrame(() => {
-      ScrollTrigger.getAll().forEach(st => {
-        if (!st.vars.scrub && st.animation &&
-            (st.trigger === target || target.contains(st.trigger))) st.animation.progress(1);
-      });
+    const focusHeading = () => {
       const heading = target.querySelector('h2, h1');
       if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
+    };
+    if (SE.reduce) {
+      window.scrollTo({ top, behavior: 'instant' });
+      focusHeading();
+      return;
+    }
+    const position = { y: scrollY };
+    navigationTween = gsap.to(position, {
+      y: top,
+      duration: gsap.utils.clamp(1.4, 8, Math.abs(top - scrollY) / 1800),
+      ease: 'power1.inOut',
+      onUpdate: () => window.scrollTo({ top: position.y, behavior: 'instant' }),
+      onComplete: focusHeading,
     });
   };
 
@@ -1785,12 +1799,13 @@
     intro(tl, reduce) {
       if (reduce) return;
       const title = SE.split($(".hero__title"), "lines");
-      tl.from(".hero__media > *", { scale: 1.04, duration: 1.2, ease: "expo.out" }, 0.2)
+      tl.from(".hero__media > *", { scale: 1.12, duration: 2.4, ease: "expo.out" }, 0.2)
         .from(title.lines, { yPercent: 118, duration: 1.6, stagger: 0.12 }, 0.7)
         .fromTo([".hero__label", ".hero__row", ".hero__foot"], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 1.4, stagger: 0.1 }, 1.0)
         .from(".header", { autoAlpha: 0, duration: 1.2, ease: "power2.out", clearProps: "opacity,visibility" }, 0.95);
       const out = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
       gsap.to(".hero__copy", { yPercent: -12, autoAlpha: 0, ease: "none", scrollTrigger: out });
+      gsap.to(".hero__media", { yPercent: 18, ease: "none", scrollTrigger: { ...out } });
 
 
       // Room cards stack: each one settles back as the next slides over it.
@@ -1802,7 +1817,7 @@
           gsap.fromTo(
             room,
             { scale: 1 },
-            { scale: 0.97, ease: "none", scrollTrigger: { trigger: next, start: "top bottom", end: "top 96px", scrub: true } },
+            { scale: 0.92, ease: "none", scrollTrigger: { trigger: next, start: "top bottom", end: "top 96px", scrub: true } },
           );
         });
       });
