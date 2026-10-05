@@ -271,6 +271,7 @@
   font-weight: 600;
 }
 
+.hero-stock-note {position:absolute;right:var(--pad);top:110px;z-index:2;color:#fff;font-size:10px;letter-spacing:.06em;opacity:.8;}
 /* ------------------------------------------------------------------ hero */
 .hero {
   position: relative;
@@ -1436,10 +1437,11 @@
 <main>
   <section class="hero" id="top" data-theme="dark">
     <div class="hero__media">
-      <img fetchpriority="high" decoding="async" src="media/hero-calm.jpg" alt="" data-preload>
-      <video poster="media/hero-calm.jpg" muted playsinline loop preload="none" data-hero-video aria-label="A calm view towards the resort beach beneath the palms"></video>
+      <img fetchpriority="high" decoding="async" src="media/hero-stock.jpg" alt="" data-preload>
+      <video poster="media/hero-stock.jpg" muted playsinline loop preload="none" data-hero-video aria-label="Illustrative tropical beach stock footage for this design preview"></video>
     </div>
     <div class="hero__shade"></div>
+    <span class="hero-stock-note">Illustrative beach footage · design preview</span>
     <div class="hero__copy">
       <p class="label hero__label" data-intro>Nilaveli · Trincomalee · Sri Lanka</p>
       <h1 class="hero__title serif" data-intro>Step out of your cabana,<br> <em>onto the sand.</em></h1>
@@ -1719,7 +1721,7 @@
   <p class="footer__word" data-split="chars" aria-hidden="true">Nilaveli</p>
   <div class="footer__bottom">
     <span>© 2026 Nilaveli Beach Resort · Km 19, Nilaveli Road, Trincomalee, Sri Lanka</span>
-    <span>Resort source photos and film: Nilaveli Beach Resort · room images AI-retouched for this design preview, pending resort approval · additional photos via Pexels · Design by Hemal Herath</span>
+    <span>Resort source photos and film: Nilaveli Beach Resort · room images AI-retouched for this design preview, pending resort approval · additional photos and illustrative hero film via Pexels (David Pickup) · Design by Hemal Herath</span>
   </div>
 </footer>
 
@@ -1738,11 +1740,29 @@
 <script>
 (() => {
   const { $, $$ } = SE;
+  SE.scrollTo = (value) => {
+    const target = typeof value === 'string' ? document.querySelector(value) : value;
+    if (!target) return;
+    gsap.getTweensOf(document.querySelector(".menu")).forEach(tween => tween.duration(0.2));
+    // Navigation moves straight to its destination; natural scrolling keeps reveals.
+    const top = Math.max(0, target.getBoundingClientRect().top + scrollY - 92);
+    window.scrollTo({ top, behavior: 'instant' });
+    ScrollTrigger.update();
+    requestAnimationFrame(() => {
+      ScrollTrigger.getAll().forEach(st => {
+        if (!st.vars.scrub && st.animation &&
+            (st.trigger === target || target.contains(st.trigger))) st.animation.progress(1);
+      });
+      const heading = target.querySelector('h2, h1');
+      if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
+    });
+  };
+
   const heroVideo = document.querySelector('[data-hero-video]');
   const connection = navigator.connection;
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !connection?.saveData) {
     heroVideo.src = matchMedia('(max-width: 800px)').matches
-      ? 'media/hero-calm-mobile.mp4' : 'media/hero-calm.mp4';
+      ? 'media/hero-stock-mobile.mp4' : 'media/hero-stock.mp4';
     heroVideo.preload = 'metadata';
     new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !document.hidden) heroVideo.play().catch(() => {});
