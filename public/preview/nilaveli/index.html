@@ -10,6 +10,7 @@
 <meta name="theme-color" content="#0c2833">
 <link rel="icon" type="image/png" sizes="64x64" href="media/favicon.png">
 <link rel="apple-touch-icon" href="media/apple-touch-icon.png">
+<script>try{if(sessionStorage.getItem("nbr-intro"))document.documentElement.classList.add("intro-seen")}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -136,13 +137,63 @@
 }
 
 /* ---------------------------------------------------------------- loader */
-.loader__brand {
-  color: var(--gold-2);
+/* A short welcome instead of a counter: the sun rises out of the wave, then "Ayubowan". */
+.loader {
+  grid-template-rows: none;
+  place-content: center;
+  justify-items: center;
+  gap: 26px;
 }
-.loader__note em {
+.intro-mark {
+  position: relative;
+  width: min(46vw, 300px);
+  aspect-ratio: 1000 / 428;
+}
+.intro-mark span {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.intro-mark__sun {
+  background: var(--gold-2);
+  -webkit-mask-image: url(media/logo-sun.png);
+  mask-image: url(media/logo-sun.png);
+  animation: nbr-sunrise 1.4s var(--ease-out) 0.35s both;
+}
+.intro-mark__wave {
+  background: #2aa7df;
+  -webkit-mask-image: url(media/logo-wave.png);
+  mask-image: url(media/logo-wave.png);
+  animation: nbr-wave 1.1s var(--ease-io) both;
+}
+.intro-word {
   font-family: var(--font-display);
-  font-size: 1.6em;
-  opacity: 1;
+  font-size: clamp(30px, 3vw, 44px);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  animation: nbr-word 1.2s var(--ease-out) 0.75s both;
+}
+@keyframes nbr-wave {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes nbr-sunrise {
+  from { clip-path: inset(100% 0 0 0); transform: translateY(12%); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+@keyframes nbr-word {
+  from { opacity: 0; transform: translateY(14px); letter-spacing: 0.14em; }
+  to { opacity: 1; transform: none; letter-spacing: 0.02em; }
+}
+.intro-seen .intro-mark span,
+.intro-seen .intro-word {
+  animation-duration: 0.01s;
+  animation-delay: 0s;
 }
 
 /* ---------------------------------------------------------------- header */
@@ -525,17 +576,18 @@
   position: absolute;
   border-radius: 16px;
 }
-.welcome__img--a {
-  top: 46%;
-  left: var(--pad);
-  width: clamp(140px, 14vw, 250px);
+.welcome__img--a,
+.welcome__img--b {
+  width: clamp(150px, 15vw, 260px);
   aspect-ratio: 3 / 4;
 }
+.welcome__img--a {
+  top: 44%;
+  left: var(--pad);
+}
 .welcome__img--b {
-  top: 64%;
+  top: 56%;
   right: var(--pad);
-  width: clamp(150px, 15vw, 270px);
-  aspect-ratio: 4 / 3;
 }
 
 /* ----------------------------------------------------------------- stats */
@@ -761,12 +813,6 @@
 .moment .media {
   aspect-ratio: 3 / 2;
   border-radius: 20px;
-}
-.moment--tall {
-  width: clamp(260px, 25vw, 420px);
-}
-.moment--tall .media {
-  aspect-ratio: 3 / 4;
 }
 .moment figcaption {
   display: grid;
@@ -1292,9 +1338,6 @@
   .moment {
     width: 82vw;
   }
-  .moment--tall {
-    width: 64vw;
-  }
   .ayur__media {
     position: relative;
     top: 0;
@@ -1347,12 +1390,8 @@
 <body>
 
 <div class="loader" aria-hidden="true">
-  <div class="loader__brand"><span class="mark" style="height: 76px"></span></div>
-  <div class="loader__row">
-    <p class="loader__note"><em>Ayubowan</em><br>Km 19, Nilaveli Road, Trincomalee</p>
-    <p class="loader__count">000</p>
-  </div>
-  <span class="loader__bar"></span>
+  <div class="intro-mark"><span class="intro-mark__sun"></span><span class="intro-mark__wave"></span></div>
+  <p class="intro-word">Ayubowan</p>
 </div>
 <div class="grain" aria-hidden="true"></div>
 
@@ -1544,9 +1583,9 @@
         <div class="media"><img src="media/breakfast.jpg" alt="A breakfast table set on a terrace above the beach"></div>
         <figcaption><time>08:00</time><b>Breakfast by the beach</b><span>Start the day slowly, looking out over the sand.</span></figcaption>
       </figure>
-      <figure class="moment moment--tall">
-        <div class="media"><img src="media/lounger.jpg" alt="A sunbed under a palm with Pigeon Island on the horizon"></div>
-        <figcaption><time>10:30</time><b>Sun, sand, shade</b><span>A sunbed, a palm and Pigeon Island on the horizon.</span></figcaption>
+      <figure class="moment">
+        <div class="media"><img src="media/beach.jpg" alt="Sunbeds under thatched umbrellas with Pigeon Island on the horizon"></div>
+        <figcaption><time>10:30</time><b>Sun, sand, shade</b><span>Sunbeds under the thatch, with Pigeon Island on the horizon.</span></figcaption>
       </figure>
       <figure class="moment">
         <div class="media"><img src="media/restaurant.jpg" alt="The thatched restaurant pavilion looking out to the beach"></div>
@@ -1556,7 +1595,7 @@
         <div class="media"><img src="media/crab.jpg" alt="A spicy crab dish served with rice"></div>
         <figcaption><time>16:00</time><b>Fresh catch of the day</b><span>Crab, prawns and fish, fresh from the sea.</span></figcaption>
       </figure>
-      <figure class="moment moment--tall">
+      <figure class="moment">
         <div class="media"><img src="media/dinner.jpg" alt="A candlelit dinner table on the sand at dusk"></div>
         <figcaption><time>19:30</time><b>Dinner on the sand</b><span>A candlelit table on the beach as the evening cools.</span></figcaption>
       </figure>
@@ -1608,9 +1647,9 @@
     </ul>
   </section>
 
-  <section class="grow" data-theme="dark" aria-label="Sunbeds under thatched umbrellas with Pigeon Island on the horizon">
+  <section class="grow" data-theme="dark" aria-label="A white-sand beach with a boat and an island on the horizon">
     <div class="grow__media media" data-grow>
-      <img src="media/beach.jpg" alt="">
+      <img src="media/coast.jpg" alt="">
     </div>
     <div class="grow__title serif"><h2 data-split>Calm water,<br><em>warm all year</em></h2></div>
   </section>
@@ -1699,7 +1738,13 @@
 <script>
 (() => {
   const { $, $$ } = SE;
+  let seen = false;
+  try {
+    seen = Boolean(sessionStorage.getItem("nbr-intro"));
+    sessionStorage.setItem("nbr-intro", "1");
+  } catch {}
   SE.init({
+    minTime: seen ? 300 : 2000,
     intro(tl, reduce) {
       if (reduce) return;
       const title = SE.split($(".hero__title"), "lines");
