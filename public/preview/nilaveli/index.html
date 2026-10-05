@@ -22,6 +22,7 @@
   --accent: #1f8a8a;
   --coral: #e07a5f;
   --foam: #fbf8f2;
+  --mint: #7fd1c8;
   --loader-bg: #10292f;
   --loader-fg: #f3ede2;
   --menu-bg: #10292f;
@@ -51,6 +52,7 @@
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   height: 52px;
   padding: 0 26px;
@@ -59,6 +61,7 @@
   color: var(--foam);
   font-weight: 600;
   font-size: 15px;
+  white-space: nowrap;
   transition: background 0.4s, color 0.4s;
 }
 .btn:hover {
@@ -72,19 +75,19 @@
   background: var(--foam);
   color: var(--fg);
 }
-.btn--ghost {
-  background: rgb(251 248 242 / 0.14);
-  border: 1px solid rgb(251 248 242 / 0.5);
-  color: var(--foam);
-  backdrop-filter: blur(10px);
-}
-.btn--ghost:hover {
-  background: var(--foam);
-  color: var(--fg);
-}
 .wa-icon {
   width: 18px;
   height: 18px;
+  flex-shrink: 0;
+}
+/* The resort's own logo, drawn in the current text colour */
+.mark {
+  display: block;
+  height: 56px;
+  aspect-ratio: 319 / 240;
+  background: currentColor;
+  -webkit-mask: url(media/logo-mask.png) center / contain no-repeat;
+  mask: url(media/logo-mask.png) center / contain no-repeat;
 }
 
 /* ---------------------------------------------------------------- header */
@@ -96,7 +99,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-  padding: 18px var(--pad);
+  padding: 14px var(--pad);
   color: var(--fg);
   transition: transform 0.9s var(--ease-out), color 0.4s;
 }
@@ -105,23 +108,6 @@
 }
 .header.is-hidden {
   transform: translateY(-110%);
-}
-.logo {
-  display: grid;
-  line-height: 1;
-}
-.logo b {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 24px;
-}
-.logo small {
-  margin-top: 4px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  opacity: 0.75;
 }
 .nav {
   display: flex;
@@ -145,56 +131,53 @@
   position: relative;
   height: 100vh;
   height: 100svh;
-  min-height: 640px;
+  min-height: 680px;
   overflow: hidden;
   color: var(--foam);
-  background: #6d8f99;
+  background: #5e8fb0;
 }
 .hero__media {
   position: absolute;
   inset: 0;
 }
-.hero__media > * {
+.hero__media > img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 60%;
 }
 .hero__shade {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgb(8 28 33 / 0.55) 0%, rgb(8 28 33 / 0) 30%),
-    linear-gradient(0deg, rgb(8 28 33 / 0.66) 0%, rgb(8 28 33 / 0) 55%);
+    linear-gradient(180deg, rgb(8 28 33 / 0.5) 0%, rgb(8 28 33 / 0) 24%),
+    linear-gradient(0deg, rgb(8 28 33 / 0.78) 0%, rgb(8 28 33 / 0.34) 46%, rgb(8 28 33 / 0) 72%);
 }
 .hero__copy {
   position: absolute;
   left: var(--pad);
   right: var(--pad);
-  bottom: clamp(90px, 13vh, 130px);
+  bottom: clamp(84px, 11vh, 118px);
   display: grid;
-  gap: 26px;
+  gap: 22px;
   justify-items: start;
-}
-.hero__title {
-  max-width: 13em;
-  font-size: clamp(52px, 8.4vw, 150px);
-  line-height: 0.95;
 }
 .hero__label {
   color: var(--foam);
   text-shadow: 0 1px 14px rgb(8 28 33 / 0.45);
 }
+.hero__title {
+  max-width: 13em;
+  font-size: clamp(50px, 7.4vw, 132px);
+  line-height: 0.95;
+  text-shadow: 0 2px 30px rgb(8 28 33 / 0.22);
+}
 .hero__sub {
-  max-width: 40ch;
+  max-width: 44ch;
   font-size: 18px;
   line-height: 1.55;
-}
-.hero__cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
 }
 .hero__foot {
   position: absolute;
@@ -210,6 +193,93 @@
   text-transform: uppercase;
 }
 
+/* booking bar */
+.book {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1.25fr)) repeat(2, minmax(0, 1fr)) auto;
+  gap: 6px;
+  width: min(100%, 940px);
+  margin-top: 6px;
+  padding: 6px;
+  border: 1px solid rgb(251 248 242 / 0.24);
+  border-radius: 20px;
+  background: rgb(8 28 33 / 0.42);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.book__f {
+  position: relative;
+  display: grid;
+  gap: 3px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgb(251 248 242 / 0.08);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.book__f:hover,
+.book__f:focus-within {
+  background: rgb(251 248 242 / 0.17);
+}
+.book__f > span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+.book__f input,
+.book__f select {
+  width: 100%;
+  min-height: 22px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--foam);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color-scheme: dark;
+  text-align: left;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.book__f input::-webkit-date-and-time-value {
+  text-align: left;
+}
+.book__f input::-webkit-calendar-picker-indicator {
+  opacity: 0.6;
+  cursor: pointer;
+}
+.book__f select option {
+  color: var(--fg);
+  background: #fff;
+}
+.book__f--sel::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  bottom: 17px;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.book__go {
+  height: auto;
+  min-height: 58px;
+  border-radius: 14px;
+}
+.book__note {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
 /* ----------------------------------------------------------------- intro */
 .intro {
   display: grid;
@@ -222,24 +292,28 @@
   line-height: 1.12;
 }
 
+/* ------------------------------------------------------- shared headings */
+.cabanas h2,
+.rooms h2,
+.ayur h2,
+.todo h2,
+.getting h2,
+.plan h2,
+.life__intro h2 {
+  font-size: clamp(46px, 5.6vw, 100px);
+}
+
 /* --------------------------------------------------------------- cabanas */
 .cabanas {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: clamp(30px, 6vw, 110px);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(30px, 5vw, 90px);
   align-items: center;
   padding: 0 var(--pad) clamp(110px, 14vw, 200px);
 }
 .cabanas__media {
-  aspect-ratio: 4 / 5;
-  border-radius: 200px 200px 18px 18px;
-}
-.cabanas h2,
-.ayur h2,
-.todo h2,
-.getting h2,
-.plan h2 {
-  font-size: clamp(46px, 5.6vw, 100px);
+  aspect-ratio: 16 / 11;
+  border-radius: 18px;
 }
 .cabanas p {
   max-width: 44ch;
@@ -264,6 +338,153 @@
   font-weight: 500;
 }
 
+/* ----------------------------------------------------------------- rooms */
+.rooms {
+  padding: 0 var(--pad) clamp(110px, 14vw, 200px);
+}
+.rooms__head {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: end;
+  gap: var(--gap);
+  margin-bottom: clamp(40px, 6vw, 80px);
+}
+.rooms__head p {
+  max-width: 40ch;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.rooms__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+.room {
+  display: grid;
+  gap: 22px;
+  align-content: start;
+  padding: 12px 12px 26px;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: var(--paper);
+}
+.room__media {
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+}
+.room__media img {
+  transition: transform 1.2s var(--ease-out);
+}
+.room:hover .room__media img {
+  transform: scale(1.05);
+}
+.room__body {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  padding: 0 12px;
+}
+.room h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 2.5vw, 40px);
+  line-height: 1.05;
+}
+.room__meta {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.room__price {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 1;
+  text-align: right;
+  white-space: nowrap;
+}
+.room__price small {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.room .btn {
+  justify-self: start;
+  margin: 0 12px;
+}
+
+/* -------------------------------------------------- life at the resort */
+.life {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--fg);
+  color: var(--foam);
+}
+.life .h-track {
+  gap: clamp(16px, 2vw, 28px);
+  padding: 0 var(--pad);
+  align-items: stretch;
+}
+.life__intro,
+.shot {
+  flex-shrink: 0;
+}
+.life__intro {
+  display: grid;
+  align-content: space-between;
+  width: clamp(280px, 27vw, 410px);
+  padding: 6px 0;
+}
+.life__intro .label,
+.getting .label {
+  color: var(--mint);
+}
+.life__intro p {
+  max-width: 30ch;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.82;
+}
+.life__hint {
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mint);
+}
+.shot {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  width: clamp(320px, 58vw, 1000px);
+}
+.shot .media {
+  aspect-ratio: 16 / 10;
+  border-radius: 18px;
+}
+.shot figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  font-size: 15px;
+  opacity: 0.85;
+}
+.shot figcaption b {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 28px;
+  opacity: 1;
+}
+
 /* ------------------------------------------------------------------ grow */
 .grow {
   position: relative;
@@ -274,7 +495,7 @@
   top: 0;
   height: 100vh;
 }
-.grow__media > * {
+.grow__media > img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -285,7 +506,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgb(8 28 33 / 0.28);
+  background: rgb(8 28 33 / 0.26);
 }
 .grow__title {
   position: absolute;
@@ -295,6 +516,7 @@
   place-items: center;
   text-align: center;
   color: var(--foam);
+  text-shadow: 0 2px 40px rgb(8 28 33 / 0.3);
   pointer-events: none;
 }
 .grow__title h2 {
@@ -345,7 +567,7 @@
 
 /* ------------------------------------------------------------ things to do */
 .todo {
-  padding: 0 var(--pad) clamp(110px, 14vw, 200px);
+  padding: clamp(110px, 14vw, 200px) var(--pad);
 }
 .todo__grid {
   display: grid;
@@ -383,9 +605,6 @@
   padding: clamp(100px, 12vw, 170px) var(--pad);
   background: var(--fg);
   color: var(--foam);
-}
-.getting .label {
-  color: #7fd1c8;
 }
 .ways {
   display: grid;
@@ -510,6 +729,11 @@
   font-weight: 600;
 }
 
+@media (max-width: 1100px) {
+  .nav {
+    gap: 22px;
+  }
+}
 @media (max-width: 900px) {
   .nav,
   .header .btn span {
@@ -522,29 +746,47 @@
     width: 44px;
     margin-left: auto;
     padding: 0;
-    justify-content: center;
+  }
+  .mark {
+    height: 46px;
   }
   .hero__shade {
     background:
-      linear-gradient(180deg, rgb(8 28 33 / 0.5) 0%, rgb(8 28 33 / 0) 26%),
-      linear-gradient(0deg, rgb(8 28 33 / 0.78) 0%, rgb(8 28 33 / 0.4) 50%, rgb(8 28 33 / 0) 78%);
+      linear-gradient(180deg, rgb(8 28 33 / 0.5) 0%, rgb(8 28 33 / 0) 24%),
+      linear-gradient(0deg, rgb(8 28 33 / 0.84) 0%, rgb(8 28 33 / 0.5) 48%, rgb(8 28 33 / 0) 76%);
   }
   .hero__copy {
-    bottom: 80px;
+    bottom: 64px;
+    gap: 16px;
   }
-  .hero__sub {
-    font-size: 16px;
-  }
-  .hero__foot > span:last-child {
+  .hero__sub,
+  .book__note,
+  .hero__foot {
     display: none;
+  }
+  .book {
+    grid-template-columns: 1fr 1fr;
+    border-radius: 18px;
+  }
+  .book__go {
+    grid-column: 1 / -1;
+    min-height: 52px;
   }
   .intro,
   .cabanas,
-  .ayur {
+  .ayur,
+  .rooms__head,
+  .rooms__grid {
     grid-template-columns: 1fr;
   }
-  .cabanas__media {
-    width: 86%;
+  .room__body {
+    padding: 0 6px;
+  }
+  .room .btn {
+    margin: 0 6px;
+  }
+  .room__price {
+    font-size: 34px;
   }
   .menu-list {
     columns: 1;
@@ -552,6 +794,27 @@
   .ayur__media {
     position: relative;
     top: 0;
+  }
+  .life {
+    height: auto;
+    padding: 90px 0 60px;
+  }
+  .life .h-track {
+    padding-right: var(--pad);
+  }
+  .life__intro {
+    width: 82vw;
+    gap: 30px;
+  }
+  .shot {
+    width: 82vw;
+  }
+  .shot .media {
+    aspect-ratio: 4 / 3;
+  }
+  .shot figcaption {
+    display: grid;
+    gap: 4px;
   }
   .todo__grid,
   .ways {
@@ -564,16 +827,13 @@
     bottom: 10px;
     font-size: 11px;
   }
-  .hero__foot {
-    display: none;
-  }
 }
 </style>
 </head>
 <body>
 
 <div class="loader" aria-hidden="true">
-  <p class="loader__brand" style="letter-spacing: 0.02em; text-transform: none; font-size: 26px">Nilaveli Beach Resort</p>
+  <div class="loader__brand"><span class="mark" style="height: 74px"></span></div>
   <div class="loader__row">
     <p class="loader__note">Km 19, Nilaveli Road<br>Trincomalee, Sri Lanka</p>
     <p class="loader__count">000</p>
@@ -583,14 +843,15 @@
 <div class="grain" aria-hidden="true"></div>
 
 <header class="header" data-header>
-  <a class="logo" href="#top" aria-label="Nilaveli Beach Resort, back to top"><b>Nilaveli</b><small>Beach Resort</small></a>
+  <a class="logo" href="#top" aria-label="Nilaveli Beach Resort, back to top"><span class="mark" aria-hidden="true"></span></a>
   <ul class="nav">
     <li><a class="roll" href="#cabanas"><span data-text="Cabanas">Cabanas</span></a></li>
+    <li><a class="roll" href="#rooms"><span data-text="Rooms">Rooms</span></a></li>
     <li><a class="roll" href="#ayurveda"><span data-text="Ayurveda">Ayurveda</span></a></li>
     <li><a class="roll" href="#todo"><span data-text="Things to do">Things to do</span></a></li>
     <li><a class="roll" href="#getting"><span data-text="Getting here">Getting here</span></a></li>
   </ul>
-  <a class="btn btn--wa" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20check%20availability%20at%20Nilaveli%20Beach%20Resort." target="_blank" rel="noopener" data-magnetic="0.25">
+  <a class="btn btn--wa" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20check%20availability%20at%20Nilaveli%20Beach%20Resort." target="_blank" rel="noopener" data-magnetic="0.25" aria-label="Book on WhatsApp">
     <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
     <span>Book on WhatsApp</span>
   </a>
@@ -601,35 +862,46 @@
   <button class="menu__close roll" type="button" data-menu-close><span data-text="Close">Close</span></button>
   <ul class="menu__links">
     <li><a href="#cabanas"><small>01</small>Cabanas</a></li>
-    <li><a href="#ayurveda"><small>02</small>Ayurveda</a></li>
-    <li><a href="#todo"><small>03</small>Things to do</a></li>
-    <li><a href="#getting"><small>04</small>Getting here</a></li>
-    <li><a href="#plan"><small>05</small>Book</a></li>
+    <li><a href="#rooms"><small>02</small>Rooms</a></li>
+    <li><a href="#resort"><small>03</small>The resort</a></li>
+    <li><a href="#ayurveda"><small>04</small>Ayurveda</a></li>
+    <li><a href="#todo"><small>05</small>Things to do</a></li>
+    <li><a href="#getting"><small>06</small>Getting here</a></li>
+    <li><a href="#top"><small>07</small>Book</a></li>
   </ul>
   <div class="menu__media" aria-hidden="true">
     <img src="media/cabanas.jpg" alt="">
+    <img src="media/room-royal.jpg" alt="">
+    <img src="media/pool.jpg" alt="">
     <img src="media/ayurveda.jpg" alt="">
     <img src="media/snorkel.jpg" alt="">
-    <img src="media/bay.jpg" alt="">
-    <img src="media/daybed.jpg" alt="">
+    <img src="media/beach.jpg" alt="">
+    <img src="media/evening.jpg" alt="">
   </div>
 </nav>
 
 <main>
   <section class="hero" id="top" data-theme="dark">
     <div class="hero__media">
-      <img src="media/hero.jpg" alt="" data-preload>
-      <video src="media/hero.mp4" poster="media/hero.jpg" muted playsinline loop autoplay preload="auto" data-autoplay></video>
+      <img src="media/hero.jpg" srcset="media/hero-1200.jpg 1200w, media/hero.jpg 2400w" sizes="100vw" alt="Wooden cabanas under coconut palms on Nilaveli beach" data-preload>
     </div>
     <div class="hero__shade"></div>
     <div class="hero__copy">
       <p class="label hero__label" data-intro>Nilaveli · Trincomalee · Sri Lanka</p>
-      <h1 class="hero__title serif" data-intro>Step out of your cabana, <em>onto the sand</em></h1>
-      <p class="hero__sub" data-intro>Wooden cabanas on the sand, the warm Indian Ocean at your door and Pigeon Island just offshore.</p>
-      <div class="hero__cta" data-intro>
-        <a class="btn btn--wa" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20check%20availability%20at%20Nilaveli%20Beach%20Resort." target="_blank" rel="noopener" data-magnetic="0.25">Check availability</a>
-        <a class="btn btn--ghost" href="#cabanas">See the cabanas</a>
-      </div>
+      <h1 class="hero__title serif" data-intro>Step out of your cabana,<br> <em>onto the sand</em></h1>
+      <p class="hero__sub" data-intro>Wooden cabanas on the beach, the warm Indian Ocean at your door and Pigeon Island just offshore.</p>
+      <form class="book" data-intro data-book aria-label="Check availability">
+        <label class="book__f"><span>Check in</span><input type="date" name="checkin" required></label>
+        <label class="book__f"><span>Check out</span><input type="date" name="checkout" required></label>
+        <label class="book__f book__f--sel"><span>Adults</span>
+          <select name="adults"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+        </label>
+        <label class="book__f book__f--sel"><span>Children</span>
+          <select name="kids"><option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+        </label>
+        <button class="btn btn--wa book__go" type="submit">Check availability</button>
+      </form>
+      <p class="book__note" data-intro>Your dates go straight to the resort on WhatsApp.</p>
     </div>
     <div class="hero__foot" data-intro>
       <span>Km 19, Nilaveli Road</span>
@@ -639,28 +911,89 @@
 
   <section class="intro">
     <span class="label" data-fade>The resort</span>
-    <p class="serif" data-split="fill">A small boutique resort for a quiet stay on Nilaveli beach. Every room is a wooden cabana on the beach itself: step out of your door, walk on the soft sand and dip into the warm Indian Ocean.</p>
+    <p class="serif" data-split="fill">A small boutique resort for a quiet stay on Nilaveli beach. Every room is in a wooden cabana on the beach itself: step out of your door, walk on the soft sand and dip into the warm Indian Ocean.</p>
   </section>
 
   <section class="cabanas" id="cabanas">
-    <div class="cabanas__media media" data-reveal data-parallax="12"><img src="media/cabanas.jpg" alt="Wooden beach cabanas in a row on the sand"></div>
+    <div class="cabanas__media media" data-reveal data-parallax="10"><img src="media/cabanas.jpg" alt="Two-storey wooden cabanas with thatched roofs among coconut palms"></div>
     <div>
       <span class="label" data-fade>Our cabanas</span>
       <h2 class="serif" data-split style="margin-top: 18px">Wooden cabanas, <em>right on the beach</em></h2>
       <p data-fade>Each cabana opens straight onto the sand, so the sea is the first thing you see in the morning and the last thing you hear at night.</p>
       <ul class="chips" data-fade>
-        <li>On the sand</li><li>Sunrise over the sea</li><li>Quiet east-coast beach</li><li>Check-in from 3 pm</li>
+        <li>On the sand</li><li>Sunrise over the sea</li><li>Pool by the beach</li><li>Check-in from 3 pm</li>
       </ul>
-      <a class="btn" href="https://wa.me/94777951871?text=Hello%2C%20could%20you%20send%20me%20your%20cabana%20rates%3F" target="_blank" rel="noopener" data-fade>Ask about rooms &amp; rates</a>
+      <a class="btn" href="#rooms" data-fade>See the rooms</a>
     </div>
   </section>
 
-  <section class="grow" data-theme="dark" aria-label="The turquoise water of the east coast">
-    <div class="grow__media media" data-grow>
-      <img src="media/bay.jpg" alt="">
-      <video src="media/bay.mp4" poster="media/bay.jpg" muted playsinline loop preload="none" data-autoplay></video>
+  <section class="rooms" id="rooms">
+    <div class="rooms__head">
+      <div>
+        <span class="label" data-fade>Rooms</span>
+        <h2 class="serif" data-split style="margin-top: 18px">Wake up <em>to the sea</em></h2>
+      </div>
+      <p data-fade>Every room is in one of our wooden cabanas, a few steps from the sand. Choose your dates above, or book a room directly.</p>
     </div>
-    <div class="grow__title serif"><h2 data-split>Calm water,<br><em>warm all year</em></h2></div>
+    <div class="rooms__grid">
+      <article class="room" data-fade>
+        <div class="room__media media"><img src="media/room-king.jpg" alt="King room with timber walls and doors to the terrace"></div>
+        <div class="room__body">
+          <div>
+            <h3>King Room with Ocean View</h3>
+            <p class="room__meta">311 sq ft · 1 king bed</p>
+          </div>
+          <p class="room__price"><small>From</small>$150</p>
+        </div>
+        <a class="btn" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20book%20the%20King%20Room%20with%20Ocean%20View." target="_blank" rel="noopener" data-room="King Room with Ocean View">Book this room</a>
+      </article>
+      <article class="room" data-fade data-delay="0.08">
+        <div class="room__media media"><img src="media/room-royal.jpg" alt="Royal deluxe room with a carved four-poster bed"></div>
+        <div class="room__body">
+          <div>
+            <h3>Royal Deluxe Ocean Terrace</h3>
+            <p class="room__meta">422 sq ft · 1 king bed</p>
+          </div>
+          <p class="room__price"><small>From</small>$170</p>
+        </div>
+        <a class="btn" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20book%20the%20Royal%20Deluxe%20Ocean%20Terrace." target="_blank" rel="noopener" data-room="Royal Deluxe Ocean Terrace">Book this room</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="life" id="resort" data-horizontal data-theme="dark">
+    <div class="h-track">
+      <div class="life__intro">
+        <div>
+          <span class="label">The resort</span>
+          <h2 class="serif" data-split style="margin-top: 18px">Pool, palms <em>and the sea</em></h2>
+        </div>
+        <div>
+          <p>Life here moves at beach pace: a swim, a long lunch, the lights coming on under the thatch.</p>
+          <p class="life__hint">Scroll sideways →</p>
+        </div>
+      </div>
+      <figure class="shot">
+        <div class="media"><img src="media/pool.jpg" alt="The swimming pool with sunbeds, palms and the beach behind"></div>
+        <figcaption><b>The pool</b><span>Among the palms, steps from the beach</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="media"><img src="media/dining.jpg" alt="A table set for dinner with the sea beyond"></div>
+        <figcaption><b>Dining by the sea</b><span>Tables set with the ocean in view</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="media"><img src="media/evening.jpg" alt="Lit thatched umbrellas and loungers on the sand at night"></div>
+        <figcaption><b>After dark</b><span>Lights under the thatch, loungers on the sand</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="media"><img src="media/stilts.jpg" alt="A wooden cabana on stilts with a thatched roof"></div>
+        <figcaption><b>Cabanas on stilts</b><span>Thatched roofs and timber decks</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="media"><img src="media/deck.jpg" alt="A timber deck with railings and tropical plants"></div>
+        <figcaption><b>Your own deck</b><span>Timber balconies wrapped in green</span></figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="ayur" id="ayurveda">
@@ -681,7 +1014,14 @@
         <li>Manicure &amp; pedicure <span>—</span></li>
       </ul>
     </div>
-    <div class="ayur__media media" data-reveal data-parallax="10"><img src="media/ayurveda.jpg" alt="An Ayurvedic herbal poultice massage"></div>
+    <div class="ayur__media media" data-reveal data-parallax="10"><img src="media/ayurveda.jpg" alt="Ayurvedic herbs and spices with a mortar and pestle"></div>
+  </section>
+
+  <section class="grow" data-theme="dark" aria-label="The beach and Pigeon Island">
+    <div class="grow__media media" data-grow>
+      <img src="media/beach.jpg" alt="">
+    </div>
+    <div class="grow__title serif"><h2 data-split>Calm water,<br><em>warm all year</em></h2></div>
   </section>
 
   <section class="todo" id="todo">
@@ -735,11 +1075,11 @@
   <p class="footer__word" data-split="chars" aria-hidden="true">Nilaveli</p>
   <div class="footer__bottom">
     <span>© 2026 Nilaveli Beach Resort · Km 19, Nilaveli Road, Trincomalee</span>
-    <span>Placeholder photos via Pexels · Design by Hemal Herath</span>
+    <span>Resort photos: Nilaveli Beach Resort · activity photos via Pexels · Design by Hemal Herath</span>
   </div>
 </footer>
 
-<a class="hh-preview" href="/showcase"><i></i>Design preview by Hemal Herath · placeholder photos</a>
+<a class="hh-preview" href="/showcase"><i></i>Homepage design preview by Hemal Herath</a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
@@ -748,25 +1088,74 @@
 <script src="/showcase/_engine/engine.js"></script>
 <script>
 (() => {
-  const { $ } = SE;
+  const { $, $$ } = SE;
   SE.init({
     intro(tl, reduce) {
       if (reduce) return;
       const title = SE.split($(".hero__title"), "lines");
-      tl.from(".hero__media > *", { scale: 1.22, duration: 2.6, ease: "expo.out" }, 0.2)
+      tl.from(".hero__media > img", { scale: 1.2, duration: 2.6, ease: "expo.out" }, 0.2)
         .from(title.lines, { yPercent: 118, duration: 1.6, stagger: 0.12 }, 0.7)
-        .fromTo([".hero__label", ".hero__sub", ".hero__cta", ".hero__foot"], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.4, stagger: 0.1 }, 1.05)
+        .fromTo([".hero__label", ".hero__sub", ".book", ".book__note", ".hero__foot"], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.4, stagger: 0.08 }, 1.0)
         .from(".header", { autoAlpha: 0, duration: 1.2, ease: "power2.out", clearProps: "opacity,visibility" }, 0.95);
       const out = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
-      gsap.to(".hero__copy", { yPercent: -22, autoAlpha: 0, ease: "none", scrollTrigger: out });
+      gsap.to(".hero__copy", { yPercent: -14, autoAlpha: 0, ease: "none", scrollTrigger: out });
       gsap.to(".hero__media", { yPercent: 18, ease: "none", scrollTrigger: { ...out } });
     },
   });
 
+  // The preview badge steps aside once you leave the hero.
   const badge = $(".hh-preview");
   const away = () => badge.classList.toggle("is-away", scrollY > innerHeight * 0.5);
   addEventListener("scroll", away, { passive: true });
   away();
+
+  // Booking: dates and guests go to the resort's WhatsApp as a ready-made message.
+  const form = $("[data-book]");
+  const { checkin, checkout, adults, kids } = form.elements;
+  const DAY = 864e5;
+  const pad = (n) => String(n).padStart(2, "0");
+  const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const parse = (v) => new Date(`${v}T12:00:00`);
+  const nice = (v) => parse(v).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+  const today = new Date();
+  today.setHours(12, 0, 0, 0);
+  checkin.min = iso(today);
+  checkin.value = iso(new Date(+today + DAY));
+  const sync = () => {
+    if (!checkin.value) return;
+    const start = parse(checkin.value);
+    checkout.min = iso(new Date(+start + DAY));
+    if (!checkout.value || parse(checkout.value) <= start) checkout.value = iso(new Date(+start + 3 * DAY));
+  };
+  checkin.addEventListener("change", sync);
+  sync();
+  $$(".book__f").forEach((field) => {
+    const input = $("input", field);
+    if (input) field.addEventListener("click", () => { try { input.showPicker(); } catch {} });
+  });
+
+  const ask = (room) => {
+    const nights = Math.round((parse(checkout.value) - parse(checkin.value)) / DAY);
+    const a = +adults.value;
+    const k = +kids.value;
+    const lines = [
+      `Hello Nilaveli Beach Resort, I'd like to check availability${room ? ` for the ${room}` : ""}.`,
+      `Check in: ${nice(checkin.value)}`,
+      `Check out: ${nice(checkout.value)} (${nights} night${nights === 1 ? "" : "s"})`,
+      `Guests: ${a} adult${a === 1 ? "" : "s"}${k ? `, ${k} ${k === 1 ? "child" : "children"}` : ""}`,
+    ];
+    window.open(`https://wa.me/94777951871?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
+  };
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    ask();
+  });
+  $$("[data-room]").forEach((link) =>
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      ask(link.dataset.room);
+    }),
+  );
 })();
 </script>
 </body>
