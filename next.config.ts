@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
         source: "/showcase/lakmini/:page(about|services|contact)",
         destination: "/showcase/lakmini/:page/index.html",
       },
+      // Free homepage designs made for prospective clients.
+      {
+        source: "/preview/:client(nilaveli)",
+        destination: "/preview/:client/index.html",
+      },
     ];
   },
 };
