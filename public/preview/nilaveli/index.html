@@ -293,6 +293,7 @@
   height: 100%;
   object-fit: cover;
 }
+.hero__media picture img {width:100%;height:100%;object-fit:cover;}
 .hero__shade {
   position: absolute;
   inset: 0;
@@ -1437,11 +1438,11 @@
 <main>
   <section class="hero" id="top" data-theme="dark">
     <div class="hero__media">
-      <img fetchpriority="high" decoding="async" src="media/hero-stock.jpg" alt="" data-preload>
-      <video poster="media/hero-stock.jpg" muted playsinline loop preload="none" data-hero-video aria-label="Illustrative tropical beach stock footage for this design preview"></video>
+      <picture><source media="(max-width: 800px)" srcset="media/hero-scenes-mobile.jpg"><img fetchpriority="high" decoding="async" src="media/hero-scenes.jpg" alt="" data-preload></picture>
+      <video poster="media/hero-scenes.jpg" muted playsinline loop preload="none" data-hero-video aria-label="Five AI-retouched and generated resort concept scenes with slow zooms and crossfades"></video>
     </div>
     <div class="hero__shade"></div>
-    <span class="hero-stock-note">Illustrative beach footage · design preview</span>
+    <span class="hero-stock-note">AI-generated / retouched scenes · design preview</span>
     <div class="hero__copy">
       <p class="label hero__label" data-intro>Nilaveli · Trincomalee · Sri Lanka</p>
       <h1 class="hero__title serif" data-intro>Step out of your cabana,<br> <em>onto the sand.</em></h1>
@@ -1721,7 +1722,7 @@
   <p class="footer__word" data-split="chars" aria-hidden="true">Nilaveli</p>
   <div class="footer__bottom">
     <span>© 2026 Nilaveli Beach Resort · Km 19, Nilaveli Road, Trincomalee, Sri Lanka</span>
-    <span>Resort source photos and film: Nilaveli Beach Resort · room images AI-retouched for this design preview, pending resort approval · additional photos and illustrative hero film via Pexels (David Pickup) · Design by Hemal Herath</span>
+    <span>Resort source photos and film: Nilaveli Beach Resort · room images AI-retouched for this design preview, pending resort approval · AI-generated and retouched hero scenes for this preview · additional photos via Pexels · Design by Hemal Herath</span>
   </div>
 </footer>
 
@@ -1775,8 +1776,10 @@
   const heroVideo = document.querySelector('[data-hero-video]');
   const connection = navigator.connection;
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !connection?.saveData) {
-    heroVideo.src = matchMedia('(max-width: 800px)').matches
-      ? 'media/hero-stock-mobile.mp4' : 'media/hero-stock.mp4';
+    const mobileHero = matchMedia('(max-width: 800px)').matches;
+    if (mobileHero) heroVideo.poster = 'media/hero-scenes-mobile.jpg';
+    heroVideo.src = mobileHero
+      ? 'media/hero-scenes-mobile.mp4' : 'media/hero-scenes.mp4';
     heroVideo.preload = 'metadata';
     new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !document.hidden) heroVideo.play().catch(() => {});
