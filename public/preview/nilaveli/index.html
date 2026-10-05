@@ -7,87 +7,140 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Nilaveli Beach Resort — Homepage design preview</title>
 <meta name="description" content="A homepage design preview for Nilaveli Beach Resort, Trincomalee, by Hemal Herath.">
-<meta name="theme-color" content="#10292f">
+<meta name="theme-color" content="#0c2833">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/showcase/_engine/engine.css">
 <style>
 :root {
-  --bg: #f3ede2;
-  --paper: #faf6ef;
-  --fg: #10292f;
-  --muted: #5b6b6c;
-  --line: rgb(16 41 47 / 0.15);
-  --accent: #1f8a8a;
-  --coral: #e07a5f;
+  --bg: #f5efe5;
+  --paper: #fbf7ef;
+  --fg: #13232b;
+  --muted: #5e6a6d;
+  --line: rgb(19 35 43 / 0.14);
+  --gold: #8a6d27;
+  --gold-2: #cfae62;
+  --ocean: #0a8fcb;
+  --deep: #0c2833;
+  --deeper: #081c24;
   --foam: #fbf8f2;
-  --mint: #7fd1c8;
-  --loader-bg: #10292f;
-  --loader-fg: #f3ede2;
-  --menu-bg: #10292f;
-  --menu-fg: #f3ede2;
-  --cursor-bg: #1f8a8a;
-  --font-display: "DM Serif Display", Georgia, serif;
+  --accent: var(--gold);
+  --loader-bg: #0c2833;
+  --loader-fg: #f5efe5;
+  --menu-bg: #0c2833;
+  --menu-fg: #f5efe5;
+  --cursor: var(--gold);
+  --cursor-bg: var(--gold);
+  --font-display: "Instrument Serif", Georgia, serif;
   --font-body: "Manrope", system-ui, sans-serif;
-  --grain: 0.05;
+  --grain: 0.045;
+}
+::selection {
+  background: var(--gold-2);
+  color: var(--deep);
 }
 .label {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--gold);
+}
+.label::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
 }
 .serif {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.015em;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
 }
 .serif em {
   font-style: italic;
+}
+.h2 {
+  font-size: clamp(50px, 6.6vw, 118px);
+}
+.lead {
+  max-width: 44ch;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--muted);
 }
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  height: 52px;
-  padding: 0 26px;
+  height: 54px;
+  padding: 0 28px;
   border-radius: 999px;
   background: var(--fg);
   color: var(--foam);
-  font-weight: 600;
   font-size: 15px;
+  font-weight: 600;
   white-space: nowrap;
-  transition: background 0.4s, color 0.4s;
+  transition: background 0.4s, color 0.4s, border-color 0.4s;
 }
 .btn:hover {
-  background: var(--accent);
+  background: var(--gold);
 }
-.btn--wa {
-  background: #25d366;
-  color: #08331c;
+.btn--gold {
+  background: var(--gold-2);
+  color: var(--deep);
 }
-.btn--wa:hover {
+.btn--gold:hover {
   background: var(--foam);
-  color: var(--fg);
+  color: var(--deep);
 }
-.wa-icon {
+.btn--line {
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+}
+.btn--line:hover {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--foam);
+}
+.btn svg {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
 }
-/* The resort's own logo, drawn in the current text colour */
+/* The resort's logo and its sun-and-wave mark, drawn in the current colour */
 .mark {
   display: block;
-  height: 56px;
+  height: 54px;
   aspect-ratio: 319 / 240;
   background: currentColor;
   -webkit-mask: url(media/logo-mask.png) center / contain no-repeat;
   mask: url(media/logo-mask.png) center / contain no-repeat;
+}
+.sun {
+  display: block;
+  aspect-ratio: 1000 / 428;
+  background: currentColor;
+  -webkit-mask: url(media/sun-mask.png) center / contain no-repeat;
+  mask: url(media/sun-mask.png) center / contain no-repeat;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- loader */
+.loader__brand {
+  color: var(--gold-2);
+}
+.loader__note em {
+  font-family: var(--font-display);
+  font-size: 1.6em;
+  opacity: 1;
 }
 
 /* ---------------------------------------------------------------- header */
@@ -95,10 +148,10 @@
   position: fixed;
   inset: 0 0 auto;
   z-index: 60;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   padding: 14px var(--pad);
   color: var(--fg);
   transition: transform 0.9s var(--ease-out), color 0.4s;
@@ -109,20 +162,59 @@
 .header.is-hidden {
   transform: translateY(-110%);
 }
+.logo {
+  justify-self: start;
+}
 .nav {
   display: flex;
-  gap: 30px;
+  gap: 2px;
+  padding: 5px;
   list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgb(251 248 242 / 0.74);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: background 0.4s, border-color 0.4s;
+}
+.header.is-dark .nav {
+  border-color: rgb(251 248 242 / 0.2);
+  background: rgb(8 28 36 / 0.3);
+}
+.nav a {
+  display: block;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 14px;
   font-weight: 500;
-  font-size: 15px;
+  transition: background 0.3s, color 0.3s;
+}
+.nav a:hover {
+  background: var(--fg);
+  color: var(--foam);
+}
+.header.is-dark .nav a:hover {
+  background: var(--foam);
+  color: var(--deep);
+}
+.header__end {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .header .btn {
-  height: 44px;
-  padding: 0 18px;
+  height: 46px;
+  padding: 0 22px;
   font-size: 14px;
 }
 .menu-btn {
   display: none;
+  height: 46px;
+  padding: 0 18px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -131,59 +223,61 @@
   position: relative;
   height: 100vh;
   height: 100svh;
-  min-height: 680px;
+  min-height: 700px;
   overflow: hidden;
   color: var(--foam);
-  background: #5e8fb0;
+  background: var(--deep);
 }
 .hero__media {
   position: absolute;
   inset: 0;
 }
-.hero__media > img {
+.hero__media > * {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 60%;
 }
 .hero__shade {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgb(8 28 33 / 0.5) 0%, rgb(8 28 33 / 0) 24%),
-    linear-gradient(0deg, rgb(8 28 33 / 0.78) 0%, rgb(8 28 33 / 0.34) 46%, rgb(8 28 33 / 0) 72%);
+    linear-gradient(180deg, rgb(8 24 31 / 0.55) 0%, rgb(8 24 31 / 0) 22%),
+    linear-gradient(0deg, rgb(8 24 31 / 0.84) 0%, rgb(8 24 31 / 0.38) 44%, rgb(8 24 31 / 0) 70%),
+    radial-gradient(130% 95% at 50% 40%, transparent 58%, rgb(8 24 31 / 0.35) 100%);
 }
 .hero__copy {
   position: absolute;
   left: var(--pad);
   right: var(--pad);
-  bottom: clamp(84px, 11vh, 118px);
+  bottom: clamp(70px, 9vh, 100px);
   display: grid;
-  gap: 22px;
+  gap: 24px;
   justify-items: start;
 }
 .hero__label {
-  color: var(--foam);
-  text-shadow: 0 1px 14px rgb(8 28 33 / 0.45);
+  color: var(--gold-2);
 }
 .hero__title {
-  max-width: 13em;
-  font-size: clamp(50px, 7.4vw, 132px);
-  line-height: 0.95;
-  text-shadow: 0 2px 30px rgb(8 28 33 / 0.22);
+  font-size: clamp(56px, 8.4vw, 150px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 30px rgb(8 24 31 / 0.25);
 }
-.hero__sub {
-  max-width: 44ch;
-  font-size: 18px;
-  line-height: 1.55;
+.hero__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 28px;
+  width: 100%;
+  margin-top: 6px;
 }
 .hero__foot {
   position: absolute;
   left: var(--pad);
   right: var(--pad);
-  bottom: 26px;
+  bottom: 24px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -191,42 +285,121 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  opacity: 0.85;
+}
+.hero__foot b {
+  color: var(--gold-2);
+  font-weight: 700;
+}
+
+/* film button + modal */
+.film-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+  color: var(--foam);
+  text-align: left;
+}
+.film-btn__ring {
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border: 1px solid rgb(251 248 242 / 0.55);
+  border-radius: 50%;
+  transition: transform 0.6s var(--ease-out), background 0.4s, border-color 0.4s, color 0.4s;
+}
+.film-btn__ring svg {
+  width: 16px;
+  height: 16px;
+  margin-left: 3px;
+}
+.film-btn:hover .film-btn__ring {
+  transform: scale(1.08);
+  border-color: var(--gold-2);
+  background: var(--gold-2);
+  color: var(--deep);
+}
+.film-btn b {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+}
+.film-btn small {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  opacity: 0.75;
+}
+.film {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 70px var(--pad) var(--pad);
+  background: rgb(6 18 24 / 0.94);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+.film.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+.film video {
+  width: min(100%, 1280px);
+  max-height: 80vh;
+  border-radius: 14px;
+  background: #000;
+}
+.film__close {
+  position: absolute;
+  top: 18px;
+  right: var(--pad);
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid rgb(251 248 242 / 0.5);
+  border-radius: 999px;
+  color: var(--foam);
+  font-weight: 600;
 }
 
 /* booking bar */
 .book {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1.25fr)) repeat(2, minmax(0, 1fr)) auto;
+  grid-template-columns: repeat(2, minmax(0, 1.2fr)) repeat(2, minmax(0, 0.9fr)) auto;
   gap: 6px;
-  width: min(100%, 940px);
-  margin-top: 6px;
+  width: min(100%, 920px);
   padding: 6px;
-  border: 1px solid rgb(251 248 242 / 0.24);
-  border-radius: 20px;
-  background: rgb(8 28 33 / 0.42);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgb(251 248 242 / 0.2);
+  border-radius: 22px;
+  background: rgb(8 24 31 / 0.46);
+  color: var(--foam);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 .book__f {
   position: relative;
   display: grid;
   gap: 3px;
   padding: 10px 14px;
-  border-radius: 14px;
+  border-radius: 16px;
   background: rgb(251 248 242 / 0.08);
   cursor: pointer;
   transition: background 0.3s;
 }
 .book__f:hover,
 .book__f:focus-within {
-  background: rgb(251 248 242 / 0.17);
+  background: rgb(251 248 242 / 0.16);
 }
 .book__f > span {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  opacity: 0.72;
+  opacity: 0.7;
 }
 .book__f input,
 .book__f select {
@@ -236,7 +409,7 @@
   border: 0;
   outline: 0;
   background: none;
-  color: var(--foam);
+  color: inherit;
   font: inherit;
   font-size: 15px;
   font-weight: 500;
@@ -254,8 +427,8 @@
   cursor: pointer;
 }
 .book__f select option {
-  color: var(--fg);
   background: #fff;
+  color: var(--fg);
 }
 .book__f--sel::after {
   content: "";
@@ -272,137 +445,251 @@
 }
 .book__go {
   height: auto;
-  min-height: 58px;
-  border-radius: 14px;
-}
-.book__note {
-  font-size: 13px;
-  opacity: 0.8;
+  min-height: 60px;
+  border-radius: 16px;
 }
 
-/* ----------------------------------------------------------------- intro */
-.intro {
+/* ---------------------------------------------------------------- marquee */
+.band {
+  padding: clamp(26px, 3vw, 44px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.band .marquee__track {
+  align-items: center;
+}
+.band span {
+  flex-shrink: 0;
+  padding: 0 0.4em;
+  font-family: var(--font-display);
+  font-size: clamp(46px, 6vw, 104px);
+  font-style: italic;
+  line-height: 1.05;
+}
+.band i {
+  flex-shrink: 0;
+  color: var(--gold);
+  font-size: clamp(20px, 2.2vw, 36px);
+  font-style: normal;
+}
+
+/* --------------------------------------------------------------- welcome */
+.welcome {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
-  gap: var(--gap);
-  padding: clamp(120px, 15vw, 220px) var(--pad);
+  justify-items: center;
+  gap: 26px;
+  padding: clamp(130px, 15vw, 230px) var(--pad);
+  overflow: hidden;
+  text-align: center;
 }
-.intro p.serif {
-  font-size: clamp(32px, 3.9vw, 66px);
-  line-height: 1.12;
+.welcome__sun {
+  position: absolute;
+  top: clamp(40px, 6vw, 90px);
+  left: 50%;
+  width: min(84vw, 1100px);
+  margin-left: max(-42vw, -550px);
+  color: var(--gold);
+  opacity: 0.08;
+}
+.welcome__title {
+  position: relative;
+  font-size: clamp(92px, 16vw, 290px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+}
+.welcome__note {
+  position: relative;
+  font-size: 15px;
+  color: var(--muted);
+}
+.welcome__note em {
+  font-family: var(--font-display);
+  font-size: 1.4em;
+  color: var(--fg);
+}
+.welcome__text {
+  position: relative;
+  max-width: 15.5em;
+  margin-top: clamp(20px, 3vw, 40px);
+  font-size: clamp(30px, 3.4vw, 56px);
+  line-height: 1.14;
+}
+.welcome__imgs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.welcome__img {
+  position: absolute;
+  border-radius: 16px;
+}
+.welcome__img--a {
+  top: 46%;
+  left: var(--pad);
+  width: clamp(140px, 14vw, 250px);
+  aspect-ratio: 3 / 4;
+}
+.welcome__img--b {
+  top: 64%;
+  right: var(--pad);
+  width: clamp(150px, 15vw, 270px);
+  aspect-ratio: 4 / 3;
 }
 
-/* ------------------------------------------------------- shared headings */
-.cabanas h2,
-.rooms h2,
-.ayur h2,
-.todo h2,
-.getting h2,
-.plan h2,
-.life__intro h2 {
-  font-size: clamp(46px, 5.6vw, 100px);
+/* ----------------------------------------------------------------- stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+  padding: 0 var(--pad) clamp(110px, 13vw, 190px);
+}
+.stat {
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.stat > b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(66px, 7vw, 124px);
+  font-weight: 400;
+  line-height: 0.9;
+}
+.stat > b i {
+  color: var(--gold);
+  font-style: italic;
+}
+.stat > p {
+  max-width: 22ch;
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
 }
 
 /* --------------------------------------------------------------- cabanas */
 .cabanas {
+  padding: 0 var(--pad) clamp(110px, 13vw, 190px);
+}
+.split-head {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(30px, 5vw, 90px);
-  align-items: center;
-  padding: 0 var(--pad) clamp(110px, 14vw, 200px);
+  align-items: end;
+  gap: var(--gap);
+  margin-bottom: clamp(36px, 5vw, 70px);
+}
+.split-head .h2 {
+  margin-top: 18px;
 }
 .cabanas__media {
-  aspect-ratio: 16 / 11;
-  border-radius: 18px;
-}
-.cabanas p {
-  max-width: 44ch;
-  margin-top: 26px;
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--muted);
+  aspect-ratio: 21 / 9.5;
+  border-radius: 26px;
 }
 .chips {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 30px 0 34px;
+  margin-top: 26px;
   list-style: none;
 }
 .chips li {
   padding: 10px 16px;
+  border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--paper);
-  border: 1px solid var(--line);
   font-size: 14px;
   font-weight: 500;
 }
 
 /* ----------------------------------------------------------------- rooms */
 .rooms {
-  padding: 0 var(--pad) clamp(110px, 14vw, 200px);
+  padding: 0 var(--pad) clamp(110px, 13vw, 190px);
 }
-.rooms__head {
+.stack {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  align-items: end;
-  gap: var(--gap);
-  margin-bottom: clamp(40px, 6vw, 80px);
-}
-.rooms__head p {
-  max-width: 40ch;
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--muted);
-}
-.rooms__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
+  gap: 28px;
 }
 .room {
+  position: sticky;
+  top: 96px;
   display: grid;
-  gap: 22px;
-  align-content: start;
-  padding: 12px 12px 26px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 48px);
+  height: calc(100vh - 128px);
+  min-height: 540px;
+  max-height: 820px;
+  padding: clamp(12px, 1.2vw, 18px);
   border: 1px solid var(--line);
-  border-radius: 26px;
+  border-radius: 30px;
   background: var(--paper);
+  box-shadow: 0 30px 80px -50px rgb(19 35 43 / 0.45);
+  transform-origin: 50% 0;
 }
 .room__media {
-  aspect-ratio: 16 / 10;
-  border-radius: 16px;
+  height: 100%;
+  border-radius: 20px;
 }
 .room__media img {
-  transition: transform 1.2s var(--ease-out);
+  transition: transform 1.4s var(--ease-out);
 }
 .room:hover .room__media img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 .room__body {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: end;
-  gap: 20px;
-  padding: 0 12px;
+  gap: 30px;
+  padding: 18px 12px 12px 0;
+}
+.room__no {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--gold);
 }
 .room h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(28px, 2.5vw, 40px);
-  line-height: 1.05;
+  margin-top: 16px;
+  font-size: clamp(42px, 4.2vw, 76px);
+  line-height: 0.95;
 }
-.room__meta {
-  margin-top: 10px;
-  font-size: 14px;
+.room__text {
+  max-width: 38ch;
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--muted);
+}
+.room__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+.room__facts li {
+  padding: 16px 12px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.room__facts b {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--fg);
+}
+.room__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 .room__price {
   font-family: var(--font-display);
-  font-size: 44px;
-  line-height: 1;
-  text-align: right;
-  white-space: nowrap;
+  font-size: 58px;
+  line-height: 0.9;
 }
 .room__price small {
   display: block;
@@ -410,79 +697,201 @@
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  color: var(--gold);
+}
+.room__price span {
+  font-family: var(--font-body);
+  font-size: 14px;
   color: var(--muted);
 }
-.room .btn {
-  justify-self: start;
-  margin: 0 12px;
-}
 
-/* -------------------------------------------------- life at the resort */
-.life {
+/* ------------------------------------------------------ a day at nilaveli */
+.day {
   height: 100vh;
   display: flex;
   align-items: center;
-  background: var(--fg);
+  background: var(--deep);
   color: var(--foam);
 }
-.life .h-track {
-  gap: clamp(16px, 2vw, 28px);
+.day .h-track {
+  align-items: center;
+  gap: clamp(18px, 2.2vw, 32px);
   padding: 0 var(--pad);
-  align-items: stretch;
 }
-.life__intro,
-.shot {
+.day__intro,
+.moment {
   flex-shrink: 0;
 }
-.life__intro {
+.day__intro {
   display: grid;
   align-content: space-between;
-  width: clamp(280px, 27vw, 410px);
-  padding: 6px 0;
+  gap: 40px;
+  width: clamp(300px, 30vw, 460px);
+  height: min(72vh, 640px);
 }
-.life__intro .label,
-.getting .label {
-  color: var(--mint);
+.day__intro .label {
+  color: var(--gold-2);
 }
-.life__intro p {
-  max-width: 30ch;
+.day__intro .h2 {
+  margin-top: 18px;
+}
+.day__intro p {
+  max-width: 32ch;
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
   opacity: 0.82;
 }
-.life__hint {
+.day__hint {
   margin-top: 24px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--mint);
+  color: var(--gold-2);
 }
-.shot {
+.moment {
   display: grid;
-  gap: 16px;
-  align-content: start;
-  width: clamp(320px, 58vw, 1000px);
+  gap: 18px;
+  width: clamp(320px, 44vw, 760px);
 }
-.shot .media {
-  aspect-ratio: 16 / 10;
-  border-radius: 18px;
+.moment .media {
+  aspect-ratio: 3 / 2;
+  border-radius: 20px;
 }
-.shot figcaption {
-  display: flex;
-  justify-content: space-between;
+.moment--tall {
+  width: clamp(260px, 25vw, 420px);
+}
+.moment--tall .media {
+  aspect-ratio: 3 / 4;
+}
+.moment figcaption {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 4px 18px;
+}
+.moment time {
+  grid-row: span 2;
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1;
+  color: var(--gold-2);
+}
+.moment b {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.05;
+}
+.moment figcaption span {
+  max-width: 46ch;
+  font-size: 14px;
+  line-height: 1.55;
+  opacity: 0.78;
+}
+
+/* --------------------------------------------------------------- ayurveda */
+.ayur {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: start;
+  gap: clamp(30px, 6vw, 110px);
+  padding: clamp(120px, 14vw, 200px) var(--pad);
+}
+.ayur__media {
+  position: sticky;
+  top: 110px;
+  aspect-ratio: 4 / 5;
+  border-radius: 260px 260px 22px 22px;
+}
+.ayur .h2 {
+  margin-top: 18px;
+}
+.ayur .lead {
+  margin-top: 22px;
+}
+.treat {
+  margin: 36px 0 40px;
+  border-top: 1px solid var(--line);
+  list-style: none;
+  columns: 2;
+  column-gap: 40px;
+  counter-reset: t;
+}
+.treat li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: baseline;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+  break-inside: avoid;
+  font-size: 16px;
+}
+.treat li::before {
+  counter-increment: t;
+  content: counter(t, decimal-leading-zero);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+}
+.treat span {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------ experiences */
+.exp {
+  padding: clamp(120px, 14vw, 200px) var(--pad);
+  background: var(--deep);
+  color: var(--foam);
+}
+.exp .label {
+  color: var(--gold-2);
+}
+.exp .lead {
+  color: rgb(251 248 242 / 0.75);
+}
+.exp__list {
+  border-top: 1px solid rgb(251 248 242 / 0.2);
+  list-style: none;
+}
+.exp__list li {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1.2fr) minmax(0, 1fr);
   align-items: baseline;
   gap: 20px;
-  font-size: 15px;
-  opacity: 0.85;
+  padding: 30px 0;
+  border-bottom: 1px solid rgb(251 248 242 / 0.2);
+  transition: padding 0.6s var(--ease-out), color 0.4s;
 }
-.shot figcaption b {
+.exp__list li:hover {
+  padding-left: 18px;
+  color: var(--gold-2);
+}
+.exp__list .n {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gold-2);
+}
+.exp__list h3 {
   font-family: var(--font-display);
+  font-size: clamp(38px, 4.4vw, 76px);
   font-weight: 400;
-  font-size: 28px;
-  opacity: 1;
+  line-height: 1;
+}
+.exp__list p {
+  max-width: 40ch;
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+.exp__thumb {
+  display: none;
 }
 
 /* ------------------------------------------------------------------ grow */
@@ -506,7 +915,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgb(8 28 33 / 0.26);
+  background: rgb(8 24 31 / 0.28);
 }
 .grow__title {
   position: absolute;
@@ -514,178 +923,182 @@
   height: 100vh;
   display: grid;
   place-items: center;
-  text-align: center;
   color: var(--foam);
-  text-shadow: 0 2px 40px rgb(8 28 33 / 0.3);
+  text-align: center;
+  text-shadow: 0 2px 40px rgb(8 24 31 / 0.3);
   pointer-events: none;
 }
 .grow__title h2 {
   font: inherit;
-  font-size: clamp(50px, 8vw, 150px);
+  font-size: clamp(56px, 8.6vw, 160px);
 }
 
-/* --------------------------------------------------------------- ayurveda */
-.ayur {
+/* ---------------------------------------------------------------- awards */
+.awards {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(30px, 6vw, 110px);
-  align-items: start;
-  padding: clamp(110px, 14vw, 200px) var(--pad);
+  justify-items: center;
+  gap: 22px;
+  padding: clamp(120px, 14vw, 200px) var(--pad);
+  text-align: center;
 }
-.ayur__intro {
-  max-width: 42ch;
-  margin: 22px 0 40px;
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--muted);
+.awards__score {
+  font-size: clamp(130px, 20vw, 340px);
+  line-height: 0.8;
 }
-.menu-list {
-  list-style: none;
+.awards__score em {
+  font-size: 0.24em;
+  color: var(--gold);
+}
+.awards .lead {
+  max-width: 40ch;
+}
+.awards__list {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  width: 100%;
+  max-width: 1240px;
+  margin-top: 30px;
   border-top: 1px solid var(--line);
-  columns: 2;
-  column-gap: 40px;
-}
-.menu-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 0;
   border-bottom: 1px solid var(--line);
-  break-inside: avoid;
-  font-size: 16px;
-}
-.menu-list span {
-  color: var(--muted);
-  white-space: nowrap;
-}
-.ayur__media {
-  position: sticky;
-  top: 110px;
-  aspect-ratio: 4 / 5;
-  border-radius: 18px;
-}
-
-/* ------------------------------------------------------------ things to do */
-.todo {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: clamp(30px, 6vw, 110px);
-  align-items: center;
-  padding: clamp(110px, 14vw, 200px) var(--pad);
-}
-.todo__media {
-  justify-self: center;
-  width: min(100%, 460px);
-  aspect-ratio: 3 / 4;
-  border-radius: 240px 240px 18px 18px;
-}
-.todo__list {
-  margin-top: clamp(30px, 4vw, 50px);
   list-style: none;
-  border-top: 1px solid var(--line);
 }
-.todo__list li {
+.awards__list li {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
-  gap: 16px;
-  padding: 22px 0;
-  border-bottom: 1px solid var(--line);
+  gap: 8px;
+  padding: 26px 8px;
+  border-right: 1px solid var(--line);
 }
-.todo__list small {
-  padding-top: 9px;
+.awards__list li:last-child {
+  border-right: 0;
+}
+.awards__list b {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 3.4vw, 58px);
+  font-weight: 400;
+  line-height: 1;
+}
+.awards__list span {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.14em;
-  color: var(--accent);
+  color: var(--gold);
 }
-.todo__list h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(26px, 2.2vw, 34px);
-  line-height: 1.1;
-}
-.todo__list p {
-  max-width: 46ch;
-  margin-top: 6px;
-  font-size: 15px;
-  line-height: 1.6;
+.awards__note {
+  font-size: 13px;
   color: var(--muted);
 }
 
 /* ------------------------------------------------------------ getting here */
 .getting {
-  padding: clamp(100px, 12vw, 170px) var(--pad);
-  background: var(--fg);
-  color: var(--foam);
+  padding: clamp(110px, 12vw, 170px) var(--pad);
+  border-top: 1px solid var(--line);
+  background: var(--paper);
 }
 .ways {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap);
-  margin-top: clamp(40px, 6vw, 80px);
   list-style: none;
 }
 .ways li {
   padding-top: 22px;
-  border-top: 1px solid rgb(251 248 242 / 0.25);
+  border-top: 1px solid var(--line);
+}
+.ways small {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gold);
 }
 .ways h3 {
+  margin-top: 14px;
   font-family: var(--font-display);
+  font-size: clamp(38px, 3.4vw, 54px);
   font-weight: 400;
-  font-size: 34px;
+  line-height: 1;
 }
 .ways p {
-  margin-top: 12px;
+  max-width: 36ch;
+  margin-top: 14px;
   font-size: 15px;
   line-height: 1.65;
-  opacity: 0.85;
+  color: var(--muted);
 }
 
 /* -------------------------------------------------------------------- plan */
 .plan {
+  position: relative;
   display: grid;
   justify-items: center;
-  gap: 26px;
-  padding: clamp(120px, 15vw, 220px) var(--pad);
+  gap: 24px;
+  padding: clamp(130px, 15vw, 230px) var(--pad) clamp(110px, 12vw, 170px);
+  overflow: hidden;
+  background: var(--deep);
+  color: var(--foam);
   text-align: center;
 }
-.plan p {
+.plan__sun {
+  position: absolute;
+  top: clamp(30px, 5vw, 70px);
+  left: 50%;
+  width: min(70vw, 900px);
+  margin-left: max(-35vw, -450px);
+  color: var(--gold-2);
+  opacity: 0.1;
+}
+.plan .label {
+  color: var(--gold-2);
+}
+.plan .h2 {
+  position: relative;
+}
+.plan__text {
+  position: relative;
   max-width: 46ch;
   font-size: 17px;
   line-height: 1.6;
-  color: var(--muted);
+  opacity: 0.8;
 }
-.plan__cta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 10px;
+.book--full {
+  position: relative;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: min(100%, 1080px);
+  margin-top: 16px;
+  text-align: left;
+}
+.book--full .book__go {
+  grid-column: 1 / -1;
+  min-height: 58px;
 }
 .contacts {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px 28px;
-  margin-top: 20px;
+  gap: 12px 30px;
+  margin-top: 26px;
   font-size: 15px;
 }
 .contacts a {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgb(251 248 242 / 0.3);
+}
+.contacts span {
+  opacity: 0.75;
 }
 
 /* ---------------------------------------------------------------- footer */
 .footer {
   padding: clamp(60px, 8vw, 110px) var(--pad) 26px;
-  background: #0b1f24;
+  background: var(--deeper);
   color: var(--foam);
 }
 .footer__word {
   font-family: var(--font-display);
-  /* "Nilaveli" is ~3.13em wide: fill the row */
-  font-size: calc((100vw - 2 * var(--pad)) / 3.22);
-  line-height: 0.85;
-  letter-spacing: -0.015em;
+  /* "Nilaveli" is ~2.37em wide in Instrument Serif: fill the row */
+  font-size: calc((100vw - 2 * var(--pad)) / 2.42);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  color: var(--gold-2);
   text-align: center;
   white-space: nowrap;
 }
@@ -696,9 +1109,9 @@
   gap: 12px 24px;
   margin-top: clamp(40px, 6vw, 70px);
   padding-top: 20px;
-  border-top: 1px solid rgb(251 248 242 / 0.2);
+  border-top: 1px solid rgb(251 248 242 / 0.18);
   font-size: 13px;
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
 /* preview badge */
@@ -706,8 +1119,6 @@
   position: fixed;
   left: 50%;
   bottom: 16px;
-  transform: translateX(-50%);
-  white-space: nowrap;
   z-index: 95;
   display: inline-flex;
   align-items: center;
@@ -718,6 +1129,8 @@
   color: #fff;
   font-size: 12px;
   font-weight: 500;
+  white-space: nowrap;
+  transform: translateX(-50%);
   backdrop-filter: blur(8px);
   transition: transform 0.7s var(--ease-out), opacity 0.4s;
 }
@@ -735,46 +1148,66 @@
 
 .menu__close {
   position: absolute;
-  left: var(--pad);
   top: 26px;
+  left: var(--pad);
   z-index: 2;
   font-weight: 600;
 }
+.menu__links a {
+  font-weight: 400;
+  transition: color 0.4s, transform 0.8s var(--ease-out);
+}
+.menu__links a:hover {
+  color: var(--gold-2);
+  transform: translateX(14px);
+}
 
 @media (max-width: 1100px) {
-  .nav {
-    gap: 22px;
+  .nav a {
+    padding: 9px 12px;
+  }
+  .hero__row {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
-@media (max-width: 900px) {
-  .nav,
-  .header .btn span {
+@media (max-width: 1000px) {
+  .header {
+    grid-template-columns: auto 1fr auto;
+  }
+  .nav {
     display: none;
   }
   .menu-btn {
     display: inline-block;
   }
-  .header .btn {
-    width: 44px;
-    margin-left: auto;
-    padding: 0;
-  }
+}
+@media (max-width: 900px) {
   .mark {
-    height: 46px;
+    height: 44px;
+  }
+  .header .btn {
+    height: 44px;
+    padding: 0 18px;
+  }
+  .menu-btn {
+    height: 44px;
   }
   .hero__shade {
     background:
-      linear-gradient(180deg, rgb(8 28 33 / 0.5) 0%, rgb(8 28 33 / 0) 24%),
-      linear-gradient(0deg, rgb(8 28 33 / 0.84) 0%, rgb(8 28 33 / 0.5) 48%, rgb(8 28 33 / 0) 76%);
+      linear-gradient(180deg, rgb(8 24 31 / 0.55) 0%, rgb(8 24 31 / 0) 24%),
+      linear-gradient(0deg, rgb(8 24 31 / 0.88) 0%, rgb(8 24 31 / 0.5) 50%, rgb(8 24 31 / 0) 78%);
   }
   .hero__copy {
-    bottom: 64px;
+    bottom: 60px;
     gap: 16px;
   }
-  .hero__sub,
-  .book__note,
   .hero__foot {
     display: none;
+  }
+  .film-btn__ring {
+    width: 48px;
+    height: 48px;
   }
   .book {
     grid-template-columns: 1fr 1fr;
@@ -784,61 +1217,127 @@
     grid-column: 1 / -1;
     min-height: 52px;
   }
-  .intro,
-  .cabanas,
-  .ayur,
-  .rooms__head,
-  .rooms__grid {
+  .book--full .book__f:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+  .welcome__text {
+    max-width: 14em;
+  }
+  .welcome__imgs {
+    position: relative;
+    inset: auto;
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .welcome__img {
+    position: relative;
+    inset: auto;
+  }
+  .welcome__img--a,
+  .welcome__img--b {
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 42vw;
+  }
+  .welcome__img--b {
+    margin-top: 40px;
+  }
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 40px;
+  }
+  .split-head,
+  .ayur {
     grid-template-columns: 1fr;
   }
-  .room__body {
-    padding: 0 6px;
+  .cabanas__media {
+    aspect-ratio: 4 / 3;
+    border-radius: 20px;
   }
-  .room .btn {
-    margin: 0 6px;
+  .room {
+    position: relative;
+    top: 0;
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    border-radius: 24px;
+  }
+  .room__media {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .room__body {
+    padding: 6px 8px 10px;
   }
   .room__price {
-    font-size: 34px;
+    font-size: 46px;
   }
-  .menu-list {
-    columns: 1;
+  .day {
+    height: auto;
+    padding: 90px 0 60px;
+  }
+  .day .h-track {
+    align-items: flex-start;
+    padding-right: var(--pad);
+  }
+  .day__intro {
+    width: 82vw;
+    height: auto;
+  }
+  .moment {
+    width: 82vw;
+  }
+  .moment--tall {
+    width: 64vw;
   }
   .ayur__media {
     position: relative;
     top: 0;
+    width: 80%;
+    justify-self: center;
   }
-  .life {
-    height: auto;
-    padding: 90px 0 60px;
+  .treat {
+    columns: 1;
   }
-  .life .h-track {
-    padding-right: var(--pad);
+  .exp__list li {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
-  .life__intro {
-    width: 82vw;
-    gap: 30px;
+  .exp__list li:hover {
+    padding-left: 0;
   }
-  .shot {
-    width: 82vw;
+  .exp__thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    margin-bottom: 8px;
+    border-radius: 14px;
+    object-fit: cover;
   }
-  .shot .media {
-    aspect-ratio: 4 / 3;
+  .awards__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  .shot figcaption {
-    display: grid;
-    gap: 4px;
+  .awards__list li:nth-child(4) {
+    border-right: 0;
   }
-  .todo,
+  .awards__list li:nth-child(n + 5) {
+    border-top: 1px solid var(--line);
+  }
   .ways {
     grid-template-columns: 1fr;
-  }
-  .todo__media {
-    justify-self: start;
-    width: 86%;
+    row-gap: 36px;
   }
   .hh-preview {
     bottom: 10px;
     font-size: 11px;
+  }
+}
+@media (max-width: 520px) {
+  .header .btn .long {
+    display: none;
   }
 }
 </style>
@@ -846,9 +1345,9 @@
 <body>
 
 <div class="loader" aria-hidden="true">
-  <div class="loader__brand"><span class="mark" style="height: 74px"></span></div>
+  <div class="loader__brand"><span class="mark" style="height: 76px"></span></div>
   <div class="loader__row">
-    <p class="loader__note">Km 19, Nilaveli Road<br>Trincomalee, Sri Lanka</p>
+    <p class="loader__note"><em>Ayubowan</em><br>Km 19, Nilaveli Road, Trincomalee</p>
     <p class="loader__count">000</p>
   </div>
   <span class="loader__bar"></span>
@@ -858,163 +1357,221 @@
 <header class="header" data-header>
   <a class="logo" href="#top" aria-label="Nilaveli Beach Resort, back to top"><span class="mark" aria-hidden="true"></span></a>
   <ul class="nav">
-    <li><a class="roll" href="#cabanas"><span data-text="Cabanas">Cabanas</span></a></li>
-    <li><a class="roll" href="#rooms"><span data-text="Rooms">Rooms</span></a></li>
-    <li><a class="roll" href="#ayurveda"><span data-text="Ayurveda">Ayurveda</span></a></li>
-    <li><a class="roll" href="#todo"><span data-text="Things to do">Things to do</span></a></li>
-    <li><a class="roll" href="#getting"><span data-text="Getting here">Getting here</span></a></li>
+    <li><a href="#stay">Stay</a></li>
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#day">Dining</a></li>
+    <li><a href="#ayurveda">Ayurveda</a></li>
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#getting">Getting here</a></li>
   </ul>
-  <a class="btn btn--wa" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20check%20availability%20at%20Nilaveli%20Beach%20Resort." target="_blank" rel="noopener" data-magnetic="0.25" aria-label="Book on WhatsApp">
-    <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
-    <span>Book on WhatsApp</span>
-  </a>
-  <button class="menu-btn roll" type="button" data-menu-open><span data-text="Menu">Menu</span></button>
+  <div class="header__end">
+    <a class="btn btn--gold" href="#book" data-magnetic="0.2"><span>Book<span class="long"> your stay</span></span></a>
+    <button class="menu-btn" type="button" data-menu-open>Menu</button>
+  </div>
 </header>
 
 <nav class="menu" aria-label="Site menu">
   <button class="menu__close roll" type="button" data-menu-close><span data-text="Close">Close</span></button>
   <ul class="menu__links">
-    <li><a href="#cabanas"><small>01</small>Cabanas</a></li>
+    <li><a href="#stay"><small>01</small>Stay</a></li>
     <li><a href="#rooms"><small>02</small>Rooms</a></li>
-    <li><a href="#resort"><small>03</small>The resort</a></li>
+    <li><a href="#day"><small>03</small>Dining</a></li>
     <li><a href="#ayurveda"><small>04</small>Ayurveda</a></li>
-    <li><a href="#todo"><small>05</small>Things to do</a></li>
+    <li><a href="#experiences"><small>05</small>Experiences</a></li>
     <li><a href="#getting"><small>06</small>Getting here</a></li>
-    <li><a href="#top"><small>07</small>Book</a></li>
+    <li><a href="#book"><small>07</small>Book</a></li>
   </ul>
   <div class="menu__media" aria-hidden="true">
     <img src="media/cabanas.jpg" alt="">
-    <img src="media/room-royal.jpg" alt="">
-    <img src="media/pool.jpg" alt="">
+    <img src="media/room-king.jpg" alt="">
+    <img src="media/dinner.jpg" alt="">
     <img src="media/ayurveda.jpg" alt="">
-    <img src="media/palms.jpg" alt="">
+    <img src="media/pigeon.jpg" alt="">
+    <img src="media/sunrise.jpg" alt="">
     <img src="media/beach.jpg" alt="">
-    <img src="media/evening.jpg" alt="">
   </div>
 </nav>
 
 <main>
   <section class="hero" id="top" data-theme="dark">
     <div class="hero__media">
-      <img src="media/hero.jpg" srcset="media/hero-1200.jpg 1200w, media/hero.jpg 2400w" sizes="100vw" alt="Wooden cabanas under coconut palms on Nilaveli beach" data-preload>
+      <img src="media/hero.jpg" alt="" data-preload>
+      <video src="media/hero.mp4" poster="media/hero.jpg" muted playsinline loop autoplay preload="auto" data-autoplay aria-label="Walking past the wooden cabanas under the palms"></video>
     </div>
     <div class="hero__shade"></div>
     <div class="hero__copy">
       <p class="label hero__label" data-intro>Nilaveli · Trincomalee · Sri Lanka</p>
-      <h1 class="hero__title serif" data-intro>Step out of your cabana,<br> <em>onto the sand</em></h1>
-      <p class="hero__sub" data-intro>Wooden cabanas on the beach, the warm Indian Ocean at your door and Pigeon Island just offshore.</p>
-      <form class="book" data-intro data-book aria-label="Check availability">
-        <label class="book__f"><span>Check in</span><input type="date" name="checkin" required></label>
-        <label class="book__f"><span>Check out</span><input type="date" name="checkout" required></label>
-        <label class="book__f book__f--sel"><span>Adults</span>
-          <select name="adults"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
-        </label>
-        <label class="book__f book__f--sel"><span>Children</span>
-          <select name="kids"><option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
-        </label>
-        <button class="btn btn--wa book__go" type="submit">Check availability</button>
-      </form>
-      <p class="book__note" data-intro>Your dates go straight to the resort on WhatsApp.</p>
+      <h1 class="hero__title serif" data-intro>Step out of your cabana,<br> <em>onto the sand.</em></h1>
+      <div class="hero__row" data-intro>
+        <form class="book" data-book aria-label="Check availability">
+          <label class="book__f"><span>Check in</span><input type="date" name="checkin" required></label>
+          <label class="book__f"><span>Check out</span><input type="date" name="checkout" required></label>
+          <label class="book__f book__f--sel"><span>Adults</span>
+            <select name="adults"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+          </label>
+          <label class="book__f book__f--sel"><span>Children</span>
+            <select name="kids"><option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+          </label>
+          <button class="btn btn--gold book__go" type="submit">Check availability</button>
+        </form>
+        <button class="film-btn" type="button" data-film data-cursor="Play">
+          <span class="film-btn__ring"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3 1.5v13L14 8z"/></svg></span>
+          <span><b>Watch the film</b><small>1:45 · a walk through the resort</small></span>
+        </button>
+      </div>
     </div>
     <div class="hero__foot" data-intro>
-      <span>Km 19, Nilaveli Road</span>
-      <span>Trincomalee <span data-clock="Asia/Colombo">09:00</span></span>
+      <span>Km 19, Nilaveli Road · Trincomalee <span data-clock="Asia/Colombo">09:00</span></span>
+      <span>Rated <b>9.0</b> by guests on Booking.com</span>
     </div>
   </section>
 
-  <section class="intro">
-    <span class="label" data-fade>The resort</span>
-    <p class="serif" data-split="fill">A small boutique resort for a quiet stay on Nilaveli beach. Every room is in a wooden cabana on the beach itself: step out of your door, walk on the soft sand and dip into the warm Indian Ocean.</p>
+  <div class="band marquee" data-marquee aria-hidden="true">
+    <div class="marquee__track">
+      <span>Wooden cabanas</span><i>✦</i><span>Pigeon Island</span><i>✦</i><span>Ayurveda</span><i>✦</i><span>Sunrise over the Indian Ocean</span><i>✦</i><span>Fresh catch of the day</span><i>✦</i>
+    </div>
+  </div>
+
+  <section class="welcome" id="welcome">
+    <span class="sun welcome__sun" aria-hidden="true" data-drift="70"></span>
+    <p class="label" data-fade>Welcome</p>
+    <h2 class="welcome__title serif" data-split="chars">Ayubowan</h2>
+    <p class="welcome__note" data-fade>The Sri Lankan greeting: <em>may you live long and healthy.</em></p>
+    <p class="welcome__text serif" data-split="fill">Family holidays, romantic getaways or a quiet retreat: come and stay with us. Stretch out on luxurious bedding, unwind with an Ayurvedic massage, enjoy the fresh catch of the day and dip into the warm Indian Ocean.</p>
+    <div class="welcome__imgs">
+      <figure class="welcome__img welcome__img--a media" data-drift="90"><img src="media/lounger.jpg" alt="A guest on a sunbed under a palm, Pigeon Island on the horizon"></figure>
+      <figure class="welcome__img welcome__img--b media" data-drift="150"><img src="media/entrance.jpg" alt="The thatched entrance of Nilaveli Beach Resort"></figure>
+    </div>
   </section>
 
-  <section class="cabanas" id="cabanas">
-    <div class="cabanas__media media" data-reveal data-parallax="10"><img src="media/cabanas.jpg" alt="Two-storey wooden cabanas with thatched roofs among coconut palms"></div>
-    <div>
-      <span class="label" data-fade>Our cabanas</span>
-      <h2 class="serif" data-split style="margin-top: 18px">Wooden cabanas, <em>right on the beach</em></h2>
-      <p data-fade>Each cabana opens straight onto the sand, so the sea is the first thing you see in the morning and the last thing you hear at night.</p>
-      <ul class="chips" data-fade>
-        <li>On the sand</li><li>Sunrise over the sea</li><li>Pool by the beach</li><li>Check-in from 3 pm</li>
-      </ul>
-      <a class="btn" href="#rooms" data-fade>See the rooms</a>
+  <section class="stats" aria-label="At a glance">
+    <div class="stat" data-fade><b data-count="9.0">9.0</b><p>Guest rating on Booking.com</p></div>
+    <div class="stat" data-fade data-delay="0.08"><b><span data-count="7">7</span><i>×</i></b><p>Booking.com Guest Review Award winner</p></div>
+    <div class="stat" data-fade data-delay="0.16"><b data-count="11">11</b><p>Traditional Ayurvedic treatments</p></div>
+    <div class="stat" data-fade data-delay="0.24"><b>1</b><p>row of wooden cabanas, every one facing the sea</p></div>
+  </section>
+
+  <section class="cabanas" id="stay">
+    <div class="split-head">
+      <div>
+        <p class="label" data-fade>Stay</p>
+        <h2 class="h2 serif" data-split>One row of cabanas, <em>every one facing the sea</em></h2>
+      </div>
+      <div>
+        <p class="lead" data-fade>Walk out of your room and onto the beach. Feel the sand slip through your toes, soak in the warm ocean, or simply sit on your balcony, watch the sunrise and listen to the waves.</p>
+        <ul class="chips" data-fade><li>Private balcony</li><li>Sea view</li><li>Free Wi-Fi</li><li>Check-in from 3 pm</li></ul>
+      </div>
     </div>
+    <div class="cabanas__media media" data-reveal="up" data-parallax="10"><img src="media/cabanas.jpg" alt="Two-storey wooden cabanas with thatched roofs in a row under coconut palms"></div>
   </section>
 
   <section class="rooms" id="rooms">
-    <div class="rooms__head">
+    <div class="split-head">
       <div>
-        <span class="label" data-fade>Rooms</span>
-        <h2 class="serif" data-split style="margin-top: 18px">Wake up <em>to the sea</em></h2>
+        <p class="label" data-fade>Rooms</p>
+        <h2 class="h2 serif" data-split>Choose <em>your cabana</em></h2>
       </div>
-      <p data-fade>Every room is in one of our wooden cabanas, a few steps from the sand. Choose your dates above, or book a room directly.</p>
+      <p class="lead" data-fade>From deluxe doubles to family rooms for four, every room is in a wooden cabana with a balcony over the beach.</p>
     </div>
-    <div class="rooms__grid">
-      <article class="room" data-fade>
-        <div class="room__media media"><img src="media/room-king.jpg" alt="King room with timber walls and doors to the terrace"></div>
+    <div class="stack">
+      <article class="room">
+        <div class="room__media media"><img src="media/room-king.jpg" alt="King room with timber walls and a door onto the balcony"></div>
         <div class="room__body">
           <div>
-            <h3>King Room with Ocean View</h3>
-            <p class="room__meta">311 sq ft · 1 king bed</p>
+            <span class="room__no">01 / 03</span>
+            <h3 class="serif">King Room <em>with Ocean View</em></h3>
+            <p class="room__text">A king bed, warm timber walls and a door that opens onto your balcony and the sea.</p>
           </div>
-          <p class="room__price"><small>From</small>$150</p>
+          <ul class="room__facts"><li><b>311</b>sq ft</li><li><b>1</b>king bed</li><li><b>Sea</b>view</li></ul>
+          <div class="room__foot">
+            <p class="room__price"><small>From</small>$150 <span>/ night</span></p>
+            <a class="btn btn--gold" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20book%20the%20King%20Room%20with%20Ocean%20View." target="_blank" rel="noopener" data-room="King Room with Ocean View">Book this room</a>
+          </div>
         </div>
-        <a class="btn" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20book%20the%20King%20Room%20with%20Ocean%20View." target="_blank" rel="noopener" data-room="King Room with Ocean View">Book this room</a>
       </article>
-      <article class="room" data-fade data-delay="0.08">
+      <article class="room">
         <div class="room__media media"><img src="media/room-royal.jpg" alt="Royal deluxe room with a carved four-poster bed"></div>
         <div class="room__body">
           <div>
-            <h3>Royal Deluxe Ocean Terrace</h3>
-            <p class="room__meta">422 sq ft · 1 king bed</p>
+            <span class="room__no">02 / 03</span>
+            <h3 class="serif">Royal Deluxe <em>Ocean Terrace</em></h3>
+            <p class="room__text">A carved four-poster bed, more room to spread out and a terrace facing the Indian Ocean.</p>
           </div>
-          <p class="room__price"><small>From</small>$170</p>
+          <ul class="room__facts"><li><b>422</b>sq ft</li><li><b>1</b>king bed</li><li><b>Ocean</b>terrace</li></ul>
+          <div class="room__foot">
+            <p class="room__price"><small>From</small>$170 <span>/ night</span></p>
+            <a class="btn btn--gold" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20book%20the%20Royal%20Deluxe%20Ocean%20Terrace." target="_blank" rel="noopener" data-room="Royal Deluxe Ocean Terrace">Book this room</a>
+          </div>
         </div>
-        <a class="btn" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20book%20the%20Royal%20Deluxe%20Ocean%20Terrace." target="_blank" rel="noopener" data-room="Royal Deluxe Ocean Terrace">Book this room</a>
+      </article>
+      <article class="room">
+        <div class="room__media media"><img src="media/room-family.jpg" alt="Family room with two large beds and timber walls"></div>
+        <div class="room__body">
+          <div>
+            <span class="room__no">03 / 03</span>
+            <h3 class="serif">Premium Deluxe <em>Family Room</em></h3>
+            <p class="room__text">Space for the whole family, with room for four and the beach a few steps from the door.</p>
+          </div>
+          <ul class="room__facts"><li><b>4</b>guests</li><li><b>2</b>large beds</li><li><b>Beach</b>front</li></ul>
+          <div class="room__foot">
+            <p class="room__price"><small>Rates</small>On request</p>
+            <a class="btn btn--gold" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20ask%20about%20the%20Premium%20Deluxe%20Family%20Room." target="_blank" rel="noopener" data-room="Premium Deluxe Family Room">Ask about this room</a>
+          </div>
+        </div>
       </article>
     </div>
   </section>
 
-  <section class="life" id="resort" data-horizontal data-theme="dark">
+  <section class="day" id="day" data-horizontal data-theme="dark">
     <div class="h-track">
-      <div class="life__intro">
+      <div class="day__intro">
         <div>
-          <span class="label">The resort</span>
-          <h2 class="serif" data-split style="margin-top: 18px">Pool, palms <em>and the sea</em></h2>
+          <p class="label">A day at Nilaveli</p>
+          <h2 class="h2 serif" data-split>From sunrise <em>to starlight</em></h2>
         </div>
         <div>
-          <p>Life here moves at beach pace: a swim, a long lunch, the lights coming on under the thatch.</p>
-          <p class="life__hint">Scroll sideways →</p>
+          <p>Our restaurant opens for breakfast, lunch and dinner, with local favourites, international dishes and the fresh catch of the day.</p>
+          <p class="day__hint">Scroll sideways →</p>
         </div>
       </div>
-      <figure class="shot">
-        <div class="media"><img src="media/pool.jpg" alt="The swimming pool with sunbeds, palms and the beach behind"></div>
-        <figcaption><b>The pool</b><span>Among the palms, steps from the beach</span></figcaption>
+      <figure class="moment">
+        <div class="media"><img src="media/sunrise.jpg" alt="Sunrise over the sea with a traditional outrigger boat on the sand"></div>
+        <figcaption><time>06:00</time><b>Sunrise from the sea</b><span>On the east coast the sun comes up over the Indian Ocean, right in front of your balcony.</span></figcaption>
       </figure>
-      <figure class="shot">
-        <div class="media"><img src="media/dining.jpg" alt="A table set for dinner with the sea beyond"></div>
-        <figcaption><b>Dining by the sea</b><span>Tables set with the ocean in view</span></figcaption>
+      <figure class="moment">
+        <div class="media"><img src="media/breakfast.jpg" alt="Breakfast served in the beach pavilion"></div>
+        <figcaption><time>08:00</time><b>Breakfast by the beach</b><span>Start the day slowly, looking out over the sand.</span></figcaption>
       </figure>
-      <figure class="shot">
-        <div class="media"><img src="media/evening.jpg" alt="Lit thatched umbrellas and loungers on the sand at night"></div>
-        <figcaption><b>After dark</b><span>Lights under the thatch, loungers on the sand</span></figcaption>
+      <figure class="moment moment--tall">
+        <div class="media"><img src="media/lounger.jpg" alt="A sunbed under a palm with Pigeon Island on the horizon"></div>
+        <figcaption><time>10:30</time><b>Sun, sand, shade</b><span>A sunbed, a palm and Pigeon Island on the horizon.</span></figcaption>
       </figure>
-      <figure class="shot">
-        <div class="media"><img src="media/stilts.jpg" alt="A wooden cabana on stilts with a thatched roof"></div>
-        <figcaption><b>Cabanas on stilts</b><span>Thatched roofs and timber decks</span></figcaption>
+      <figure class="moment">
+        <div class="media"><img src="media/restaurant.jpg" alt="The thatched restaurant pavilion looking out to the beach"></div>
+        <figcaption><time>13:00</time><b>Lunch in the pavilion</b><span>Local favourites and international dishes under the thatch, with the sea in view.</span></figcaption>
       </figure>
-      <figure class="shot">
-        <div class="media"><img src="media/deck.jpg" alt="A timber deck with railings and tropical plants"></div>
-        <figcaption><b>Your own deck</b><span>Timber balconies wrapped in green</span></figcaption>
+      <figure class="moment">
+        <div class="media"><img src="media/crab.jpg" alt="A whole crab served with salad"></div>
+        <figcaption><time>16:00</time><b>Fresh catch of the day</b><span>Crab, prawns and fish, fresh from the sea.</span></figcaption>
+      </figure>
+      <figure class="moment">
+        <div class="media"><img src="media/dinner.jpg" alt="A candlelit table set on the beach at dusk"></div>
+        <figcaption><time>19:30</time><b>Dinner on the sand</b><span>A candlelit table on the beach as the evening cools.</span></figcaption>
+      </figure>
+      <figure class="moment">
+        <div class="media"><img src="media/night.jpg" alt="Thatched umbrellas lit up at night above loungers"></div>
+        <figcaption><time>21:00</time><b>Lights under the thatch</b><span>The day ends where it began: by the sea.</span></figcaption>
       </figure>
     </div>
   </section>
 
   <section class="ayur" id="ayurveda">
+    <div class="ayur__media media" data-reveal="up" data-parallax="8"><img src="media/ayurveda.jpg" alt="Ayurvedic herbs and spices with a mortar and pestle"></div>
     <div>
-      <span class="label" data-fade>Ayurveda</span>
-      <h2 class="serif" data-split style="margin-top: 18px">Traditional treatments <em>by the sea</em></h2>
-      <p class="ayur__intro" data-fade>Sri Lankan Ayurvedic treatments by a professional Ayurvedic doctor and his team, for in-house guests with a prior reservation.</p>
-      <ul class="menu-list" data-fade>
+      <p class="label" data-fade>Ayurveda</p>
+      <h2 class="h2 serif" data-split>Ayurveda <em>by the sea</em></h2>
+      <p class="lead" data-fade>Traditional Sri Lankan Ayurvedic treatments by a professional Ayurvedic doctor and his team, for in-house guests with a prior reservation.</p>
+      <ol class="treat" data-fade>
         <li>Body massage <span>60 min</span></li>
         <li>Head massage <span>30 min</span></li>
         <li>Neck &amp; shoulder massage <span>30 min</span></li>
@@ -1023,66 +1580,112 @@
         <li>Ayurvedic facial <span>60 min</span></li>
         <li>Body scrub <span>75 min</span></li>
         <li>Reflexology <span>45 min</span></li>
-        <li>Face massage <span>—</span></li>
-        <li>Manicure &amp; pedicure <span>—</span></li>
-      </ul>
+        <li>Face massage <span></span></li>
+        <li>Pedicure <span></span></li>
+        <li>Manicure <span></span></li>
+      </ol>
+      <a class="btn" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20reserve%20an%20Ayurvedic%20treatment%20during%20my%20stay." target="_blank" rel="noopener" data-fade>Reserve a treatment</a>
     </div>
-    <div class="ayur__media media" data-reveal data-parallax="10"><img src="media/ayurveda.jpg" alt="Ayurvedic herbs and spices with a mortar and pestle"></div>
   </section>
 
-  <section class="grow" data-theme="dark" aria-label="The beach and Pigeon Island">
+  <section class="exp" id="experiences" data-theme="dark">
+    <div class="split-head">
+      <div>
+        <p class="label" data-fade>Experiences</p>
+        <h2 class="h2 serif" data-split>Beyond <em>the beach</em></h2>
+      </div>
+      <p class="lead" data-fade>We'll help you plan your days on land and sea, from Pigeon Island to the temples and history of Trincomalee.</p>
+    </div>
+    <ul class="exp__list" data-follow>
+      <li data-img="media/pigeon.jpg"><img class="exp__thumb" src="media/pigeon.jpg" alt=""><span class="n">01</span><h3>Pigeon Island</h3><p>Snorkelling and diving at the marine national park, just off Nilaveli beach.</p></li>
+      <li data-img="media/sunrise.jpg"><img class="exp__thumb" src="media/sunrise.jpg" alt=""><span class="n">02</span><h3>Whales &amp; dolphins</h3><p>Boat trips from Trincomalee to see whales and dolphins in season.</p></li>
+      <li data-img="media/catch.jpg"><img class="exp__thumb" src="media/catch.jpg" alt=""><span class="n">03</span><h3>Fishing</h3><p>Fishing trips that we can arrange for you, and the catch of the day on the beach.</p></li>
+      <li data-img="media/temple.jpg"><img class="exp__thumb" src="media/temple.jpg" alt=""><span class="n">04</span><h3>Temples</h3><p>Hindu and Buddhist temples, including Koneswaram on the cliffs above the sea.</p></li>
+      <li data-img="media/deer.jpg"><img class="exp__thumb" src="media/deer.jpg" alt=""><span class="n">05</span><h3>History</h3><p>The old fort, where spotted deer roam, and the British war cemetery.</p></li>
+      <li data-img="media/fishermen.jpg"><img class="exp__thumb" src="media/fishermen.jpg" alt=""><span class="n">06</span><h3>Trincomalee</h3><p>A city tour of daily life in one of the most beautiful natural harbours in the world.</p></li>
+    </ul>
+  </section>
+
+  <section class="grow" data-theme="dark" aria-label="Sunbeds under thatched umbrellas with Pigeon Island on the horizon">
     <div class="grow__media media" data-grow>
       <img src="media/beach.jpg" alt="">
     </div>
     <div class="grow__title serif"><h2 data-split>Calm water,<br><em>warm all year</em></h2></div>
   </section>
 
-  <section class="todo" id="todo">
-    <div class="todo__media media" data-reveal data-parallax="8"><img src="media/palms.jpg" alt="Coconut palms over the pool and a thatched pavilion"></div>
-    <div>
-      <span class="label" data-fade>Things to do</span>
-      <h2 class="serif" data-split style="margin-top: 18px">Slow days on the<br> <em>east coast</em></h2>
-      <ol class="todo__list">
-        <li data-fade><small>01</small><div><h3>Pigeon Island</h3><p>Snorkel with reef fish and turtles at the marine park just off Nilaveli beach.</p></div></li>
-        <li data-fade><small>02</small><div><h3>Yoga on the beach</h3><p>Start the day with yoga on the sand, with the sound of the waves all around you.</p></div></li>
-        <li data-fade><small>03</small><div><h3>Whales &amp; dolphins</h3><p>Boat trips from Trincomalee to see whales and dolphins in season.</p></div></li>
-        <li data-fade><small>04</small><div><h3>Trincomalee</h3><p>Koneswaram temple on the cliffs, the old town and the great natural harbour.</p></div></li>
-      </ol>
-    </div>
+  <section class="awards" id="reviews">
+    <p class="label" data-fade>Loved by our guests</p>
+    <p class="awards__score serif" data-fade><span data-count="9.0">9.0</span><em> / 10</em></p>
+    <p class="lead" data-fade>Our guest rating on Booking.com, with seven Guest Review Awards since 2014.</p>
+    <ol class="awards__list" data-fade>
+      <li><b>9.0</b><span>2014</span></li>
+      <li><b>9.1</b><span>2015</span></li>
+      <li><b>9.0</b><span>2016</span></li>
+      <li><b>9.1</b><span>2017</span></li>
+      <li><b>9.1</b><span>2018</span></li>
+      <li><b>8.9</b><span>2020</span></li>
+      <li><b>9.0</b><span>2021</span></li>
+    </ol>
+    <p class="awards__note" data-fade>Booking.com Guest Review Awards</p>
   </section>
 
-  <section class="getting" id="getting" data-theme="dark">
-    <span class="label" data-fade>Getting here</span>
-    <h2 class="serif" data-split style="margin-top: 18px">Easier than you <em>think</em></h2>
+  <section class="getting" id="getting">
+    <div class="split-head">
+      <div>
+        <p class="label" data-fade>Getting here</p>
+        <h2 class="h2 serif" data-split>Easier than <em>you think</em></h2>
+      </div>
+      <p class="lead" data-fade>We're at Km 19 on Nilaveli Road, north of Trincomalee on Sri Lanka's east coast.</p>
+    </div>
     <ul class="ways">
-      <li data-fade><h3>By air</h3><p>Helitours flies from Ratmalana, and Cinnamon Air from Katunayake, to China Bay airport, 7 km from Trincomalee.</p></li>
-      <li data-fade data-delay="0.08"><h3>By train</h3><p>The night train runs from Colombo Fort to Trincomalee. Wake up on the coast.</p></li>
-      <li data-fade data-delay="0.16"><h3>By road</h3><p>Express buses leave Colombo Pettah two or three times a day, or travel by private air-conditioned car.</p></li>
+      <li data-fade><small>01</small><h3>By air</h3><p>Helitours flies from Ratmalana, and Cinnamon Air from Katunayake, to China Bay airport, 7 km from Trincomalee.</p></li>
+      <li data-fade data-delay="0.08"><small>02</small><h3>By train</h3><p>The night train runs from Colombo Fort to Trincomalee. Wake up on the coast.</p></li>
+      <li data-fade data-delay="0.16"><small>03</small><h3>By road</h3><p>Express buses leave Colombo Pettah two or three times a day, or travel by private air-conditioned car.</p></li>
     </ul>
   </section>
 
-  <section class="plan" id="plan">
-    <span class="label" data-fade>Plan your stay</span>
-    <h2 class="serif" data-split>Your cabana <em>is waiting</em></h2>
-    <p data-fade>Send us your dates on WhatsApp and we'll reply with availability and our direct rate.</p>
-    <div class="plan__cta" data-fade>
-      <a class="btn btn--wa" href="https://wa.me/94777951871?text=Hello%2C%20I%27d%20like%20to%20check%20availability%20at%20Nilaveli%20Beach%20Resort." target="_blank" rel="noopener" data-magnetic="0.2">Check availability on WhatsApp</a>
-    </div>
+  <section class="plan" id="book" data-theme="dark">
+    <span class="sun plan__sun" aria-hidden="true"></span>
+    <p class="label" data-fade>Plan your stay</p>
+    <h2 class="h2 serif" data-split>Your cabana <em>is waiting</em></h2>
+    <p class="plan__text" data-fade>Choose your dates and room, and we'll reply on WhatsApp with availability and our best direct rate.</p>
+    <form class="book book--full" data-book data-fade aria-label="Plan your stay">
+      <label class="book__f"><span>Check in</span><input type="date" name="checkin" required></label>
+      <label class="book__f"><span>Check out</span><input type="date" name="checkout" required></label>
+      <label class="book__f book__f--sel"><span>Adults</span>
+        <select name="adults"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+      </label>
+      <label class="book__f book__f--sel"><span>Children</span>
+        <select name="kids"><option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+      </label>
+      <label class="book__f book__f--sel"><span>Room</span>
+        <select name="room"><option value="">Any room</option><option>King Room with Ocean View</option><option>Royal Deluxe Ocean Terrace</option><option>Premium Deluxe Family Room</option></select>
+      </label>
+      <button class="btn btn--gold book__go" type="submit">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
+        Send my request on WhatsApp
+      </button>
+    </form>
     <div class="contacts" data-fade>
-      <a href="tel:+94777951871">+94 777 951 871</a>
+      <a href="tel:+94777951871">+94 777 951 871</a><span>WhatsApp · Viber · FaceTime</span>
+      <a href="tel:+94262050088">+94 26 205 0088</a>
       <a href="mailto:nilavelibeachresort@yahoo.com">nilavelibeachresort@yahoo.com</a>
-      <span>Km 19, Nilaveli Road, Trincomalee</span>
     </div>
   </section>
 </main>
 
-<footer class="footer">
+<footer class="footer" data-theme="dark">
   <p class="footer__word" data-split="chars" aria-hidden="true">Nilaveli</p>
   <div class="footer__bottom">
-    <span>© 2026 Nilaveli Beach Resort · Km 19, Nilaveli Road, Trincomalee</span>
-    <span>Photos: Nilaveli Beach Resort · Design by Hemal Herath</span>
+    <span>© 2026 Nilaveli Beach Resort · Km 19, Nilaveli Road, Trincomalee, Sri Lanka</span>
+    <span>Photos and film: Nilaveli Beach Resort · Design by Hemal Herath</span>
   </div>
 </footer>
+
+<div class="film" data-film-modal aria-hidden="true">
+  <button class="film__close" type="button" data-film-close>Close</button>
+  <video controls playsinline preload="none" poster="media/film.jpg"></video>
+</div>
 
 <a class="hh-preview" href="/showcase"><i></i>Homepage design preview by Hemal Herath</a>
 
@@ -1098,13 +1701,29 @@
     intro(tl, reduce) {
       if (reduce) return;
       const title = SE.split($(".hero__title"), "lines");
-      tl.from(".hero__media > img", { scale: 1.2, duration: 2.6, ease: "expo.out" }, 0.2)
+      tl.from(".hero__media > *", { scale: 1.18, duration: 2.8, ease: "expo.out" }, 0.2)
         .from(title.lines, { yPercent: 118, duration: 1.6, stagger: 0.12 }, 0.7)
-        .fromTo([".hero__label", ".hero__sub", ".book", ".book__note", ".hero__foot"], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 1.4, stagger: 0.08 }, 1.0)
+        .fromTo([".hero__label", ".hero__row", ".hero__foot"], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 1.4, stagger: 0.1 }, 1.0)
         .from(".header", { autoAlpha: 0, duration: 1.2, ease: "power2.out", clearProps: "opacity,visibility" }, 0.95);
       const out = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
-      gsap.to(".hero__copy", { yPercent: -14, autoAlpha: 0, ease: "none", scrollTrigger: out });
+      gsap.to(".hero__copy", { yPercent: -12, autoAlpha: 0, ease: "none", scrollTrigger: out });
       gsap.to(".hero__media", { yPercent: 18, ease: "none", scrollTrigger: { ...out } });
+
+      // Room cards stack: each one settles back as the next slides over it.
+      gsap.matchMedia().add("(min-width: 901px)", () => {
+        const rooms = $$(".room");
+        rooms.forEach((room, i) => {
+          const next = rooms[i + 1];
+          if (!next) return;
+          gsap.fromTo(
+            room,
+            { scale: 1, filter: "brightness(1)" },
+            { scale: 0.92, filter: "brightness(0.82)", ease: "none", scrollTrigger: { trigger: next, start: "top bottom", end: "top 96px", scrub: true } },
+          );
+        });
+      });
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
     },
   });
 
@@ -1114,53 +1733,83 @@
   addEventListener("scroll", away, { passive: true });
   away();
 
-  // Booking: dates and guests go to the resort's WhatsApp as a ready-made message.
-  const form = $("[data-book]");
-  const { checkin, checkout, adults, kids } = form.elements;
+  // Booking: dates, guests and room go to the resort's WhatsApp as a ready-made message.
   const DAY = 864e5;
-  const pad = (n) => String(n).padStart(2, "0");
-  const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const iso = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
   const parse = (v) => new Date(`${v}T12:00:00`);
   const nice = (v) => parse(v).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+  const send = (lines) => window.open(`https://wa.me/94777951871?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
   const today = new Date();
   today.setHours(12, 0, 0, 0);
-  checkin.min = iso(today);
-  checkin.value = iso(new Date(+today + DAY));
-  const sync = () => {
-    if (!checkin.value) return;
-    const start = parse(checkin.value);
-    checkout.min = iso(new Date(+start + DAY));
-    if (!checkout.value || parse(checkout.value) <= start) checkout.value = iso(new Date(+start + 3 * DAY));
-  };
-  checkin.addEventListener("change", sync);
-  sync();
-  $$(".book__f").forEach((field) => {
-    const input = $("input", field);
-    if (input) field.addEventListener("click", () => { try { input.showPicker(); } catch {} });
-  });
-
-  const ask = (room) => {
+  const forms = $$("[data-book]");
+  const FIELDS = ["checkin", "checkout", "adults", "kids"];
+  const enquiry = (form, room = "") => {
+    const { checkin, checkout, adults, kids } = form.elements;
+    const pick = room || form.elements.room?.value || "";
     const nights = Math.round((parse(checkout.value) - parse(checkin.value)) / DAY);
     const a = +adults.value;
     const k = +kids.value;
-    const lines = [
-      `Hello Nilaveli Beach Resort, I'd like to check availability${room ? ` for the ${room}` : ""}.`,
+    return [
+      `Hello Nilaveli Beach Resort, I'd like to check availability${pick ? ` for the ${pick}` : ""}.`,
       `Check in: ${nice(checkin.value)}`,
       `Check out: ${nice(checkout.value)} (${nights} night${nights === 1 ? "" : "s"})`,
       `Guests: ${a} adult${a === 1 ? "" : "s"}${k ? `, ${k} ${k === 1 ? "child" : "children"}` : ""}`,
     ];
-    window.open(`https://wa.me/94777951871?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
   };
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    ask();
+  forms.forEach((form) => {
+    const { checkin, checkout } = form.elements;
+    checkin.min = iso(today);
+    checkin.value = iso(new Date(+today + DAY));
+    const sync = () => {
+      if (!checkin.value) return;
+      const start = parse(checkin.value);
+      checkout.min = iso(new Date(+start + DAY));
+      if (!checkout.value || parse(checkout.value) <= start) checkout.value = iso(new Date(+start + 3 * DAY));
+    };
+    checkin.addEventListener("change", sync);
+    sync();
+    // Keep both forms showing the same dates and guests.
+    form.addEventListener("change", () =>
+      forms.forEach((other) => other !== form && FIELDS.forEach((n) => (other.elements[n].value = form.elements[n].value))),
+    );
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      send(enquiry(form));
+    });
+  });
+  $$(".book__f").forEach((field) => {
+    const input = $("input", field);
+    if (input) field.addEventListener("click", () => { try { input.showPicker(); } catch {} });
   });
   $$("[data-room]").forEach((link) =>
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      ask(link.dataset.room);
+      send(enquiry(forms[0], link.dataset.room));
     }),
   );
+
+  // The film: their own walk-through, streamed only when asked for.
+  const modal = $("[data-film-modal]");
+  const film = $("video", modal);
+  const FILM = "https://video.wixstatic.com/video/c74f78_42b3b2e7d5b44d0facf05b1a06135199/";
+  const openFilm = () => {
+    if (!film.src) film.src = `${FILM}${innerWidth > 900 ? "1080p" : "720p"}/mp4/file.mp4`;
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    SE.lenis?.stop();
+    film.play().catch(() => {});
+  };
+  const closeFilm = () => {
+    film.pause();
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    SE.lenis?.start();
+  };
+  $$("[data-film]").forEach((b) => b.addEventListener("click", openFilm));
+  $("[data-film-close]").addEventListener("click", closeFilm);
+  modal.addEventListener("click", (e) => e.target === modal && closeFilm());
+  addEventListener("keydown", (e) => e.key === "Escape" && modal.classList.contains("is-open") && closeFilm());
 })();
 </script>
 </body>
