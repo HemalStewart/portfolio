@@ -226,8 +226,8 @@
   border: 1px solid var(--line);
   border-radius: 999px;
   background: rgb(251 248 242 / 0.74);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transition: background 0.4s, border-color 0.4s;
 }
 .header.is-dark .nav {
@@ -430,8 +430,8 @@
   border-radius: 22px;
   background: rgb(8 24 31 / 0.46);
   color: var(--foam);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 .book__f {
   position: relative;
@@ -1179,7 +1179,7 @@
   font-weight: 500;
   white-space: nowrap;
   transform: translateX(-50%);
-  backdrop-filter: blur(8px);
+  backdrop-filter: none;
   transition: transform 0.7s var(--ease-out), opacity 0.4s;
 }
 .hh-preview.is-away {
@@ -1423,21 +1423,21 @@
     <li><a href="#book"><small>07</small>Book</a></li>
   </ul>
   <div class="menu__media" aria-hidden="true">
-    <img src="media/cabanas.jpg" alt="">
-    <img src="media/room-king-ai-preview.jpg" alt="">
-    <img src="media/dinner.jpg" alt="">
-    <img src="media/ayurveda.jpg" alt="">
-    <img src="media/pigeon.jpg" alt="">
-    <img src="media/sunrise.jpg" alt="">
-    <img src="media/beach.jpg" alt="">
+    <img loading="lazy" decoding="async" src="media/cabanas.jpg" alt="">
+    <img loading="lazy" decoding="async" src="media/room-king-ai-preview.jpg" alt="">
+    <img loading="lazy" decoding="async" src="media/dinner.jpg" alt="">
+    <img loading="lazy" decoding="async" src="media/ayurveda.jpg" alt="">
+    <img loading="lazy" decoding="async" src="media/pigeon.jpg" alt="">
+    <img loading="lazy" decoding="async" src="media/sunrise.jpg" alt="">
+    <img loading="lazy" decoding="async" src="media/beach.jpg" alt="">
   </div>
 </nav>
 
 <main>
   <section class="hero" id="top" data-theme="dark">
     <div class="hero__media">
-      <img src="media/hero.jpg" alt="" data-preload>
-      <video src="media/hero.mp4" poster="media/hero.jpg" muted playsinline loop autoplay preload="auto" data-autoplay aria-label="Walking past the wooden cabanas under the palms"></video>
+      <img fetchpriority="high" decoding="async" src="media/hero-calm.jpg" alt="" data-preload>
+      <video poster="media/hero-calm.jpg" muted playsinline loop preload="none" data-hero-video aria-label="A calm view towards the resort beach beneath the palms"></video>
     </div>
     <div class="hero__shade"></div>
     <div class="hero__copy">
@@ -1480,8 +1480,8 @@
     <p class="welcome__note" data-fade>The Sri Lankan greeting: <em>may you live long and healthy.</em></p>
     <p class="welcome__text serif" data-split="fill">Family holidays, romantic getaways or a quiet retreat: come and stay with us. Stretch out on luxurious bedding, unwind with an Ayurvedic massage, enjoy the fresh catch of the day and dip into the warm Indian Ocean.</p>
     <div class="welcome__imgs">
-      <figure class="welcome__img welcome__img--a media" data-drift="90"><img src="media/lounger.jpg" alt="A guest on a sunbed under a palm, Pigeon Island on the horizon"></figure>
-      <figure class="welcome__img welcome__img--b media" data-drift="150"><img src="media/entrance.jpg" alt="The thatched entrance of Nilaveli Beach Resort"></figure>
+      <figure class="welcome__img welcome__img--a media" data-drift="90"><img loading="lazy" decoding="async" src="media/lounger.jpg" alt="A guest on a sunbed under a palm, Pigeon Island on the horizon"></figure>
+      <figure class="welcome__img welcome__img--b media" data-drift="150"><img loading="lazy" decoding="async" src="media/entrance.jpg" alt="The thatched entrance of Nilaveli Beach Resort"></figure>
     </div>
   </section>
 
@@ -1503,7 +1503,7 @@
         <ul class="chips" data-fade><li>Private balcony</li><li>Sea view</li><li>Free Wi-Fi</li><li>Check-in from 3 pm</li></ul>
       </div>
     </div>
-    <div class="cabanas__media media" data-reveal="up" data-parallax="10"><img src="media/cabanas.jpg" alt="Two-storey wooden cabanas with thatched roofs in a row under coconut palms"></div>
+    <div class="cabanas__media media" data-reveal="up" ><img loading="lazy" decoding="async" src="media/cabanas.jpg" alt="Two-storey wooden cabanas with thatched roofs in a row under coconut palms"></div>
   </section>
 
   <section class="rooms" id="rooms">
@@ -1516,7 +1516,7 @@
     </div>
     <div class="stack">
       <article class="room">
-        <div class="room__media media"><img src="media/room-king-ai-preview.jpg" alt="King room with timber walls and a door onto the balcony"></div>
+        <div class="room__media media"><img loading="lazy" decoding="async" src="media/room-king-ai-preview.jpg" alt="King room with timber walls and a door onto the balcony"></div>
         <div class="room__body">
           <div>
             <span class="room__no">01 / 03</span>
@@ -1531,7 +1531,7 @@
         </div>
       </article>
       <article class="room">
-        <div class="room__media media"><img src="media/room-royal-ai-preview.jpg" alt="Royal deluxe room with a carved four-poster bed"></div>
+        <div class="room__media media"><img loading="lazy" decoding="async" src="media/room-royal-ai-preview.jpg" alt="Royal deluxe room with a carved four-poster bed"></div>
         <div class="room__body">
           <div>
             <span class="room__no">02 / 03</span>
@@ -1546,7 +1546,7 @@
         </div>
       </article>
       <article class="room">
-        <div class="room__media media"><img src="media/room-family-ai-preview.jpg" alt="Family room with two large beds and timber walls"></div>
+        <div class="room__media media"><img loading="lazy" decoding="async" src="media/room-family-ai-preview.jpg" alt="Family room with two large beds and timber walls"></div>
         <div class="room__body">
           <div>
             <span class="room__no">03 / 03</span>
@@ -1576,38 +1576,38 @@
         </div>
       </div>
       <figure class="moment">
-        <div class="media"><img src="media/sunrise.jpg" alt="A fishing boat on still water at sunrise"></div>
+        <div class="media"><img loading="lazy" decoding="async" src="media/sunrise.jpg" alt="A fishing boat on still water at sunrise"></div>
         <figcaption><time>06:00</time><b>Sunrise from the sea</b><span>On the east coast the sun comes up over the Indian Ocean, right in front of your balcony.</span></figcaption>
       </figure>
       <figure class="moment">
-        <div class="media"><img src="media/breakfast.jpg" alt="A breakfast table set on a terrace above the beach"></div>
+        <div class="media"><img loading="lazy" decoding="async" src="media/breakfast.jpg" alt="A breakfast table set on a terrace above the beach"></div>
         <figcaption><time>08:00</time><b>Breakfast by the beach</b><span>Start the day slowly, looking out over the sand.</span></figcaption>
       </figure>
       <figure class="moment">
-        <div class="media"><img src="media/beach.jpg" alt="Sunbeds under thatched umbrellas with Pigeon Island on the horizon"></div>
+        <div class="media"><img loading="lazy" decoding="async" src="media/beach.jpg" alt="Sunbeds under thatched umbrellas with Pigeon Island on the horizon"></div>
         <figcaption><time>10:30</time><b>Sun, sand, shade</b><span>Sunbeds under the thatch, with Pigeon Island on the horizon.</span></figcaption>
       </figure>
       <figure class="moment">
-        <div class="media"><img src="media/restaurant.jpg" alt="The thatched restaurant pavilion looking out to the beach"></div>
+        <div class="media"><img loading="lazy" decoding="async" src="media/restaurant.jpg" alt="The thatched restaurant pavilion looking out to the beach"></div>
         <figcaption><time>13:00</time><b>Lunch in the pavilion</b><span>Local favourites and international dishes under the thatch, with the sea in view.</span></figcaption>
       </figure>
       <figure class="moment">
-        <div class="media"><img src="media/crab.jpg" alt="A spicy crab dish served with rice"></div>
+        <div class="media"><img loading="lazy" decoding="async" src="media/crab.jpg" alt="A spicy crab dish served with rice"></div>
         <figcaption><time>16:00</time><b>Fresh catch of the day</b><span>Crab, prawns and fish, fresh from the sea.</span></figcaption>
       </figure>
       <figure class="moment">
-        <div class="media"><img src="media/dinner.jpg" alt="A candlelit dinner table on the sand at dusk"></div>
+        <div class="media"><img loading="lazy" decoding="async" src="media/dinner.jpg" alt="A candlelit dinner table on the sand at dusk"></div>
         <figcaption><time>19:30</time><b>Dinner on the sand</b><span>A candlelit table on the beach as the evening cools.</span></figcaption>
       </figure>
       <figure class="moment">
-        <div class="media"><img src="media/night.jpg" alt="Thatched umbrellas lit up at night above loungers"></div>
+        <div class="media"><img loading="lazy" decoding="async" src="media/night.jpg" alt="Thatched umbrellas lit up at night above loungers"></div>
         <figcaption><time>21:00</time><b>Lights under the thatch</b><span>The day ends where it began: by the sea.</span></figcaption>
       </figure>
     </div>
   </section>
 
   <section class="ayur" id="ayurveda">
-    <div class="ayur__media media" data-reveal="up" data-parallax="8"><img src="media/ayurveda.jpg" alt="An Ayurvedic herbal compress massage"></div>
+    <div class="ayur__media media" data-reveal="up" ><img loading="lazy" decoding="async" src="media/ayurveda.jpg" alt="An Ayurvedic herbal compress massage"></div>
     <div>
       <p class="label" data-fade>Ayurveda</p>
       <h2 class="h2 serif" data-split>Ayurveda <em>by the sea</em></h2>
@@ -1648,8 +1648,8 @@
   </section>
 
   <section class="grow" data-theme="dark" aria-label="A white-sand beach with a boat and an island on the horizon">
-    <div class="grow__media media" data-grow>
-      <img src="media/coast.jpg" alt="">
+    <div class="grow__media media" >
+      <img loading="lazy" decoding="async" src="media/coast.jpg" alt="">
     </div>
     <div class="grow__title serif"><h2 data-split>Calm water,<br><em>warm all year</em></h2></div>
   </section>
@@ -1733,28 +1733,45 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+
 <script src="/showcase/_engine/engine.js"></script>
 <script>
 (() => {
   const { $, $$ } = SE;
+  const heroVideo = document.querySelector('[data-hero-video]');
+  const connection = navigator.connection;
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !connection?.saveData) {
+    heroVideo.src = matchMedia('(max-width: 800px)').matches
+      ? 'media/hero-calm-mobile.mp4' : 'media/hero-calm.mp4';
+    heroVideo.preload = 'metadata';
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !document.hidden) heroVideo.play().catch(() => {});
+      else heroVideo.pause();
+    }, { threshold: 0.05 }).observe(heroVideo);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) heroVideo.pause();
+      else if (document.querySelector('.hero').getBoundingClientRect().bottom > 0)
+        heroVideo.play().catch(() => {});
+    });
+  }
+
   let seen = false;
   try {
     seen = Boolean(sessionStorage.getItem("nbr-intro"));
     sessionStorage.setItem("nbr-intro", "1");
   } catch {}
   SE.init({
-    minTime: seen ? 300 : 2000,
+    minTime: seen ? 0 : 650,
     intro(tl, reduce) {
       if (reduce) return;
       const title = SE.split($(".hero__title"), "lines");
-      tl.from(".hero__media > *", { scale: 1.18, duration: 2.8, ease: "expo.out" }, 0.2)
+      tl.from(".hero__media > *", { scale: 1.04, duration: 1.2, ease: "expo.out" }, 0.2)
         .from(title.lines, { yPercent: 118, duration: 1.6, stagger: 0.12 }, 0.7)
         .fromTo([".hero__label", ".hero__row", ".hero__foot"], { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 1.4, stagger: 0.1 }, 1.0)
         .from(".header", { autoAlpha: 0, duration: 1.2, ease: "power2.out", clearProps: "opacity,visibility" }, 0.95);
       const out = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
       gsap.to(".hero__copy", { yPercent: -12, autoAlpha: 0, ease: "none", scrollTrigger: out });
-      gsap.to(".hero__media", { yPercent: 18, ease: "none", scrollTrigger: { ...out } });
+
 
       // Room cards stack: each one settles back as the next slides over it.
       gsap.matchMedia().add("(min-width: 901px)", () => {
@@ -1764,8 +1781,8 @@
           if (!next) return;
           gsap.fromTo(
             room,
-            { scale: 1, filter: "brightness(1)" },
-            { scale: 0.92, filter: "brightness(0.82)", ease: "none", scrollTrigger: { trigger: next, start: "top bottom", end: "top 96px", scrub: true } },
+            { scale: 1 },
+            { scale: 0.97, ease: "none", scrollTrigger: { trigger: next, start: "top bottom", end: "top 96px", scrub: true } },
           );
         });
       });
