@@ -592,7 +592,7 @@ export const showcaseWhatsApp =
   "https://wa.me/94718850419?text=Hi%20Hemal%2C%20I%20saw%20your%203D%20showcase%20and%20I%27d%20like%20a%20website.";
 
 export const showcaseSites: ShowcaseSite[] = [
-  { slug: "crunch", name: "Crunch Club", kind: "Bánh Mì · reference study", line: "A credited study of HoQuan’s Bánh Mì Vietnam: floating photographs, stacked history cards, an anatomy spread and a touch gallery.", stack: ["Editorial motion", "Scroll animation", "Reference study"], href: "/showcase/crunch", status: "concept" },
+  { slug: "crunch", name: "Crunch Club", kind: "Vietnamese sandwich · reference study", line: "A credited study of HoQuan’s Vietnamese sandwich editorial: floating photographs, stacked history cards, an anatomy spread and a touch gallery.", stack: ["Editorial motion", "Scroll animation", "Reference study"], href: "/showcase/crunch", status: "concept" },
   {
     slug: "afterhours",
     name: "Afterhours",

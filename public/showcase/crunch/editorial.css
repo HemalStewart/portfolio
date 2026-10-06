@@ -39,3 +39,7 @@
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:clip}
 
 .is-ready .food-hero h1 span,.is-ready .sandwich .assembled,.is-ready .food-circle img{animation-delay:.65s}.street-icon.is-motion-active .street-icon-photo{will-change:transform}
+
+/* Keep the longer English title inside the phone's content width. */
+@media(max-width:700px){.closing-collage h2{font-size:18vw}}
+@media(min-width:701px){.food-hero h1{left:11.5%;right:11.5%}}
