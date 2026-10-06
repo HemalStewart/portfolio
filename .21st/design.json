@@ -183,7 +183,8 @@
     "Effects adapted from the SHIFENMEI site (lens, pinned showcase, odometer, cursor, Lenis) in this portfolio's own identity.",
     "A code-modelled cartoon guide bot (three.js, lazy) leads visitors through the sections; it is generic, not a likeness of the owner.",
     "Afterhours is an original standalone cinematic city-guide concept inspired by the scroll-story format of Fly Crooked; free Pexels night photography, acid-lime/ink palette, Barlow Condensed typography, reduced-motion fallback and interactive route dialogs. It uses the established public/showcase integration.",
-    "Afterhours scroll was corrected to a single pinned film with scroll-driven camera zoom, overlapping scenes and timed text beats. Crunch Club adds an original playful food-brand concept with free Pexels imagery, ingredient interaction and a flavour builder."
+    "Afterhours scroll was corrected to a single pinned film with scroll-driven camera zoom, overlapping scenes and timed text beats. Crunch Club adds an original playful food-brand concept with free Pexels imagery, ingredient interaction and a flavour builder.",
+    "Second rebuild: Afterhours uses an original alley texture on depth-shaped WebGL geometry, six timed story beats, a 3D-transformed phone route prototype, real asset readiness and smooth menu anchors. Crunch Club uses original transparent ingredient artwork recombined into an assembled sandwich, a five-beat pinned story and an exploded ingredient interaction. Both share a local Lenis runtime, loader fallback, modal scroll locking and reduced-motion behavior."
   ],
   "generatedAt": "2026-10-03T12:00:00.000Z"
 }
