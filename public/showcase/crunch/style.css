@@ -35,3 +35,6 @@ body.is-loading{overflow:hidden}
 @media(max-width:700px){.food-hero h1{top:22%}.food-hero h1 span:last-child{padding-top:350px}}
 @media(max-height:740px) and (max-width:700px){.food-hero h1{top:22%}.food-hero h1 span:last-child{padding-top:300px}}
 @media(prefers-reduced-motion:reduce){.food-hero h1{top:auto}.food-hero h1 span:last-child{padding-top:0}}
+
+.food-stage{height:var(--stage-height,100svh)}
+@media(prefers-reduced-motion:reduce){.food-stage{height:auto}}

@@ -21,3 +21,6 @@ body.is-loading{overflow:hidden}
 
 .world-poster,#world{filter:none}.world-vignette{background:linear-gradient(0deg,#070a10aa,transparent 55%,#070a1022)}.kitchen-sign{display:none}.rail-window{border-radius:65px}.scene-shutter{display:none}.invitation{bottom:130px}.beat-caption{max-width:420px}.invitation .beat-caption{margin-left:auto}.rewind{top:19%}.map-copy{top:28%}
 @media(max-width:700px){.map-copy{top:16%}.rewind{top:18%}.rail-window{border-radius:50px}}
+
+.film-stage{height:var(--stage-height,100svh)}
+@media(prefers-reduced-motion:reduce){.film-stage{height:auto}}
