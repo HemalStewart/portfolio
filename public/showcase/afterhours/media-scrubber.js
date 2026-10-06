@@ -55,11 +55,13 @@ export function createMediaScrubber(container) {
   }
   return {
     prepare(key) { return get(key).ready; },
-    prefetch(key) { if (key) get(key); },
+    prefetch(key) { if (key && (!wanted || shown === wanted)) get(key); },
     show(key, value) {
       progress = value;
       if (wanted !== key) {
         wanted = key;
+        shown = '';
+        for (const other of slots.values()) other.video.style.opacity = '0';
         poster.src = `reference-media/${key}/f_001.webp`;
         poster.style.opacity = '1';
       }
