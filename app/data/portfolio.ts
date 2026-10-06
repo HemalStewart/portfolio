@@ -592,13 +592,13 @@ export const showcaseWhatsApp =
   "https://wa.me/94718850419?text=Hi%20Hemal%2C%20I%20saw%20your%203D%20showcase%20and%20I%27d%20like%20a%20website.";
 
 export const showcaseSites: ShowcaseSite[] = [
-  { slug: "crunch", name: "Crunch Club", kind: "Playful food brand", line: "A playful bánh mì concept with an assembled sandwich, an exploded ingredient story and an interactive flavour builder.", stack: ["Scroll animation", "Interactive menu", "Food branding"], href: "/showcase/crunch", status: "concept" },
+  { slug: "crunch", name: "Crunch Club", kind: "Playful food brand", line: "A cut-paper bánh mì story with rounded lettering, a continuous sandwich journey and an interactive flavour builder.", stack: ["Scroll animation", "Interactive menu", "Food branding"], href: "/showcase/crunch", status: "concept" },
   {
     slug: "afterhours",
     name: "Afterhours",
     kind: "Cinematic city guide",
-    line: "A depth-staged Tokyo night with cinematic camera movement, a route-planning scene and interactive evening guides.",
-    stack: ["Depth-staged WebGL", "Scroll choreography", "JavaScript"],
+    line: "A modelled night street with forward camera travel, a rooftop rise, route planning and interactive evening guides.",
+    stack: ["Three.js city scene", "Scroll choreography", "JavaScript"],
     href: "/showcase/afterhours",
     status: "concept",
   },

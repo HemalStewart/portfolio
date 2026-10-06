@@ -18,3 +18,6 @@ body.is-loading{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.scene-shutter,.rail-window,.travel-ticket,.kitchen-sign,.night-coordinates{display:none}.beat h1>span>b,.beat h2>span>b{transform:none!important}}
 
 .rail-window{box-shadow:0 0 0 100vmax #141311ee,inset 0 0 0 3px #a69a86,0 0 0 2px #0a0908,0 25px 90px #0009}.rail-window:after{content:"";position:absolute;left:12%;right:12%;bottom:-45px;height:7px;border-radius:8px;background:linear-gradient(#716b60,#282622);box-shadow:0 6px 13px #000a}.travel-ticket{background:#eae3d3}.kitchen-sign{box-shadow:0 0 65px #111014cc;background:#11101499}.beat h1>span,.beat h2>span{padding-bottom:.045em;margin-bottom:-.045em}
+
+.world-poster,#world{filter:none}.world-vignette{background:linear-gradient(0deg,#070a10aa,transparent 55%,#070a1022)}.kitchen-sign{display:none}.rail-window{border-radius:65px}.scene-shutter{display:none}.invitation{bottom:130px}.beat-caption{max-width:420px}.invitation .beat-caption{margin-left:auto}.rewind{top:19%}.map-copy{top:28%}
+@media(max-width:700px){.map-copy{top:16%}.rewind{top:18%}.rail-window{border-radius:50px}}
