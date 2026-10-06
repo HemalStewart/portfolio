@@ -41,3 +41,6 @@ body.is-loading{overflow:hidden}
 
 .food-stage{position:fixed;top:0;left:0;right:0}.food-stage.is-ending{position:absolute;top:auto;bottom:0}
 @media(prefers-reduced-motion:reduce){.food-stage{position:relative;inset:auto}}
+
+/* Clip without creating a scroll container when opening a chapter URL. */
+.food-stage{overflow:clip}
