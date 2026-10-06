@@ -1,15 +1,12 @@
 import {reduce,clamp,ease} from '../_engine/story-runtime.js';
 
 export function createEditorialMotion() {
-  const sections = ['.evolution','.history-story','.anatomy-spread','.closing-collage'].map(s=>document.querySelector(s));
+  const sections = ['.evolution','.history-story'].map(s=>document.querySelector(s));
   const photos = [...document.querySelectorAll('.evo-photo')];
   const cards = [...document.querySelectorAll('.history-card')];
   const index = document.querySelector('.history-index');
   const progress = document.querySelector('.page-progress span');
-  const anatomyImage = document.querySelector('.anatomy-sandwich');
-  const anatomyStar = document.querySelector('.anatomy-star');
-  const closingBites = [...document.querySelectorAll('.closing-bite')];
-  const metrics = [], active = [false,false,false,false], cardAccess = [], settled = [], update = [], reveals = [];
+  const metrics = [], active = [false,false], cardAccess = [], settled = [], update = [], reveals = [];
   let maxScroll = 1, mobile = false, lastIndex = -1;
   cards.forEach((card,i)=>{card.style.zIndex=i+1});
 
@@ -89,28 +86,19 @@ export function createEditorialMotion() {
         if(cardAccess[i]!==accessible) {cardAccess[i]=accessible;cards[i].inert=!accessible;cards[i].setAttribute('aria-hidden',String(!accessible));}
       }
     }
-    if(update[2]) {
-      const a=clamp((y-metrics[2].top+innerHeight*.4)/(innerHeight*.8));
-      anatomyImage.style.transform=`rotate(${-14+ease(a)*6}deg) translate3d(0,${(1-ease(a))*35}px,0)`;
-      anatomyStar.style.transform=`rotate(${a*18}deg)`;
-    }
-    if(update[3]) {
-      const c=clamp((y-metrics[3].top+innerHeight)/innerHeight);
-      closingBites[0].style.transform=`translate3d(0,${(1-c)*-70}px,0) rotate(${20+c*10}deg)`;
-      closingBites[1].style.transform=`translate3d(0,${(1-c)*70}px,0) rotate(${-10-c*10}deg)`;
-    }
   }
   function move(direction){viewport.scrollBy({left:step*direction,behavior:reduce?'instant':'smooth'});}
   prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));
   viewport.addEventListener('scroll',()=>{galleryDirty=true},{passive:true});
   viewport.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();move(e.key==='ArrowRight'?1:-1)}});
   function reveal(element,delay=0,kind='up') {
-    if(reduce||!element)return;
+    if(reduce||!element||element.closest('.scene-controlled'))return;
     element.classList.add('motion-pending');
     reveals.push({element,delay,kind,top:0,bottom:0,pin:element.closest('.evolution-pin,.street-icon-pin'),pinTop:0,pinLength:0,shown:false,animation:null});
   }
   // Separate line wrappers keep transforms independent of the scroll-driven art.
   for(const heading of document.querySelectorAll('.evolution-copy h2,.closing-collage h2')) {
+    if(heading.closest('.scene-controlled'))continue;
     const nodes=[...heading.childNodes];let line=document.createElement('span');line.className='reveal-line';heading.replaceChildren(line);
     for(const node of nodes) {
       if(node.nodeName==='BR') {line=document.createElement('span');line.className='reveal-line';heading.append(line);}

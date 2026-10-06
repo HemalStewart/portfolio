@@ -1,0 +1,43 @@
+.has-pinned-scenes .scene-controlled{position:relative}
+.has-pinned-scenes .scene-pin{position:sticky;top:0;height:var(--stage-height,100svh);overflow:clip;isolation:isolate;background:var(--paper)}
+.has-pinned-scenes .anatomy-sequence{height:420svh}
+.has-pinned-scenes .anatomy-prelude{position:absolute;inset:0;padding:70px 22px 30px;background:var(--paper)}
+.has-pinned-scenes .anatomy-prelude h2{font:700 clamp(40px,6.2vw,110px)/1.08 var(--display);letter-spacing:-.025em;max-width:92%}
+.has-pinned-scenes .anatomy-prelude img{position:absolute;bottom:5%;right:2%;width:38%;height:42%;object-fit:contain;transform-origin:80% 70%}
+.has-pinned-scenes .anatomy-pin .anatomy-spread{position:absolute;inset:0;min-height:0;height:100%;padding:70px var(--pad) 28px;background:var(--clay)}
+.has-pinned-scenes .anatomy-pin .anatomy-kicker,.has-pinned-scenes .anatomy-pin .anatomy-note{display:none}
+.has-pinned-scenes .anatomy-pin .anatomy-layout{margin:25px auto 22px;min-height:0;height:53%;max-width:1100px}
+.has-pinned-scenes .anatomy-pin .anatomy-centre{height:100%;aspect-ratio:auto}
+.has-pinned-scenes .anatomy-pin .anatomy-word{position:absolute;bottom:5%;left:0;right:0}
+.has-pinned-scenes .fillings-sequence{height:360svh}
+.has-pinned-scenes .fillings-pin .fillings-title{position:absolute;inset:0;min-height:0;height:100%;padding:80px 20px;gap:25px;z-index:2;background:transparent;pointer-events:none}
+.has-pinned-scenes .fillings-title>a{pointer-events:auto}
+.has-pinned-scenes .fillings-pin .food-gallery{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:75px 0 25px;transform-origin:center;z-index:1}
+.has-pinned-scenes .fillings-pin .gallery-copy{margin:0 auto 22px}
+.has-pinned-scenes .fillings-pin .gallery-copy h2,.has-pinned-scenes .fillings-pin .gallery-copy>.mono{display:none}
+.has-pinned-scenes .fillings-pin .gallery-slide img{height:53svh;min-height:0;max-height:none}
+.has-pinned-scenes .fillings-pin .gallery-track{padding-top:8px;padding-bottom:12px}
+.has-pinned-scenes .fillings-pin .gallery-controls{margin-top:10px;gap:22px}
+.has-pinned-scenes .scene-anchor{position:absolute;width:1px;height:1px;pointer-events:none}
+.has-pinned-scenes .street-icon{height:370svh;background:var(--paper);color:var(--ink)}
+.has-pinned-scenes .street-icon-pin{height:var(--stage-height,100svh);background:var(--paper)}
+.has-pinned-scenes .street-type{position:relative;z-index:2;width:94%;text-align:center}
+.has-pinned-scenes .street-type h2{font:700 min(11vw,17vh)/.97 var(--display);max-width:none;text-shadow:none;color:var(--clay);letter-spacing:-.025em}
+.has-pinned-scenes .street-type .street-ink{position:absolute;inset:0;color:var(--ink)}
+.has-pinned-scenes .closing-sequence{height:220svh}
+.has-pinned-scenes .closing-pin .closing-collage{height:100%;min-height:0}
+.has-pinned-scenes .closing-collage .scene-line{display:block;color:var(--paper)}
+.has-pinned-scenes .is-motion-active .anatomy-spread,.has-pinned-scenes .is-motion-active .anatomy-sandwich,.has-pinned-scenes .is-motion-active .fillings-title h2>span,.has-pinned-scenes .is-motion-active .food-gallery,.has-pinned-scenes .is-motion-active .street-type,.has-pinned-scenes .is-motion-active .scene-line{will-change:transform}
+@media(max-width:700px){
+ .has-pinned-scenes .anatomy-prelude{padding:85px 20px 25px}
+ .has-pinned-scenes .anatomy-prelude h2{font-size:10.5vw;max-width:100%;line-height:1.12}
+ .has-pinned-scenes .anatomy-prelude img{width:76%;height:38%;right:4%;bottom:10%}
+ .has-pinned-scenes .anatomy-pin .anatomy-spread{padding:75px 20px 30px}
+ .has-pinned-scenes .anatomy-pin .anatomy-layout{height:auto;margin:16px auto;gap:12px 20px}
+ .has-pinned-scenes .anatomy-pin .anatomy-centre{height:28svh;width:86%}
+ .has-pinned-scenes .anatomy-pin .anatomy-list{font-size:clamp(12px,3.6vw,15px);line-height:1.6}
+ .has-pinned-scenes .anatomy-pin .anatomy-word{bottom:5%;font-size:13vw}
+ .has-pinned-scenes .fillings-pin .gallery-slide img{height:47svh}
+ .has-pinned-scenes .fillings-pin .gallery-copy>p:last-child{font-size:13px}
+ .has-pinned-scenes .street-type h2{font-size:min(15.5vw,14vh);line-height:1.04}
+}

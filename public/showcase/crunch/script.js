@@ -1,6 +1,12 @@
-import {reduce,clamp,ease,loader,scrollEngine,navigation,restoreHash} from '../_engine/story-runtime.js';
+import {reduce,clamp,loader,scrollEngine,navigation,restoreHash} from '../_engine/story-runtime.js';
 import {createEditorialMotion} from './editorial.js';
-loader();navigation();const editorial=createEditorialMotion(),header=document.querySelector('.food-header'),orbit=document.querySelector('.sandwich-orbit'),film=document.querySelector('.food-film'),stage=document.querySelector('.food-stage'),street=document.querySelector('.street-icon'),streetPhotos=[...document.querySelectorAll('.street-icon-photo')];let last=-1,streetTop=0,streetLength=1,streetHeight=1,lastHero=-1,streetActive=false;
-function measure(){document.documentElement.style.setProperty('--stage-height',innerHeight+'px');editorial.measure();streetTop=street.offsetTop;streetHeight=street.offsetHeight;streetLength=Math.max(1,streetHeight-innerHeight);last=-1;lastHero=-1}
-function render(){editorial.gallery();const y=scrollY;if(Math.abs(y-last)<.05)return;last=y;header.classList.toggle('is-past-hero',y>innerHeight*.65);if(reduce)return;editorial.render(y);const p=clamp(y/innerHeight);if(p!==lastHero){lastHero=p;orbit.style.transform=`translate(-50%,-50%) rotate(${-p*8}deg) scale(${1-p*.05})`;}const visible=y+innerHeight>=streetTop&&y<=streetTop+streetHeight;if(visible!==streetActive){streetActive=visible;street.classList.toggle('is-motion-active',visible)}if(!visible)return;const sp=clamp((y-streetTop)/streetLength);for(let i=0;i<streetPhotos.length;i++){streetPhotos[i].style.transform=`translateY(${(sp-.5)*[160,-220,200,-140][i]}px) rotate(${[-6,8,-8,5][i]+sp*[5,-8,7,-5][i]}deg)`}}
-measure();addEventListener('resize',measure);document.fonts.ready.then(measure);const lenis=scrollEngine(render);restoreHash(lenis);addEventListener('load',measure);const credits=document.querySelector('#credits');document.querySelector('#credits-open').addEventListener('click',()=>credits.showModal());credits.querySelector('.dialog-close').addEventListener('click',()=>credits.close());
+import {createPinnedScenes} from './scenes.js';
+loader();navigation();
+const scenes=createPinnedScenes(),editorial=createEditorialMotion();
+const header=document.querySelector('.food-header'),orbit=document.querySelector('.sandwich-orbit');
+let last=-1,lastHero=-1;
+function measure(){document.documentElement.style.setProperty('--stage-height',innerHeight+'px');scenes.measure();editorial.measure();last=-1;lastHero=-1}
+function render(){editorial.gallery();const y=scrollY;if(Math.abs(y-last)<.05)return;last=y;header.classList.toggle('is-past-hero',y>innerHeight*.65);editorial.render(y);if(reduce)return;scenes.render(y);const p=clamp(y/innerHeight);if(p!==lastHero){lastHero=p;orbit.style.transform=`translate(-50%,-50%) rotate(${-p*8}deg) scale(${1-p*.05})`;}}
+measure();addEventListener('resize',measure);document.fonts.ready.then(measure);
+const lenis=scrollEngine(render);restoreHash(lenis);addEventListener('load',measure);
+const credits=document.querySelector('#credits');document.querySelector('#credits-open').addEventListener('click',()=>credits.showModal());credits.querySelector('.dialog-close').addEventListener('click',()=>credits.close());
