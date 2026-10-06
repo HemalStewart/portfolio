@@ -24,3 +24,6 @@ body.is-loading{overflow:hidden}
 
 .film-stage{height:var(--stage-height,100svh)}
 @media(prefers-reduced-motion:reduce){.film-stage{height:auto}}
+
+.film-stage{position:fixed;top:0;left:0;right:0}.film-stage.is-ending{position:absolute;top:auto;bottom:0}
+@media(prefers-reduced-motion:reduce){.film-stage{position:relative;inset:auto}}
