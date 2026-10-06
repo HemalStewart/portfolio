@@ -1,74 +1,68 @@
-// Each chapter is one seek-friendly film, with at most three decoders retained.
 export function createMediaScrubber(container) {
-  const slots = new Map();
-  const mobile = matchMedia('(max-width: 700px)').matches;
-  const poster = document.createElement('img');
-  poster.className = 'motion-poster';
-  poster.alt = '';
-  container.append(poster);
-  let wanted = '', progress = 0, clock = 0, shown = '';
-  function reveal(slot) {
-    if (slot.key !== wanted || slot.video.readyState < 2) return;
-    if (shown !== slot.key) {
-      for (const other of slots.values()) other.video.style.opacity = other === slot ? '1' : '0';
-      shown = slot.key;
-      poster.style.opacity = '0';
-    }
-    container.dataset.scene = slot.key;
-    container.dataset.presentedTime = slot.video.currentTime.toFixed(3);
-  }
+  const slots=new Map(),mobile=matchMedia('(max-width:700px)').matches;
+  const poster=document.createElement('img');poster.className='motion-poster';poster.alt='';container.append(poster);
+  let clock=0,requests=[],presented='',blendTo='',blendFrom='',lastTick=performance.now();
   function seek(slot) {
-    const video = slot.video;
-    if (slot.key !== wanted || video.readyState < 2 || !Number.isFinite(video.duration) || video.seeking) return;
-    const target = progress * Math.max(0, video.duration - 1 / 48);
-    if (Math.abs(video.currentTime - target) > 1 / 60) {
-      video.currentTime = target;
-    } else reveal(slot);
+    const v=slot.video;
+    if(!slot.requested||v.readyState<1||!Number.isFinite(v.duration)||v.seeking||performance.now()<slot.nextSeek)return;
+    const target=Math.round(slot.progress*Math.max(0,v.duration-1/48)*48)/48;
+    if(Math.abs(v.currentTime-target)>1/60)v.currentTime=target;
+    else if(v.readyState>=2){slot.decoded=true;slot.frameTime=v.currentTime;}
   }
   function get(key) {
-    let slot = slots.get(key);
-    if (slot) { slot.used = ++clock; return slot; }
-    // Reuse compressed browser cache, release old decoder and buffered media.
-    if (slots.size >= 3) {
-      const oldest = [...slots.values()].filter(s => s.key !== wanted && s.key !== shown).sort((a,b) => a.used - b.used)[0];
-      if (oldest) {
-        oldest.video.removeAttribute('src'); oldest.video.load(); oldest.video.remove(); slots.delete(oldest.key);
-      }
+    let slot=slots.get(key);if(slot){slot.used=++clock;return slot;}
+    if(slots.size>=3) {
+      const oldest=[...slots.values()].filter(s=>!s.requested&&s.key!==presented&&s.key!==blendFrom).sort((a,b)=>a.used-b.used)[0];
+      if(!oldest)return null;
+      oldest.video.removeAttribute('src');oldest.video.load();oldest.video.remove();slots.delete(oldest.key);
     }
-    const video = document.createElement('video');
-    video.muted = true; video.playsInline = true; video.preload = 'auto';
-    video.setAttribute('aria-hidden', 'true');
-    video.className = 'motion-clip';
-    video.style.opacity = '0';
-    slot = { key, video, used: ++clock };
-    slots.set(key, slot);
-    const ready = new Promise(resolve => {
-      video.addEventListener('loadeddata', () => { seek(slot); resolve(); }, {once:true});
-      video.addEventListener('error', resolve, {once:true});
-    });
-    video.addEventListener('seeked', () => { reveal(slot); seek(slot); });
-    video.addEventListener('canplay', () => seek(slot));
-    slot.ready = ready;
-    container.append(video);
-    video.src = `motion-media/${key}-${mobile ? 'mobile' : 'desktop'}.mp4`;
-    return slot;
+    const v=document.createElement('video');v.muted=true;v.playsInline=true;v.preload='auto';v.className='motion-clip';v.setAttribute('aria-hidden','true');v.style.opacity='0';
+    slot={key,video:v,used:++clock,requested:false,progress:0,decoded:false,mix:0,nextSeek:0,frameTime:0};slots.set(key,slot);
+    slot.ready=new Promise(resolve=>{v.addEventListener('loadeddata',()=>{seek(slot);resolve()},{once:true});v.addEventListener('error',()=>{slot.failed=true;resolve()},{once:true});});
+    v.addEventListener('loadedmetadata',()=>seek(slot));
+    v.addEventListener('seeked',()=>{slot.decoded=v.readyState>=2;slot.frameTime=v.currentTime;slot.nextSeek=performance.now()+16;});
+    v.addEventListener('canplay',()=>seek(slot));
+    container.append(v);v.src=`motion-media/${key}-${mobile?'mobile':'desktop'}.mp4`;return slot;
+  }
+  function tick(now=performance.now()) {
+    for(const slot of slots.values())seek(slot);
+    const dt=Math.min(64,now-lastTick);lastTick=now;
+    if(requests.length>1&&!slots.get(requests[0].key)?.decoded)return;
+    let front=null,back=null;
+    for(const r of requests) {const slot=slots.get(r.key);if(!slot?.decoded)continue;if(r.weight>0) {back=front;front=slot;}}
+    // Keep the previous decoded image until the incoming chapter has a real frame.
+    if(!front)return;
+    const request=requests.find(r=>r.key===front.key),target=request?.weight??1;
+    if(blendTo!==front.key) {blendFrom=presented;blendTo=front.key;front.mix=Number(front.video.style.opacity)||0;}
+    if(front.video.style.zIndex!=='2')front.video.style.zIndex='2';
+    const previous=back||slots.get(blendFrom);if(previous&&previous!==front&&previous.video.style.zIndex!=='1')previous.video.style.zIndex='1';
+    if(back)front.mix=target;
+    else if(front.mix<target)front.mix=Math.min(target,front.mix+dt/320);else front.mix=target;
+    for(const slot of slots.values()) {
+      let opacity=0;
+      if(slot===front)opacity=front.mix;
+      else if(slot===previous)opacity=1;
+      if(slot.opacity!==opacity){slot.video.style.opacity=String(opacity);slot.opacity=opacity;}
+    }
+    if(!previous&&front.opacity!==1){front.video.style.opacity='1';front.opacity=1;}
+    const displayed=previous&&front.mix<.5?previous:front;presented=displayed.key;
+    if(front.mix>=1||back)blendFrom='';
+    if(poster.style.opacity!=='0')poster.style.opacity='0';
+    if(container.dataset.scene!==displayed.key)container.dataset.scene=displayed.key;
+    const frameTime=displayed.frameTime.toFixed(3);if(container.dataset.presentedTime!==frameTime)container.dataset.presentedTime=frameTime;
   }
   return {
-    prepare(key) { return get(key).ready; },
-    prefetch(key) { if (key && (!wanted || shown === wanted)) get(key); },
-    show(key, value) {
-      progress = value;
-      if (wanted !== key) {
-        wanted = key;
-        shown = '';
-        for (const other of slots.values()) other.video.style.opacity = '0';
-        poster.src = `reference-media/${key}/f_001.webp`;
-        poster.style.opacity = '1';
-      }
-      const slot = get(key);
-      seek(slot);
+    prepare(key){return get(key)?.ready||Promise.resolve()},
+    prefetch(key){if(!key||requests.some(r=>!slots.get(r.key)?.decoded))return;get(key)},
+    show(layers) {
+      requests=layers;
+      for(const s of slots.values())s.requested=layers.some(r=>r.key===s.key);
+      for(const r of layers) {const s=get(r.key);if(!s)continue;s.requested=true;s.progress=r.progress;seek(s);}
+      const primary=layers[layers.length-1];
+      if(!presented&&primary&&poster.dataset.key!==primary.key){poster.src=`reference-media/${primary.key==='transit-reveal'?'next-panel-transit-colosseum-comic-motion-v1':primary.key}/f_001.webp`;poster.dataset.key=primary.key;poster.style.opacity='1';}
+      const failed=primary&&slots.get(primary.key)?.failed;
+      if(failed){poster.src=`reference-media/${primary.key==='transit-reveal'?'next-panel-transit-colosseum-comic-motion-v1':primary.key}/f_001.webp`;poster.style.opacity='1';poster.style.zIndex='3';}else poster.style.zIndex='-1';
     },
-    hide() { container.style.opacity = '0'; },
-    visible() { container.style.opacity = '1'; },
+    tick,
   };
 }
