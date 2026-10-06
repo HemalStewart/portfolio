@@ -593,6 +593,15 @@ export const showcaseWhatsApp =
 
 export const showcaseSites: ShowcaseSite[] = [
   {
+    slug: "afterhours",
+    name: "Afterhours",
+    kind: "Cinematic city guide",
+    line: "A night in Tokyo told through full-screen scenes, slow scroll and interactive route guides.",
+    stack: ["Scroll storytelling", "CSS motion", "JavaScript"],
+    href: "/showcase/afterhours",
+    status: "concept",
+  },
+  {
     slug: "tea",
     name: "Mistline",
     kind: "Ceylon tea",

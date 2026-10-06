@@ -3,18 +3,34 @@
   "project": {
     "name": "portfolio",
     "productType": "personal-portfolio",
-    "stack": ["nextjs", "react", "tailwind-v4", "motion", "lenis", "three"]
+    "stack": [
+      "nextjs",
+      "react",
+      "tailwind-v4",
+      "motion",
+      "lenis",
+      "three"
+    ]
   },
   "sources": {
-    "tokens": ["app/globals.css"],
+    "tokens": [
+      "app/globals.css"
+    ],
     "components": [
       "app/components",
       "app/components/motion",
       "app/components/mockups",
       "app/components/guide"
     ],
-    "assets": ["public/resume.pdf", "public/guide-poster.webp"],
-    "instructions": ["AGENTS.md", "CLAUDE.md", "docs/DESIGN.md"]
+    "assets": [
+      "public/resume.pdf",
+      "public/guide-poster.webp"
+    ],
+    "instructions": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "docs/DESIGN.md"
+    ]
   },
   "design": {
     "colorMode": "light+dark (prefers-color-scheme)",
@@ -147,15 +163,15 @@
     "must": [
       "Use only real content from app/data/portfolio.ts and public/resume.pdf; never invent clients, numbers, testimonials or awards.",
       "Respect prefers-reduced-motion; no WebGL, post-processing or heavy effects; Lighthouse mobile 90+ and accessibility 100.",
-      "Responsive 320–1920px without horizontal overflow; 44px minimum touch targets; visible focus.",
+      "Responsive 320\u20131920px without horizontal overflow; 44px minimum touch targets; visible focus.",
       "Signal lime is only a background behind --on-signal text."
     ],
     "avoid": [
-      "The SHIFENMEI identity (dark ink + cinnabar, 十, Mona Sans / Martian Mono / Instrument Serif).",
+      "The SHIFENMEI identity (dark ink + cinnabar, \u5341, Mona Sans / Martian Mono / Instrument Serif).",
       "Raster avatars or portraits of Hemal (removed at the owner's request).",
-      "Raster screenshots — project visuals are code-built mockups.",
+      "Raster screenshots \u2014 project visuals are code-built mockups.",
       "Container queries for mockup sizing (measured ~2x layout cost); use --mw.",
-      "Hiding the header on scroll — it must stay reachable."
+      "Hiding the header on scroll \u2014 it must stay reachable."
     ]
   },
   "decisions": [
@@ -165,7 +181,8 @@
     "21st.dev-style components were written locally because 21st.dev is not reachable from the build environment.",
     "Project visuals are code-built mockups; the code under the X-ray lens is illustrative and labelled so.",
     "Effects adapted from the SHIFENMEI site (lens, pinned showcase, odometer, cursor, Lenis) in this portfolio's own identity.",
-    "A code-modelled cartoon guide bot (three.js, lazy) leads visitors through the sections; it is generic, not a likeness of the owner."
+    "A code-modelled cartoon guide bot (three.js, lazy) leads visitors through the sections; it is generic, not a likeness of the owner.",
+    "Afterhours is an original standalone cinematic city-guide concept inspired by the scroll-story format of Fly Crooked; free Pexels night photography, acid-lime/ink palette, Barlow Condensed typography, reduced-motion fallback and interactive route dialogs. It uses the established public/showcase integration."
   ],
   "generatedAt": "2026-10-03T12:00:00.000Z"
 }
