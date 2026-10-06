@@ -31,3 +31,11 @@
 @keyframes sandwich-enter{from{transform:rotate(-360deg) scale(0)}to{transform:rotate(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){.loader,.is-ready .food-hero h1 span,.is-ready .sandwich .assembled,.is-ready .food-circle img{animation:none!important;transition:none!important}.food-hero h1{top:43%}}
 @media(prefers-reduced-motion:reduce) and (max-width:700px){.food-hero h1{top:22%;flex-direction:column}}
+
+/* Scroll transforms own these layers; no lagging CSS transition behind them. */
+.reveal-line{display:block}.motion-pending{opacity:0}.gallery-slide{transition:none;backface-visibility:hidden}.is-motion-active .evo-photo,.is-motion-active .history-card,.is-motion-active .anatomy-sandwich,.is-motion-active .anatomy-star,.is-motion-active .closing-bite{will-change:transform}.sandwich .assembled{filter:none!important}.closing-bite,.closing-background{filter:none}.street-icon-photo{backface-visibility:hidden}.history-pin,.evolution-pin{contain:paint}.food-stage{backface-visibility:hidden}.gallery-window{overscroll-behavior-x:contain}
+@media(prefers-reduced-motion:reduce){.motion-pending{opacity:1}.reveal-line{translate:none}}
+
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:clip}
+
+.is-ready .food-hero h1 span,.is-ready .sandwich .assembled,.is-ready .food-circle img{animation-delay:.65s}.street-icon.is-motion-active .street-icon-photo{will-change:transform}

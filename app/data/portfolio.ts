@@ -598,7 +598,7 @@ export const showcaseSites: ShowcaseSite[] = [
     name: "Afterhours",
     kind: "Crow · reference study",
     line: "A credited study of Crow / Fly Crooked’s illustrated Rome film, with scroll-scrubbed flight, museum, transit and bookbinder scenes.",
-    stack: ["Canvas film", "Scroll choreography", "Reference study"],
+    stack: ["Scroll-driven video", "Scroll choreography", "Reference study"],
     href: "/showcase/afterhours",
     status: "concept",
   },
