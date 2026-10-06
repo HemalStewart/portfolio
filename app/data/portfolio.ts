@@ -592,6 +592,7 @@ export const showcaseWhatsApp =
   "https://wa.me/94718850419?text=Hi%20Hemal%2C%20I%20saw%20your%203D%20showcase%20and%20I%27d%20like%20a%20website.";
 
 export const showcaseSites: ShowcaseSite[] = [
+  { slug: "crunch", name: "Crunch Club", kind: "Playful food brand", line: "A bold bánh mì concept with rotating food photography, a pinned ingredient story and an interactive flavour builder.", stack: ["Scroll animation", "Interactive menu", "Food branding"], href: "/showcase/crunch", status: "concept" },
   {
     slug: "afterhours",
     name: "Afterhours",

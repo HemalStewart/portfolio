@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/showcase", destination: "/showcase/index.html" },
       {
-        source: "/showcase/:site(tea|villa|sapphire|coffee|surf|afterhours)",
+        source: "/showcase/:site(tea|villa|sapphire|coffee|surf|afterhours|crunch)",
         destination: "/showcase/:site/index.html",
       },
       // Multi-page preview of the Lakmini International redesign.

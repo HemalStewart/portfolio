@@ -21,6 +21,7 @@ const countWords = [
   "eight",
   "nine",
   "ten",
+  "eleven",
 ];
 const countWord = (n: number) => countWords[n] ?? String(n);
 
