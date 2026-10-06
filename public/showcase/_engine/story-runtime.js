@@ -3,10 +3,10 @@ export const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 export const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));
 export const ease=n=>{n=clamp(n);return n*n*(3-2*n)};
 export function loader(extra=Promise.resolve()){
- const main=document.querySelector('main'),header=document.querySelector('header');main.inert=true;header.inert=true;document.body.classList.add('is-loading');const el=document.querySelector('.loader'),count=el.querySelector('.load-count'),line=el.querySelector('.load-line span');
+ const main=document.querySelector('main'),header=document.querySelector('header'),footer=document.querySelector('footer');main.inert=true;header.inert=true;if(footer)footer.inert=true;document.body.classList.add('is-loading');const el=document.querySelector('.loader'),count=el.querySelector('.load-count'),line=el.querySelector('.load-line span');
  const tasks=[...document.querySelectorAll('[data-critical]')].map(img=>new Promise(resolve=>{if(img.complete){resolve();return}img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true})}));tasks.push(document.fonts.ready,extra);
  let complete=0,finished=false;const started=performance.now();
- function finish(fallback=false){if(finished)return;finished=true;count.textContent=fallback&&complete<tasks.length?'READY':'100';line.style.transform='scaleX(1)';document.body.classList.remove('is-loading');document.body.classList.add('is-ready');main.inert=false;header.inert=false;document.dispatchEvent(new Event('site-ready'));el.classList.add('is-finished');setTimeout(()=>el.remove(),reduce?0:1100)}
+ function finish(fallback=false){if(finished)return;finished=true;count.textContent=fallback&&complete<tasks.length?'READY':'100';line.style.transform='scaleX(1)';document.body.classList.remove('is-loading');document.body.classList.add('is-ready');main.inert=false;header.inert=false;if(footer)footer.inert=false;document.dispatchEvent(new Event('site-ready'));el.classList.add('is-finished');setTimeout(()=>el.remove(),reduce?0:1100)}
  tasks.forEach(p=>Promise.resolve(p).catch(()=>{}).then(()=>{complete++;const n=Math.round(complete/tasks.length*100);count.textContent=String(n).padStart(2,'0');line.style.transform=`scaleX(${n/100})`;if(complete===tasks.length)setTimeout(finish,Math.max(0,450-(performance.now()-started)))}));
  setTimeout(()=>finish(true),8000);return finish;
 }
