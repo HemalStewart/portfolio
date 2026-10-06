@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
       },
       // Free homepage designs made for prospective clients.
       {
-        source: "/preview/:client(nilaveli)",
+        source: "/preview/:client(nilaveli|ceylon-select)",
         destination: "/preview/:client/index.html",
       },
     ];

@@ -1,0 +1,322 @@
+{
+  "currency": "CAD",
+  "asOf": "2026-10-06",
+  "source": "https://ceylonselect.com/products.json",
+  "products": [
+    {
+      "handle": "ceylon-breakfast-tea",
+      "title": "Ceylon Breakfast Tea",
+      "category": "classics",
+      "ingredients": "Whole-leaf Ceylon tea",
+      "notes": "A full-bodied Ceylon black tea with a softly honeyed character. A considered choice for your everyday breakfast ritual.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730446332070,
+          "title": "Default Title",
+          "price": 1599,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/ceylon-breakfast-tea-0.webp",
+        "media/ceylon-breakfast-tea-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/ceylon-breakfast-tea"
+    },
+    {
+      "handle": "blue-hawaii",
+      "title": "Blue Hawaii",
+      "category": "botanical",
+      "ingredients": "Coconut, Ceylon Cinnamon, Ginger, Butterfly Pea Flower",
+      "notes": "Coconut and warming spices meet a vivid blue butterfly-pea infusion.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730619150502,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/blue-hawaii-0.webp",
+        "media/blue-hawaii-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/blue-hawaii"
+    },
+    {
+      "handle": "tranquilitea",
+      "title": "TranquiliTea",
+      "category": "botanical",
+      "ingredients": "Bacopa Leaves, Ashwagandha Root, Hibiscus, Cinnamon, Butterfly Pea Flower",
+      "notes": "Butterfly pea, hibiscus and cinnamon meet the botanical character of bacopa and ashwagandha.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730621280422,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/tranquilitea-0.webp",
+        "media/tranquilitea-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/tranquilitea"
+    },
+    {
+      "handle": "regal-golden-tips",
+      "title": "Regal Golden Tips",
+      "category": "rare",
+      "ingredients": "Whole-leaf Ceylon tea",
+      "notes": "Carefully selected golden tea buds. A delicate Sri Lankan white tea for a special moment.",
+      "water": "80–85°C (175–185°F)",
+      "variants": [
+        {
+          "id": 56730609451174,
+          "title": "Default Title",
+          "price": 2699,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/regal-golden-tips-0.webp",
+        "media/regal-golden-tips-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/regal-golden-tips"
+    },
+    {
+      "handle": "lavish-silver-tips",
+      "title": "Lavish Silver Tips",
+      "category": "rare",
+      "ingredients": "Whole-leaf Ceylon tea",
+      "notes": "Delicate silver tea buds, with the quiet character of a fine Sri Lankan white tea.",
+      "water": "80–85°C (175–185°F)",
+      "variants": [
+        {
+          "id": 56730607943846,
+          "title": "Default Title",
+          "price": 2499,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/lavish-silver-tips-0.webp",
+        "media/lavish-silver-tips-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/lavish-silver-tips"
+    },
+    {
+      "handle": "mint-hibiscus-bliss",
+      "title": "Mint Hibiscus Bliss",
+      "category": "botanical",
+      "ingredients": "Ceylon Cinnamon, Hibiscus, Peppermint",
+      "notes": "A bright hibiscus cup, balanced with cool peppermint and the warmth of Ceylon cinnamon.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730619216038,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/mint-hibiscus-bliss-0.webp",
+        "media/mint-hibiscus-bliss-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/mint-hibiscus-bliss"
+    },
+    {
+      "handle": "ceylon-afternoon-tea",
+      "title": "Ceylon Afternoon Tea",
+      "category": "classics",
+      "ingredients": "Whole-leaf Ceylon tea",
+      "notes": "A Sri Lankan black tea to make a moment of your afternoon.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730606895270,
+          "title": "Default Title",
+          "price": 1599,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/ceylon-afternoon-tea-0.webp",
+        "media/ceylon-afternoon-tea-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/ceylon-afternoon-tea"
+    },
+    {
+      "handle": "elegant-black-tea",
+      "title": "Elegant Black Tea",
+      "category": "classics",
+      "ingredients": "Whole-leaf Ceylon tea",
+      "notes": "Fine Ceylon black tea, chosen for a slow and thoughtful cup.",
+      "water": "85–90°C (185–194°F)",
+      "variants": [
+        {
+          "id": 56730607419558,
+          "title": "Default Title",
+          "price": 2199,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/elegant-black-tea-0.webp",
+        "media/elegant-black-tea-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/elegant-black-tea"
+    },
+    {
+      "handle": "ginger-turmeric-green-tea",
+      "title": "Ginger Turmeric Tea",
+      "category": "botanical",
+      "ingredients": "Green Tea, Ginger, Turmeric, Black Pepper",
+      "notes": "A thoughtfully composed loose-leaf blend. Explore the individual ingredients below and find a flavour for your moment.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730620068006,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/ginger-turmeric-green-tea-0.webp",
+        "media/ginger-turmeric-green-tea-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/ginger-turmeric-green-tea"
+    },
+    {
+      "handle": "yummy-tummy-chai",
+      "title": "Yummy Tummy Chai",
+      "category": "botanical",
+      "ingredients": "Black Tea, Ginger, Cardamom, Ceylon Cinnamon, Clove, Cumin, Fennel, Coriander, Turmeric, Black Pepper",
+      "notes": "A thoughtfully composed loose-leaf blend. Explore the individual ingredients below and find a flavour for your moment.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730620887206,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/yummy-tummy-chai-0.webp",
+        "media/yummy-tummy-chai-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/yummy-tummy-chai"
+    },
+    {
+      "handle": "tea-amore",
+      "title": "Tea Amore",
+      "category": "botanical",
+      "ingredients": "Ashwagandha, Cinnamon, Hibiscus, Green Tea, Ginger",
+      "notes": "A thoughtfully composed loose-leaf blend. Explore the individual ingredients below and find a flavour for your moment.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730620395686,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/tea-amore-0.webp",
+        "media/tea-amore-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/tea-amore"
+    },
+    {
+      "handle": "immune-tea",
+      "title": "Immune Tea",
+      "category": "botanical",
+      "ingredients": "Ginger, Cinnamon, Licorice, Green Tea, Hibiscus, Turmeric, Coriander, Black Pepper",
+      "notes": "A thoughtfully composed loose-leaf blend. Explore the individual ingredients below and find a flavour for your moment.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730619936934,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/immune-tea-0.webp",
+        "media/immune-tea-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/immune-tea"
+    },
+    {
+      "handle": "sugar-crush",
+      "title": "Sugar Crush",
+      "category": "botanical",
+      "ingredients": "Ceylon Cinnamon, Lemongrass, Ginger, Green Tea, Bitter Gourd, Turmeric, Moringa",
+      "notes": "A thoughtfully composed loose-leaf blend. Explore the individual ingredients below and find a flavour for your moment.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730619805862,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/sugar-crush-0.webp",
+        "media/sugar-crush-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/sugar-crush"
+    },
+    {
+      "handle": "englands-rose-tea",
+      "title": "England's Rose Tea",
+      "category": "botanical",
+      "ingredients": "Black Tea, Ceylon Cinnamon, Rose Petals",
+      "notes": "A thoughtfully composed loose-leaf blend. Explore the individual ingredients below and find a flavour for your moment.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730618986662,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/englands-rose-tea-0.webp",
+        "media/englands-rose-tea-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/englands-rose-tea"
+    },
+    {
+      "handle": "forever-young-detox-tea",
+      "title": "Forever Young Detox Tea",
+      "category": "botanical",
+      "ingredients": "Lemongrass, Green Tea, Butterfly Pea Flower, Moringa, Gotu Kola, Ginger, Turmeric, Cinnamon, Black Pepper",
+      "notes": "A thoughtfully composed loose-leaf blend. Explore the individual ingredients below and find a flavour for your moment.",
+      "water": "100°C (212°F)",
+      "variants": [
+        {
+          "id": 56730619478182,
+          "title": "Default Title",
+          "price": 1899,
+          "available": true
+        }
+      ],
+      "images": [
+        "media/forever-young-detox-tea-0.webp",
+        "media/forever-young-detox-tea-1.webp"
+      ],
+      "url": "https://ceylonselect.com/products/forever-young-detox-tea"
+    }
+  ]
+}
