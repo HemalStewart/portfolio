@@ -43,3 +43,5 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 /* Keep the longer English title inside the phone's content width. */
 @media(max-width:700px){.closing-collage h2{font-size:18vw}}
 @media(min-width:701px){.food-hero h1{left:11.5%;right:11.5%}}
+
+.closing-collage h2 .reveal-line{color:var(--paper)}
