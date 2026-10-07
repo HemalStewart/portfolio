@@ -1,202 +1,204 @@
+// Wayline — page orchestration: loader, hero globe, header, journey timeline, dialogs.
 import Lenis from "../_engine/vendor/lenis.mjs";
-import { createGlobe, createFreight } from "./world.js";
+import { createGlobe } from "./world.js";
+import { createFreight } from "./freight.js";
 
 const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+const clamp = (v, a = 0, b = 1) => (v < a ? a : v > b ? b : v);
+const prog = (y, a, b) => clamp((y - a) / (b - a));
+const expoOut = (t) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
+const inOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
 const reduced =
   matchMedia("(prefers-reduced-motion: reduce)").matches ||
   new URLSearchParams(location.search).get("motion") === "off";
-if (reduced) document.documentElement.classList.add("reduced-motion");
-const hero = $(".hero"),
+const root = document.documentElement;
+if (reduced) root.classList.add("reduced-motion");
+
+const body = document.body,
+  main = $("main"),
+  loader = $(".loader"),
+  header = $(".site-header"),
+  hero = $(".hero"),
+  heroCopy = $(".hero-copy"),
+  globeBox = $(".globe-box"),
   journey = $(".journey"),
-  stage = $(".journey-stage");
-const header = $(".site-header"),
-  copy = $(".hero-copy"),
-  port = $(".port-frame");
-const articles = [...document.querySelectorAll("[data-chapter]")];
-const stops = [...document.querySelectorAll("[data-stop]")];
-const progressLine = $(".journey-progress i"),
-  backdrop = $(".big-backdrop");
-const menu = $("#site-menu"),
+  ocean = $(".ocean"),
+  menu = $("#site-menu"),
   quote = $("#quote-dialog");
-const modes = ["01 — LAND", "02 — TERMINAL", "03 — OCEAN", "04 — AIR"];
-const words = [
-  "ON THE ROAD",
-  "IN GOOD HANDS",
-  "BEYOND BORDERS",
-  "AHEAD OF TIME",
-];
-const clamp = (n, a = 0, b = 1) => Math.max(a, Math.min(b, n));
-const smooth = (a, b, n) => {
-  const t = clamp((n - a) / (b - a));
-  return t * t * (3 - 2 * t);
-};
-let globe,
-  freight,
-  heroTop = 0,
-  heroHeight = 1,
-  journeyTop = 0,
-  journeySpan = 1;
-let portTop = 0,
-  portHeight = 1,
-  servicesTop = 0,
-  faqTop = 0,
-  contactTop = 0,
-  vh = innerHeight,
-  frame = 0,
-  chapter = -1,
-  ready = false;
-let activeOcean = false,
-  lightHeader = false,
-  compactHeader = false,
-  lastTime = performance.now();
+
+// ---------------------------------------------------------------- engines
+let globe = null,
+  freight = null;
+try {
+  globe = createGlobe($("#globe"), $(".globe-labels"), reduced);
+} catch (e) {
+  console.warn("Globe unavailable", e);
+}
+try {
+  freight = createFreight(journey, ocean, reduced);
+} catch (e) {
+  console.warn("Journey unavailable", e);
+}
+
 const lenis = reduced
   ? null
   : new Lenis({
-      lerp: 0.085,
+      lerp: 0.1,
       smoothWheel: true,
       syncTouch: false,
-      prevent: (el) => Boolean(el.closest?.("dialog")),
+      prevent: (node) => Boolean(node.closest?.("dialog")),
     });
-lenis?.stop();
-document.querySelector("main").inert = true;
-header.inert = true;
+window.lenis = lenis;
+
+// ---------------------------------------------------------------- layout
+const L = { vw: 0, vh: 0, mobile: false, k: 1, heroH: 1, jTop: 0, jH: 1, oTop: 0, oH: 1 };
 function measure() {
-  vh = innerHeight;
-  heroTop = hero.offsetTop;
-  heroHeight = hero.offsetHeight;
-  journeyTop = journey.offsetTop;
-  journeySpan = Math.max(1, journey.offsetHeight - vh);
-  portTop = port.getBoundingClientRect().top + scrollY;
-  portHeight = port.offsetHeight;
-  servicesTop = $("#services").offsetTop;
-  faqTop = $(".faq").offsetTop;
-  contactTop = $("#contact").offsetTop;
-  globe?.resize();
-  freight?.resize();
+  L.vw = innerWidth;
+  L.vh = innerHeight;
+  L.mobile = L.vw < 768;
+  L.k = L.mobile ? L.vh / 844 : L.vh / 720;
+  L.heroH = hero.offsetHeight;
+  L.jTop = journey.offsetTop;
+  L.jH = journey.offsetHeight;
+  L.oTop = ocean.offsetTop;
+  L.oH = ocean.offsetHeight;
+  if (globe) {
+    const u = L.vw / (L.mobile ? 390 : 1280);
+    globe.resize(
+      L.mobile
+        ? { cx: 230 * u, cy: (330 * L.vh) / 844, radius: 300 * u }
+        : { cx: 1175 * u, cy: 270 * L.k, radius: 430 * u },
+    );
+  }
+  freight?.resize(L.vw, L.vh, L.mobile);
+  lastScroll = -1;
 }
-try {
-  globe = createGlobe($("#globe"), reduced);
-  freight = createFreight($("#freight"), reduced);
-} catch (error) {
-  document.body.classList.add("webgl-fallback");
-  console.warn("3D unavailable; static layout is active.", error);
-}
-function finish() {
-  if (ready) return;
-  ready = true;
-  $(".load-track i").style.transform = "scaleX(1)";
-  const loader = $(".loader");
-  loader?.classList.add("done");
-  setTimeout(() => loader?.remove(), reduced ? 0 : 1100);
-  document.body.classList.add("is-ready");
-  document.querySelector("main").inert = false;
+
+// ---------------------------------------------------------------- loader
+let revealed = false,
+  introStart = 0;
+const counter = $(".ld-count b");
+$$(".ld-list li").forEach((li, i) => li.style.setProperty("--i", String(i % 11)));
+
+function reveal() {
+  if (revealed) return;
+  revealed = true;
+  body.classList.remove("is-loading");
+  body.classList.add("is-revealed");
+  main.inert = false;
   header.inert = false;
-  document.querySelectorAll(".intro").forEach((el, i) => {
-    if (!reduced)
-      el.animate(
-        [
-          { transform: "translateY(110%)", opacity: 0 },
-          { transform: "translateY(0)", opacity: 1 },
-        ],
-        {
-          duration: 1100,
-          delay: 70 * i,
-          easing: "cubic-bezier(.16,1,.3,1)",
-          fill: "both",
-        },
-      );
-  });
+  introStart = performance.now();
   lenis?.start();
-  measure();
-  const target = location.hash
-    ? document.getElementById(location.hash.slice(1))
-    : null;
-  if (target) {
-    const y =
-      target.getBoundingClientRect().top +
-      scrollY -
-      (target === journey || target === hero ? 0 : 85);
-    if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
-    else scrollTo(0, y);
-  }
+  setTimeout(() => loader?.remove(), 700);
+  freight?.preloadAll();
+  jumpToHash();
 }
-const started = performance.now();
-Promise.allSettled([document.fonts.ready, globe?.ready]).then(() =>
-  setTimeout(finish, Math.max(0, 850 - (performance.now() - started))),
-);
-setTimeout(finish, 4500);
-const motionLink = $("#motion-link");
-if (reduced) {
-  motionLink.textContent = "Motion reduced";
-  motionLink.setAttribute("aria-current", "true");
-}
-function chooseChapter(p) {
-  const next = p < 0.28 ? 0 : p < 0.5 ? 1 : p < 0.78 ? 2 : 3;
-  if (next === chapter) return;
-  chapter = next;
-  for (let i = 0; i < articles.length; i++) {
-    articles[i].hidden = i !== next;
-    if (i === next && !reduced)
-      articles[i].animate(
-        [
-          { opacity: 0, transform: "translateY(18px)" },
-          { opacity: 1, transform: "translateY(0)" },
-        ],
-        { duration: 650, easing: "cubic-bezier(.2,.7,.1,1)" },
-      );
-    if (i === next) stops[i].setAttribute("aria-current", "step");
-    else stops[i].removeAttribute("aria-current");
-  }
-  $(".mode-label").textContent = modes[next];
-  backdrop.textContent = words[next];
-  $(".journey-number").textContent = `0${next + 1} / 04`;
-}
-function tick(t) {
-  const dt = Math.min(64, t - lastTime);
-  lastTime = t;
-  lenis?.raf(t);
-  const y = scrollY,
-    heroProgress = clamp((y - heroTop) / Math.max(1, heroHeight - vh));
-  const jp = clamp((y - journeyTop) / journeySpan);
-  const inHero = y < heroTop + heroHeight && y + vh > heroTop;
-  const inJourney = y + vh > journeyTop && y < journeyTop + journeySpan + vh;
-  if (inHero) {
-    globe?.render(t, reduced ? 0 : heroProgress, dt);
-    if (!reduced) {
-      copy.style.transform = `translate3d(0,${-heroProgress * 130}px,0)`;
-      copy.style.opacity = String(1 - smooth(0.2, 0.86, heroProgress));
+
+if (reduced || !loader) {
+  loader?.remove();
+  revealed = true;
+  body.classList.add("is-revealed");
+  freight?.ready.then(() => freight.preloadAll());
+} else {
+  body.classList.add("is-loading");
+  main.inert = true;
+  header.inert = true;
+  lenis?.stop();
+  const t0 = performance.now();
+  let readyAt = 0;
+  const ready = Promise.allSettled([
+    document.fonts.ready,
+    globe?.ready,
+    freight?.ready,
+    $(".ld-map img")?.decode?.(),
+  ]);
+  Promise.race([ready, new Promise((r) => setTimeout(r, 9000))]).then(() => {
+    readyAt = performance.now() - t0;
+  });
+  let exit = 0;
+  const step = (now) => {
+    const t = now - t0;
+    // head row drifts down while the lists are swallowed from the top
+    loader.style.setProperty("--hy", `${(26.6 + 8.5 * inOut(prog(t, 700, 5200))).toFixed(2)}rem`);
+    let n = t < 2500 ? 65 * (1 - Math.pow(1 - prog(t, 250, 2500), 2)) : 65 + 35 * prog(t, 2500, 5200);
+    if (!readyAt) n = Math.min(n, 99);
+    counter.textContent = String(Math.floor(n)).padStart(2, "0");
+    if (readyAt && t >= 5200 && !exit) exit = Math.max(t, readyAt + 150);
+    if (exit) {
+      counter.textContent = "100";
+      if (t >= exit + 200) loader.classList.add("is-exit");
+      if (t >= exit + 500) {
+        loader.classList.add("is-done");
+        reveal();
+        return;
+      }
     }
-  }
-  const ocean = jp >= 0.5 && jp < 0.78 && inJourney;
-  if (activeOcean !== ocean) {
-    activeOcean = ocean;
-    stage.classList.toggle("ocean", ocean);
-  }
-  const onLight =
-    (!inHero && !ocean && y < servicesTop) || (y >= faqTop && y < contactTop);
-  if (lightHeader !== onLight) {
-    lightHeader = onLight;
-    header.classList.toggle("light", onLight);
-  }
-  if (compactHeader === inHero) {
-    compactHeader = !inHero;
-    header.classList.toggle("compact", compactHeader);
-  }
-  if (inJourney) {
-    if (!reduced) chooseChapter(jp);
-    progressLine.style.transform = `scaleX(${jp})`;
-    freight?.render(t, reduced ? 0.14 : jp, dt);
-  }
-  if (!reduced && y + vh > portTop && y < portTop + portHeight) {
-    const p = smooth(portTop - vh, portTop + portHeight * 0.1, y);
-    port.style.clipPath = `inset(0 ${12 * (1 - p)}% 0 ${12 * (1 - p)}% round ${220 * (1 - p)}px)`;
-  }
-  frame = requestAnimationFrame(tick);
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
+
+// ---------------------------------------------------------------- header
+let compact = null,
+  hidden = false,
+  lastHeaderY = 0;
+function updateHeader(y) {
+  const c = y > 80;
+  if (c !== compact) {
+    compact = c;
+    header.classList.toggle("compact", c);
+  }
+  const d = y - lastHeaderY;
+  if (Math.abs(d) > 3) {
+    const h = d > 0 && y > 300 && !header.contains(document.activeElement);
+    if (h !== hidden) {
+      hidden = h;
+      header.classList.toggle("hide", h);
+    }
+    lastHeaderY = y;
+  }
+}
+
+// ---------------------------------------------------------------- frame loop
+let lastScroll = -1,
+  lastT = performance.now(),
+  raf = 0;
+function tick(t) {
+  const dt = clamp(t - lastT, 0, 64);
+  lastT = t;
+  lenis?.raf(t);
+  const y = lenis ? lenis.animatedScroll : scrollY;
+  const moved = y !== lastScroll;
+  lastScroll = y;
+
+  // hero: globe framing, rotation and fade; copy fades first
+  if (y < L.heroH + L.vh) {
+    const Yh = y / L.k;
+    const intro = reduced ? 1 : revealed ? expoOut(clamp((t - introStart) / 1100)) : 0;
+    const fade = L.mobile ? 1 - prog(y, 0, L.vh * 0.9) : 1 - prog(Yh, 200, 1008);
+    if (globe && fade > 0) globe.render(dt, reduced ? 0 : clamp(Yh / 1008, 0, 1.2), intro);
+    globeBox.style.opacity = fade.toFixed(3);
+    if (moved && !L.mobile) heroCopy.style.opacity = (1 - prog(Yh, 0, 150)).toFixed(3);
+  }
+  if (moved) updateHeader(y);
+
+  // journey + ocean timeline
+  if (freight) {
+    const inJ = y + L.vh > L.jTop && y < L.jTop + L.jH;
+    const inO = y + L.vh > L.oTop && y < L.oTop + L.oH;
+    if ((inJ || inO) && (moved || freight.dirty || (inO && freight.waterActive) || inO))
+      freight.render(y - L.jTop, t, dt, inJ, inO);
+  }
+  raf = requestAnimationFrame(tick);
+}
+
 measure();
-frame = requestAnimationFrame(tick);
-if (reduced) articles.forEach((article) => (article.hidden = false));
-let resizeTimer;
+raf = requestAnimationFrame(tick);
+document.fonts.ready.then(measure);
+addEventListener("load", measure);
+let resizeTimer = 0;
 addEventListener(
   "resize",
   () => {
@@ -205,79 +207,89 @@ addEventListener(
   },
   { passive: true },
 );
-document.fonts.ready.then(measure);
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden) cancelAnimationFrame(frame);
+  if (document.hidden) cancelAnimationFrame(raf);
   else {
-    lastTime = performance.now();
-    frame = requestAnimationFrame(tick);
+    lastT = performance.now();
+    raf = requestAnimationFrame(tick);
   }
 });
-function moveTo(target, offset = -85) {
-  menu.close();
-  $(".menu-toggle").setAttribute("aria-expanded", "false");
-  const y =
-    typeof target === "number"
-      ? target
-      : target.getBoundingClientRect().top + scrollY + offset;
+
+// ---------------------------------------------------------------- navigation
+function targetY(target) {
+  if (target === hero) return 0;
+  // The services rail is the meaningful start of the journey.
+  if (target === journey) return L.jTop + (L.mobile ? 2600 - 2494 : 7344 - 2544) * L.k;
+  return target.getBoundingClientRect().top + (lenis ? lenis.animatedScroll : scrollY);
+}
+function moveTo(target, immediate = false) {
+  if (menu.open) menu.close();
+  const y = typeof target === "number" ? target : targetY(target);
+  const from = lenis ? lenis.animatedScroll : scrollY;
   if (lenis)
     lenis.scrollTo(y, {
-      duration: clamp(
-        1.4 + Math.sqrt(Math.abs(y - scrollY) / vh) * 0.36,
-        1.4,
-        3.4,
-      ),
+      immediate,
       force: true,
+      duration: clamp(1.2 + Math.sqrt(Math.abs(y - from) / L.vh) * 0.3, 1.2, 3.2),
     });
   else scrollTo({ top: y, behavior: "instant" });
 }
-document.querySelectorAll('a[href^="#"]').forEach((a) =>
+function jumpToHash() {
+  const id = location.hash.slice(1);
+  const target = id && document.getElementById(id);
+  if (target) requestAnimationFrame(() => moveTo(target, true));
+}
+if (revealed) jumpToHash();
+$$('a[href^="#"]').forEach((a) =>
   a.addEventListener("click", (event) => {
-    const target = document.getElementById(a.getAttribute("href").slice(1));
+    const id = a.getAttribute("href").slice(1);
+    const target = id ? document.getElementById(id) : null;
     if (!target) return;
     event.preventDefault();
-    history.replaceState(null, "", a.getAttribute("href"));
-    moveTo(target, target === hero || target === journey ? 0 : -85);
+    history.replaceState(null, "", `#${id}`);
+    moveTo(target);
+    if (target.id !== "home") {
+      const focusable = target.querySelector("h1, h2");
+      if (focusable) {
+        focusable.setAttribute("tabindex", "-1");
+        focusable.focus({ preventScroll: true });
+      }
+    }
   }),
 );
-stops.forEach((button) =>
-  button.addEventListener("click", () =>
-    moveTo(journeyTop + Number(button.dataset.stop) * journeySpan, 0),
-  ),
-);
-$(".menu-toggle").addEventListener("click", () => {
+
+// ---------------------------------------------------------------- dialogs
+const toggle = $(".menu-toggle");
+toggle.addEventListener("click", () => {
   menu.showModal();
   lenis?.stop();
-  $(".menu-toggle").setAttribute("aria-expanded", "true");
+  toggle.setAttribute("aria-expanded", "true");
 });
 $(".menu-close").addEventListener("click", () => menu.close());
 menu.addEventListener("close", () => {
-  $(".menu-toggle").setAttribute("aria-expanded", "false");
-  if (ready) lenis?.start();
+  toggle.setAttribute("aria-expanded", "false");
+  if (revealed) lenis?.start();
+  toggle.focus({ preventScroll: true });
 });
-document.querySelectorAll("[data-quote]").forEach((button) =>
+let quoteOpener = null;
+$$("[data-quote]").forEach((button) =>
   button.addEventListener("click", () => {
+    quoteOpener = button;
+    if (menu.open) menu.close();
     quote.showModal();
     lenis?.stop();
-    if (button.dataset.service)
-      quote.querySelector("select").value = button.dataset.service;
+    if (button.dataset.service) quote.querySelector("select").value = button.dataset.service;
   }),
 );
 $(".quote-close").addEventListener("click", () => quote.close());
 quote.addEventListener("close", () => {
-  if (ready) lenis?.start();
+  if (revealed) lenis?.start();
+  quoteOpener?.focus({ preventScroll: true });
 });
 quote.addEventListener("click", (e) => {
-  if (e.target === quote) {
-    const r = quote.getBoundingClientRect();
-    if (
-      e.clientX < r.left ||
-      e.clientX > r.right ||
-      e.clientY < r.top ||
-      e.clientY > r.bottom
-    )
-      quote.close();
-  }
+  if (e.target !== quote) return;
+  const r = quote.getBoundingClientRect();
+  if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) quote.close();
 });
 $("#quote-form").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -285,43 +297,52 @@ $("#quote-form").addEventListener("submit", (event) => {
   $("#quote-result").textContent =
     `Your enquiry preview\n${data.get("service")} · ${data.get("origin")} → ${data.get("destination")}\n${data.get("cargo")}\n\nThis is a portfolio demonstration. Nothing has been sent or booked.`;
 });
-const detailGroups = [...document.querySelectorAll(".service-list details")],
-  serviceImg = $(".service-photo img");
-detailGroups.forEach((detail) =>
+
+// ---------------------------------------------------------------- services accordion
+const details = $$(".service-list details"),
+  photo = $(".service-photo img"),
+  caption = $(".service-photo span");
+let generation = 0;
+details.forEach((detail) =>
   detail.addEventListener("toggle", () => {
     if (!detail.open) return;
-    detailGroups.forEach((other) => {
-      if (other !== detail) other.open = false;
-    });
-    const src = `media/${detail.dataset.image}`;
-    serviceImg.src = src;
-    serviceImg.alt = detail.querySelector("h3").textContent + " photography";
-    $(".service-photo span").textContent = detail.dataset.caption;
+    details.forEach((other) => other !== detail && (other.open = false));
+    const src = `media/${detail.dataset.image}`,
+      g = ++generation,
+      next = new Image();
+    next.src = src;
+    next
+      .decode()
+      .then(() => {
+        if (g !== generation) return;
+        photo.src = src;
+        photo.alt = `${detail.querySelector("h3").textContent} photography`;
+        caption.textContent = detail.dataset.caption;
+        if (!reduced)
+          photo.animate(
+            [
+              { opacity: 0, transform: "scale(1.045)" },
+              { opacity: 1, transform: "scale(1)" },
+            ],
+            { duration: 650, easing: "cubic-bezier(.16,1,.3,1)" },
+          );
+      })
+      .catch(() => {});
     requestAnimationFrame(measure);
   }),
 );
-document
-  .querySelectorAll(".faq details")
-  .forEach((detail) =>
-    detail.addEventListener("toggle", () => requestAnimationFrame(measure)),
-  );
-const routes = [
-  "M207 211Q211 157 275 273",
-  "M275 273Q378 241 440 391",
-  "M440 391Q536 356 581 422",
-];
-const routeCodes = ["CMB → SIN", "SIN → MEL", "MEL → AKL"];
-document.querySelectorAll("[data-route]").forEach((button) =>
+$$(".faq details").forEach((d) => d.addEventListener("toggle", () => requestAnimationFrame(measure)));
+
+// ---------------------------------------------------------------- network routes
+const routes = ["M207 211Q211 157 275 273", "M275 273Q378 241 440 391", "M440 391Q536 356 581 422"],
+  codes = ["CMB → SIN", "SIN → MEL", "MEL → AKL"];
+$$("[data-route]").forEach((button) =>
   button.addEventListener("click", () => {
     const n = Number(button.dataset.route);
-    document
-      .querySelectorAll("[data-route]")
-      .forEach((other) =>
-        other.setAttribute("aria-pressed", String(other === button)),
-      );
+    $$("[data-route]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
     const path = $(".route-path");
     path.setAttribute("d", routes[n]);
-    $(".route-code").textContent = routeCodes[n];
+    $(".route-code").textContent = codes[n];
     if (!reduced)
       path.animate([{ strokeDashoffset: 500 }, { strokeDashoffset: 0 }], {
         duration: 1600,
@@ -330,22 +351,9 @@ document.querySelectorAll("[data-route]").forEach((button) =>
       });
   }),
 );
-if (!reduced) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries)
-        if (e.isIntersecting) {
-          e.target.animate(
-            [
-              { opacity: 0, transform: "translateY(38px)" },
-              { opacity: 1, transform: "translateY(0)" },
-            ],
-            { duration: 900, easing: "cubic-bezier(.16,1,.3,1)" },
-          );
-          observer.unobserve(e.target);
-        }
-    },
-    { threshold: 0.13 },
-  );
-  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+const motionLink = $("#motion-link");
+if (reduced && motionLink) {
+  motionLink.textContent = "Restore motion";
+  motionLink.href = location.pathname + "#home";
 }
