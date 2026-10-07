@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <base href="/showcase/">
 <title>Hemal Herath 3D Showcase</title>
-<meta name="description" content="3D, motion and scroll-driven websites designed and built by Hemal Herath in Sri Lanka. Fly through thirteen sites in 3D, including Nilaveli Beach Resort and Ceylon Select redesign previews.">
+<meta name="description" content="3D, motion and scroll-driven websites designed and built by Hemal Herath in Sri Lanka. Fly through fourteen sites in 3D, including Nilaveli Beach Resort and Ceylon Select redesign previews.">
 <meta property="og:title" content="Hemal Herath · 3D Showcase">
-<meta property="og:description" content="Explore thirteen websites, concepts and redesign previews, including Nilaveli Beach Resort and Ceylon Select, in a 3D scroll journey.">
+<meta property="og:description" content="Explore fourteen websites, concepts and redesign previews, including Nilaveli Beach Resort and Ceylon Select, in a 3D scroll journey.">
 <meta property="og:image" content="/showcase/thumbs/villa.jpg">
 <meta name="theme-color" content="#07080a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -164,7 +164,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <header class="hero">
   <h1><span class="ln"><span>Websites</span></span><span class="ln"><span><em>people</em></span></span><span class="ln"><span>remember.</span></span></h1>
   <div class="meta">
-    <p><b>3D, motion and scroll-driven websites</b> for hotels, food and lifestyle brands, designed and built in Sri Lanka by Hemal Herath. Scroll to fly through thirteen sites, concepts and redesign previews.</p>
+    <p><b>3D, motion and scroll-driven websites</b> for hotels, food and lifestyle brands, designed and built in Sri Lanka by Hemal Herath. Scroll to fly through fourteen sites, concepts and redesign previews.</p>
     <span class="cue"><i>↓</i>Scroll to fly</span>
   </div>
 </header>
@@ -173,12 +173,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <div class="chapter" id="chapter" aria-live="polite">
   <div>
-    <div class="idx"><span id="chIdx">01 / 13</span><i></i><span id="chKind">Boutique resort · redesign preview</span></div>
-    <h2 id="chName"><span>Nilaveli Beach Resort</span></h2>
+    <div class="idx"><span id="chIdx">01 / 14</span><i></i><span id="chKind">Freight & logistics · concept</span></div>
+    <h2 id="chName"><span>Wayline</span></h2>
     <p class="line" id="chLine"></p>
     <div class="tags" id="chTags"></div>
   </div>
-  <a class="open" id="chOpen" href="/preview/nilaveli">Open preview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+  <a class="open" id="chOpen" href="wayline">Explore site <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.5"/></svg></a>
 </div>
 <div class="rail" id="rail"></div>
 
@@ -222,7 +222,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
   </section>
 
-  <footer><div class="wrap"><span>© 2026 Hemal Herath</span><span>Nilaveli Beach Resort, Ceylon Select and Lakmini International are redesign previews · Mistline, Saffron Reef, Nīla, Ninth Lane and Swellhouse are fictional concept brands · The David Guetta site is an unofficial concept</span><span>Built with Three.js · GSAP · Lenis</span></div></footer>
+  <footer><div class="wrap"><span>© 2026 Hemal Herath</span><span>Nilaveli Beach Resort, Ceylon Select and Lakmini International are redesign previews · Wayline, Mistline, Saffron Reef, Nīla, Ninth Lane and Swellhouse are fictional concept brands · The David Guetta site is an unofficial concept</span><span>Built with Three.js · GSAP · Lenis</span></div></footer>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -231,6 +231,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"}}</script>
 <script>
 window.PROJECTS = [
+  {slug:"wayline", name:"Wayline", kind:"Freight & logistics · concept", color:"#617dff", bg:"#070c18", line:"A glowing globe and a continuous 3D freight journey through road, terminal, sea and air.", tags:["Three.js","Scroll choreography","Interactive routes","Concept"]},
   {slug:"nilaveli", name:"Nilaveli Beach Resort", kind:"Boutique resort · redesign preview", status:"preview", color:"#d5b887", bg:"#09262c", href:"/preview/nilaveli", line:"A cinematic beach opening, cabana rooms, a day at the resort and an Ayurveda treatment menu.", tags:["Film hero","Scroll story","Reservation enquiries","Redesign preview"]},
   {slug:"ceylon-select", name:"Ceylon Select", kind:"Tea brand · storefront preview", status:"preview", color:"#a8b88c", bg:"#09251b", href:"/preview/ceylon-select", line:"A tea cabinet with product browsing, a guided brew ritual and a scroll story tracing each cup to Ceylon.", tags:["Product catalogue","Scroll story","Shop UI","Redesign preview"]},
   {slug:"crunch", name:"Crunch Club", kind:"Vietnamese sandwich · reference study", color:"#d4a373", bg:"#20190e", line:"A credited study of HoQuan’s Vietnamese sandwich editorial: photo collage, history cards, anatomy and a touch gallery.", tags:["Editorial motion","Scroll animation","Photo gallery","Reference study"]},

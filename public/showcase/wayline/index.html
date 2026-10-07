@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <base href="/showcase/wayline/" />
+    <title>Wayline — Every move matters.</title>
+    <meta
+      name="description"
+      content="Wayline: a freight and logistics website concept by Hemal Herath. A continuous 3D journey through land, terminal, ocean and air."
+    />
+    <meta property="og:title" content="Wayline — Every move matters." />
+    <meta property="og:image" content="/showcase/thumbs/wayline.jpg" />
+    <link
+      rel="preload"
+      href="/showcase/lakmini/assets/archivo-latin-wdth-normal-DY7AcnAa.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#about">Skip the opening</a>
+    <div class="loader" aria-label="Preparing the journey">
+      <div class="load-brand">WAYLINE<span>↗</span></div>
+      <div class="load-container">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <p>
+        READY FOR DEPARTURE<span class="load-track"><i></i></span>
+      </p>
+    </div>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Wayline home"
+        >WAYLINE<span aria-hidden="true">↗</span></a
+      >
+      <nav aria-label="Main navigation">
+        <a href="#about">About</a><a href="#journey">The journey</a
+        ><a href="#services">Services</a><a href="#network">Network</a>
+      </nav>
+      <div class="header-actions">
+        <button class="quote-link" data-quote>Let’s move <span>↗</span></button
+        ><button
+          class="menu-toggle"
+          aria-expanded="false"
+          aria-controls="site-menu"
+        >
+          Menu <i></i>
+        </button>
+      </div>
+    </header>
+    <dialog class="site-menu" id="site-menu">
+      <div>
+        <a class="brand" href="#home">WAYLINE<span>↗</span></a
+        ><button class="menu-close" aria-label="Close menu">Close ×</button>
+      </div>
+      <nav aria-label="Mobile navigation">
+        <a href="#about">About us<span>01</span></a
+        ><a href="#journey">The journey<span>02</span></a
+        ><a href="#services">Our services<span>03</span></a
+        ><a href="#network">The network<span>04</span></a
+        ><a href="#contact">Let’s move<span>05</span></a>
+      </nav>
+      <p>A FREIGHT & LOGISTICS CONCEPT BY HEMAL HERATH</p>
+    </dialog>
+    <main>
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <div class="hero-stage">
+          <div class="hero-grid" aria-hidden="true"></div>
+          <div class="globe-wrap">
+            <canvas
+              id="globe"
+              aria-label="A rotating globe showing illustrative international freight routes"
+            ></canvas
+            ><span class="globe-label label-singapore">SINGAPORE</span
+            ><span class="globe-label label-colombo">COLOMBO</span
+            ><span class="globe-label label-melbourne">MELBOURNE</span>
+          </div>
+          <div class="utility">
+            <span>FREIGHT WITHOUT FRICTION.</span
+            ><span>LAND <i>·</i> SEA <i>·</i> AIR</span>
+          </div>
+          <div class="hero-copy">
+            <p class="eyebrow intro">ONE CONNECTED JOURNEY</p>
+            <h1 id="hero-title">
+              <span class="mask"><span class="intro">EVERY MOVE.</span></span
+              ><span class="mask"><span class="intro">EVERY MILE.</span></span
+              ><span class="mask"><span class="intro">MATTERS.</span></span>
+            </h1>
+            <p class="hero-desc intro">
+              From the first collection to the final handover.<br />Freight that
+              moves as one.
+            </p>
+            <div class="hero-ctas intro">
+              <button class="pill" data-quote>
+                Move with us <span>↗</span></button
+              ><a class="pill outline" href="#journey"
+                >Explore the journey <span>↓</span></a
+              >
+            </div>
+          </div>
+          <div class="hero-foot intro">
+            <span>ORIGIN → DESTINATION</span
+            ><a href="#about">SCROLL TO MOVE <span>↓</span></a
+            ><span>GLOBAL THINKING. LOCAL CARE.</span>
+          </div>
+        </div>
+      </section>
+      <section
+        class="about section-pad"
+        id="about"
+        aria-labelledby="about-title"
+      >
+        <p class="eyebrow reveal">01 / A BETTER WAY FORWARD</p>
+        <div class="about-grid">
+          <h2 id="about-title" class="reveal">
+            THE WORLD<br />MOVES.<br /><span>SO DO WE.</span>
+          </h2>
+          <div class="about-copy reveal">
+            <p class="lead">
+              Good logistics is a connection.<br />Between people. Between
+              places.<br />Between a promise and its delivery.
+            </p>
+            <p>
+              Wayline imagines a simpler supply chain: a clear route, a
+              connected team and care at every handover. Road, sea and air
+              become one considered journey.
+            </p>
+            <a class="text-link" href="#services"
+              >Discover the approach <span>↗</span></a
+            >
+          </div>
+        </div>
+        <div class="port-frame">
+          <img
+            src="media/port.jpg"
+            alt="Aerial view of a cargo ship and shipping containers in a port"
+            width="1800"
+            height="1200"
+            decoding="async"
+          />
+          <div>
+            <span>THE WORLD IS CONNECTED.</span
+            ><span>LET’S KEEP IT MOVING.</span>
+          </div>
+        </div>
+        <div class="principles">
+          <div class="reveal">
+            <span>01</span>
+            <h3>One journey.</h3>
+            <p>From collection to delivery.</p>
+          </div>
+          <div class="reveal">
+            <span>02</span>
+            <h3>Every handover.</h3>
+            <p>Considered. Connected. Clear.</p>
+          </div>
+          <div class="reveal">
+            <span>03</span>
+            <h3>A clear way ahead.</h3>
+            <p>People, places and possibilities.</p>
+          </div>
+        </div>
+      </section>
+      <section class="journey" id="journey" aria-labelledby="journey-title">
+        <div class="journey-stage">
+          <canvas
+            id="freight"
+            aria-label="An animated freight journey featuring a truck, container crane, cargo ship and aircraft"
+          ></canvas>
+          <div class="journey-top">
+            <p class="eyebrow" id="journey-title">02 / FOLLOW THE FREIGHT</p>
+            <span class="mode-label">01 — LAND</span>
+          </div>
+          <div class="big-backdrop" aria-hidden="true">ON THE ROAD</div>
+          <div class="journey-copy">
+            <article data-chapter="0">
+              <p class="eyebrow">01 / LAND TRANSPORT</p>
+              <h2>EVERY JOURNEY<br />STARTS WITH<br />A FIRST MILE.</h2>
+              <p>
+                The collection. The connection. The road ahead.<br />A good
+                start makes all the difference.
+              </p>
+            </article>
+            <article data-chapter="1" hidden>
+              <p class="eyebrow">02 / THE TERMINAL</p>
+              <h2>THE HANDOVER.<br />WITHOUT<br />THE HOLD-UP.</h2>
+              <p>A container changes hands.<br />The care stays with it.</p>
+            </article>
+            <article data-chapter="2" hidden>
+              <p class="eyebrow">03 / OCEAN FREIGHT</p>
+              <h2>NEW HORIZONS.<br />THE SAME<br />COMMITMENT.</h2>
+              <p>
+                Across the water, every connection counts.<br />One world. A
+                thousand ways forward.
+              </p>
+            </article>
+            <article data-chapter="3" hidden>
+              <p class="eyebrow">04 / AIR FREIGHT</p>
+              <h2>SOME THINGS<br />CAN’T WAIT<br />FOR TOMORROW.</h2>
+              <p>
+                When time matters, take the faster route.<br />A considered
+                move, at a different altitude.
+              </p>
+            </article>
+          </div>
+          <nav class="chapter-nav" aria-label="Freight chapters">
+            <button data-stop="0.10" aria-current="step">
+              Land<span>01</span></button
+            ><button data-stop="0.36">Terminal<span>02</span></button
+            ><button data-stop="0.63">Sea<span>03</span></button
+            ><button data-stop="0.90">Air<span>04</span></button>
+          </nav>
+          <div class="journey-foot">
+            <span>SCROLL TO CONTINUE <i>↓</i></span
+            ><span class="journey-progress"><i></i></span
+            ><span class="journey-number">01 / 04</span>
+          </div>
+        </div>
+      </section>
+      <section
+        class="services section-pad"
+        id="services"
+        aria-labelledby="services-title"
+      >
+        <div class="section-head reveal">
+          <p class="eyebrow">03 / THE COMPLETE PICTURE</p>
+          <h2 id="services-title">
+            MANY WAYS TO MOVE.<br /><span>ONE WAY TO CARE.</span>
+          </h2>
+          <p>
+            A considered service for each leg of the journey.<br />Choose a mode
+            to explore.
+          </p>
+        </div>
+        <div class="service-layout">
+          <div class="service-photo">
+            <img
+              src="media/road.jpg"
+              alt="A freight truck travelling on an open highway at sunset"
+              width="1200"
+              height="800"
+              loading="lazy"
+              decoding="async"
+            /><span>LAND TRANSPORT / FIRST TO LAST MILE</span>
+          </div>
+          <div class="service-list">
+            <details
+              open
+              data-image="road.jpg"
+              data-caption="LAND TRANSPORT / FIRST TO LAST MILE"
+            >
+              <summary>
+                <span>01</span>
+                <h3>Road & distribution</h3>
+                <i>↗</i>
+              </summary>
+              <div>
+                <p>
+                  Collection, linehaul and final delivery, designed as one
+                  connected movement. A clear plan from the first mile to the
+                  last.
+                </p>
+                <button
+                  class="text-link"
+                  data-quote
+                  data-service="Road & distribution"
+                >
+                  Plan a road movement <span>↗</span>
+                </button>
+              </div>
+            </details>
+            <details
+              data-image="port.jpg"
+              data-caption="OCEAN FREIGHT / ACROSS NEW HORIZONS"
+            >
+              <summary>
+                <span>02</span>
+                <h3>Ocean freight</h3>
+                <i>↗</i>
+              </summary>
+              <div>
+                <p>
+                  Container movements across the water. A considered route and a
+                  clear handover from port to destination.
+                </p>
+                <button
+                  class="text-link"
+                  data-quote
+                  data-service="Ocean freight"
+                >
+                  Explore sea freight <span>↗</span>
+                </button>
+              </div>
+            </details>
+            <details
+              data-image="containers.jpg"
+              data-caption="AIR & MULTIMODAL / CONNECTED MOVEMENTS"
+            >
+              <summary>
+                <span>03</span>
+                <h3>Air & multimodal</h3>
+                <i>↗</i>
+              </summary>
+              <div>
+                <p>
+                  For shipments with a tighter timeline, connect air with road
+                  and terminal handling in one carefully planned journey.
+                </p>
+                <button
+                  class="text-link"
+                  data-quote
+                  data-service="Air & multimodal"
+                >
+                  Explore your route <span>↗</span>
+                </button>
+              </div>
+            </details>
+            <details
+              data-image="warehouse.jpg"
+              data-caption="WAREHOUSING / ROOM TO MOVE"
+            >
+              <summary>
+                <span>04</span>
+                <h3>Warehousing & fulfilment</h3>
+                <i>↗</i>
+              </summary>
+              <div>
+                <p>
+                  Storage, picking and distribution that bring the wider supply
+                  chain together. Room for your business to move forward.
+                </p>
+                <button
+                  class="text-link"
+                  data-quote
+                  data-service="Warehousing & fulfilment"
+                >
+                  Find your next step <span>↗</span>
+                </button>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+      <section
+        class="network section-pad"
+        id="network"
+        aria-labelledby="network-title"
+      >
+        <div class="network-copy">
+          <p class="eyebrow reveal">04 / THINK BEYOND BORDERS</p>
+          <h2 class="reveal" id="network-title">
+            A WORLD<br />OF <span>POSSIBILITY.</span>
+          </h2>
+          <p class="reveal">
+            Your next destination starts with a connection.<br />Explore an
+            illustrative Asia-Pacific route network.
+          </p>
+          <div class="route-buttons" role="group" aria-label="Example routes">
+            <button data-route="0" aria-pressed="true">
+              Colombo → Singapore</button
+            ><button data-route="1" aria-pressed="false">
+              Singapore → Melbourne</button
+            ><button data-route="2" aria-pressed="false">
+              Melbourne → Auckland
+            </button>
+          </div>
+          <p class="network-note">ILLUSTRATIVE ROUTES / PORTFOLIO CONCEPT</p>
+        </div>
+        <div class="route-map">
+          <svg
+            viewBox="0 0 720 520"
+            role="img"
+            aria-label="Illustrative connections between Colombo, Singapore, Melbourne and Auckland"
+          >
+            <defs>
+              <pattern
+                id="mapDots"
+                x="0"
+                y="0"
+                width="14"
+                height="14"
+                patternUnits="userSpaceOnUse"
+              >
+                <circle cx="2" cy="2" r="1.2" fill="#525964" />
+              </pattern>
+            </defs>
+            <path
+              class="map-land"
+              d="M44 81l64-21 54 22 16 43 38 8 8 30 54-5 58 41-11 46-37-16-29-42-35 4-19 53-31-43-29-64-50-18-43-22zM251 249l40 12 7 18-38-4zM319 310l87-37 78 28 42 58-4 70-53 7-55-28-74 28-49-55zM567 368l17 31-15 25-12-16zM594 419l24 25-20 19-23-4z"
+              fill="url(#mapDots)"
+            />
+            <path class="route-path" d="M207 211Q211 157 275 273" />
+            <path
+              class="route-muted"
+              d="M275 273Q378 241 440 391M440 391Q536 356 581 422"
+            />
+            <g class="map-pins">
+              <circle cx="207" cy="211" r="5" />
+              <circle cx="275" cy="273" r="5" />
+              <circle cx="440" cy="391" r="5" />
+              <circle cx="581" cy="422" r="5" />
+            </g>
+            <g class="map-labels">
+              <text x="130" y="192">COLOMBO</text>
+              <text x="285" y="266">SINGAPORE</text>
+              <text x="355" y="425">MELBOURNE</text>
+              <text x="591" y="409">AUCKLAND</text>
+            </g></svg
+          ><span class="route-code">CMB → SIN</span
+          ><span class="map-crosshair">+</span>
+        </div>
+      </section>
+      <section class="faq section-pad" aria-labelledby="faq-title">
+        <div class="reveal">
+          <p class="eyebrow">05 / A CLEAR WAY AHEAD</p>
+          <h2 id="faq-title">GOOD<br />QUESTIONS.</h2>
+        </div>
+        <div>
+          <details>
+            <summary>How do I choose the right freight mode?<i>+</i></summary>
+            <p>
+              Start with your cargo, destination and timeline. Road connects
+              local movements, ocean suits containerised freight and air serves
+              time-sensitive shipments. The right plan may combine modes.
+            </p>
+          </details>
+          <details>
+            <summary>What information goes into an enquiry?<i>+</i></summary>
+            <p>
+              Origin, destination, cargo description, dimensions, weight and the
+              date you need it moved. Add any special handling requirements so
+              the movement can be considered properly.
+            </p>
+          </details>
+          <details>
+            <summary>Is Wayline a real freight company?<i>+</i></summary>
+            <p>
+              Wayline is a fictional brand created to demonstrate an interactive
+              logistics website. The transport graphics and journeys are
+              illustrative. No freight services are sold through this site.
+            </p>
+          </details>
+        </div>
+      </section>
+      <section class="contact section-pad" id="contact">
+        <p class="eyebrow reveal">YOUR NEXT MOVE STARTS HERE.</p>
+        <h2 class="reveal">LET’S GET<br /><span>THINGS MOVING.</span></h2>
+        <button
+          class="contact-button"
+          data-quote
+          aria-label="Open freight enquiry preview"
+        >
+          ↗
+        </button>
+        <div class="contact-bottom">
+          <p>
+            A freight & logistics website concept.<br />Designed and built by
+            Hemal Herath.
+          </p>
+          <a
+            class="text-link"
+            href="https://wa.me/94718850419?text=Hi%20Hemal%2C%20I%20saw%20Wayline%20and%20would%20like%20a%20website%20for%20my%20business."
+            target="_blank"
+            rel="noopener"
+            >Build a site like this <span>↗</span></a
+          >
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-brand">WAYLINE<span>↗</span></div>
+      <div class="footer-meta">
+        <span>© 2026 / A HEMAL HERATH CONCEPT</span
+        ><a href="/showcase">Back to the showcase ↗</a
+        ><a href="?motion=off#home" id="motion-link">Reduce motion</a
+        ><a href="#home">Back to top ↑</a>
+      </div>
+      <p class="credits">
+        Freight storytelling inspired by
+        <a href="https://unitedcarriers.com/" target="_blank" rel="noopener"
+          >United Carriers / Bearplus</a
+        >. Original code-built 3D graphics. Photography:
+        <a href="https://www.pexels.com/" target="_blank" rel="noopener"
+          >Pexels</a
+        >
+        · Globe geography: Natural Earth. Wayline is a fictional portfolio
+        concept.
+      </p>
+    </footer>
+    <dialog
+      class="quote-dialog"
+      id="quote-dialog"
+      aria-labelledby="quote-title"
+    >
+      <button class="quote-close" aria-label="Close enquiry">×</button>
+      <p class="eyebrow">YOUR NEXT MOVE</p>
+      <h2 id="quote-title">WHERE TO?</h2>
+      <p class="quote-note">
+        Explore a sample freight enquiry. This portfolio concept does not send
+        or book shipments.
+      </p>
+      <form id="quote-form">
+        <label
+          >Freight service<select name="service">
+            <option>Road & distribution</option>
+            <option>Ocean freight</option>
+            <option>Air & multimodal</option>
+            <option>Warehousing & fulfilment</option>
+          </select></label
+        >
+        <div class="form-grid">
+          <label
+            >From<input
+              name="origin"
+              placeholder="City or port"
+              required
+              maxlength="80" /></label
+          ><label
+            >To<input
+              name="destination"
+              placeholder="City or port"
+              required
+              maxlength="80"
+          /></label>
+        </div>
+        <label
+          >What are you moving?<textarea
+            name="cargo"
+            placeholder="Cargo, dimensions and approximate weight"
+            required
+            maxlength="500"
+          ></textarea></label
+        ><button class="pill" type="submit">
+          Preview my enquiry <span>↗</span></button
+        ><output id="quote-result" aria-live="polite"></output>
+      </form>
+    </dialog>
+    <noscript
+      ><style>
+        .loader {
+          display: none;
+        }
+        .hero h1 .intro {
+          opacity: 1;
+          transform: none;
+        }
+        .journey {
+          height: auto;
+        }
+        .journey-stage {
+          min-height: 850px;
+        }
+        .journey-copy article[hidden] {
+          display: block;
+          margin-top: 50px;
+        }
+        .journey-copy {
+          position: relative;
+          padding: 100px 24px;
+        }
+        .chapter-nav,
+        #freight,
+        .big-backdrop {
+          display: none;
+        }
+      </style></noscript
+    >
+    <script type="module" src="site.js"></script>
+  </body>
+</html>

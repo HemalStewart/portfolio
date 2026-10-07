@@ -593,6 +593,15 @@ export const showcaseWhatsApp =
 
 export const showcaseSites: ShowcaseSite[] = [
   {
+    slug: "wayline",
+    name: "Wayline",
+    kind: "Freight & logistics · concept",
+    line: "A glowing globe and a continuous 3D freight journey through road, terminal, sea and air.",
+    stack: ["Three.js", "Scroll choreography", "Interactive routes"],
+    href: "/showcase/wayline",
+    status: "concept",
+  },
+  {
     slug: "nilaveli",
     name: "Nilaveli Beach Resort",
     kind: "Boutique resort · redesign preview",

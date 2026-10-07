@@ -24,11 +24,12 @@ const countWords = [
   "eleven",
   "twelve",
   "thirteen",
+  "fourteen",
 ];
 const countWord = (n: number) => countWords[n] ?? String(n);
 
 /** Back to front: the three screens fanned out in depth on the lead panel. */
-const fan = ["lakmini", "nilaveli", "ceylon-select"];
+const fan = ["wayline", "nilaveli", "ceylon-select"];
 
 /** Dark lead panel that sends people into the 3D fly-through at /showcase. */
 export function ShowcaseFeature() {
