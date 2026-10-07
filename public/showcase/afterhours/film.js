@@ -1,47 +1,137 @@
-import {reduce,clamp,ease,loader,scrollEngine,navigation,restoreHash} from '../_engine/story-runtime.js';
+import {reduce,clamp,loader,scrollEngine,navigation,restoreHash} from '../_engine/story-runtime.js';
 import {createMediaScrubber} from './media-scrubber.js';
 import {createHeroReveal} from './hero-reveal.js';
-import {storyTime,scrollProgress,screens} from './timeline.js';
-const film=document.querySelector('.film'),stage=document.querySelector('.film-stage'),canvas=document.querySelector('#world'),media=reduce?null:createMediaScrubber(canvas),video=document.querySelector('.film-video'),copy=document.querySelector('.film-copy'),eyebrow=copy.querySelector('.eyebrow'),title=copy.querySelector('h1'),caption=copy.querySelector('.caption'),phone=document.querySelector('.phone-prototype'),label=document.querySelector('.scene-label'),dots=[...document.querySelectorAll('.film-foot a')],detailTags=document.querySelector('.detail-tags');let top=0,length=1,last=-1,dirty=true,active=-2;
-const plan=[
- {key:'takeoff4k-v1',start:.13,end:.24,tag:'TEN HOURS EARLIER',title:'START WITH<br>A BETTER WAY.',note:'The beginning is part of the story.',chapter:1},
- {key:'fork4k-v1',start:.24,end:.33,tag:'A DIFFERENT DEPARTURE',title:'CHANGE THE START.<br>KEEP THE DESTINATION.',note:'An illustrative route, with room for possibility.',chapter:2},
- {key:'next-panel-business-class4k-v1',start:.33,end:.47,tag:'A LITTLE MORE ROOM',title:'THE JOURNEY<br>IS PART OF IT.',note:'A window seat. A slower beginning.',chapter:3},
- {key:'next-panel-forum-morph-v3',start:.47,end:.575,tag:'THE CITY CHANGES',title:'LEAVE SPACE<br>FOR THE WEATHER.',note:'Plans can move when the day does.',chapter:4},
- {key:'next-panel-forum-v3',start:.575,end:.682,tag:'ROME / A DIFFERENT PERSPECTIVE',title:'SAME CITY.<br>ANOTHER STORY.',note:'Make space for the unexpected.',chapter:4},
- {key:'next-panel-museum-morph-v3',start:.682,end:.712,tag:'A CHANGE OF PLAN',title:'THE NEXT<br>GOOD IDEA.',note:'One door closes. Another opens.',chapter:5},
- {key:'next-panel-museum-v3',start:.712,end:.81,tag:'THE DAY, REIMAGINED',title:'FOLLOW<br>YOUR CURIOSITY.',note:'There is more than one way to see a city.',chapter:5},
- {key:'transit-reveal',start:.81,end:.908,tag:'ONE STOP FURTHER',title:'TAKE THE<br>WINDOW SEAT.',note:'A city reveals itself along the way.',chapter:6},
- {key:'next-panel-bookbinder-open-landscape-v2',start:.908,end:.947,tag:'AN UNEXPECTED DOOR',title:'NOT ON THE LIST.<br>STILL WORTH IT.',note:'The best detours rarely announce themselves.',chapter:7},
- {key:'bookbinder-walkin-landscape4k-v1',start:.947,end:.963,tag:'COME INSIDE',title:'THE GOOD PART<br>IS IN THE DETAILS.',note:'Take a moment. Look a little closer.',chapter:7},
- {key:'bookbinder-deep-interior-landscape4k-v1',start:.963,end:.98,tag:'SLOW DOWN',title:'GOOD STORIES<br>TAKE THEIR TIME.',note:'Let the place leave an impression.',chapter:7},
- {key:'bookbinder-finale-turn-landscape4k-v1',start:.98,end:.985,tag:'ONE MORE LOOK',title:'KEEP THE<br>FEELING.',note:'Some things are worth bringing home.',chapter:7},
- {key:'bookbinder-finale-exit-day-landscape4k-v1',start:.985,end:.991,tag:'BACK OUTSIDE',title:'THE LONG<br>WAY HOME.',note:'A different route. A different memory.',chapter:7},
- {key:'finale-day-to-night-landscape4k-v3',start:.991,end:1.000001,tag:'ROME / AFTER DARK',title:'MAKE IT<br>YOUR OWN.',note:'A cinematic reference study by Hemal Herath.',chapter:7}
+import {storyTime,scrollProgress,configure} from './timeline.js';
+const lin=(p,a,b)=>clamp((p-a)/((b-a)||1e-6)),outCubic=t=>1-(1-t)**3;
+const film=document.querySelector('.film'),canvas=document.querySelector('#world'),hero=document.querySelector('.hero'),bookend=document.querySelector('.bookend'),bookendVideo=bookend.querySelector('video'),bookendBoard=bookend.querySelector('img'),typeLayer=document.querySelector('.type-layer');
+// Canvas layers, bottom to top. vis = [fade in from, fully in, fade out from, gone]; map = story time across the frames.
+// Windows follow the reference film; visP overrides portrait, where scenes crossfade instead of cutting.
+const layers=[
+ {key:'takeoff4k-v1',n:99,last:195,vis:[.12,.145,.23,.25],map:[.13,.24]},
+ {key:'fork4k-v1',n:122,last:241,vis:[.23,.25,.32,.345],map:[.24,.33]},
+ {key:'next-panel-business-class4k-v1',n:91,vis:[.32,.34,.455,.475],map:[.33,.47]},
+ {key:'next-panel-forum-v3',n:72,vis:[.535,.555,.67,.69],visP:[.57,.58,.67,.69],map:[.575,.68]},
+ {key:'next-panel-forum-morph-v3',n:121,start:1,startP:0,vis:[.468,.48,.575,.5751],visP:[.468,.48,.575,.585],map:[.545,.575],ease:true,fx:'morph',settle:true,panel:true},
+ {key:'next-panel-museum-v3',n:72,vis:[.665,.685,.79,.81],visP:[.707,.717,.79,.81],map:[.712,.78]},
+ {key:'next-panel-museum-morph-v3',n:121,vis:[.65,.665,.711,.712],visP:[.65,.665,.712,.722],map:[.682,.712],focus:.6,settle:true,panel:true},
+ // Tram: the real 4K pass sits under the moving comic pass, which dissolves away between .855 and .885 (as in the reference).
+ {key:'next-panel-transit-colosseum-real4k-v1',n:60,vis:[.805,.82,.91,.925],map:[.81,.91],focus:.82},
+ {key:'next-panel-transit-colosseum-comic-motion-v1',n:60,vis:[.775,.79,.855,.885],map:[.81,.91],focus:.82,settle:true,panel:true},
+ {key:'next-panel-bookbinder-open-landscape-v2',n:121,vis:[.904,.908,.945,.949],visP:[.895,.908,.945,.949],map:[.908,.946]},
+ {key:'bookbinder-comic',n:1,still:'reference-media/batch-32-bookbinder-rome-comic-landscape-v1-1280.jpg',vis:[.895,.91,.917,.922],map:[0,1],settle:true,landscapeOnly:true,panel:true},
+ {key:'bookbinder-walkin-landscape4k-v1',n:121,vis:[.945,.949,.961,.965],map:[.947,.963]},
+ {key:'bookbinder-deep-interior-landscape4k-v1',n:121,vis:[.961,.965,.979,.98],map:[.963,.979]},
+ {key:'bookbinder-finale-turn-landscape4k-v1',n:121,vis:[.9785,.98,.985,.9855],map:[.98,.985]},
+ {key:'bookbinder-finale-exit-day-landscape4k-v1',n:98,last:193,vis:[.9845,.985,.991,.9915],map:[.985,.991]},
+ {key:'finale-day-to-night-landscape4k-v3',n:98,last:193,vis:[.9905,.991,.996,.9965],map:[.991,.996]}
 ];
-const reveal=createHeroReveal(stage),revealSurface=document.querySelector('.hero-reveal'),mobileComic=document.querySelector('.hero-comic-mobile');
-film.style.height=reduce?'100svh':`${(screens+1)*100}svh`;
-document.querySelectorAll('.chapter-anchor').forEach(a=>{a.dataset.time=a.dataset.stop;a.dataset.stop=scrollProgress(Number(a.dataset.time))});
-function measure(){reveal.resize();document.documentElement.style.setProperty('--stage-height',innerHeight+'px');top=film.offsetTop;length=Math.max(1,film.offsetHeight-innerHeight);last=-1;dirty=true}
-function render(time){const y=scrollY,p=storyTime(clamp((y-top)/length));reveal.render(p);media?.tick(time);if(reduce)return;stage.classList.toggle('is-ending',y>top+length);if(Math.abs(p-last)<.000001&&!dirty)return;last=p;dirty=false;if(y>top+length+innerHeight){video.pause();return}const hero=p<.14,heroMix=1-ease((p-.125)/.015);video.style.opacity=heroMix;if(revealSurface)revealSurface.style.opacity=heroMix;mobileComic.style.opacity=heroMix;canvas.style.opacity=1;if(hero&&video.paused&&document.body.classList.contains('is-ready'))video.play().catch(()=>{});if(!hero&&!video.paused)video.pause();let current=-1;for(let i=0;i<plan.length;i++){if(p>=plan[i].start&&p<plan[i].end){current=i;break}}
- if(current!==active){active=current;const scene=current<0?{tag:'ROME. FIRST TIME?',title:'FIND YOUR<br>OWN WAY IN.',note:'A different route makes a different story.',chapter:0}:plan[current];eyebrow.textContent=scene.tag;title.innerHTML=scene.title.replace('<br>','<br><em>')+'</em>';copy.dataset.chapter=scene.chapter;caption.textContent=scene.note;label.textContent=`0${scene.chapter+1} / ${['ROME AFTER DARK','THE FLIGHT','ANOTHER START','THE WINDOW SEAT','THE CITY','A CHANGE OF PLAN','IN MOTION','THE OPEN DOOR'][scene.chapter]}`;dots.forEach((d,i)=>{d.classList.toggle('active',i===scene.chapter);if(i===scene.chapter)d.setAttribute('aria-current','step');else d.removeAttribute('aria-current')})}
- const local=current<0?p/.13:(p-plan[current].start)/(plan[current].end-plan[current].start),textOpacity=current<0?1:ease(local/.1)*(1-ease((local-.86)/.14));copy.style.opacity=textOpacity;title.style.transform=`translateY(${(1-textOpacity)*18}px)`;
- if(current>=0){
-   const scene=plan[current],layers=[{key:scene.key,progress:clamp(local),weight:1}];
-   const next=plan[current+1],previous=plan[current-1];
-   if(previous){const width=Math.min(.006,(scene.end-scene.start)*.18,(previous.end-previous.start)*.18);if(p<scene.start+width)layers.unshift({key:previous.key,progress:1,weight:1}),layers[1].weight=ease((p-scene.start+width)/(2*width));}
-   if(next){const width=Math.min(.006,(scene.end-scene.start)*.18,(next.end-next.start)*.18);if(p>next.start-width)layers.push({key:next.key,progress:0,weight:ease((p-next.start+width)/(2*width))});}
-   media.show(layers);
-   if(local>.15&&next)media.prefetch(next.key);
- }else media?.prefetch(plan[0].key);
- const routePhone=ease((p-.245)/.012)*(1-ease((p-.32)/.01)),museumPhone=ease((p-.735)/.012)*(1-ease((p-.792)/.012)),transitPhone=ease((p-.865)/.008)*(1-ease((p-.89)/.008)),pv=Math.max(routePhone,museumPhone,transitPhone);
- const mode=museumPhone>.01?'museum':transitPhone>.01?'transit':'route';if(phone.dataset.mode!==mode){phone.dataset.mode=mode;phone.querySelector('h2').innerHTML=mode==='museum'?'A rainy day.<br>A better plan.':mode==='transit'?'One stop.<br>Another view.':'Same city.<br>Another way.';phone.querySelector('.phone-card strong').textContent=mode==='museum'?'Make space for the unexpected.':mode==='transit'?'Keep the day moving.':'Make room for the journey.';phone.querySelector('.route-diagram').innerHTML=mode==='museum'?'<span>ROMAN FORUM</span><i></i><span>RAIN IN THE CITY</span><i></i><span>AN AFTERNOON INSIDE</span>':mode==='transit'?'<span>COLOSSEUM</span><i></i><span>THE NEXT STOP</span><i></i><span>A DIFFERENT PERSPECTIVE</span>':'<span>DALLAS</span><i></i><span>HOUSTON</span><i></i><span>ROME</span>'}
- detailTags.style.opacity=ease((p-.442)/.012)*(1-ease((p-.49)/.012));phone.style.opacity=pv;phone.style.visibility=pv>.001?'visible':'hidden';phone.style.transform=`translateY(${(1-pv)*100}px) rotateY(${-15+pv*20}deg) rotateZ(${-5+pv*3}deg) scale(${.9+pv*.1})`;copy.classList.toggle('has-phone',pv>.01);
+const media=reduce?null:createMediaScrubber(canvas,layers);
+const reveal=reduce?{render(){},resize(){}}:createHeroReveal(hero);
+const coarse=matchMedia('(pointer:coarse)').matches,portraitQuery=matchMedia('(max-aspect-ratio: 1/1)');
+let top=0,length=1,lastP=-1,visualY=scrollY,heroShown=1,lenis=null,layoutScreens=0,styleCache=new WeakMap(),compact=false;
+// Write a style only when its value changes, so idle frames do no style work.
+function set(el,prop,value){let c=styleCache.get(el);if(!c)styleCache.set(el,c={});if(c[prop]!==value){c[prop]=value;el.style[prop]=value;}}
+
+// ---- type layer -------------------------------------------------------------------------------
+// Same model as the reference: every copy block has enter/exit windows and a block motion, every line
+// has its own reveal window and line motion, all driven by story time (so reversing replays exactly).
+const lines=[],blocks=[];
+typeLayer.querySelectorAll('[data-mist]').forEach(el=>{
+ const text=el.dataset.mist,accent=(el.dataset.accent||'').toLowerCase(),from=accent?text.toLowerCase().lastIndexOf(accent):-1,last=Math.max(1,text.length-1);
+ [...text].forEach((ch,k)=>{const s=document.createElement('span');s.className='mist-char'+(from>=0&&k>=from?' mist-char--accent':'');s.textContent=ch===' '?'\u00a0':ch;s.dataset.k=k/last;el.append(s);lines.push({el:s,host:el,motion:'mist'});});
+ el.setAttribute('aria-hidden','true');
+});
+typeLayer.querySelectorAll('i[data-at]').forEach(el=>lines.push({el,host:el,motion:el.dataset.motion||'rise'}));
+typeLayer.querySelectorAll('.block').forEach(el=>blocks.push({el,motion:el.dataset.motion||'lift',pe:el.hasAttribute('data-pe')}));
+const range=(el,name,portrait)=>{const v=(portrait&&el.dataset[name+'P'])||el.dataset[name];return v?v.split(',').map(Number):null;};
+function readTimings(){
+ const portrait=portraitQuery.matches;
+ for(const l of lines){const at=range(l.host,'at',portrait);if(l.motion==='mist'){const span=at[1]-at[0],s=at[0]+.58*span*Number(l.el.dataset.k);l.at=[s,s+.42*span];}else l.at=at;}
+ for(const b of blocks){b.enter=range(b.el,'enter',portrait);b.exit=range(b.el,'exit',portrait)||[2,3];}
+}
+function renderType(p){
+ const a=compact?16:72,s=compact?10:28,tall=innerHeight>innerWidth;
+ for(const l of lines){
+  const i=outCubic(lin(p,l.at[0],l.at[1])),n=1-i,el=l.el;let o='1',t,f='none',origin='50% 50%';
+  switch(l.motion){
+   case 'mist':o=i.toFixed(3);t=`translate3d(${(-2*n).toFixed(2)}px,${(8*n).toFixed(2)}px,0) scale(${(.9+.1*i).toFixed(4)})`;f=`blur(${(7*n).toFixed(2)}px)`;break;
+   case 'slide-left':t=`translate3d(${(-a*n).toFixed(1)}px,0,0)`;o=i.toFixed(3);break;
+   case 'slide-right':t=`translate3d(${(a*n).toFixed(1)}px,0,0)`;o=i.toFixed(3);break;
+   case 'scan':t=`translate3d(${(-s*n).toFixed(1)}px,0,0)`;o=i.toFixed(3);break;
+   case 'focus':t=`translate3d(0,${(18*n).toFixed(1)}px,0) scale(${(1+.08*n).toFixed(4)})`;o=i.toFixed(3);f=`blur(${(7*n).toFixed(2)}px)`;break;
+   case 'settle':origin='0 50%';t=`translate3d(0,${(34*n).toFixed(1)}px,0) scaleX(${(.88+.12*i).toFixed(4)})`;o=i.toFixed(3);break;
+   case 'hold':t='none';o=i.toFixed(3);break;
+   default:t=`translateY(${(135*n).toFixed(2)}%)`;
+  }
+  if(f==='blur(0.00px)')f='none';
+  set(el,'opacity',o);set(el,'transform',t);set(el,'filter',f);set(el,'transformOrigin',origin);
+ }
+ for(const b of blocks){
+  const i=outCubic(lin(p,b.exit[0],b.exit[1])),r=b.enter?outCubic(lin(p,b.enter[0],b.enter[1])):1,v=r*(1-i),el=b.el;let t,f='none';
+  switch(b.motion){
+   case 'static':t='none';break;
+   case 'drift':t=`translate3d(${(-(compact?16:46)*(1-r)+(compact?14:34)*i).toFixed(1)}px,${(-18*i).toFixed(1)}px,0)`;f=`blur(${(6*(1-r)+4*i).toFixed(2)}px)`;break;
+   case 'relief':t=`translate3d(0,${(24*(1-r)-22*i).toFixed(1)}px,0) scale(${(.94+.06*r-.025*i).toFixed(4)})`;f=`blur(${(8*(1-r)+3*i).toFixed(2)}px)`;break;
+   case 'signal':t=`translate3d(${(-(compact?16:68)*(1-r)+(tall?12:54)*i).toFixed(1)}px,0,0)`;break;
+   case 'dialogue':t=`translate3d(0,${(12*(1-r)-16*i).toFixed(1)}px,0)`;break;
+   case 'focus':t=`translate3d(0,${(20*(1-r)-24*i).toFixed(1)}px,0) scale(${(1.07-.07*r-.025*i).toFixed(4)})`;f=`blur(${(9*(1-r)+5*i).toFixed(2)}px)`;break;
+   default:t=`translateY(${(-34*i).toFixed(1)}px)`;
+  }
+  if(f==='blur(0.00px)')f='none';
+  set(el,'opacity',v.toFixed(3));set(el,'visibility',v<=.001?'hidden':'visible');set(el,'transform',t);set(el,'filter',f);
+  if(b.pe)set(el,'pointerEvents',v<=.001?'none':'auto');
+ }
+}
+
+function measure(){
+ const p=lastP;
+ const screens=configure();
+ compact=innerHeight>=innerWidth||innerWidth<768;
+ film.style.height=reduce?'100svh':`${(screens+1)*100}svh`;
+ document.documentElement.style.setProperty('--stage-height',innerHeight+'px');
+ top=film.offsetTop;length=Math.max(1,film.offsetHeight-innerHeight);
+ document.querySelectorAll('.chapter-anchor').forEach(a=>{a.dataset.stop=scrollProgress(Number(a.dataset.time))});
+ readTimings();media?.resize();reveal.resize();lastP=-1;
+ // Keep the story position when orientation or pointer type changes the distance per screen.
+ // (Plain viewport-height changes, e.g. a collapsing URL bar, must not touch scroll: it would kill momentum.)
+ const changed=layoutScreens&&screens!==layoutScreens;layoutScreens=screens;
+ if(changed&&p>=0&&!reduce){const y=top+scrollProgress(p)*length;lenis?lenis.scrollTo(y,{immediate:true,force:true}):scrollTo(0,y);visualY=y;}
+}
+document.querySelectorAll('.chapter-anchor').forEach(a=>{a.dataset.time=a.dataset.stop});
+
+function render(time,dt=16.7){
+ // Wheel input is already smoothed by Lenis. Touch scrolling is native, so the picture eases toward it
+ // here instead (the reference's 0.085 lerp, made frame-rate independent). Only one smoother is ever active.
+ const y=scrollY;
+ if(coarse&&!reduce){const k=1-Math.pow(1-.085,dt/16.667);visualY+=(y-visualY)*k;if(Math.abs(y-visualY)<.05)visualY=y;}else visualY=y;
+ const p=storyTime(clamp((visualY-top)/length));
+ if(reduce)return;
+ // Keep an opaque picture behind deep links and fast chapter jumps until the compositor has painted.
+ const painted=media.render(p,{now:time,base:heroShown>0});
+ const endReady=p>=.9955&&(portraitQuery.matches?bookendBoard.complete&&bookendBoard.naturalWidth:bookendVideo.readyState>=2);
+ const heroTarget=1-lin(p,.13,.165),forced=!painted&&!endReady&&heroTarget<1;
+ heroShown=forced?1:heroTarget>=heroShown?heroTarget:Math.max(heroTarget,heroShown-dt/260);
+ set(hero,'opacity',heroShown.toFixed(3));set(hero,'visibility',heroShown>0?'visible':'hidden');
+ reveal.render(p,heroShown>0,dt);
+ if(p===lastP)return;
+ lastP=p;
+ const end=lin(p,.9958,.9964);
+ set(bookend,'opacity',end.toFixed(3));set(bookend,'visibility',p>=.9955?'visible':'hidden');
+ if(p>=.9955&&innerWidth>innerHeight){if(!bookendVideo.src)bookendVideo.src='reference-media/hero-real.mp4';if(bookendVideo.paused)bookendVideo.play().catch(()=>{});}else if(!bookendVideo.paused)bookendVideo.pause();
+ if(p>=.99&&innerWidth<=innerHeight&&!bookendBoard.src)bookendBoard.src='reference-media/batch-79-crow-alley-phone-safe-board-v1-1536.avif';
+ renderType(p);
 }
 if(reduce){
  const list=document.createElement('div');list.className='static-chapters';
- const scenes=[plan[0],plan[1],plan[2],plan[4],plan[6],plan[7],plan[8]];
- document.querySelectorAll('.chapter-anchor').forEach((anchor,i)=>{const scene=scenes[i];const chapter=document.createElement('section');chapter.className='static-chapter';chapter.id=anchor.id;anchor.removeAttribute('id');const image=document.createElement('img');image.src=`reference-media/${scene.key==='transit-reveal'?'next-panel-transit-colosseum-comic-motion-v1':scene.key}/f_001.webp`;image.alt=scene.tag;image.loading='lazy';const heading=document.createElement('h2');heading.textContent=scene.title.replace('<br>',' ');const note=document.createElement('p');note.textContent=scene.note;chapter.append(image,heading,note);list.append(chapter)});
+ const scenes=[['takeoff4k-v1','Start with a better way.'],['fork4k-v1','A different start. Same Rome.'],['next-panel-business-class4k-v1','Ten hours. Room to breathe.'],['next-panel-forum-v3','Same city. Another story.'],['next-panel-museum-v3','Rain on the ruins. Art indoors.'],['next-panel-transit-colosseum-real4k-v1','Take the long way. Watch the city.'],['next-panel-bookbinder-open-landscape-v2','Not on the list. Still worth it.']];
+ document.querySelectorAll('.chapter-anchor').forEach((anchor,i)=>{const [key,line]=scenes[i];const chapter=document.createElement('section');chapter.className='static-chapter';chapter.id=anchor.id;anchor.removeAttribute('id');const image=document.createElement('img');image.src=`reference-media/${key}/f_001.webp`;image.alt='';image.loading='lazy';const heading=document.createElement('h2');heading.textContent=line;chapter.append(image,heading);list.append(chapter)});
  film.after(list);
 }
-const ready=reduce?Promise.resolve():media.prepare(plan[0].key);loader(ready);navigation();measure();addEventListener('resize',measure);document.fonts.ready.then(measure);const lenis=scrollEngine(render);restoreHash(lenis);document.addEventListener('site-ready',()=>{dirty=true;if(!reduce&&scrollY<innerHeight)video.play().catch(()=>{})});document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();else dirty=true});
+// The cold open runs for at least as long as the reference's (2.4s) and until the first scene can be drawn.
+const ready=reduce?Promise.resolve():Promise.all([media.prepare('takeoff4k-v1'),new Promise(r=>setTimeout(r,2400))]);
+readTimings();loader(ready);navigation();measure();
+let resizeQueued=false;addEventListener('resize',()=>{if(resizeQueued)return;resizeQueued=true;requestAnimationFrame(()=>{resizeQueued=false;measure();})});
+portraitQuery.addEventListener('change',measure);
+document.fonts.ready.then(measure);lenis=scrollEngine(render);restoreHash(lenis);
+document.addEventListener('site-ready',()=>{lastP=-1});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)bookendVideo.pause();lastP=-1});

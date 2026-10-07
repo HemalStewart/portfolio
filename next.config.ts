@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Afterhours streams hundreds of WebP frames per scene; let browsers reuse them without revalidating each one.
+  async headers() {
+    return [
+      {
+        source: "/showcase/afterhours/:dir(reference-media|frames-mobile)/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }],
+      },
+    ];
+  },
   // Static 3D showcase pages live in public/showcase; serve them at clean URLs.
   async rewrites() {
     return [

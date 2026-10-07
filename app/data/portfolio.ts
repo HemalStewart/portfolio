@@ -592,6 +592,24 @@ export const showcaseWhatsApp =
   "https://wa.me/94718850419?text=Hi%20Hemal%2C%20I%20saw%20your%203D%20showcase%20and%20I%27d%20like%20a%20website.";
 
 export const showcaseSites: ShowcaseSite[] = [
+  {
+    slug: "nilaveli",
+    name: "Nilaveli Beach Resort",
+    kind: "Boutique resort · redesign preview",
+    line: "A cinematic beach opening, cabana rooms, a day at the resort and an Ayurveda treatment menu.",
+    stack: ["GSAP", "Film", "Reservation enquiries"],
+    href: "/preview/nilaveli",
+    status: "preview",
+  },
+  {
+    slug: "ceylon-select",
+    name: "Ceylon Select",
+    kind: "Tea brand · storefront preview",
+    line: "A tea cabinet with product browsing, a guided brew ritual and a scroll story tracing each cup to Ceylon.",
+    stack: ["GSAP", "Product catalogue", "Shop UI"],
+    href: "/preview/ceylon-select",
+    status: "preview",
+  },
   { slug: "crunch", name: "Crunch Club", kind: "Vietnamese sandwich · reference study", line: "A credited study of HoQuan’s Vietnamese sandwich editorial: floating photographs, stacked history cards, an anatomy spread and a touch gallery.", stack: ["Editorial motion", "Scroll animation", "Reference study"], href: "/showcase/crunch", status: "concept" },
   {
     slug: "afterhours",

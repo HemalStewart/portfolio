@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <base href="/showcase/">
 <title>Hemal Herath 3D Showcase</title>
-<meta name="description" content="3D, motion and scroll-driven websites designed and built by Hemal Herath in Sri Lanka. Fly through eleven sites in 3D.">
+<meta name="description" content="3D, motion and scroll-driven websites designed and built by Hemal Herath in Sri Lanka. Fly through thirteen sites in 3D, including Nilaveli Beach Resort and Ceylon Select redesign previews.">
 <meta property="og:title" content="Hemal Herath · 3D Showcase">
-<meta property="og:description" content="Websites people remember: five 3D and scroll-driven concept sites, built with Three.js and GSAP.">
+<meta property="og:description" content="Explore thirteen websites, concepts and redesign previews, including Nilaveli Beach Resort and Ceylon Select, in a 3D scroll journey.">
 <meta property="og:image" content="/showcase/thumbs/villa.jpg">
 <meta name="theme-color" content="#07080a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -164,21 +164,21 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <header class="hero">
   <h1><span class="ln"><span>Websites</span></span><span class="ln"><span><em>people</em></span></span><span class="ln"><span>remember.</span></span></h1>
   <div class="meta">
-    <p><b>3D, motion and scroll-driven websites</b> for hotels, food and lifestyle brands, designed and built in Sri Lanka by Hemal Herath. Scroll to fly through eleven of my sites.</p>
+    <p><b>3D, motion and scroll-driven websites</b> for hotels, food and lifestyle brands, designed and built in Sri Lanka by Hemal Herath. Scroll to fly through thirteen sites, concepts and redesign previews.</p>
     <span class="cue"><i>↓</i>Scroll to fly</span>
   </div>
 </header>
 
-<section class="journey" id="journey" aria-label="Nine websites"></section>
+<section class="journey" id="journey" aria-label="Website showcase"></section>
 
 <div class="chapter" id="chapter" aria-live="polite">
   <div>
-    <div class="idx"><span id="chIdx">01 / 05</span><i></i><span id="chKind">Ceylon tea</span></div>
-    <h2 id="chName"><span>Mistline</span></h2>
+    <div class="idx"><span id="chIdx">01 / 13</span><i></i><span id="chKind">Boutique resort · redesign preview</span></div>
+    <h2 id="chName"><span>Nilaveli Beach Resort</span></h2>
     <p class="line" id="chLine"></p>
     <div class="tags" id="chTags"></div>
   </div>
-  <a class="open" id="chOpen" href="tea">Open live site <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+  <a class="open" id="chOpen" href="/preview/nilaveli">Open preview <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M11 3H4.5M11 3V9.5" stroke="currentColor" stroke-width="1.5"/></svg></a>
 </div>
 <div class="rail" id="rail"></div>
 
@@ -222,7 +222,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
   </section>
 
-  <footer><div class="wrap"><span>© 2026 Hemal Herath</span><span>Mistline, Saffron Reef, Nīla, Ninth Lane and Swellhouse are fictional concept brands · The David Guetta site is an unofficial concept</span><span>Built with Three.js · GSAP · Lenis</span></div></footer>
+  <footer><div class="wrap"><span>© 2026 Hemal Herath</span><span>Nilaveli Beach Resort, Ceylon Select and Lakmini International are redesign previews · Mistline, Saffron Reef, Nīla, Ninth Lane and Swellhouse are fictional concept brands · The David Guetta site is an unofficial concept</span><span>Built with Three.js · GSAP · Lenis</span></div></footer>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -231,6 +231,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"}}</script>
 <script>
 window.PROJECTS = [
+  {slug:"nilaveli", name:"Nilaveli Beach Resort", kind:"Boutique resort · redesign preview", status:"preview", color:"#d5b887", bg:"#09262c", href:"/preview/nilaveli", line:"A cinematic beach opening, cabana rooms, a day at the resort and an Ayurveda treatment menu.", tags:["Film hero","Scroll story","Reservation enquiries","Redesign preview"]},
+  {slug:"ceylon-select", name:"Ceylon Select", kind:"Tea brand · storefront preview", status:"preview", color:"#a8b88c", bg:"#09251b", href:"/preview/ceylon-select", line:"A tea cabinet with product browsing, a guided brew ritual and a scroll story tracing each cup to Ceylon.", tags:["Product catalogue","Scroll story","Shop UI","Redesign preview"]},
   {slug:"crunch", name:"Crunch Club", kind:"Vietnamese sandwich · reference study", color:"#d4a373", bg:"#20190e", line:"A credited study of HoQuan’s Vietnamese sandwich editorial: photo collage, history cards, anatomy and a touch gallery.", tags:["Editorial motion","Scroll animation","Photo gallery","Reference study"]},
   {slug:"afterhours", name:"Afterhours", kind:"Crow · reference study", color:"#ff3d81", bg:"#050507", line:"A credited study of Crow / Fly Crooked’s illustrated Rome film, from the flight to an unexpected open door.", tags:["Scroll-driven video","Scroll choreography","Illustrated Rome","Reference study"]},
   {slug:"tea",      name:"Mistline",     kind:"Ceylon tea",       color:"#7fb08a", bg:"#06110c", line:"A mist film behind a soft serif headline, and a pinned climb to 1,868 m that changes the tea as you scroll.", tags:["Video hero","Pinned scroll","SplitText","Editorial"]},
@@ -238,7 +240,7 @@ window.PROJECTS = [
   {slug:"sapphire", name:"Nīla Atelier", kind:"Ceylon sapphires", color:"#7d9bff", bg:"#040616", line:"A WebGL light that follows your cursor across a sapphire, so the facets glint as you move.", tags:["WebGL shader","Didone type","Pinned track","Luxury"]},
   {slug:"coffee",   name:"Ninth Lane",   kind:"Colombo coffee",   color:"#d2733b", bg:"#140a05", line:"An espresso film, chunky type, a spinning badge and coffee cards that stack as you scroll.", tags:["Video hero","Stacking cards","Marquee","Shop UI"]},
   {slug:"surf",     name:"Swellhouse",   kind:"Weligama surf",    color:"#3fd0c9", bg:"#041318", line:"Real drone surf footage, a live-style conditions card and a pinned row of camp cards.", tags:["Video hero","Horizontal scroll","Marquee","Booking UI"]},
-  {slug:"lakmini",   name:"Lakmini International", kind:"Software company · preview", color:"#e0242c", bg:"#0d0707", line:"The new company site: its real logo rebuilt from 5,000 WebGL pixels, pixel-wipe page transitions and a pinned services track.", tags:["Three.js","GSAP","Page transitions","Company site"]},
+  {slug:"lakmini",   name:"Lakmini International", kind:"Software company · preview", status:"preview", color:"#e0242c", bg:"#0d0707", line:"The new company site: its real logo rebuilt from 5,000 WebGL pixels, pixel-wipe page transitions and a pinned services track.", tags:["Three.js","GSAP","Page transitions","Company site"]},
   {slug:"seacloud",  name:"Sea Cloud",    kind:"Dalawella hotel · live", color:"#5cc8bd", bg:"#04110f", href:"https://hotel-kohl-ten.vercel.app/", line:"A boutique hotel on the south coast: an aerial reef film, thin serif type and a booking flow.", tags:["Next.js","Video hero","Editorial","Live site"]},
   {slug:"shifenmei", name:"Shifenmei",   kind:"Software studio · live", color:"#f05a2a", bg:"#140705", href:"https://shifenmei.vercel.app/", line:"A live studio site with floating 3D glyphs and a ten-chapter scroll story.", tags:["Three.js","Next.js","Scroll story","Live site"]},
   {slug:"guetta",   name:"David Guetta", kind:"Unofficial concept redesign", color:"#ff5a36", bg:"#0d0b0a", href:"https://david-guetta-redesign.vercel.app/", line:"An editorial redesign concept for a global DJ: tour dates, releases, store and awards.", tags:["Next.js","Editorial","Motion","Concept"]}
@@ -292,7 +294,7 @@ PROJECTS.forEach(p => { p.href = p.href || p.slug; p.ext = /^https?:/.test(p.hre
     document.getElementById('chKind').textContent = p.kind;
     document.getElementById('chLine').textContent = p.line;
     document.getElementById('chTags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join('');
-    const op = document.getElementById('chOpen'); op.href = p.href; if (p.ext){ op.target = '_blank'; op.rel = 'noopener'; op.firstChild.textContent = 'Visit live site '; } else { op.removeAttribute('target'); op.firstChild.textContent = 'Open live site '; }
+    const op = document.getElementById('chOpen'); op.href = p.href; if (p.ext){ op.target = '_blank'; op.rel = 'noopener'; } else { op.removeAttribute('target'); op.removeAttribute('rel'); } op.firstChild.textContent = p.status === 'preview' ? 'Open preview ' : p.ext ? 'Visit site ' : 'Explore site ';
     const h = document.getElementById('chName'); h.innerHTML = `<span>${p.name}</span>`;
     if (!reduce){ gsap.fromTo('#chName span',{yPercent:105},{yPercent:0,duration:.9,ease:'expo.out'}); gsap.fromTo(['#chLine','#chTags'],{opacity:0,y:14},{opacity:1,y:0,duration:.8,stagger:.06,ease:'expo.out'}); }
   };

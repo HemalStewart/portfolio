@@ -22,11 +22,13 @@ const countWords = [
   "nine",
   "ten",
   "eleven",
+  "twelve",
+  "thirteen",
 ];
 const countWord = (n: number) => countWords[n] ?? String(n);
 
 /** Back to front: the three screens fanned out in depth on the lead panel. */
-const fan = ["sapphire", "coffee", "tea"];
+const fan = ["lakmini", "nilaveli", "ceylon-select"];
 
 /** Dark lead panel that sends people into the 3D fly-through at /showcase. */
 export function ShowcaseFeature() {
@@ -85,7 +87,7 @@ export function SiteCard({ site }: { site: ShowcaseSite }) {
         <span className="branch-dot" aria-hidden="true" />
         web/{site.slug}
         <span className={site.status === "live" ? "tag" : "site-status"}>
-          {site.status}
+          {site.status === "preview" ? "design preview" : site.status}
         </span>
       </code>
       <h3 id={`site-${site.slug}-title`}>{site.name}</h3>
@@ -101,7 +103,7 @@ export function SiteCard({ site }: { site: ShowcaseSite }) {
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
       >
-        {external ? "Visit site" : "Open site"}
+        {site.status === "preview" ? "View preview" : external ? "Visit site" : "Open site"}
         <span className="sr-only">
           : {site.name}
           {external ? " (opens in a new tab)" : ""}

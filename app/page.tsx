@@ -331,8 +331,8 @@ export default function Home() {
             <SectionHead
               id="showcase-title"
               command="git checkout web/showcase"
-              title="3D websites."
-              description="Five concept sites for Sri Lankan tea, travel, gems, coffee and surf, plus the new Lakmini International site, a live hotel, a studio site and an unofficial redesign. Each one is built around real-time 3D, film or a scroll story."
+              title="Websites worth exploring."
+              description="Explore the Nilaveli Beach Resort and Ceylon Select redesign previews, company websites, cinematic concepts and interactive scroll stories. Open a project below, or fly through the collection in 3D."
             />
             <ShowcaseFeature />
             <div className="site-grid reveal">
