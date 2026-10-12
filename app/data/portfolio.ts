@@ -604,10 +604,10 @@ export const showcaseSites: ShowcaseSite[] = [
   {
     slug: "nilaveli",
     name: "Nilaveli Beach Resort",
-    kind: "Boutique resort · redesign preview",
-    line: "A cinematic beach opening, cabana rooms, a day at the resort and an Ayurveda treatment menu.",
-    stack: ["GSAP", "Film", "Reservation enquiries"],
-    href: "/preview/nilaveli",
+    kind: "Boutique resort · project preview",
+    line: "Cinematic beach films, room stories, island experiences and direct booking enquiries.",
+    stack: ["Next.js", "GSAP", "Booking enquiries"],
+    href: "https://nilaveli-beach-resort.vercel.app/",
     status: "preview",
   },
   {
@@ -680,8 +680,8 @@ export const showcaseSites: ShowcaseSite[] = [
     kind: "Software company",
     line: "Its logo rebuilt from 5,000 WebGL pixels, with pixel-wipe page transitions.",
     stack: ["Three.js", "GSAP", "Vite"],
-    href: "/showcase/lakmini",
-    status: "preview",
+    href: "https://lakminiint.com/",
+    status: "live",
   },
   {
     slug: "seacloud",

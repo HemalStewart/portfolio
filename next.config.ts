@@ -1,6 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // These projects have their own hosting; preserve links shared before they moved.
+  async redirects() {
+    return [
+      {
+        source: "/preview/nilaveli/:path*",
+        destination: "https://nilaveli-beach-resort.vercel.app/",
+        permanent: true,
+      },
+      {
+        source: "/showcase/lakmini/:path*",
+        destination: "https://lakminiint.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   // Afterhours streams hundreds of WebP frames per scene; let browsers reuse them without revalidating each one.
   async headers() {
     return [
@@ -18,16 +33,10 @@ const nextConfig: NextConfig = {
         source: "/showcase/:site(tea|villa|sapphire|coffee|surf|afterhours|crunch|wayline)",
         destination: "/showcase/:site/index.html",
       },
-      // Multi-page preview of the Lakmini International redesign.
-      { source: "/showcase/lakmini", destination: "/showcase/lakmini/index.html" },
-      {
-        source: "/showcase/lakmini/:page(about|services|contact)",
-        destination: "/showcase/lakmini/:page/index.html",
-      },
       // Free homepage designs made for prospective clients.
       {
-        source: "/preview/:client(nilaveli|ceylon-select)",
-        destination: "/preview/:client/index.html",
+        source: "/preview/ceylon-select",
+        destination: "/preview/ceylon-select/index.html",
       },
     ];
   },

@@ -332,7 +332,7 @@ export default function Home() {
               id="showcase-title"
               command="git checkout web/showcase"
               title="Websites worth exploring."
-              description="Explore the Nilaveli Beach Resort and Ceylon Select redesign previews, company websites, cinematic concepts and interactive scroll stories. Open a project below, or fly through the collection in 3D."
+              description="Explore the Nilaveli Beach Resort project, Lakmini International’s live website, the Ceylon Select storefront preview, cinematic concepts and interactive scroll stories. Open a project below, or fly through the collection in 3D."
             />
             <ShowcaseFeature />
             <div className="site-grid reveal">

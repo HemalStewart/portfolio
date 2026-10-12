@@ -20,6 +20,9 @@
 # production
 /build
 
+# Local browser verification profiles and screenshots
+/shots-showcase/
+
 # misc
 .DS_Store
 *.pem
