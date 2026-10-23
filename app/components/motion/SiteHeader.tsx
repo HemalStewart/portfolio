@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowIcon } from "../icons";
+import { LocalTime } from "../chrome/LocalTime";
+import { ArrowIcon, BranchMark } from "../icons";
 
 type Link = { label: string; href: string };
 
 /**
- * Floating pill header that stays reachable at all times: it compacts once
- * you scroll, tracks the section in view with a sliding highlight, and opens a
- * full-screen menu on small screens (Escape closes it, focus returns).
+ * Full-width header bar that stays reachable at all times: it gains a glass
+ * backing once you scroll, tracks the section in view with a sliding marker,
+ * shows Hemal's local time, and opens a full-screen menu on small screens
+ * (Escape closes it, focus returns).
  */
 export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
   const [scrolled, setScrolled] = useState(false);
@@ -90,11 +92,14 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
       data-scrolled={scrolled || undefined}
       data-open={open || undefined}
     >
-      <div className="header-pill">
+      <div className="header-bar">
         <a className="wordmark" href="#top" onClick={() => setOpen(false)}>
-          <span className="wordmark-node" aria-hidden="true" />
-          hemal<span className="wordmark-slash">/</span>main
-          <span className="sr-only"> — Hemal Herath, back to top</span>
+          <BranchMark />
+          <span className="wordmark-text">
+            <strong>Hemal Herath</strong>
+            <small>hemal/main</small>
+          </span>
+          <span className="sr-only"> — back to top</span>
         </a>
         <nav aria-label="Sections" className="nav">
           <span ref={pillRef} className="nav-pill" aria-hidden="true" />
@@ -112,6 +117,7 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
           </ul>
         </nav>
         <div className="header-actions">
+          <LocalTime />
           <a
             className="header-cv"
             href="/resume.pdf"
@@ -120,8 +126,11 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
           >
             CV
           </a>
-          <a className="button button-small" href={email}>
-            Hire me <ArrowIcon direction="right" />
+          <a className="button button-accent button-small" href={email}>
+            Hire me
+            <span className="button-arrow" aria-hidden="true">
+              <ArrowIcon direction="right" />
+            </span>
           </a>
           <button
             ref={toggleRef}
@@ -149,7 +158,7 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
               >
                 <a href={link.href} onClick={() => setOpen(false)}>
                   <span className="mobile-index" aria-hidden="true">
-                    0{index + 1}
+                    ({String(index + 1).padStart(2, "0")})
                   </span>
                   {link.label}
                 </a>
@@ -158,8 +167,11 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
           </ol>
         </nav>
         <div className="mobile-actions">
-          <a className="button" href={email}>
-            Hire me <ArrowIcon direction="right" />
+          <a className="button button-accent" href={email}>
+            Hire me
+            <span className="button-arrow" aria-hidden="true">
+              <ArrowIcon direction="right" />
+            </span>
           </a>
           <a
             className="text-link"

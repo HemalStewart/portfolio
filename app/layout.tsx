@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
+import { Archivo, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { Cursor } from "./components/motion/Cursor";
 import { MotionProvider } from "./components/motion/MotionProvider";
 import { SmoothScroll } from "./components/motion/SmoothScroll";
@@ -8,10 +8,20 @@ import { profileLinks } from "./data/portfolio";
 import { siteUrl } from "./site";
 import "./globals.css";
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+// Archivo's width axis gives the expanded display cuts; body text stays normal width.
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  axes: ["opsz"],
+  axes: ["wdth"],
+  display: "swap",
+});
+
+// One italic serif phrase per headline.
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: "400",
+  style: "italic",
   display: "swap",
 });
 
@@ -63,12 +73,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4f2ea" },
-    { media: "(prefers-color-scheme: dark)", color: "#0c1712" },
-  ],
-  colorScheme: "light dark",
+  themeColor: "#0a0b0a",
+  colorScheme: "dark",
 };
+
+// Show the boot screen once per session: repeat visits skip straight in.
+const bootScript = `try{var s=sessionStorage;if(s.getItem("hh:boot"))document.documentElement.dataset.boot="skip";else s.setItem("hh:boot","1")}catch(e){}`;
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -101,8 +111,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${jetbrainsMono.variable}`}
+      className={`${archivo.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
+      </head>
       <body>
         <MotionProvider>
           <SmoothScroll />

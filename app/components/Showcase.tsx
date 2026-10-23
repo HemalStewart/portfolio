@@ -74,7 +74,10 @@ export function ShowcaseFeature() {
 export function SiteCard({ site }: { site: ShowcaseSite }) {
   const external = isExternal(site.href);
   return (
-    <article className="site-card" aria-labelledby={`site-${site.slug}-title`}>
+    <article
+      className="site-card reveal"
+      aria-labelledby={`site-${site.slug}-title`}
+    >
       <div className="site-shot">
         <Image
           src={`/showcase/thumbs/${site.slug}.jpg`}
@@ -118,7 +121,10 @@ export function SiteCard({ site }: { site: ShowcaseSite }) {
 /** Closing card of the grid: the next site could be yours. */
 export function NextSiteCard() {
   return (
-    <article className="site-card site-next" aria-labelledby="site-next-title">
+    <article
+      className="site-card site-next reveal"
+      aria-labelledby="site-next-title"
+    >
       <code className="branch-label">
         <span className="branch-dot" aria-hidden="true" />
         web/your-brand

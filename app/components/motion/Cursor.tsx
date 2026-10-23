@@ -6,9 +6,8 @@ import { useEffect, useRef } from "react";
 const INTERACTIVE = 'a[href], button, [role="button"], summary, label';
 
 /**
- * A trailing ring that follows the pointer, swells over links and buttons,
- * labels outbound links and hides over the X-ray lens (which draws its own).
- * Mouse-only; the native cursor is kept.
+ * A trailing ring that follows the pointer, swells over links and buttons and
+ * labels outbound links. Mouse-only; the native cursor is kept.
  */
 export function Cursor() {
   const reduced = useReducedMotion();
@@ -40,10 +39,6 @@ export function Cursor() {
       if (!raf) raf = requestAnimationFrame(tick);
 
       const target = event.target as Element | null;
-      if (target?.closest('[data-cursor="lens"]')) {
-        ring.dataset.state = "hidden";
-        return;
-      }
       const link = target?.closest(INTERACTIVE) as HTMLElement | null;
       if (!link) {
         delete ring.dataset.state;
