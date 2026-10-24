@@ -1,0 +1,538 @@
+/* LinkForex admin dashboard (dark theme), sized in em off the mockup root. */
+
+.mock-lf .m-body {
+  overflow: hidden;
+}
+.mock-lf .lf-app {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 10em minmax(0, 1fr);
+  grid-template-rows: 2.55em minmax(0, 1fr);
+  background: #091717;
+  color: #e6f2f1;
+  line-height: 1.25;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+}
+.mock-lf .lf-i {
+  display: block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+}
+.mock-lf b {
+  font-weight: 700;
+}
+
+/* top bar ------------------------------------------------------------- */
+.mock-lf .lf-top {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 10em minmax(0, 1fr) auto;
+  align-items: center;
+  background: #112625;
+  border-bottom: 1px solid #1a2f30;
+}
+.mock-lf .lf-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 1.8em;
+  margin-inline: 0.42em;
+  padding: 0 0.4em 0 0.5em;
+  border: 1px solid #22393a;
+  border-radius: 99em;
+  background: #0f2223;
+  box-shadow: inset 0 0 0.6em rgb(0 0 0 / 0.25);
+}
+.mock-lf .lf-collapse {
+  width: 0.62em;
+  height: 0.62em;
+  color: #7f9096;
+}
+.mock-lf .lf-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.08em;
+  font-size: 0.98em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.mock-lf .lf-logo-box {
+  padding: 0.1em 0.12em 0.06em;
+  border-radius: 0.16em;
+  background: linear-gradient(90deg, #17c1d0, #04a9b2);
+  color: #03282c;
+}
+.mock-lf .lf-logo-word {
+  display: flex;
+  align-items: center;
+  color: #eef1f2;
+}
+.mock-lf .lf-logo-o {
+  width: 0.92em;
+  height: 0.92em;
+  margin-inline: 0.02em;
+}
+.mock-lf .lf-logo-x {
+  width: 0.78em;
+  height: 0.88em;
+  margin-left: 0.02em;
+  fill: none;
+  stroke-width: 2.1;
+  stroke-linecap: square;
+}
+
+.mock-lf .lf-search {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  width: 37em;
+  max-width: calc(100% - 1.8em);
+  height: 2.75em;
+  margin-left: 1.6em;
+  padding: 0 1em;
+  border: 1px solid #1b3031;
+  border-radius: 0.8em;
+  background: #0f2122;
+  color: #7f9096;
+  font-size: 0.56em;
+  white-space: nowrap;
+}
+.mock-lf .lf-search .lf-i {
+  width: 1.35em;
+  height: 1.35em;
+  color: #c8d6da;
+}
+
+.mock-lf .lf-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  padding-right: 0.85em;
+}
+.mock-lf .lf-new {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  height: 2.6em;
+  padding: 0 1em 0 0.8em;
+  border: 1px solid #1f3434;
+  border-radius: 99em;
+  background: #10201f;
+  color: #c2d1d7;
+  font-size: 0.6em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.mock-lf .lf-new .lf-i {
+  width: 1.25em;
+  height: 1.25em;
+}
+.mock-lf .lf-round {
+  display: grid;
+  place-items: center;
+  width: 1.58em;
+  height: 1.58em;
+  border: 1px solid #1f3434;
+  border-radius: 50%;
+  background: #10201f;
+  color: #90a1ab;
+}
+.mock-lf .lf-round .lf-i {
+  width: 0.72em;
+  height: 0.72em;
+}
+.mock-lf .lf-user {
+  display: flex;
+  align-items: center;
+  gap: 0.38em;
+  height: 1.78em;
+  padding: 0 0.85em 0 0.16em;
+  border: 1px solid #1f3434;
+  border-radius: 99em;
+  background: #10201f;
+  line-height: 1.15;
+}
+.mock-lf .lf-user > span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+.mock-lf .lf-user b {
+  font-size: 0.52em;
+  color: #f5f9fa;
+}
+.mock-lf .lf-user b + span {
+  font-size: 0.44em;
+  color: #798a92;
+  letter-spacing: 0.02em;
+}
+.mock-lf .lf-avatar {
+  display: block;
+  width: 1.45em;
+  height: 1.45em;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #3c5a5a;
+  background:
+    radial-gradient(circle at 70% 25%, #9cc3c7 0 18%, transparent 45%),
+    linear-gradient(160deg, #5f8d96, #2b4a53);
+}
+.mock-lf .lf-avatar svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.mock-lf .lf-logout {
+  display: grid;
+  place-items: center;
+  width: 1.72em;
+  height: 1.3em;
+  border: 1px solid #1f3434;
+  border-radius: 99em;
+  background: #10201f;
+  color: #f0466b;
+}
+.mock-lf .lf-logout .lf-i {
+  width: 0.62em;
+  height: 0.62em;
+}
+
+/* sidebar ------------------------------------------------------------- */
+.mock-lf .lf-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.24em;
+  padding: 0.5em 0.42em;
+  background: #112625;
+  border-right: 1px solid #1a2f30;
+  overflow: hidden;
+}
+.mock-lf .lf-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  height: 3.15em;
+  padding: 0 0.55em 0 0.7em;
+  border-radius: 99em;
+  color: #d0e0e0;
+  font-size: 0.54em;
+  letter-spacing: -0.01em;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.mock-lf .lf-nav.is-group {
+  color: #adc2c2;
+  font-weight: 400;
+}
+.mock-lf .lf-nav > .lf-i {
+  width: 1.35em;
+  height: 1.35em;
+  color: #bdd2d4;
+  stroke-width: 1.7;
+}
+.mock-lf .lf-nav-label {
+  min-width: 0;
+  overflow: hidden;
+}
+.mock-lf .lf-nav .lf-chev {
+  width: 0.95em;
+  height: 0.95em;
+  margin-left: auto;
+  color: #9fb3b4;
+}
+.mock-lf .lf-nav.is-on {
+  background: linear-gradient(90deg, #00bfa9, #01937f);
+  color: #eaffff;
+  font-weight: 700;
+  box-shadow: 0 0.5em 1.4em -0.5em rgb(0 191 169 / 0.6);
+}
+.mock-lf .lf-nav.is-on > .lf-i {
+  color: #eaffff;
+}
+
+/* main ---------------------------------------------------------------- */
+.mock-lf .lf-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0.85em 0.88em 0;
+  overflow: hidden;
+}
+.mock-lf .lf-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1em;
+}
+.mock-lf .lf-h1 {
+  color: #35c8b4;
+  font-size: 1.12em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.mock-lf .lf-lede {
+  margin-top: 0.4em;
+  color: #8d9ba9;
+  font-size: 0.6em;
+  white-space: nowrap;
+}
+.mock-lf .lf-seg {
+  display: flex;
+  flex: none;
+  gap: 0.3em;
+  padding: 0.28em;
+  border: 1px solid #1f3132;
+  border-radius: 0.6em;
+  background: #142322;
+}
+.mock-lf .lf-seg span {
+  padding: 0.62em 1.15em;
+  border-radius: 0.7em;
+  color: #bac7ce;
+  font-size: 0.5em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.mock-lf .lf-seg .is-on {
+  background: linear-gradient(180deg, #07c1af, #01a594);
+  color: #effffd;
+  box-shadow: 0 0.3em 0.9em -0.3em rgb(1 183 167 / 0.7);
+}
+
+.mock-lf .lf-card {
+  border: 1px solid #1f3132;
+  border-radius: 0.62em;
+  background: #10201f;
+}
+.mock-lf .lf-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.42em;
+  margin-top: 0.8em;
+}
+.mock-lf .lf-kpi {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  padding: 0.62em 0.5em 0.66em 0.55em;
+  min-width: 0;
+}
+.mock-lf .lf-kpi-label {
+  padding-top: 0.15em;
+  color: #c4d3d6;
+  font-size: 0.53em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mock-lf .lf-kpi-ico {
+  display: grid;
+  place-items: center;
+  width: 1.18em;
+  height: 1.18em;
+  border: 1px solid #263837;
+  border-radius: 50%;
+  background: #1b2b2a;
+  color: #b5c4ca;
+}
+.mock-lf .lf-kpi-ico .lf-i {
+  width: 0.55em;
+  height: 0.55em;
+}
+.mock-lf .lf-kpi-value {
+  grid-column: 1 / -1;
+  margin-top: 0.12em;
+  color: #fff;
+  font-size: 1.05em;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.mock-lf .lf-kpi-note {
+  grid-column: 1 / -1;
+  margin-top: 0.6em;
+  color: #81929a;
+  font-size: 0.4em;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mock-lf .lf-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.345fr) minmax(0, 1fr);
+  gap: 0.6em;
+  margin-top: 0.85em;
+  flex: none;
+}
+.mock-lf .lf-title {
+  display: block;
+  color: #2fbfae;
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.mock-lf .lf-desc {
+  display: block;
+  margin-top: 0.4em;
+  color: #8d9ba9;
+  font-size: 0.52em;
+  white-space: nowrap;
+}
+
+/* flow overview chart */
+.mock-lf .lf-flow {
+  display: flex;
+  flex-direction: column;
+  padding: 0.65em 0.6em 0.55em;
+}
+.mock-lf .lf-plot {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 0.7em;
+  overflow: visible;
+}
+.mock-lf .lf-plot text,
+.mock-lf .lf-mini text {
+  font-family: inherit;
+}
+.mock-lf .lf-gridline {
+  stroke: #2b3d3d;
+  stroke-width: 0.45;
+  stroke-dasharray: 1 1.6;
+}
+.mock-lf .lf-ln {
+  fill: none;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mock-lf .lf-ln-c {
+  stroke: #e3a22f;
+}
+.mock-lf .lf-ln-v {
+  stroke: #42c4b3;
+}
+.mock-lf .lf-bar {
+  fill: #15b7a5;
+  transform-box: fill-box;
+}
+.mock-lf .lf-legend {
+  display: flex;
+  justify-content: center;
+  gap: 0.8em;
+  margin-top: 0.35em;
+  font-size: 0.6em;
+}
+.mock-lf .lf-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+}
+.mock-lf .lf-legend svg {
+  width: 1em;
+  height: 0.6em;
+  fill: #10201f;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+.mock-lf .lf-lg-c {
+  color: #e3a22f;
+}
+.mock-lf .lf-lg-t,
+.mock-lf .lf-lg-v {
+  color: #2fc0ae;
+}
+.mock-lf .lf-lg-t i {
+  width: 0.8em;
+  height: 0.62em;
+  background: #15b7a5;
+}
+
+/* recent activity */
+.mock-lf .lf-recent {
+  padding-top: 0.65em;
+  overflow: hidden;
+}
+.mock-lf .lf-recent-head {
+  padding: 0 0.6em 0.75em;
+  border-bottom: 1px solid #1a2b2c;
+}
+.mock-lf .lf-tx {
+  display: flex;
+  align-items: center;
+  gap: 0.48em;
+  padding: 0.62em 0.6em;
+  border-bottom: 1px solid #1a2b2c;
+}
+.mock-lf .lf-initials {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 3.1em;
+  height: 3.1em;
+  border: 1px solid #2c4b4a;
+  border-radius: 50%;
+  background: #143734;
+  color: #74d4c7;
+  font-size: 0.47em;
+  font-weight: 700;
+}
+.mock-lf .lf-tx-who {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  min-width: 0;
+}
+.mock-lf .lf-tx-who b {
+  color: #f4fbfb;
+  font-size: 0.58em;
+}
+.mock-lf .lf-tx-who span {
+  color: #63737b;
+  font-size: 0.47em;
+}
+.mock-lf .lf-pill {
+  margin-left: auto;
+  padding: 0.5em 0.95em;
+  border: 1px solid #2a3c3c;
+  border-radius: 99em;
+  color: #b8c7cc;
+  font-size: 0.46em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* next row, cropped by the window edge like a scrolled screenshot */
+.mock-lf .lf-row-next {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.345fr);
+}
+.mock-lf .lf-next {
+  height: 7em;
+  padding: 0.65em 0.6em 0;
+  overflow: hidden;
+}
+.mock-lf .lf-donut {
+  display: block;
+  width: 100%;
+  margin-top: 0.2em;
+}
+.mock-lf .lf-donut circle {
+  fill: none;
+  stroke: #95a4b8;
+  stroke-width: 5.5;
+}
+.mock-lf .lf-mini {
+  display: block;
+  width: 100%;
+  margin-top: 0.6em;
+}

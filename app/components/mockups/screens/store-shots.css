@@ -1,0 +1,44 @@
+.mock .ss-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  perspective: 80em;
+  background:
+    radial-gradient(42% 60% at 50% 58%, rgb(var(--glow) / 0.34), transparent 72%),
+    radial-gradient(70% 50% at 50% 100%, rgb(var(--glow) / 0.18), transparent 70%),
+    var(--m-bg);
+}
+/* The store art's glowing ring, echoed behind the fan. */
+.mock .ss-ring {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 46%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 0.35em solid rgb(var(--glow) / 0.55);
+  box-shadow:
+    0 0 3em rgb(var(--glow) / 0.45),
+    inset 0 0 3em rgb(var(--glow) / 0.3);
+  transform: translate(-50%, -50%);
+}
+.mock .ss-shot {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 23%;
+  margin: 0;
+  border-radius: 1.1em;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.08),
+    0 2.4em 4em -1.2em rgb(0 0 0 / 0.9);
+  transform: translateX(calc(-50% + var(--i) * 76%))
+    translateZ(calc(var(--a) * -11em)) rotateY(calc(var(--i) * -18deg));
+  filter: brightness(calc(1 - var(--a) * 0.24));
+}
+.mock .ss-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

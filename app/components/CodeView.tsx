@@ -58,10 +58,20 @@ function tokenize(code: string): Token[] {
 const escape = (text: string) =>
   text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+const LANGUAGES: Record<string, string> = {
+  tsx: "TypeScript React",
+  ts: "TypeScript",
+  dart: "Dart",
+  php: "PHP",
+  py: "Python",
+};
+
 /**
- * Server-rendered, dependency-free syntax highlighting for the X-ray layer.
- * The highlighted lines are injected as one static HTML string, so React has
- * hundreds fewer nodes to hydrate.
+ * An editor window for a project's illustrative code: title bar with the file
+ * tab, server-rendered syntax highlighting (one static HTML string, so React
+ * has hundreds fewer nodes to hydrate) and a status bar. The font is sized in
+ * CSS from the line count and longest line (`--lines`, `--cols`) so the whole
+ * sample always fits the frame, from a phone card to the pinned stage.
  */
 export function CodeView({
   file,
@@ -72,11 +82,11 @@ export function CodeView({
   code: string;
   theme?: "dark" | "light";
 }) {
-  const html = code
-    .split("\n")
+  const lines = code.split("\n");
+  const html = lines
     .map(
       (line, i) =>
-        `<span class="code-line"><span class="code-ln">${i + 1}</span>${tokenize(
+        `<span class="code-line" style="--n:${i}"><span class="code-ln">${i + 1}</span>${tokenize(
           line,
         )
           .map((token) =>
@@ -84,18 +94,38 @@ export function CodeView({
               ? `<span class="tk-${token.kind}">${escape(token.text)}</span>`
               : escape(token.text),
           )
-          .join("")}\n</span>`,
+          .join("")}${i < lines.length - 1 ? "\n" : ""}</span>`,
     )
     .join("");
+  const language = LANGUAGES[file.split(".").pop() ?? ""] ?? "Code";
   return (
-    <div className={`code-view code-${theme}`}>
-      <div className="code-tab">
-        <span className="code-dot" aria-hidden="true" />
-        {file}
+    <div
+      className={`code-view code-${theme}`}
+      style={
+        {
+          "--lines": lines.length,
+          "--cols": Math.max(...lines.map((line) => line.length)),
+        } as React.CSSProperties
+      }
+    >
+      <div className="code-bar">
+        <span className="code-lights" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className="code-tab">
+          <span className="code-dot" aria-hidden="true" />
+          {file}
+        </span>
       </div>
       <pre>
         <code dangerouslySetInnerHTML={{ __html: html }} />
       </pre>
+      <div className="code-status">
+        <span>{language}</span>
+        <span>Illustrative sketch · real source on request</span>
+      </div>
     </div>
   );
 }

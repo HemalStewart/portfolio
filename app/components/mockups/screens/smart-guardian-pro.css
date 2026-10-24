@@ -1,0 +1,1018 @@
+/* Smart Guardian: three Google Play promo panels rebuilt in code.
+   Everything is in em off the .sg-strip base size (1em ≈ 1.5% of --mw). */
+
+.mock-sg {
+  background: #03060b;
+}
+.mock-sg .sg-strip {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9em;
+  padding: 0.9em;
+  line-height: 1.25;
+  color: #f4f7fb;
+}
+.mock-sg .sg-strip svg {
+  display: block;
+  flex: none;
+}
+
+/* ---------- promo panel ---------- */
+
+.mock-sg .sg-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.1em;
+  border: 1px solid rgb(255 255 255 / 0.07);
+  background:
+    radial-gradient(circle 7.5em at 5% 50%, rgb(37 99 235 / 0.36), transparent),
+    radial-gradient(circle 8.5em at 96% 67%, rgb(34 197 94 / 0.3), transparent),
+    linear-gradient(180deg, #0a1526 0%, #060c18 48%, #03070e 100%);
+}
+.mock-sg .sg-panel.is-calm {
+  background:
+    radial-gradient(circle 9em at 100% 26%, rgb(34 197 94 / 0.12), transparent),
+    radial-gradient(circle 9em at 0% 88%, rgb(37 99 235 / 0.12), transparent),
+    linear-gradient(180deg, #0e131a 0%, #090c11 60%, #06080b 100%);
+}
+
+.mock-sg .sg-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mock-sg .sg-bg .g {
+  stroke: currentColor;
+  stroke-width: 0.24;
+}
+.mock-sg .sg-bg .a {
+  stroke: currentColor;
+  stroke-width: 0.7;
+}
+.mock-sg .sg-bg.is-blue {
+  color: #3d7dff;
+  opacity: 0.7;
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 38% at 4% 50%,
+    #000,
+    rgb(0 0 0 / 0.22) 60%,
+    rgb(0 0 0 / 0.08)
+  );
+  mask-image: radial-gradient(
+    ellipse 70% 38% at 4% 50%,
+    #000,
+    rgb(0 0 0 / 0.22) 60%,
+    rgb(0 0 0 / 0.08)
+  );
+}
+.mock-sg .sg-bg.is-green {
+  color: #2fe070;
+  opacity: 0.7;
+  -webkit-mask-image: radial-gradient(
+    ellipse 62% 32% at 97% 68%,
+    #000,
+    rgb(0 0 0 / 0.16) 60%,
+    transparent
+  );
+  mask-image: radial-gradient(
+    ellipse 62% 32% at 97% 68%,
+    #000,
+    rgb(0 0 0 / 0.16) 60%,
+    transparent
+  );
+}
+.mock-sg .is-calm .sg-bg.is-blue {
+  color: #7f8ea6;
+  opacity: 0.32;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.mock-sg .is-calm .sg-bg.is-green {
+  opacity: 0.22;
+}
+.mock-sg .is-calm .sg-trail {
+  display: none;
+}
+
+.mock-sg .sg-trail .b {
+  stroke: #4f8dff;
+}
+.mock-sg .sg-trail .gr {
+  stroke: #3cf07e;
+}
+.mock-sg .sg-trail circle.b {
+  fill: #4f8dff;
+}
+.mock-sg .sg-trail circle.gr {
+  fill: #3cf07e;
+}
+.mock-sg .sg-trail .halo {
+  stroke-width: 2.2;
+  opacity: 0.2;
+}
+.mock-sg .sg-trail .core {
+  stroke-width: 0.6;
+}
+.mock-sg .sg-trail circle.ring {
+  fill: none;
+  stroke-width: 0.35;
+  opacity: 0.55;
+}
+.mock-sg .sg-trail .disc {
+  stroke: none;
+  opacity: 0.28;
+}
+.mock-sg .sg-trail .dot {
+  stroke: #fff;
+  stroke-width: 0.5;
+}
+
+.mock-sg .sg-head {
+  position: absolute;
+  z-index: 2;
+  top: 1.35em;
+  left: 0.6em;
+  right: 0.6em;
+  text-align: center;
+}
+.mock-sg .sg-title {
+  display: block;
+  font-size: 2.1em;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  white-space: nowrap;
+  color: #fff;
+}
+.mock-sg .sg-title span {
+  color: #35e06f;
+}
+.mock-sg .p2 .sg-title {
+  font-size: 1.62em;
+  letter-spacing: -0.03em;
+  margin-top: 0.15em;
+}
+.mock-sg .p3 .sg-title {
+  font-size: 1.7em;
+  margin-top: 0.1em;
+}
+.mock-sg .sg-sub {
+  display: block;
+  max-width: 14em;
+  margin: 0.45em auto 0;
+  font-size: 0.72em;
+  line-height: 1.3;
+  color: #c2c9d4;
+}
+.mock-sg .p3 .sg-sub {
+  max-width: none;
+  color: #a7afbb;
+  font-size: 0.66em;
+}
+.mock-sg .sg-foot {
+  position: absolute;
+  z-index: 2;
+  left: 1em;
+  right: 1em;
+  bottom: 0.8em;
+  max-width: 13em;
+  margin-inline: auto;
+  text-align: center;
+  font-size: 0.66em;
+  line-height: 1.3;
+  color: #a9b1bd;
+}
+
+/* ---------- phone ---------- */
+
+.mock-sg .sg-device {
+  position: absolute;
+  z-index: 1;
+  top: 7.3em;
+  left: calc(50% - 6.8em);
+  width: 13.6em;
+  height: 29.4em;
+  padding: 0.32em;
+  border-radius: 1.95em;
+  background: linear-gradient(150deg, #353b45, #101318 22%, #07080b 70%, #1c2027);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.1),
+    0 1.6em 2.8em -0.6em rgb(0 0 0 / 0.85);
+}
+.mock-sg .sg-device::after {
+  content: "";
+  position: absolute;
+  top: 6.4em;
+  right: -0.16em;
+  width: 0.16em;
+  height: 2.6em;
+  border-radius: 0 0.2em 0.2em 0;
+  background: #2a2f37;
+}
+.mock-sg .sg-screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.65em;
+  background: #11161e;
+  font-size: 0.6em;
+}
+
+.mock-sg .sg-status {
+  position: relative;
+  z-index: 3;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 2.5em;
+  padding: 0 1.5em 0 1.7em;
+  color: #e9edf3;
+}
+.mock-sg .sg-status > span {
+  font-size: 0.78em;
+  font-weight: 600;
+}
+.mock-sg .sg-cam {
+  position: absolute;
+  top: 0.8em;
+  left: calc(50% - 0.45em);
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 50%;
+  background: #020304;
+  box-shadow: 0 0 0 0.12em #1d222a;
+}
+.mock-sg .sg-sys {
+  width: 3.5em;
+  height: 1em;
+}
+
+/* shared member bits */
+.mock-sg .sg-av {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    color-mix(in srgb, var(--c) 55%, #fff),
+    var(--c) 55%,
+    color-mix(in srgb, var(--c) 70%, #000)
+  );
+  box-shadow: 0 0 0 0.14em color-mix(in srgb, var(--c) 45%, transparent);
+  color: #fff;
+  font-weight: 700;
+  font-style: normal;
+}
+.mock-sg .sg-who {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  min-width: 0;
+  flex: 1;
+}
+.mock-sg .sg-who b {
+  font-weight: 650;
+  white-space: nowrap;
+}
+.mock-sg .sg-who > span {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  color: #8b95a5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mock-sg .sg-pin {
+  width: 1em;
+  height: 1em;
+}
+.mock-sg .sg-row {
+  display: flex;
+  align-items: center;
+}
+.mock-sg .sg-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25em;
+}
+.mock-sg .sg-pct,
+.mock-sg .sg-temp {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.mock-sg .sg-temp {
+  font-weight: 500;
+  color: #d5dbe4;
+}
+.mock-sg .sg-batt {
+  width: 2.1em;
+  height: 1em;
+}
+.mock-sg .sg-sky {
+  width: 1.45em;
+  height: 1.2em;
+}
+
+/* ---------- panel 1: circle onboarding ---------- */
+
+.mock-sg .sg-skip {
+  position: absolute;
+  top: 3.3em;
+  right: 1.5em;
+  font-size: 0.8em;
+  color: #8b95a5;
+}
+.mock-sg .sg-orbit {
+  position: relative;
+  flex: none;
+  height: 15.8em;
+  margin-top: 1.7em;
+}
+.mock-sg .sg-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgb(120 160 220 / 0.16);
+  border-radius: 50%;
+}
+.mock-sg .sg-ring.r1 {
+  width: 7.8em;
+  height: 7.8em;
+  margin: -3.9em 0 0 -3.9em;
+}
+.mock-sg .sg-ring.r2 {
+  width: 12.4em;
+  height: 12.4em;
+  margin: -6.2em 0 0 -6.2em;
+}
+.mock-sg .sg-ring.r3 {
+  width: 17em;
+  height: 17em;
+  margin: -8.5em 0 0 -8.5em;
+  border-color: rgb(120 160 220 / 0.09);
+}
+.mock-sg .sg-self {
+  position: absolute;
+  top: calc(50% - 3.2em);
+  left: calc(50% - 3.2em);
+  width: 6.4em;
+  height: 6.4em;
+  display: grid;
+  place-items: end center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 30%, #6aa8ff, #2f6fe0 55%, #1b3f8f);
+  box-shadow:
+    0 0 0 0.25em rgb(47 124 240 / 0.22),
+    0 0 2.4em rgb(47 124 240 / 0.45);
+  color: #e6f0ff;
+}
+.mock-sg .sg-self svg {
+  width: 4.6em;
+  height: 4.6em;
+  margin-bottom: -0.3em;
+}
+.mock-sg .sg-orbit .sg-av {
+  position: absolute;
+  font-size: 1.5em;
+}
+.mock-sg .sg-o1 {
+  top: 0.7em;
+  left: 1.1em;
+  width: 2.8em;
+  height: 2.8em;
+}
+.mock-sg .sg-orbit .sg-o2 {
+  top: 3.3em;
+  right: 0.8em;
+  width: 2.4em;
+  height: 2.4em;
+  --d: 1;
+}
+.mock-sg .sg-orbit .sg-o3 {
+  top: 6.6em;
+  left: 0.9em;
+  width: 2.25em;
+  height: 2.25em;
+  --d: 2;
+}
+
+.mock-sg .sg-stack {
+  position: relative;
+  flex: none;
+  height: 13.6em;
+  margin-top: -0.9em;
+}
+.mock-sg .sg-tab {
+  position: absolute;
+  top: 0;
+  left: 4em;
+  right: 4em;
+  height: 3.8em;
+  padding: 0.55em 1em;
+  border-radius: 0.9em;
+  background: #1a212b;
+  border: 1px solid rgb(255 255 255 / 0.05);
+  font-size: 0.78em;
+  font-weight: 650;
+  color: #c5ccd6;
+}
+.mock-sg .sg-tab.t2 {
+  top: 1.65em;
+  left: 2.9em;
+  right: 2.9em;
+  background: #1c242f;
+}
+.mock-sg .sg-fam {
+  position: absolute;
+  top: 2.6em;
+  left: 1.4em;
+  right: 1.4em;
+  padding: 0.5em 0.8em 0.2em;
+  border-radius: 0.8em;
+  background: #161c25;
+  border: 1px solid rgb(255 255 255 / 0.07);
+  box-shadow: 0 -0.4em 1.2em rgb(0 0 0 / 0.4);
+}
+.mock-sg .sg-fam-h {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  padding-bottom: 0.35em;
+}
+.mock-sg .sg-fam-h b {
+  flex: 1;
+  font-size: 0.82em;
+}
+.mock-sg .sg-check {
+  display: grid;
+  place-items: center;
+  width: 0.95em;
+  height: 0.95em;
+  border-radius: 0.2em;
+  background: rgb(234 179 8 / 0.2);
+  color: #eab308;
+}
+.mock-sg .sg-check svg {
+  width: 0.8em;
+  height: 0.8em;
+}
+.mock-sg .sg-chip {
+  padding: 0.15em 0.55em;
+  border-radius: 99px;
+  background: rgb(59 130 246 / 0.22);
+  color: #93c5fd;
+  font-size: 0.6em;
+  font-weight: 650;
+}
+.mock-sg .sg-fam .sg-row {
+  gap: 0.55em;
+  padding: 0.45em 0;
+  border-top: 1px solid rgb(255 255 255 / 0.06);
+}
+.mock-sg .sg-fam .sg-av {
+  width: 1.85em;
+  height: 1.85em;
+  font-size: 0.8em;
+}
+.mock-sg .sg-fam .sg-who b {
+  font-size: 0.72em;
+}
+.mock-sg .sg-fam .sg-who > span {
+  font-size: 0.56em;
+}
+.mock-sg .sg-fam .sg-pct {
+  font-size: 0.64em;
+}
+.mock-sg .sg-fam .sg-temp {
+  font-size: 0.56em;
+}
+.mock-sg .sg-live {
+  position: absolute;
+  top: -0.7em;
+  right: 0.9em;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 50%;
+  background: #2ccf66;
+  box-shadow: 0 0 1.4em rgb(53 224 111 / 0.5);
+}
+.mock-sg .sg-live::after {
+  content: "";
+  position: absolute;
+  inset: 0.55em;
+  border-radius: 50%;
+  border: 0.32em solid #f2fff6;
+}
+
+.mock-sg .sg-pitch {
+  display: block;
+  max-width: 14.5em;
+  margin: 1.1em auto 0;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #f4f7fb;
+}
+.mock-sg .sg-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.35em;
+  margin-top: 1.1em;
+}
+.mock-sg .sg-dots i {
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 0.25);
+}
+.mock-sg .sg-dots i.on {
+  width: 1.6em;
+  background: #35e06f;
+}
+.mock-sg .sg-cta {
+  display: grid;
+  place-items: center;
+  height: 2.8em;
+  margin: auto 1.5em 2.1em;
+  border-radius: 0.8em;
+  background: linear-gradient(180deg, #3bdc76, #22c35e);
+  box-shadow: 0 0.5em 1.2em -0.3em rgb(34 197 94 / 0.55);
+  color: #f2fff6;
+  font-size: 0.92em;
+  font-weight: 650;
+}
+
+/* ---------- panel 2: live map ---------- */
+
+.mock-sg .sg-map {
+  position: absolute;
+  inset: 0;
+  background: #121821;
+}
+.mock-sg .sg-map > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mock-sg .sg-park {
+  fill: #13271d;
+  stroke: none;
+}
+.mock-sg .sg-rd3 {
+  stroke: #1b2330;
+  stroke-width: 0.7;
+}
+.mock-sg .sg-rd2 {
+  stroke: #232d3c;
+  stroke-width: 1.5;
+}
+.mock-sg .sg-rd1 {
+  stroke: #2e3a4d;
+  stroke-width: 3;
+}
+.mock-sg .sg-trail-b {
+  stroke: #4f8dff;
+  stroke-width: 1.1;
+  stroke-dasharray: 2.2 1.8;
+  opacity: 0.9;
+}
+.mock-sg .sg-route-halo {
+  stroke: #35e06f;
+  stroke-width: 4;
+  opacity: 0.2;
+}
+.mock-sg .sg-route {
+  stroke: #35e06f;
+  stroke-width: 1.4;
+}
+
+.mock-sg .sg-street {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%) rotate(var(--r));
+  font-size: 0.52em;
+  color: #6f7887;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.mock-sg .sg-street.is-park {
+  color: #4f9a6a;
+}
+.mock-sg .sg-poi {
+  position: absolute;
+  left: calc(var(--x) - 0.6em);
+  top: calc(var(--y) - 0.6em);
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+.mock-sg .sg-poi i {
+  display: grid;
+  place-items: center;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  background: #4b5563;
+  color: #fff;
+  box-shadow: 0 0 0 0.12em rgb(255 255 255 / 0.18);
+}
+.mock-sg .sg-poi svg {
+  width: 0.78em;
+  height: 0.78em;
+}
+.mock-sg .sg-poi span {
+  font-size: 0.52em;
+  line-height: 1.15;
+  color: #9aa3b0;
+  white-space: nowrap;
+}
+.mock-sg .sg-poi.is-h i {
+  background: #e5484d;
+}
+.mock-sg .sg-poi.is-food i {
+  background: #f08a24;
+}
+.mock-sg .sg-poi.is-shop i {
+  background: #a855f7;
+}
+.mock-sg .sg-poi.is-dot i {
+  width: 0.9em;
+  height: 0.9em;
+  background: #9ca3af;
+  box-shadow: 0 0 0 0.12em rgb(255 255 255 / 0.25);
+}
+.mock-sg .sg-poi.is-dot svg {
+  display: none;
+}
+
+.mock-sg .sg-lbs {
+  position: absolute;
+  top: 3.4em;
+  left: 1em;
+  display: grid;
+  place-items: center;
+  width: 2.5em;
+  height: 2.3em;
+  border-radius: 0.55em;
+  background: linear-gradient(180deg, #34d7bd, #12a48e);
+  box-shadow: 0 0.3em 0.8em rgb(20 184 166 / 0.4);
+  color: #fff;
+}
+.mock-sg .sg-lbs b {
+  font-size: 0.62em;
+  font-weight: 750;
+  letter-spacing: 0.03em;
+}
+.mock-sg .sg-ctrl {
+  position: absolute;
+  top: 3.6em;
+  right: 0.95em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  color: #e5e9ef;
+}
+.mock-sg .sg-ctrl svg {
+  width: 1.15em;
+  height: 1.15em;
+}
+.mock-sg .sg-sos {
+  position: absolute;
+  top: 13.4em;
+  right: 0.65em;
+  display: grid;
+  place-items: center;
+  width: 2.3em;
+  height: 2.3em;
+  border-radius: 0.5em;
+  background: #ef3b3b;
+  box-shadow: 0 0 1.1em rgb(239 59 59 / 0.55);
+  color: #fff;
+}
+.mock-sg .sg-sos svg {
+  width: 1.3em;
+  height: 1.3em;
+}
+.mock-sg .sg-pulse {
+  position: absolute;
+  left: calc(var(--x) - 2.4em);
+  top: calc(var(--y) - 2.4em);
+  width: 4.8em;
+  height: 4.8em;
+  border-radius: 50%;
+  background: rgb(53 224 111 / 0.14);
+  border: 1px solid rgb(53 224 111 / 0.5);
+}
+.mock-sg .sg-pulse::after {
+  content: "";
+  position: absolute;
+  inset: calc(50% - 0.35em);
+  border-radius: 50%;
+  background: #35e06f;
+  box-shadow: 0 0 0 0.15em #0b1a12;
+}
+.mock-sg .sg-mpin {
+  position: absolute;
+  left: calc(var(--x) - 1.3em);
+  top: calc(var(--y) - 3.1em);
+  width: 2.6em;
+  height: 2.6em;
+  padding: 0.18em;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0.3em 0.8em rgb(0 0 0 / 0.5);
+}
+.mock-sg .sg-mpin::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 0.4em);
+  top: calc(100% - 0.15em);
+  border: 0.4em solid transparent;
+  border-top: 0.55em solid #fff;
+  border-bottom: 0;
+}
+.mock-sg .sg-mpin .sg-av {
+  width: 100%;
+  height: 100%;
+  box-shadow: none;
+  font-size: 1em;
+}
+
+.mock-sg .sg-sheet {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16.8em;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1.5em 1.5em 0 0;
+  background: #11161e;
+  box-shadow: 0 -0.8em 2em rgb(0 0 0 / 0.55);
+}
+.mock-sg .sg-handle {
+  width: 2.6em;
+  height: 0.3em;
+  margin: 0.6em auto 0.4em;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 0.18);
+}
+.mock-sg .sg-sheet-h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.1em;
+}
+.mock-sg .sg-sheet-h b {
+  font-size: 1.05em;
+}
+.mock-sg .sg-fab {
+  display: grid;
+  place-items: center;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0.3em 0.9em rgb(34 197 94 / 0.45);
+  color: #fff;
+}
+.mock-sg .sg-fab svg {
+  width: 1.3em;
+  height: 1.3em;
+}
+.mock-sg .sg-mcard {
+  display: flex;
+  align-items: center;
+  gap: 0.65em;
+  margin: 0.55em 1em 0;
+  padding: 0.6em 0.7em;
+  border-radius: 0.8em;
+  background: #18202b;
+  border: 1px solid rgb(255 255 255 / 0.06);
+}
+.mock-sg .sg-mcard .sg-av {
+  width: 2.2em;
+  height: 2.2em;
+  font-size: 0.9em;
+}
+.mock-sg .sg-mcard .sg-who b {
+  font-size: 0.82em;
+}
+.mock-sg .sg-mcard .sg-who > span {
+  font-size: 0.6em;
+}
+.mock-sg .sg-mcard .sg-pct {
+  font-size: 0.72em;
+}
+.mock-sg .sg-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  height: 4.3em;
+  margin-top: auto;
+  padding-bottom: 0.4em;
+  background: #0c1117;
+  border-top: 1px solid rgb(255 255 255 / 0.06);
+}
+.mock-sg .sg-nav span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+  font-size: 0.6em;
+  color: #5f6876;
+}
+.mock-sg .sg-nav svg {
+  width: 2.3em;
+  height: 2.3em;
+}
+.mock-sg .sg-nav .on {
+  color: #f4f7fb;
+  font-weight: 600;
+}
+
+/* ---------- panel 3: battery card ---------- */
+
+.mock-sg .sg-p3 {
+  position: absolute;
+  z-index: 1;
+  top: 6.2em;
+  left: 1.15em;
+  right: 1.15em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  font-size: 0.82em;
+}
+.mock-sg .sg-card {
+  overflow: hidden;
+  border-radius: 1.6em;
+  background: linear-gradient(180deg, #171d26, #10151c);
+  border: 1px solid rgb(255 255 255 / 0.09);
+  box-shadow: 0 1.6em 3em -0.8em rgb(0 0 0 / 0.85);
+}
+.mock-sg .sg-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  padding: 1em 1.1em;
+  border-bottom: 1px solid rgb(255 255 255 / 0.07);
+}
+.mock-sg .sg-shield {
+  width: 2.3em;
+  height: 2.3em;
+  filter: drop-shadow(0 0 0.4em rgb(53 224 111 / 0.35));
+}
+.mock-sg .sg-brand b {
+  flex: 1;
+  font-size: 1em;
+  font-weight: 650;
+}
+.mock-sg .sg-brand b span {
+  color: #35e06f;
+}
+.mock-sg .sg-round {
+  display: grid;
+  place-items: center;
+  width: 2.3em;
+  height: 2.3em;
+  border-radius: 50%;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: rgb(255 255 255 / 0.03);
+  color: #d5dbe4;
+}
+.mock-sg .sg-round svg {
+  width: 1.15em;
+  height: 1.15em;
+}
+.mock-sg .sg-nexus {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding: 0.95em 1.2em 0.8em;
+}
+.mock-sg .sg-nexus b {
+  font-size: 1.4em;
+  font-weight: 650;
+}
+.mock-sg .sg-nexus span {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.7em;
+  color: #8b95a5;
+}
+.mock-sg .sg-nexus i {
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: #35e06f;
+  box-shadow: 0 0 0.5em #35e06f;
+}
+.mock-sg .sg-list {
+  margin: 0 0.85em 0.95em;
+  padding: 0 0.95em;
+  border-radius: 1.1em;
+  background: rgb(255 255 255 / 0.03);
+  border: 1px solid rgb(255 255 255 / 0.06);
+}
+.mock-sg .sg-list .sg-row {
+  gap: 0.85em;
+  padding: 0.72em 0;
+}
+.mock-sg .sg-list .sg-row + .sg-row {
+  border-top: 1px solid rgb(255 255 255 / 0.07);
+}
+.mock-sg .sg-list .sg-av {
+  width: 2.25em;
+  height: 2.25em;
+  font-size: 1.35em;
+  box-shadow: 0 0 0 0.1em color-mix(in srgb, var(--c) 40%, transparent);
+}
+.mock-sg .sg-list .sg-who b {
+  font-size: 0.98em;
+}
+.mock-sg .sg-list .sg-who > span {
+  font-size: 0.7em;
+}
+.mock-sg .sg-list .sg-pct {
+  font-size: 1.02em;
+}
+.mock-sg .sg-list .sg-temp {
+  font-size: 0.74em;
+}
+.mock-sg .sg-list .sg-temp .sg-sky {
+  width: 1.7em;
+  height: 1.4em;
+}
+
+.mock-sg .sg-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  padding: 0.85em 1em;
+  border-radius: 1.3em;
+  background: linear-gradient(90deg, rgb(53 224 111 / 0.1), #141a22 45%);
+  border: 1px solid rgb(53 224 111 / 0.2);
+  box-shadow: 0 1.2em 2.4em -0.8em rgb(0 0 0 / 0.8);
+}
+.mock-sg .sg-bell {
+  display: grid;
+  place-items: center;
+  width: 2.7em;
+  height: 2.7em;
+  border-radius: 50%;
+  background: rgb(53 224 111 / 0.14);
+  border: 1px solid rgb(53 224 111 / 0.55);
+  box-shadow: 0 0 1.1em rgb(53 224 111 / 0.4);
+  color: #35e06f;
+}
+.mock-sg .sg-bell svg {
+  width: 1.3em;
+  height: 1.3em;
+}
+.mock-sg .sg-alert .sg-who b {
+  font-size: 0.9em;
+}
+.mock-sg .sg-alert .sg-who > span {
+  font-size: 0.68em;
+}
+.mock-sg .sg-chev {
+  display: grid;
+  place-items: center;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.07);
+  color: #e5e9ef;
+}
+.mock-sg .sg-chev svg {
+  width: 1em;
+  height: 1em;
+}

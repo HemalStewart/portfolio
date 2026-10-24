@@ -4,25 +4,36 @@ import { CodeView } from "./CodeView";
 import { ArrowIcon } from "./icons";
 import { ProjectMockup } from "./mockups/Mockups";
 import { TypeCommand } from "./motion/TypeCommand";
-import { XRayLens } from "./motion/XRayLens";
+import { CodeSwitch } from "./motion/CodeSwitch";
 import { DiffToggle } from "./motion/DiffToggle";
 
 export function SectionHead({
   id,
+  index,
+  label,
   command,
   title,
   description,
 }: {
   id: string;
+  /** Chapter number shown in the eyebrow, e.g. 2 → "(02)". */
+  index: number;
+  label: string;
   command: string;
-  title: string;
+  title: React.ReactNode;
   description?: string;
 }) {
   return (
     <header className="section-head reveal">
-      <TypeCommand text={command} />
+      <p className="eyebrow">
+        <span className="eyebrow-index">
+          ({String(index).padStart(2, "0")})
+        </span>
+        <span className="eyebrow-label">{label}</span>
+        <TypeCommand text={command} />
+      </p>
       <h2 id={id}>{title}</h2>
-      {description ? <p>{description}</p> : null}
+      {description ? <p className="section-lede">{description}</p> : null}
     </header>
   );
 }
@@ -67,12 +78,12 @@ function Visual({ project }: { project: ProjectExperience }) {
   );
 }
 
-function LensVisual({ project }: { project: ProjectExperience }) {
+function CodeVisual({ project }: { project: ProjectExperience }) {
   const sample = codeSamples[project.slug];
   if (!sample) return <Visual project={project} />;
   return (
-    <div className="shot shot-lens">
-      <XRayLens
+    <div className="shot">
+      <CodeSwitch
         title={project.title}
         interfaceLayer={<ProjectMockup slug={project.slug} />}
         codeLayer={
@@ -120,12 +131,12 @@ export function FeaturedCase({
       className="case reveal"
       aria-labelledby={`${project.slug}-title`}
     >
-      <LensVisual project={project} />
+      <CodeVisual project={project} />
       <div className="case-body">
         <code className="branch-label">
           <span className="branch-dot" aria-hidden="true" />
           feature/{project.slug}
-          <span className="merged">merged</span>
+          <span className="tag tag-merged">merged</span>
           <span className="case-index">
             {String(index + 1).padStart(2, "0")}
           </span>

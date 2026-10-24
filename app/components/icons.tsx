@@ -84,3 +84,27 @@ export function ArrowIcon({
     </svg>
   );
 }
+
+/** The site mark: a git-branch glyph — trunk, three commits, one merge. */
+export function BranchMark({ size = 22 }: { size?: number }) {
+  return (
+    <svg
+      className="branch-mark"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="square"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path className="branch-mark-trunk" d="M6 5.5v13" />
+      <path className="branch-mark-curve" d="M18 8.5c0 5-6 4.5-12 6.5" />
+      <rect x="3.5" y="1.5" width="5" height="5" />
+      <rect x="3.5" y="17.5" width="5" height="5" />
+      <rect className="branch-mark-head" x="15.5" y="3.5" width="5" height="5" />
+    </svg>
+  );
+}

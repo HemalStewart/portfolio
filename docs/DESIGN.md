@@ -1,140 +1,129 @@
-# Design concept — "Merged to main"
+# Design concept — "Merged to main", after dark
 
 ## The idea
 
 The portfolio reads as a **git history of one engineer**. Every product Hemal has
 shipped is a branch that eventually merged into `main` and got a `live` tag. The
 site borrows the vocabulary every engineer already knows — commits, branches,
-tags, releases, pull requests — and uses it as a structural device, not as a
-gimmick terminal theme:
+tags, releases, pull requests — and uses it as a structural device:
 
-- the hero is a **commit header** (author, location, message) next to a drawn
-  **branch graph** where the real production products fork off and merge back;
-- live deployments are **releases**;
-- case studies are **merged branches**;
-- smaller experiments are **side branches**;
-- websites built for brands live on a **`web/` branch**, with a 3D fly-through
-  at `/showcase`;
+- the hero puts the name beside a **voxel git-branch glyph** (three commits, a
+  trunk and a merge) that bursts into particles as you scroll and reassembles
+  at the end — merged;
+- live deployments are **releases**; case studies are **merged branches**;
+  experiments are **side branches**; websites live on a **`web/` branch**,
+  with a 3D fly-through at `/showcase`;
 - the contact section asks you to **open a pull request** (send an email).
 
-It is personal, not agency: one author, one history, real artifacts only.
+The look follows the studio sites Hemal has built (Shifenmei, Calcify,
+Lakmini International): near-black, one electric accent, very large
+expanded type with one italic serif phrase, mono metadata, and a living 3D
+layer behind everything.
 
-## Palette — "tea estate paper"
+## Visuals
 
-Light, warm, and green — a nod to Sri Lankan tea country rather than a dark
-studio look.
+- the **voxel field** is generated geometry (three.js instanced cubes);
+- **project screens** live one per file in `app/components/mockups/screens`.
+  Web products (LinkForex, PDMS, Novice Monk Registry, Huddle, Scholar
+  Desktop, PaperMind, EnglishMind, Smart Guardian's store panels) are rebuilt
+  in code from the live interface: real labels, figures, layout and colours,
+  sized in em off the frame width (`--mw`), with invented names wherever the
+  real screen shows people. Mobile apps whose screens are artwork and
+  photography — VibeChat AI and WriteScan — show their real store
+  screenshots (`public/work/*`) in a coverflow (`StoreShots`), and the Sea
+  Cloud website shows its real homepage;
+- the **favicon** (`app/icon.tsx`) and **share image**
+  (`app/opengraph-image.tsx`) are rendered with `next/og`.
 
-| Token     | Value     | Use                                         |
-| --------- | --------- | ------------------------------------------- |
-| `paper`   | `#F4F2EA` | page background                             |
-| `paper-2` | `#EBE8DC` | raised panels, image mats                   |
-| `ink`     | `#0F2219` | text, dark contact section                  |
-| `muted`   | `#4F5E55` | secondary text (AA on paper)                |
-| `line`    | `#D3D3C4` | hairlines, graph rails                      |
-| `tea`     | `#0E5A43` | primary accent: links, branch `main`        |
-| `leaf`    | `#2F8A5F` | secondary branch colour                     |
-| `signal`  | `#D9F99D` | highlighter behind text, `HEAD`/`live` tags |
-| `clay`    | `#B4532A` | one warm branch colour (sparingly)          |
+The websites section shows real screenshots (`public/showcase/thumbs/*.jpg`,
+lazy-loaded through `next/image`); the same thumbnails are the textures of
+the 3D fly-through at `/showcase`. `public/resume.pdf` is the CV download.
 
-`signal` is only ever a background behind `ink` text, never text on paper.
+## Palette
+
+| Token      | Value     | Use                                        |
+| ---------- | --------- | ------------------------------------------ |
+| `bg`       | `#0A0B0A` | page                                       |
+| `bg-2/3`   | `#101210` / `#161916` | panels, hovers                 |
+| `line`     | `#1F231F` / `#2D322D` | hairlines, grid               |
+| `ink`      | `#F0EFE9` | text                                       |
+| `muted`    | `#A3A79F` | secondary text (AA on bg)                  |
+| `subtle`   | `#7A7F77` | mono labels                                |
+| `accent`   | `#B6F36A` | the one accent: CTAs, emphasis, live state |
+| `merge`    | `#B9A3FF` | the `merged` tag only                      |
+
+Change `--accent` and `--accent-rgb` in `:root`; the voxel palette lives at
+the top of `app/components/field/scene.ts`.
 
 ## Type
 
-- **Bricolage Grotesque** (variable, `opsz` + `wdth`) — display and body. Big,
-  slightly quirky optical sizes for headings, calm at text size.
-- **JetBrains Mono** — the "git" layer: labels, hashes, tags, stack lists.
+- **Archivo** (variable, `wdth` axis) — display at `wdth` 112–125 (expanded),
+  body at normal width.
+- **Instrument Serif** — the italic phrase in each headline (`<em>`).
+- **JetBrains Mono** — the git layer: eyebrows, commands, tags, stacks.
 
 ## Layout
 
-12-column fluid shell, max 1240px, 16–40px gutters. Generous vertical rhythm,
-hairline rules between rows, oversized section titles with a mono `git`
-command as the eyebrow (e.g. `$ git tag --list`).
+12-column fluid shell, max 1240px, 16–40px gutters. A faint six-column grid
+sits behind the page; `+` crosshairs mark where each section rule meets the
+shell. Sections open with an eyebrow — `(02) ■ RELEASES — $ git tag …` — then
+an oversized title with one italic serif word.
 
-## Sections
+## Chrome
 
-1. **Header** — always-visible floating pill: wordmark `hemal/main`, anchors
-   with a sliding active-section highlight, CV + Hire me. Mobile: a menu button
-   opens a full-screen animated menu.
-2. **Hero** — "open to roles" kicker, kinetic H1 name, a statement grounded in
-   real numbers, CTAs; on the right the **guide bot** stands on a platform with
-   orbiting stack chips; rolling facts and a scroll cue below. Then a
-   scroll-inked `README.md` statement.
-3. **Releases** — production deployments grouped per product with store/web links.
-4. **Merged branches** — four featured case studies in a pinned stage (X-ray lens, highlights,
-   stack, references) then six more projects in a compact grid.
-5. **3D websites** (`#showcase`) — a dark lead panel into the 3D fly-through
-   at `/showcase` (static pages in `public/showcase`, routed by rewrites in
-   `next.config.ts`), then one card per site plus a "your brand, next" card.
-   Phones get a swipeable row.
-6. **Experience** — roles from the CV as a `git log` timeline, with education and
-   recognition (IEEE paper, competitions) in a side panel.
-7. **Stack** — skill groups + the tech marquee.
-8. **Side branches** — additional projects as a log list.
-9. **Open a PR** — contact: email, phone, LinkedIn, GitHub, CV. Footer.
+- **Boot screen** (`chrome/Boot.tsx`): a short clone log and a 00→100
+  counter, then the panel wipes up. Pure CSS; once per session (an inline
+  script in the layout skips it on repeat visits); never with reduced motion.
+- **Header**: full-width bar, branch mark + wordmark, centred nav with a
+  sliding accent square, Colombo local time, CV and an accent "Hire me" pill.
+  Small screens get a full-screen menu.
+- **Chapter rail** (`chrome/ChapterRail.tsx`): fixed right-edge ticks with a
+  `03 / 10` count; wide screens only.
 
-## The guide bot ("Commit")
+## The voxel field
 
-A cartoon robot modelled in code with three.js (`app/components/guide/scene.ts`):
-rounded head with a dark visor and glowing eyes, a git-branch antenna, a
-tea-green body and arms. It hovers, blinks, follows the pointer and plays poses
-(wave, point, think, cheer).
+`app/components/field/scene.ts`: one `InstancedMesh` of rounded cubes
+(2,000 on desktop, 1,100 on phones), lit by a room environment, fog for
+depth. Four formations, each voxelised from a signed distance field or laid
+out on a grid:
 
-- It stands large in the hero's `.hero-stage`, then shrinks and docks in the
-  bottom-right corner as you scroll; each section gives it a pose and a short
-  speech bubble. Clicking it jumps to the next section.
-- One fixed 520px canvas, moved and scaled with a CSS transform (no canvas
-  resizing while scrolling); DPR capped at 1.5, no shadows or post-processing;
-  rendering stops when the tab is hidden; reduced motion renders still frames.
-- three.js loads only after the first interaction. Until then (and without
-  WebGL) the hero shows `public/guide-poster.webp`, a 24 KB still rendered
-  from the same scene.
+- `branch` — the git-branch glyph; the head commit is lit in the accent;
+- `scatter` — sparse particles across the viewport, mostly fine dust;
+- `sphere` — a hollow voxel planet;
+- `wave` — a field of columns that rolls at runtime.
+
+`VoxelField.tsx` maps scroll to a mood per section (shape, placement, scale,
+opacity) and blends to the next as that section's top reaches mid-screen;
+voxels fly with a per-instance stagger and a slight outward bow. The pointer
+tilts the whole field and pushes nearby voxels aside. three.js loads when the
+browser is idle after first paint; rendering stops in hidden tabs; reduced
+motion draws still frames; without WebGL the page simply has no field.
 
 ## Motion
 
-The site should feel alive, but the effects come from CSS wherever possible
-and JavaScript only where the interaction needs it:
-
-- **X-ray lens** (`XRayLens`) on each featured case: the code-built interface is
-  masked by a soft circle that follows the pointer (eased, springs larger on
-  press, tap to move on touch, arrow keys when focused) and reveals an
-  illustrative code layer for that stack. A "Show code" toggle swaps layers.
-- **Pinned showcase** (`PinnedWork`): on desktop the four featured cases share a
-  sticky full-height stage, one viewport of scroll each; text lines slide and
-  the visual wipes between projects. Small/short screens and reduced motion get
-  the same cases stacked.
-- **Typed commands** (`TypeCommand`): each section's `$ git …` line types itself
-  out when it scrolls into view.
-- **Rolling digits** (`Odometer`, Motion) on the hero facts; **magnetic CTAs**
-  (`Magnetic`, Motion); a trailing **cursor ring** that labels outbound links.
+- Hero letters rise out of line masks after the boot screen; the kicker,
+  copy and strip fade up.
+- **Interface / Code switch** (`CodeSwitch`) on the four featured cases: a
+  pill switch wipes the code-built interface into an editor window (file tab,
+  line numbers, status bar) behind an accent scan line, and the lines settle
+  in one by one. The editor sizes its font from the sample's line count and
+  longest line so every line fits, from a phone to the pinned stage; samples
+  in `app/data/code.ts` are illustrative sketches, and the status bar says so.
+  The smaller project cards show the interface only.
+- **Pinned showcase**, **typed commands**,
+  **rolling digits**, **magnetic CTAs**, a **cursor** ring with an accent dot.
 - **Lenis smooth scrolling**, loaded after hydration.
-- CSS scroll-driven animations (`animation-timeline: view()/scroll()`): the
-  README paragraph inks word by word, headings clip up, the experience rail
-  draws, mockup parts build in (charts draw, KPIs rise, bars grow), card
-  visuals drift, the top progress bar fills.
-- CSS-only: kinetic hero letters (rise + hover hop), branch graph draw-in,
-  marquee, pointer spotlight on cards (one delegated listener).
+- CSS scroll-driven animations: the README paragraph inks word by word,
+  headings clip up, the experience rail draws, card visuals drift, the footer
+  wordmark rises, the header progress line fills.
 
-Everything honours `prefers-reduced-motion`. Looping animations use only
-transform/opacity so they stay on the compositor.
-
-## Visuals: no raster assets
-
-Every project visual is a code-built mockup (`app/components/mockups`): HTML,
-CSS and SVG sketches of the real product's layout and vocabulary (taken from
-the live app or store listing). Text sizes derive from the mockup's computed
-width (`--mw`), not container queries, which measured ~2× slower to lay out.
-Binary assets: `public/resume.pdf` and the guide poster. The one exception is
-the 3D websites section, which shows real screenshots
-(`public/showcase/thumbs/*.jpg`, lazy-loaded through `next/image`) because
-those sites are visual work.
+Everything honours `prefers-reduced-motion`.
 
 ## Performance & accessibility budget
 
-- Static prerender, self-hosted fonts via `next/font`; the only image is the
-  guide poster.
-- three.js (guide bot), Motion features and Lenis all load lazily after first
-  paint / first interaction.
-- Contrast AA for all text; visible focus rings; skip link; semantic landmarks.
+- Static prerender, self-hosted fonts via `next/font`; raster images (store
+  and website screenshots) are WebP/JPEG, lazy-loaded through `next/image`.
+- three.js, Motion features and Lenis all load lazily after first paint.
+- Contrast AA for all text; visible focus rings; skip link; semantic
+  landmarks; decorative layers are `aria-hidden`.
 - Responsive 320–1920px with no horizontal overflow.
-- Metadata: title, description, canonical, Open Graph image, Twitter card,
-  `robots.txt`, `sitemap.xml`, JSON-LD `Person`.

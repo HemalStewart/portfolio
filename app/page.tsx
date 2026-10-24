@@ -1,6 +1,7 @@
-import Image from "next/image";
-import { Guide, type GuideStop } from "./components/guide/Guide";
+import { Boot } from "./components/chrome/Boot";
+import { ChapterRail } from "./components/chrome/ChapterRail";
 import { CopyButton } from "./components/CopyButton";
+import { VoxelField, type FieldStop } from "./components/field/VoxelField";
 import { Magnetic } from "./components/motion/Magnetic";
 import { KineticName } from "./components/KineticName";
 import { Odometer } from "./components/motion/Odometer";
@@ -32,7 +33,6 @@ import {
   releases,
   selectedProjects,
   showcaseSites,
-  showcaseUrl,
   skillGroups,
   totalDownloads,
   formatDownloads,
@@ -41,52 +41,74 @@ import {
 const email = profileLinks.find((link) => link.label === "Email")!;
 const phone = profileLinks.find((link) => link.label === "Phone")!;
 
-const heroChips = [
-  "Flutter",
-  "Next.js",
-  "TypeScript",
-  "FastAPI",
-  "Laravel",
-  "RAG Pipelines",
-];
-
-const guideStops: GuideStop[] = [
+/**
+ * The voxel field's mood per section: the git-branch glyph in the hero,
+ * particles behind long copy, a planet beside the websites, a rolling wave
+ * under experience and stack, and the glyph again at the end — merged.
+ */
+const fieldStops: FieldStop[] = [
   {
     id: "top",
-    pose: "wave",
-    line: "Hi! I'm Commit, Hemal's guide bot. Scroll and I'll show you around.",
+    mood: {
+      form: "branch",
+      x: 0.5,
+      y: -0.02,
+      scale: 0.8,
+      opacity: 1,
+      narrow: { x: 0, y: 0.5, scale: 0.66 },
+    },
   },
+  { id: "about", mood: { form: "scatter", x: 0, y: 0, scale: 1, opacity: 0.7 } },
   {
     id: "releases",
-    pose: "point",
-    line: `These ${releases.length} products are live. Open any of them.`,
+    mood: { form: "scatter", x: 0, y: 0, scale: 1, opacity: 0.45 },
   },
-  {
-    id: "work",
-    pose: "point",
-    line: "Move over a project to X-ray the code underneath.",
-  },
+  { id: "work", mood: { form: "scatter", x: 0, y: 0, scale: 1, opacity: 0.3 } },
   {
     id: "showcase",
-    pose: "point",
-    line: "Want a website like these? Fly through them all in 3D.",
+    mood: {
+      form: "sphere",
+      x: 0.68,
+      y: -0.22,
+      scale: 0.85,
+      opacity: 0.55,
+      narrow: { x: 0.35, y: 0.45, opacity: 0.35 },
+    },
+  },
+  // The planet steps back once the site cards fill the screen.
+  {
+    id: "showcase-sites",
+    mood: { form: "scatter", x: 0, y: 0, scale: 1, opacity: 0.3 },
   },
   {
     id: "experience",
-    pose: "think",
-    line: `Writing production code since ${experience[experience.length - 1].start.slice(0, 4)}.`,
+    mood: { form: "wave", x: 0, y: -1, scale: 1, opacity: 0.35, tilt: 0.7 },
   },
-  { id: "stack", pose: "idle", line: "The toolchain behind everything above." },
+  {
+    id: "stack",
+    mood: { form: "wave", x: 0, y: -1.05, scale: 1, opacity: 0.45, tilt: 0.85 },
+  },
   {
     id: "side-branches",
-    pose: "idle",
-    line: "Experiments and side projects live here.",
+    mood: { form: "scatter", x: 0, y: 0, scale: 1, opacity: 0.35 },
   },
   {
     id: "contact",
-    pose: "cheer",
-    line: "Ready to merge? Hemal's inbox is open.",
+    mood: {
+      form: "branch",
+      x: 0.66,
+      y: 0.12,
+      scale: 0.62,
+      opacity: 0.85,
+      narrow: { x: 0, y: 0.5, scale: 0.6, opacity: 0.45 },
+    },
   },
+];
+
+const chapters = [
+  { id: "top", label: "Intro" },
+  { id: "about", label: "About" },
+  ...navLinks.map((link) => ({ id: link.href.slice(1), label: link.label })),
 ];
 
 export default function Home() {
@@ -99,43 +121,61 @@ export default function Home() {
         Skip to content
       </a>
 
+      <Boot />
+      <div className="backdrop" aria-hidden="true">
+        <div className="shell backdrop-cols">
+          {[0, 1, 2, 3, 4, 5].map((col) => (
+            <i key={col} />
+          ))}
+        </div>
+      </div>
+      <VoxelField stops={fieldStops} />
       <SiteHeader links={navLinks} email={email.href} />
-      <Guide stops={guideStops} />
+      <ChapterRail chapters={chapters} />
 
       <main id="main">
         {/* HEAD */}
         <section id="top" className="hero" aria-labelledby="hero-title">
-          <div className="shell hero-grid">
-            <div className="hero-copy">
-              <p className="hero-kicker">
-                <span className="tag tag-open">open to roles</span>
-                <span>Software engineer · Colombo, Sri Lanka</span>
-              </p>
+          <div className="shell hero-inner">
+            <p className="hero-kicker">
+              <span className="kicker-square" aria-hidden="true" />
+              Software engineer · Mobile, web &amp; AI · Since{" "}
+              {experience[experience.length - 1].start.slice(0, 4)}
+            </p>
 
-              <h1 id="hero-title">
-                <span className="sr-only">Hemal Herath, software engineer</span>
-                <KineticName lines={["Hemal", "Herath"]} />
-              </h1>
+            <h1 id="hero-title" className="hero-title">
+              <span className="sr-only">
+                Hemal Herath, software engineer — from idea to production
+              </span>
+              <KineticName lines={["Hemal", "Herath"]} />
+              <span className="hero-italic" aria-hidden="true">
+                <span>from idea to production.</span>
+              </span>
+            </h1>
 
+            <div className="hero-foot">
               <p className="hero-message">
-                I build mobile, web and AI products end to end — and{" "}
-                <mark>ship them to real users</mark>:{" "}
-                {`${formatDownloads(totalDownloads)} Play Store downloads`}{" "}
+                I build mobile, web and AI products end to end — and ship them
+                to real users:{" "}
+                <strong>
+                  {`${formatDownloads(totalDownloads)} Play Store downloads`}
+                </strong>{" "}
                 across three apps, and systems running at Sri Lanka&apos;s
                 Ministry of Education.
               </p>
 
               <div className="hero-actions">
                 <Magnetic>
-                  <a className="button" href={email.href}>
-                    Hire me <ArrowIcon direction="right" />
+                  <a className="button button-accent" href={email.href}>
+                    Hire me
+                    <span className="button-arrow" aria-hidden="true">
+                      <ArrowIcon direction="right" />
+                    </span>
                   </a>
                 </Magnetic>
-                <Magnetic>
-                  <a className="button button-ghost" href="#work">
-                    See the work <ArrowIcon direction="down" />
-                  </a>
-                </Magnetic>
+                <a className="text-link" href="#work">
+                  See the work <ArrowIcon direction="down" />
+                </a>
                 <a
                   className="text-link"
                   href="/resume.pdf"
@@ -144,45 +184,46 @@ export default function Home() {
                 >
                   Download CV <ArrowIcon />
                 </a>
-                <a className="text-link" href={showcaseUrl}>
-                  3D web showcase <ArrowIcon />
-                </a>
               </div>
-            </div>
-
-            <div className="hero-stage" aria-hidden="true">
-              <span className="stage-platform" />
-              <ul className="stage-chips">
-                {heroChips.map((chip, index) => (
-                  <li
-                    key={chip}
-                    style={{ "--i": index } as React.CSSProperties}
-                  >
-                    {chip}
-                  </li>
-                ))}
-              </ul>
-              <Image
-                className="stage-poster"
-                src="/guide-poster.webp"
-                alt=""
-                width={520}
-                height={520}
-                sizes="(max-width: 900px) 320px, 560px"
-                loading="eager"
-              />
             </div>
           </div>
 
-          <div className="shell hero-strip">
-            <dl className="hero-facts">
-              <div>
+          <div className="hero-strip">
+            <div className="shell hero-strip-row">
+              <span>Colombo, Sri Lanka</span>
+              <span className="hero-coords">6.9271° N — 79.8612° E</span>
+              <a className="scroll-cue" href="#about">
+                <i aria-hidden="true" />
+                Scroll to explore
+              </a>
+              <span className="hero-open">
+                <span className="pulse" aria-hidden="true" />
+                Open to roles &amp; contracts
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* README */}
+        <section id="about" className="readme" aria-labelledby="readme-title">
+          <div className="shell">
+            <p className="eyebrow">
+              <span className="eyebrow-index">(01)</span>
+              <span className="eyebrow-label">About</span>
+              <TypeCommand text="cat README.md" />
+            </p>
+            <h2 id="readme-title" className="sr-only">
+              About
+            </h2>
+            <ScrubText text="I build the *whole* thing — the interface, the API, the database and the server it runs on — and I *own* it from the first design to the deployment. Flutter and Next.js up front; CodeIgniter, Laravel, Django and FastAPI behind them. Shipped to Google Play, the App Store, and Sri Lanka's Ministry of Education." />
+            <dl className="facts">
+              <div className="reveal">
                 <dt>Live products</dt>
                 <dd>
                   <Odometer value={releases.length} />
                 </dd>
               </div>
-              <div>
+              <div className="reveal">
                 <dt>Play Store downloads</dt>
                 <dd>
                   <Odometer
@@ -191,13 +232,13 @@ export default function Home() {
                   />
                 </dd>
               </div>
-              <div>
-                <dt>Store & web releases</dt>
+              <div className="reveal">
+                <dt>Store &amp; web releases</dt>
                 <dd>
                   <Odometer value={productionDeployments.length} />
                 </dd>
               </div>
-              <div>
+              <div className="reveal">
                 <dt>First commit</dt>
                 <dd>
                   <Odometer
@@ -208,21 +249,6 @@ export default function Home() {
                 </dd>
               </div>
             </dl>
-            <a className="scroll-cue" href="#releases">
-              <span>Scroll — the bot will show you around</span>
-              <i aria-hidden="true" />
-            </a>
-          </div>
-        </section>
-
-        {/* README */}
-        <section className="readme" aria-labelledby="readme-title">
-          <div className="shell">
-            <h2 id="readme-title" className="sr-only">
-              About
-            </h2>
-            <TypeCommand text="cat README.md" />
-            <ScrubText text="I build the whole thing — the interface, the API, the database and the server it runs on — and I own it from the first design to the deployment. Flutter and Next.js up front; CodeIgniter, Laravel, Django and FastAPI behind them. Shipped to Google Play, the App Store, and Sri Lanka's Ministry of Education." />
           </div>
         </section>
 
@@ -235,8 +261,14 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="releases-title"
+              index={2}
+              label="Releases"
               command="git tag --list 'live/*'"
-              title="Releases."
+              title={
+                <>
+                  Shipped &amp; <em>live.</em>
+                </>
+              }
               description="Products in production right now — on Google Play, the App Store, the web, and Sri Lanka's Ministry of Education. Open the real thing."
             />
             <ol className="release-list">
@@ -297,8 +329,14 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="work-title"
+              index={3}
+              label="Selected work"
               command="git log --merges --first-parent"
-              title="Merged branches."
+              title={
+                <>
+                  Merged <em>branches.</em>
+                </>
+              }
               description="Four larger builds, from fintech operations to multi-platform AI and school administration — then six more."
             />
             <PinnedWork titles={featured.map((project) => project.title)}>
@@ -311,7 +349,7 @@ export default function Home() {
               ))}
             </PinnedWork>
             <h3 className="subhead reveal">
-              <code>+{more.length}</code> more engineering work
+              <code>+{more.length}</code> more engineering <em>work</em>
             </h3>
             <div className="card-grid">
               {more.map((project) => (
@@ -330,12 +368,18 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="showcase-title"
+              index={4}
+              label="Websites"
               command="git checkout web/showcase"
-              title="Websites worth exploring."
+              title={
+                <>
+                  Websites worth <em>exploring.</em>
+                </>
+              }
               description="Explore the Nilaveli Beach Resort project, Lakmini International’s live website, the Ceylon Select storefront preview, cinematic concepts and interactive scroll stories. Open a project below, or fly through the collection in 3D."
             />
             <ShowcaseFeature />
-            <div className="site-grid reveal">
+            <div id="showcase-sites" className="site-grid">
               {showcaseSites.map((site) => (
                 <SiteCard key={site.slug} site={site} />
               ))}
@@ -353,8 +397,14 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="experience-title"
+              index={5}
+              label="Experience"
               command='git log --author="Hemal Herath"'
-              title="Experience."
+              title={
+                <>
+                  The commit <em>log.</em>
+                </>
+              }
               description="From a Laravel and React internship in 2017 to owning full-stack delivery for government and product clients."
             />
             <div className="experience-grid">
@@ -417,14 +467,20 @@ export default function Home() {
         {/* Stack */}
         <section
           id="stack"
-          className="section section-tint"
+          className="section"
           aria-labelledby="stack-title"
         >
           <div className="shell">
             <SectionHead
               id="stack-title"
+              index={6}
+              label="Stack"
               command="cat package.json | jq .dependencies"
-              title="The toolchain."
+              title={
+                <>
+                  The <em>toolchain.</em>
+                </>
+              }
               description="The technologies behind the work above, grouped by responsibility."
             />
             <div className="skill-grid">
@@ -449,8 +505,13 @@ export default function Home() {
             <div className="marquee-track">
               {[0, 1].map((copy) => (
                 <ul key={copy} aria-hidden={copy === 1 ? true : undefined}>
-                  {marqueeItems.map((item) => (
-                    <li key={item}>{item}</li>
+                  {marqueeItems.map((item, index) => (
+                    <li
+                      key={item}
+                      className={index % 2 ? "marquee-outline" : undefined}
+                    >
+                      {item}
+                    </li>
                   ))}
                 </ul>
               ))}
@@ -467,8 +528,14 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="side-title"
+              index={7}
+              label="Side projects"
               command="git branch --list 'side/*'"
-              title="Side branches."
+              title={
+                <>
+                  Side <em>branches.</em>
+                </>
+              }
               description="Focused builds and research tools — different problems, same hands-on engineering."
             />
             <ul className="log">
@@ -499,9 +566,13 @@ export default function Home() {
           aria-labelledby="contact-title"
         >
           <div className="shell">
-            <TypeCommand text="gh pr create --base hemal/main" />
-            <h2 id="contact-title" className="reveal">
-              Open a pull request.
+            <p className="eyebrow">
+              <span className="eyebrow-index">(08)</span>
+              <span className="eyebrow-label">Contact</span>
+              <TypeCommand text="gh pr create --base hemal/main" />
+            </p>
+            <h2 id="contact-title" className="contact-title">
+              Open a <em>pull request.</em>
             </h2>
             <p className="contact-lede">
               Hiring a software engineer or building a product? I&apos;m open to
@@ -536,11 +607,16 @@ export default function Home() {
                 ))}
             </ul>
           </div>
-          <footer className="shell footer">
-            <span>© {new Date().getFullYear()} Hemal Herath</span>
-            <span>Software engineer · Colombo, Sri Lanka</span>
-            <a href={phone.href}>{phone.display}</a>
-            <a href="#top">Back to HEAD ↑</a>
+          <footer className="footer">
+            <div className="shell footer-row">
+              <span>© {new Date().getFullYear()} Hemal Herath</span>
+              <span>Software engineer · Colombo, Sri Lanka</span>
+              <a href={phone.href}>{phone.display}</a>
+              <a href="#top">Back to HEAD ↑</a>
+            </div>
+            <p className="footer-mark" aria-hidden="true">
+              Hemal Herath
+            </p>
           </footer>
         </section>
       </main>

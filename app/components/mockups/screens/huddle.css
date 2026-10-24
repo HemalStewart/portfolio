@@ -1,0 +1,268 @@
+/* Huddle — the web client's home screen in dark mode, scaled from a
+   ~1280px desktop (1em here ≈ 20px there). Tailwind tokens from the repo:
+   dark-1 #1C1F2E main, dark-2 #161925 bars, dark-3 #252A41 active,
+   dark-4 #1E2757 borders, blue-1 #0E78F9. */
+
+.mock-hu .m-bar {
+  background: #161925;
+}
+.mock-hu .m-body {
+  background: var(--m-bg);
+}
+
+.mock-hu .hu-app {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.25;
+}
+.mock-hu svg {
+  display: block;
+  flex: none;
+}
+.mock-hu i {
+  font-style: normal;
+}
+
+/* navbar */
+.mock-hu .hu-nav {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6em 2em;
+  border-bottom: 1px solid var(--m-line);
+  background: #161925;
+}
+.mock-hu .hu-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+}
+.mock-hu .hu-logo {
+  display: grid;
+  place-items: center;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 0.6em;
+  background: #2563eb;
+  color: #fff;
+  box-shadow: 0 0.2em 0.35em -0.05em rgb(59 130 246 / 0.2);
+}
+.mock-hu .hu-logo svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+.mock-hu .hu-brand b {
+  font-size: 1.1em;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.mock-hu .hu-nav-end {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.mock-hu .hu-theme {
+  display: grid;
+  place-items: center;
+  width: 2em;
+  height: 2em;
+  border: 1px solid var(--m-line);
+  border-radius: 0.3em;
+  background: #252a41;
+  color: #fff;
+}
+.mock-hu .hu-theme svg {
+  width: 0.95em;
+  height: 0.95em;
+}
+/* the dicebear "initials" avatar UserButton falls back to */
+.mock-hu .hu-avatar {
+  display: grid;
+  place-items: center;
+  width: 2em;
+  height: 2em;
+  border: 1px solid var(--m-line);
+  border-radius: 50%;
+  background: #5e35b1;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+.mock-hu .hu-shell {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* sidebar */
+.mock-hu .hu-side {
+  flex: none;
+  width: 12.6em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  padding: 2.4em 1.2em 1.2em;
+  border-right: 1px solid var(--m-line);
+  background: #161925;
+}
+/* Labels are 16px there, so the item's own em is the label size. */
+.mock-hu .hu-link {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 1em;
+  border-radius: 0.75em;
+  color: #d1d5db;
+  font-size: 0.8em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.mock-hu .hu-link svg {
+  width: 1.5em;
+  height: 1.5em;
+  color: #9ca3af;
+}
+.mock-hu .hu-link.hu-active {
+  background: #252a41;
+  color: var(--m-acc);
+}
+.mock-hu .hu-link.hu-active svg {
+  color: inherit;
+}
+
+/* main column */
+.mock-hu .hu-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  padding: 2.4em 2.4em 1.2em;
+}
+
+/* clock hero over the desk photo */
+.mock-hu .hu-hero {
+  position: relative;
+  flex: none;
+  height: 16.4em;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 1.4em;
+  overflow: hidden;
+  background: radial-gradient(90% 140% at 40% 45%, #243040, #172331);
+  box-shadow:
+    0 1em 1.25em -0.25em rgb(0 0 0 / 0.25),
+    0 0.4em 0.5em -0.3em rgb(0 0 0 / 0.2);
+}
+.mock-hu .hu-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* bg-gradient-to-r from-blue-900/40 to-transparent */
+.mock-hu .hu-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(30 58 138 / 0.4), transparent);
+}
+.mock-hu .hu-hero-in {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.2em;
+}
+.mock-hu .hu-pill {
+  align-self: flex-start;
+  /* max-w-[273px], stretched; grows if a fallback font runs wider */
+  width: max-content;
+  min-width: 19.5em;
+  padding: 0.71em 1.14em;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 0.86em;
+  background: rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(1em);
+  color: #fff;
+  font-size: 0.7em;
+  font-weight: 600;
+  line-height: 1.43;
+  text-align: center;
+  white-space: nowrap;
+}
+.mock-hu .hu-time {
+  display: block;
+  font-size: 4.8em;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  text-shadow: 0 0.25em 0.4em rgb(0 0 0 / 0.15);
+}
+.mock-hu .hu-date {
+  display: block;
+  margin-top: 0.27em;
+  color: #dbeafe;
+  font-size: 1.5em;
+  font-weight: 500;
+  line-height: 1.2;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+/* the four HomeCards */
+.mock-hu .hu-cards {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1em;
+}
+.mock-hu .hu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 11em;
+  padding: 1.6em 0.3em;
+  border-radius: 1.2em;
+  box-shadow: 0 0.05em 0.1em rgb(0 0 0 / 0.05);
+  text-align: center;
+  white-space: nowrap;
+}
+.mock-hu .hu-glass {
+  display: grid;
+  place-items: center;
+  width: 3.2em;
+  height: 3.2em;
+  margin-bottom: 0.8em;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  border-radius: 1em;
+  background: rgb(255 255 255 / 0.2);
+  color: #fff;
+}
+.mock-hu .hu-glass svg {
+  width: 1.6em;
+  height: 1.6em;
+}
+.mock-hu .hu-card b {
+  color: #fff;
+  font-size: 0.95em;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+.mock-hu .hu-card small {
+  margin-top: 0.3em;
+  color: rgb(255 255 255 / 0.8);
+  font-size: 0.7em;
+  font-weight: 500;
+  line-height: 1.43;
+}
