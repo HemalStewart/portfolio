@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/preview/nilaveli/:path*",
-        destination: "https://nilaveli-beach-resort.vercel.app/",
+        destination: "https://nilavelibeachresort.com/",
         permanent: true,
       },
       {

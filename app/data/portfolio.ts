@@ -121,13 +121,13 @@ export const productionDeployments: ProductionDeployment[] = [
     platform: "Android",
     href: "https://play.google.com/store/apps/details?id=com.appmixer.vibechatai",
     downloads: 100_000,
-    project: "chatsoul-ai",
+    project: "vibechat-ai",
   },
   {
     name: "VibeChat AI",
     platform: "iOS",
     href: "https://apps.apple.com/us/app/vibechat-ai-vibe-your-chat/id6782503745",
-    project: "chatsoul-ai",
+    project: "vibechat-ai",
   },
   {
     name: "WriteScan",
@@ -137,22 +137,16 @@ export const productionDeployments: ProductionDeployment[] = [
     project: "writescan",
   },
   {
-    name: "ChatSoul AI",
-    platform: "Web",
-    href: "https://chatsoulai.com/",
-    project: "chatsoul-ai",
-  },
-  {
-    name: "ChatSoul AI",
-    platform: "iOS",
-    href: "https://apps.apple.com/us/app/chatsoul-ai/id6756913536",
-    project: "chatsoul-ai",
-  },
-  {
     name: "PDMS",
     platform: "Ministry of Education, Sri Lanka",
     href: "https://pdms.moe.gov.lk/",
     project: "pdms",
+  },
+  {
+    name: "Piriven Education Portal",
+    platform: "Ministry of Education, Sri Lanka",
+    href: "https://piriven.moe.gov.lk/",
+    project: "piriven-education-portal",
   },
   {
     name: "Smart Guardian Pro",
@@ -178,6 +172,30 @@ export const productionDeployments: ProductionDeployment[] = [
     platform: "Web admin",
     href: "https://novice-monk-admin.vercel.app/admin",
     project: "novice-monk-registry",
+  },
+  {
+    name: "Nilaveli Beach Resort",
+    platform: "Web",
+    href: "https://nilavelibeachresort.com/",
+    project: "nilaveli-beach-resort",
+  },
+  {
+    name: "Ceylon Select",
+    platform: "Shopify store",
+    href: "https://ceylonselect.com/",
+    project: "ceylon-select",
+  },
+  {
+    name: "Calcify International",
+    platform: "Web",
+    href: "https://www.calcifyint.com/",
+    project: "calcify-international",
+  },
+  {
+    name: "Lakmini International",
+    platform: "Web",
+    href: "https://lakminiint.com/",
+    project: "lakmini-international",
   },
   {
     name: "Sea Cloud, Dalawella",
@@ -225,7 +243,7 @@ export const skillGroups: SkillGroup[] = [
   },
 ];
 
-// Ordered so LinkForex, ChatSoul/VibeChat, WriteScan, and PDMS (the four
+// Ordered so LinkForex, VibeChat, WriteScan, and PDMS (the four
 // featured, production-proven builds) lead the section; Huddle stays lower
 // in the list as a personal infrastructure build rather than a client product.
 export const selectedProjects: ProjectExperience[] = [
@@ -263,34 +281,25 @@ export const selectedProjects: ProjectExperience[] = [
     featured: true,
   },
   {
-    slug: "chatsoul-ai",
-    initials: "CS",
-    title: "ChatSoul AI / VibeChat AI",
+    slug: "vibechat-ai",
+    initials: "VC",
+    title: "VibeChat AI",
     tagline:
-      "One Flutter codebase shipped to Android, iOS, and Web as an AI companion app.",
-    platforms: ["Android", "iOS", "Web"],
+      "AI companion app shipped to Android and iOS from one Flutter codebase.",
+    platforms: ["Android", "iOS"],
     techStack: ["Flutter", "Dart", "CodeIgniter/Laravel APIs"],
     highlights: [
-      "Delivered auth, chat, discovery/matching, wallet & subscriptions, and referral flows across all three platforms from a single codebase.",
+      "Delivered auth, chat, discovery/matching, wallet & subscriptions, and referral flows on both platforms from a single codebase.",
       "Structured the app into reusable feature, core, and data layers to keep parity across clients.",
-      "Live now on Google Play, the App Store, and the web — VibeChat AI alone has passed 100K+ downloads on Google Play.",
+      "Live on Google Play and the App Store, with 100K+ downloads on Google Play.",
     ],
     references: [
       {
-        label: "Source repo",
-        href: "https://github.com/shehan-077/ChatSoulAi---Flutter",
-      },
-      { label: "ChatSoul AI (Web)", href: "https://chatsoulai.com/" },
-      {
-        label: "ChatSoul AI (iOS)",
-        href: "https://apps.apple.com/us/app/chatsoul-ai/id6756913536",
-      },
-      {
-        label: "VibeChat AI (Android)",
+        label: "Google Play",
         href: "https://play.google.com/store/apps/details?id=com.appmixer.vibechatai",
       },
       {
-        label: "VibeChat AI (iOS)",
+        label: "App Store",
         href: "https://apps.apple.com/us/app/vibechat-ai-vibe-your-chat/id6782503745",
       },
     ],
@@ -371,6 +380,25 @@ export const selectedProjects: ProjectExperience[] = [
     ],
   },
   {
+    slug: "piriven-education-portal",
+    initials: "PE",
+    title: "Piriven Education Portal",
+    tagline:
+      "Official website of Sri Lanka's Division of Piriven Education, with a Django admin panel behind it.",
+    platforms: ["Web", "Web admin"],
+    techStack: ["Next.js", "Django", "SQLite", "Nginx", "AlmaLinux"],
+    highlights: [
+      "Built the public site in Next.js: news, notices, downloads, publications, photo and video galleries, an events calendar and a newsletter sign-up.",
+      "Sinhala-first with an English version, linked to the division's PDMS.",
+      "Django backend and admin panel so the division's staff publish news, notices and downloads themselves.",
+      "Deployed end to end on AlmaLinux with Nginx; live at piriven.moe.gov.lk.",
+    ],
+    references: [
+      { label: "Live site", href: "https://piriven.moe.gov.lk/" },
+      { label: "Source", note: "Code available on request" },
+    ],
+  },
+  {
     slug: "novice-monk-registry",
     initials: "NM",
     title: "Novice Monk Registry",
@@ -388,6 +416,89 @@ export const selectedProjects: ProjectExperience[] = [
         label: "Live admin",
         href: "https://novice-monk-admin.vercel.app/admin",
       },
+    ],
+  },
+  {
+    slug: "nilaveli-beach-resort",
+    initials: "NB",
+    title: "Nilaveli Beach Resort",
+    tagline:
+      "Website for a beachfront resort near Trincomalee, built to take direct booking enquiries.",
+    platforms: ["Web"],
+    techStack: ["Next.js", "GSAP", "ScrollTrigger", "Lenis"],
+    highlights: [
+      "Cinematic beach film, room stories and island experiences: Pigeon Island reef, beach yoga and whale watching.",
+      "Date picker and enquiry form so guests can book with the resort directly, not only through booking sites.",
+      "Holiday guide and Pigeon Island trip pages written for search.",
+    ],
+    references: [
+      { label: "Live site", href: "https://nilavelibeachresort.com/" },
+    ],
+  },
+  {
+    slug: "ceylon-select",
+    initials: "CS",
+    title: "Ceylon Select",
+    tagline:
+      "Custom Shopify storefront for a Ceylon tea brand selling in Canada.",
+    platforms: ["Web", "Shopify"],
+    techStack: ["Shopify", "Liquid", "Online Store 2.0", "JavaScript"],
+    highlights: [
+      "Custom Online Store 2.0 theme on Dawn: product, cart and checkout stay standard, and every homepage section is editable by the client.",
+      "Tea bundles with saving badges, a Black Friday offer panel with a live countdown, and product cards in each tea's own colour.",
+      "Faster on phones: on slow 4G the main image now appears in 6.3 s instead of 17.4 s, with 1.2 MB loaded up front instead of 3.8 MB.",
+      "SEO pass across 65 pages: one H1 per page, structured data, and search titles and descriptions for every tea and bundle.",
+    ],
+    references: [{ label: "Live store", href: "https://ceylonselect.com/" }],
+  },
+  {
+    slug: "calcify-international",
+    initials: "CI",
+    title: "Calcify International",
+    tagline:
+      "Company website for a Colombo software house: services, work, about and contact.",
+    platforms: ["Web"],
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Lenis"],
+    highlights: [
+      "Every visual is drawn in code from a documented design system, with no stock imagery.",
+      "Smooth scrolling and motion with Framer Motion and Lenis on the Next.js App Router.",
+      "Contact form emails the team an alert and sends the visitor a designed confirmation from the company mailbox.",
+    ],
+    references: [
+      { label: "Live site", href: "https://www.calcifyint.com/" },
+    ],
+  },
+  {
+    slug: "lakmini-international",
+    initials: "LI",
+    title: "Lakmini International",
+    tagline:
+      "Website for a Sri Lankan software and mobile-app company, in business since 2012.",
+    platforms: ["Web"],
+    techStack: ["Three.js", "GSAP", "Vite", "Firebase Analytics"],
+    highlights: [
+      "Its logo rebuilt from 5,000 WebGL pixels, with pixel-wipe page transitions.",
+      "Home, About, Services and Contact pages with a working enquiry form.",
+      "Lead tracking for Google Analytics and Google Ads: enquiries plus WhatsApp, email, phone and Messenger clicks, with no personal data sent.",
+    ],
+    references: [{ label: "Live site", href: "https://lakminiint.com/" }],
+  },
+  {
+    slug: "sea-cloud-dalawella",
+    initials: "SC",
+    title: "Sea Cloud, Dalawella",
+    tagline:
+      "Marketing site and reservation flow for a boutique hotel in Sri Lanka.",
+    platforms: ["Web"],
+    techStack: ["Next.js", "TypeScript", "Prisma", "NextAuth", "Leaflet"],
+    highlights: [
+      "Shipped the public marketing site and a reservation-request flow with map integration.",
+      "Scoped the build deliberately: public site first, admin panel and persistence staged for a later phase.",
+      "A real client engagement, not a template.",
+    ],
+    references: [
+      { label: "Live site", href: "https://hotel-kohl-ten.vercel.app/" },
+      { label: "Source", note: "Code available on request" },
     ],
   },
   {
@@ -472,37 +583,9 @@ export const selectedProjects: ProjectExperience[] = [
     ],
     references: [{ label: "Source", note: "Code available on request" }],
   },
-  {
-    slug: "sea-cloud-dalawella",
-    initials: "SC",
-    title: "Sea Cloud, Dalawella",
-    tagline:
-      "Marketing site and reservation flow for a boutique hotel in Sri Lanka.",
-    platforms: ["Web"],
-    techStack: ["Next.js", "TypeScript", "Prisma", "NextAuth", "Leaflet"],
-    highlights: [
-      "Shipped the public marketing site and a reservation-request flow with map integration.",
-      "Scoped the build deliberately: public site first, admin panel and persistence staged for a later phase.",
-      "A real client engagement, not a template.",
-    ],
-    references: [
-      { label: "Live site", href: "https://hotel-kohl-ten.vercel.app/" },
-      { label: "Source", note: "Code available on request" },
-    ],
-  },
 ];
 
 export const additionalProjects: LightProject[] = [
-  {
-    title: "Piriven Education CMS",
-    tagline:
-      "Content management system for the Division of Piriven Education website: admin dashboard, REST APIs, and end-to-end deployment.",
-    techStack: "Next.js, Django, SQLite, Nginx, AlmaLinux",
-    reference: {
-      label: "Details on request",
-      note: "Code available on request",
-    },
-  },
   {
     title: "Energy Forecasting",
     tagline:
@@ -604,20 +687,20 @@ export const showcaseSites: ShowcaseSite[] = [
   {
     slug: "nilaveli",
     name: "Nilaveli Beach Resort",
-    kind: "Boutique resort · project preview",
+    kind: "Boutique resort",
     line: "Cinematic beach films, room stories, island experiences and direct booking enquiries.",
     stack: ["Next.js", "GSAP", "Booking enquiries"],
-    href: "https://nilaveli-beach-resort.vercel.app/",
-    status: "preview",
+    href: "https://nilavelibeachresort.com/",
+    status: "live",
   },
   {
     slug: "ceylon-select",
     name: "Ceylon Select",
-    kind: "Tea brand · storefront preview",
-    line: "A tea cabinet with product browsing, a guided brew ritual and a scroll story tracing each cup to Ceylon.",
-    stack: ["GSAP", "Product catalogue", "Shop UI"],
-    href: "/preview/ceylon-select",
-    status: "preview",
+    kind: "Ceylon tea store",
+    line: "A custom Shopify store: colour-coded teas, gift bundles with savings and a fast phone homepage.",
+    stack: ["Shopify", "Liquid", "Bundles"],
+    href: "https://ceylonselect.com/",
+    status: "live",
   },
   { slug: "crunch", name: "Crunch Club", kind: "Vietnamese sandwich · reference study", line: "A credited study of HoQuan’s Vietnamese sandwich editorial: floating photographs, stacked history cards, an anatomy spread and a touch gallery.", stack: ["Editorial motion", "Scroll animation", "Reference study"], href: "/showcase/crunch", status: "concept" },
   {

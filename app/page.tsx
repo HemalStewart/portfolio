@@ -337,7 +337,7 @@ export default function Home() {
                   Merged <em>branches.</em>
                 </>
               }
-              description="Four larger builds, from fintech operations to multi-platform AI and school administration — then six more."
+              description={`Four larger builds, from fintech operations to multi-platform AI and school administration — then ${more.length} more, including the live websites.`}
             />
             <PinnedWork titles={featured.map((project) => project.title)}>
               {featured.map((project, index) => (
@@ -376,7 +376,7 @@ export default function Home() {
                   Websites worth <em>exploring.</em>
                 </>
               }
-              description="Explore the Nilaveli Beach Resort project, Lakmini International’s live website, the Ceylon Select storefront preview, cinematic concepts and interactive scroll stories. Open a project below, or fly through the collection in 3D."
+              description="Explore the live Nilaveli Beach Resort, Ceylon Select and Lakmini International websites, cinematic concepts and interactive scroll stories. Open a project below, or fly through the collection in 3D."
             />
             <ShowcaseFeature />
             <div id="showcase-sites" className="site-grid">

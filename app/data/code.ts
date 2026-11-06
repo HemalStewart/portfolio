@@ -27,7 +27,7 @@ export const codeSamples: Record<
   );
 }`,
   },
-  "chatsoul-ai": {
+  "vibechat-ai": {
     theme: "dark",
     file: "lib/features/chat/chat_screen.dart",
     code: `class _ChatScreenState extends State<ChatScreen> {

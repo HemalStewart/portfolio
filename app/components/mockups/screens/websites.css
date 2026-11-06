@@ -1,0 +1,10 @@
+.mock-web .m-body {
+  overflow: hidden;
+}
+.mock-web .web-shot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}

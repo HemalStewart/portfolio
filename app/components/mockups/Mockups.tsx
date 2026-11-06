@@ -1,5 +1,4 @@
 import "./mockups.css";
-import { ChatSoulScreen } from "./screens/chatsoul-ai";
 import { EnglishMindScreen } from "./screens/englishmind-ai";
 import { HuddleScreen } from "./screens/huddle";
 import { LinkForexScreen } from "./screens/linkforex";
@@ -9,6 +8,14 @@ import { PdmsScreen } from "./screens/pdms";
 import { ScholarScreen } from "./screens/scholar-desktop";
 import { SeaCloudScreen } from "./screens/sea-cloud-dalawella";
 import { SmartGuardianScreen } from "./screens/smart-guardian-pro";
+import { VibeChatScreen } from "./screens/vibechat-ai";
+import {
+  CalcifyScreen,
+  CeylonSelectScreen,
+  LakminiScreen,
+  NilaveliScreen,
+  PirivenScreen,
+} from "./screens/websites";
 import { WriteScanScreen } from "./screens/writescan";
 
 /*
@@ -16,15 +23,21 @@ import { WriteScanScreen } from "./screens/writescan";
  * code from the live interface (real labels, figures and layout; invented
  * names where the real screen shows people); mobile apps whose screens are
  * artwork and photography (VibeChat, WriteScan) show their real store
- * screenshots, and the Sea Cloud website shows its real homepage.
+ * screenshots, and the shipped websites (Sea Cloud and those in
+ * ./screens/websites) show their real homepages.
  */
 const SCREENS: Record<string, () => React.JSX.Element> = {
   linkforex: LinkForexScreen,
-  "chatsoul-ai": ChatSoulScreen,
+  "vibechat-ai": VibeChatScreen,
   writescan: WriteScanScreen,
   pdms: PdmsScreen,
   "smart-guardian-pro": SmartGuardianScreen,
   "novice-monk-registry": NoviceMonkScreen,
+  "piriven-education-portal": PirivenScreen,
+  "nilaveli-beach-resort": NilaveliScreen,
+  "ceylon-select": CeylonSelectScreen,
+  "calcify-international": CalcifyScreen,
+  "lakmini-international": LakminiScreen,
   huddle: HuddleScreen,
   "scholar-desktop": ScholarScreen,
   papermind: PaperMindScreen,
