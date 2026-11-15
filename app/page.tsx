@@ -1,14 +1,17 @@
 import { Boot } from "./components/chrome/Boot";
 import { ChapterRail } from "./components/chrome/ChapterRail";
 import { CopyButton } from "./components/CopyButton";
+import { Crafts } from "./components/crafts/Crafts";
 import { VoxelField, type FieldStop } from "./components/field/VoxelField";
 import { Magnetic } from "./components/motion/Magnetic";
+import { Marquee } from "./components/motion/Marquee";
 import { KineticName } from "./components/KineticName";
 import { Odometer } from "./components/motion/Odometer";
 import { PinnedWork } from "./components/motion/PinnedWork";
 import { SiteHeader } from "./components/motion/SiteHeader";
 import { ScrubText } from "./components/ScrubText";
 import {
+  countWord,
   NextSiteCard,
   ShowcaseFeature,
   SiteCard,
@@ -23,6 +26,7 @@ import {
 } from "./components/Work";
 import {
   additionalProjects,
+  crafts,
   education,
   experience,
   recognition,
@@ -40,6 +44,14 @@ import {
 
 const email = profileLinks.find((link) => link.label === "Email")!;
 const phone = profileLinks.find((link) => link.label === "Phone")!;
+
+/** The website the Crafts frame builds: a real client homepage. */
+const nilaveli = showcaseSites.find((site) => site.slug === "nilaveli")!;
+const craftSite = {
+  name: nilaveli.name,
+  host: new URL(nilaveli.href).host,
+  image: `/showcase/thumbs/${nilaveli.slug}.jpg`,
+};
 
 /**
  * The voxel field's mood per section: the git-branch glyph in the hero,
@@ -59,6 +71,8 @@ const fieldStops: FieldStop[] = [
     },
   },
   { id: "about", mood: { form: "scatter", x: 0, y: 0, scale: 1, opacity: 0.7 } },
+  // Thinned out so the pinned frame reads cleanly.
+  { id: "crafts", mood: { form: "scatter", x: 0, y: 0, scale: 1, opacity: 0.28 } },
   {
     id: "releases",
     mood: { form: "scatter", x: 0, y: 0, scale: 1, opacity: 0.45 },
@@ -108,6 +122,7 @@ const fieldStops: FieldStop[] = [
 const chapters = [
   { id: "top", label: "Intro" },
   { id: "about", label: "About" },
+  { id: "crafts", label: "Crafts" },
   ...navLinks.map((link) => ({ id: link.href.slice(1), label: link.label })),
 ];
 
@@ -139,7 +154,7 @@ export default function Home() {
           <div className="shell hero-inner">
             <p className="hero-kicker">
               <span className="kicker-square" aria-hidden="true" />
-              Software engineer · Mobile, web &amp; AI · Since{" "}
+              Designer &amp; developer · Web, Flutter &amp; AI · Since{" "}
               {experience[experience.length - 1].start.slice(0, 4)}
             </p>
 
@@ -155,8 +170,8 @@ export default function Home() {
 
             <div className="hero-foot">
               <p className="hero-message">
-                I build mobile, web and AI products end to end — and ship them
-                to real users:{" "}
+                I design and build websites, web apps and Flutter apps end to
+                end — and ship them to real users:{" "}
                 <strong>
                   {`${formatDownloads(totalDownloads)} Play Store downloads`}
                 </strong>{" "}
@@ -252,6 +267,25 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Crafts */}
+        <section id="crafts" className="section" aria-labelledby="crafts-title">
+          <div className="shell">
+            <SectionHead
+              id="crafts-title"
+              index={2}
+              label="Crafts"
+              command="git log --graph --oneline --all"
+              title={
+                <>
+                  Design it, build it, <em>ship it.</em>
+                </>
+              }
+              description="Web design, web development, Flutter apps and the backend behind them — one pair of hands, start to finish. Keep scrolling to watch one idea travel from wireframe to production."
+            />
+            <Crafts crafts={crafts} site={craftSite} />
+          </div>
+        </section>
+
         {/* Releases */}
         <section
           id="releases"
@@ -261,7 +295,7 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="releases-title"
-              index={2}
+              index={3}
               label="Releases"
               command="git tag --list 'live/*'"
               title={
@@ -329,7 +363,7 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="work-title"
-              index={3}
+              index={4}
               label="Selected work"
               command="git log --merges --first-parent"
               title={
@@ -337,7 +371,7 @@ export default function Home() {
                   Merged <em>branches.</em>
                 </>
               }
-              description="Four larger builds, from fintech operations to multi-platform AI and school administration — then six more."
+              description={`Four larger builds, from fintech operations to multi-platform AI and school administration — then ${countWord(more.length)} more.`}
             />
             <PinnedWork titles={featured.map((project) => project.title)}>
               {featured.map((project, index) => (
@@ -368,7 +402,7 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="showcase-title"
-              index={4}
+              index={5}
               label="Websites"
               command="git checkout web/showcase"
               title={
@@ -397,7 +431,7 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="experience-title"
-              index={5}
+              index={6}
               label="Experience"
               command='git log --author="Hemal Herath"'
               title={
@@ -473,7 +507,7 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="stack-title"
-              index={6}
+              index={7}
               label="Stack"
               command="cat package.json | jq .dependencies"
               title={
@@ -501,22 +535,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="marquee" aria-label="Technologies">
-            <div className="marquee-track">
-              {[0, 1].map((copy) => (
-                <ul key={copy} aria-hidden={copy === 1 ? true : undefined}>
-                  {marqueeItems.map((item, index) => (
-                    <li
-                      key={item}
-                      className={index % 2 ? "marquee-outline" : undefined}
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              ))}
-            </div>
-          </div>
+          <Marquee items={marqueeItems} />
         </section>
 
         {/* Side branches */}
@@ -528,7 +547,7 @@ export default function Home() {
           <div className="shell">
             <SectionHead
               id="side-title"
-              index={7}
+              index={8}
               label="Side projects"
               command="git branch --list 'side/*'"
               title={
@@ -567,7 +586,7 @@ export default function Home() {
         >
           <div className="shell">
             <p className="eyebrow">
-              <span className="eyebrow-index">(08)</span>
+              <span className="eyebrow-index">(09)</span>
               <span className="eyebrow-label">Contact</span>
               <TypeCommand text="gh pr create --base hemal/main" />
             </p>

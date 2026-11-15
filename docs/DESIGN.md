@@ -13,6 +13,9 @@ tags, releases, pull requests — and uses it as a structural device:
 - live deployments are **releases**; case studies are **merged branches**;
   experiments are **side branches**; websites live on a **`web/` branch**,
   with a 3D fly-through at `/showcase`;
+- the **crafts** section pins one frame and morphs it through the four things
+  Hemal does — a wireframe, the built website, a Flutter app, the terminal
+  that ships it;
 - the contact section asks you to **open a pull request** (send an email).
 
 The look follows the studio sites Hemal has built (Shifenmei, Calcify,
@@ -110,6 +113,21 @@ motion draws still frames; without WebGL the page simply has no field.
   longest line so every line fits, from a phone to the pinned stage; samples
   in `app/data/code.ts` are illustrative sketches, and the status bar says so.
   The smaller project cards show the interface only.
+- **Crafts sequence** (`crafts/Crafts.tsx`, `crafts/crafts.css`): the stage
+  is pinned for four and a half screens while one frame morphs — an artboard
+  holding a wireframe of the Nilaveli homepage, a browser where the real page
+  develops over it behind an accent scan line, a phone showing WriteScan with
+  VibeChat stepping out on both sides, and a terminal that prints the backend
+  stack and ends on `live`. Scroll position is written to custom properties
+  on the track (`--t1`–`--t3`, one per morph) and the stylesheet interpolates
+  every size from them in `cqw`, so nothing re-renders while scrolling and the
+  stage scales from a phone to a desktop. The copy beside it swaps per craft
+  and a four-commit pipeline fills underneath; its nodes jump between states.
+  Content is `crafts` in `app/data/portfolio.ts`; the phone screens are
+  cropped from the store screenshots into `public/crafts`. With reduced
+  motion, or under 540px of height, the four crafts are listed instead.
+- The **hero copy** recedes as you scroll away from it, and the technology
+  **marquee** speeds up and leans with scroll velocity (`motion/Marquee.tsx`).
 - **Pinned showcase**, **typed commands**,
   **rolling digits**, **magnetic CTAs**, a **cursor** ring with an accent dot.
 - **Lenis smooth scrolling**, loaded after hydration.

@@ -1,0 +1,909 @@
+/*
+ * The Crafts sequence (see Crafts.tsx). The track carries the scroll state:
+ *   --in   0 → 1 as the stage rises into view
+ *   --t0   0 → 1 through the first hold (the designer's cursor)
+ *   --t1   artboard  → browser
+ *   --t2   browser   → phone
+ *   --t3   phone     → terminal
+ *   --log  0 → 1 as the terminal prints
+ * Everything in the stage is sized in cqw, so it scales with the canvas.
+ */
+
+.crafts-track {
+  --in: 1;
+  --t0: 0;
+  --t1: 0;
+  --t2: 0;
+  --t3: 0;
+  --log: 0;
+}
+
+/* ------------------------------------------------------------------ copy */
+
+/* Listed layout: reduced motion and very short screens. */
+.crafts-steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(40px, 6vw, 72px) var(--case-gap);
+}
+.crafts-stage,
+.crafts-pipe {
+  display: none;
+}
+.craft .branch-label {
+  max-width: 30rem;
+}
+.craft h3 {
+  margin-top: 16px;
+  font-size: clamp(2.3rem, 4.7vw, 4.3rem);
+  font-weight: 700;
+  font-variation-settings: "wdth" 116;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+.craft-line {
+  max-width: 44ch;
+  margin-top: 18px;
+  font-size: 1.08rem;
+  color: var(--muted);
+}
+.craft-proof {
+  position: relative;
+  max-width: 30rem;
+  margin-top: 18px;
+  padding: 10px 14px 10px 32px;
+  border-left: 2px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  background: rgb(var(--accent-rgb) / 0.04);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #d6d6cf;
+}
+.craft-proof::before {
+  content: "+";
+  position: absolute;
+  left: 12px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--accent);
+}
+.craft .ref {
+  margin-top: 10px;
+}
+
+@media (max-width: 640px) {
+  .crafts-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------------------------------------------------------------- pinned */
+
+@media (prefers-reduced-motion: no-preference) and (min-height: 540px) {
+  /* The pinned stage centres itself in the screen, so the section needs
+     less air around it than a flowing one. */
+  #crafts {
+    padding-bottom: clamp(40px, 5vw, 80px);
+  }
+  #crafts .section-head {
+    margin-bottom: 0;
+  }
+  .crafts-track {
+    /* One screen of scroll per craft, plus the dwell on the last one. */
+    height: 450svh;
+  }
+  .crafts-pin {
+    position: sticky;
+    top: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: var(--case-gap);
+    height: 100svh;
+    padding-top: 64px;
+  }
+  .crafts-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(18px, 4vh, 44px);
+  }
+  .crafts-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .crafts-steps > * {
+    grid-area: 1 / 1;
+  }
+  .craft > * {
+    transition:
+      transform 0.7s var(--ease),
+      opacity 0.45s var(--ease);
+  }
+  .craft[data-state="after"] > * {
+    opacity: 0;
+    transform: translateY(44px);
+    transition-duration: 0.35s, 0.25s;
+  }
+  .craft[data-state="before"] > * {
+    opacity: 0;
+    transform: translateY(-32px);
+    transition-duration: 0.35s, 0.25s;
+  }
+  .craft[data-state="active"] > :nth-child(1) {
+    transition-delay: 0.12s;
+  }
+  .craft[data-state="active"] > :nth-child(2) {
+    transition-delay: 0.17s;
+  }
+  .craft[data-state="active"] > :nth-child(3) {
+    transition-delay: 0.22s;
+  }
+  .craft[data-state="active"] > :nth-child(4) {
+    transition-delay: 0.27s;
+  }
+  .craft[data-state="active"] > :nth-child(n + 5) {
+    transition-delay: 0.32s;
+  }
+  .craft:not([data-state="active"]) {
+    pointer-events: none;
+  }
+
+  /* The pipeline: four commits on a line that fills as the frame morphs. */
+  .crafts-pipe {
+    display: flex;
+    align-items: center;
+  }
+  .crafts-pipe button {
+    --link: clamp(22px, 3.2vw, 46px);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding-right: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--subtle);
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .crafts-pipe button:last-child {
+    padding-right: 0;
+  }
+  .crafts-pipe button + button {
+    padding-left: calc(var(--link) + 12px);
+  }
+  .crafts-pipe button + button::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: var(--link);
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      var(--accent) calc(var(--f) * 100%),
+      var(--line-2) 0
+    );
+  }
+  .crafts-pipe button:nth-child(2) {
+    --f: var(--t1);
+  }
+  .crafts-pipe button:nth-child(3) {
+    --f: var(--t2);
+  }
+  .crafts-pipe button:nth-child(4) {
+    --f: var(--t3);
+  }
+  .crafts-pipe i {
+    width: 8px;
+    height: 8px;
+    border: 1.5px solid var(--line-2);
+    transition:
+      background 0.3s,
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+  .crafts-pipe button:hover {
+    color: var(--ink);
+  }
+  .crafts-pipe button[data-done] i {
+    border-color: var(--accent);
+  }
+  .crafts-pipe button[aria-current] {
+    color: var(--ink);
+  }
+  .crafts-pipe button[aria-current] i {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 14px rgb(var(--accent-rgb) / 0.7);
+  }
+
+  .crafts-stage {
+    display: block;
+    min-width: 0;
+  }
+}
+
+/* ----------------------------------------------------------------- stage */
+
+.cs-canvas {
+  /* Shared by everything that belongs to one state. */
+  --s0: clamp(0, calc(1 - var(--t1) * 4), 1);
+  --ph: calc(var(--t2) * (1 - var(--t3)));
+  --live: clamp(0, calc((var(--log) - 0.82) * 8), 1);
+  container-type: inline-size;
+  position: relative;
+  width: min(100%, calc((100svh - 150px) / 0.76));
+  aspect-ratio: 100 / 76;
+  margin-inline: auto;
+  font-family: var(--font-mono);
+  line-height: 1;
+  color: var(--ink);
+  user-select: none;
+}
+.cs-canvas i,
+.cs-canvas b,
+.cs-canvas u,
+.cs-canvas s,
+.cs-canvas em {
+  font-style: normal;
+  font-weight: inherit;
+  text-decoration: none;
+}
+
+/* The frame: artboard 84 × 52.5 → browser 92 × 60.9 → phone 30 × 65.6 →
+   terminal 86 × 52, in cqw. */
+.cs-frame {
+  --bar: calc(3.4cqw * (var(--t1) - var(--t2) + var(--t3)));
+  --bezel: calc(0.75cqw * (var(--t2) - var(--t3)));
+  --radius-f: calc(
+    0.5cqw + 1.1cqw * var(--t1) + 3cqw * var(--t2) - 3cqw * var(--t3)
+  );
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: calc(
+    84cqw + 8cqw * var(--t1) - 62cqw * var(--t2) + 56cqw * var(--t3)
+  );
+  height: calc(
+    52.5cqw + 8.4cqw * var(--t1) + 4.7cqw * var(--t2) - 13.6cqw * var(--t3)
+  );
+  padding: var(--bezel);
+  border-radius: var(--radius-f);
+  background: #171a17;
+  box-shadow:
+    0 0 0 1px
+      color-mix(in srgb, var(--accent) calc(var(--s0) * 100%), var(--line-2)),
+    0 4cqw 8cqw -4cqw rgb(0 0 0 / 0.85),
+    0 0 9cqw -2cqw rgb(var(--accent-rgb) / calc(0.3 * var(--live)));
+  transform: translate(-50%, -50%);
+  will-change: width, height;
+}
+.cs-bar {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  height: var(--bar);
+  padding-inline: 1.4cqw;
+  overflow: hidden;
+  border-radius: var(--radius-f) var(--radius-f) 0 0;
+  background: #101310;
+  box-shadow: inset 0 -1px var(--line);
+}
+.cs-dots {
+  display: flex;
+  gap: 0.6cqw;
+}
+.cs-dots i {
+  width: 0.9cqw;
+  height: 0.9cqw;
+  border-radius: 50%;
+  background: var(--line-2);
+}
+.cs-bar-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 1.25cqw;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+.cs-url {
+  padding: 0.55cqw 2.4cqw;
+  border-radius: 99px;
+  background: rgb(240 239 233 / 0.05);
+  opacity: clamp(0, calc(var(--t1) * 3 - 2 - var(--t2) * 4), 1);
+}
+.cs-term-title {
+  opacity: clamp(0, calc(var(--t3) * 3 - 2), 1);
+}
+.cs-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: calc(var(--radius-f) - var(--bezel));
+  background: var(--bg-2);
+}
+.cs-bar + .cs-body {
+  border-top-left-radius: calc(
+    (var(--radius-f) - var(--bezel)) * (1 - var(--t1) + var(--t2) - var(--t3))
+  );
+  border-top-right-radius: calc(
+    (var(--radius-f) - var(--bezel)) * (1 - var(--t1) + var(--t2) - var(--t3))
+  );
+}
+.cs-layer {
+  position: absolute;
+  inset: 0;
+}
+/* Screens keep their final size while the frame opens and closes around
+   them, so nothing rescales mid-morph. */
+.cs-layer img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: none;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+}
+.cs-site img {
+  width: 92cqw;
+  height: 57.5cqw;
+}
+.cs-app img {
+  width: 28.5cqw;
+  height: 64.1cqw;
+}
+
+/* State 0 — the artboard: selection outline, handles, name and size. */
+.cs-artlabel,
+.cs-size,
+.cs-handle {
+  position: absolute;
+  opacity: var(--s0);
+}
+.cs-artlabel {
+  left: 0;
+  bottom: calc(100% + 1cqw);
+  font-size: 1.3cqw;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.cs-artlabel b {
+  opacity: 0.6;
+}
+.cs-size {
+  left: 50%;
+  top: calc(100% + 0.9cqw);
+  padding: 0.5cqw 1cqw;
+  border-radius: 0.5cqw;
+  background: var(--accent);
+  font-size: 1.15cqw;
+  font-weight: 500;
+  color: var(--on-accent);
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+.cs-handle {
+  width: 1cqw;
+  height: 1cqw;
+  margin: -0.5cqw;
+  background: var(--bg);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.cs-handle:nth-of-type(1) {
+  left: 0;
+  top: 0;
+}
+.cs-handle:nth-of-type(2) {
+  left: 100%;
+  top: 0;
+}
+.cs-handle:nth-of-type(3) {
+  left: 0;
+  top: 100%;
+}
+.cs-handle:nth-of-type(4) {
+  left: 100%;
+  top: 100%;
+}
+
+/* The wireframe mirrors the built homepage block for block, so the site can
+   develop straight out of it. */
+.cs-wire {
+  --wire: rgb(240 239 233 / 0.3);
+  --fill: rgb(240 239 233 / 0.14);
+  background:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.5px),
+      rgb(240 239 233 / 0.07) calc(50% - 0.5px) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    ),
+    linear-gradient(
+      to bottom right,
+      transparent calc(50% - 0.5px),
+      rgb(240 239 233 / 0.07) calc(50% - 0.5px) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    ),
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 4cqw 4cqw,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 4cqw 4cqw,
+    var(--bg-2);
+  opacity: clamp(0, calc((1 - var(--t1)) * 12), 1);
+}
+:where(.cs-wire > i) {
+  --w: clamp(0, calc((var(--in) - var(--d, 0.4)) * 5), 1);
+  position: absolute;
+  box-shadow: inset 0 0 0 1px var(--wire);
+  clip-path: inset(-2px calc((1 - var(--w)) * 100%) -2px -2px);
+}
+.w-logo {
+  --d: 0.36;
+  left: 3.2%;
+  top: 2.2%;
+  width: 6%;
+  height: 7.4%;
+  border-radius: 0.6cqw;
+}
+.w-nav {
+  --d: 0.4;
+  left: 28.5%;
+  top: 2.4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 43%;
+  height: 6%;
+  border-radius: 99px;
+}
+.w-nav b {
+  width: 12%;
+  height: 0.5cqw;
+  border-radius: 99px;
+  background: var(--wire);
+}
+.w-cta {
+  --d: 0.44;
+  right: 3.2%;
+  top: 2.6%;
+  width: 11%;
+  height: 5.6%;
+  border-radius: 99px;
+  background: var(--fill);
+}
+.w-kicker {
+  --d: 0.5;
+  left: 3.2%;
+  top: 49.4%;
+  width: 22%;
+  height: 0.5cqw;
+  border-radius: 99px;
+  background: var(--wire);
+  box-shadow: none;
+}
+.w-h1,
+.w-h2 {
+  left: 3.2%;
+  height: 10%;
+  border-radius: 0.5cqw;
+  background: var(--fill);
+}
+.w-h1 {
+  --d: 0.54;
+  --sel: clamp(0, calc((var(--t0) - 0.6) * 6), 1);
+  top: 54.4%;
+  width: 65%;
+  box-shadow:
+    inset 0 0 0 1px var(--wire),
+    0 0 0 1px rgb(var(--accent-rgb) / var(--sel));
+}
+.w-h2 {
+  --d: 0.6;
+  top: 66.8%;
+  width: 40%;
+}
+.w-book {
+  --d: 0.66;
+  left: 3.2%;
+  top: 81.6%;
+  display: flex;
+  gap: 1cqw;
+  width: 71.5%;
+  height: 9.6%;
+  padding: 0.9cqw;
+  border-radius: 1.4cqw;
+}
+.w-book b {
+  flex: 1;
+  border-radius: 0.6cqw;
+  box-shadow: inset 0 0 0 1px var(--wire);
+}
+.w-book b:last-child {
+  flex: 1.15;
+  background: var(--fill);
+}
+.w-play {
+  --d: 0.72;
+  left: 77.6%;
+  top: 82.4%;
+  height: 8%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.w-cap {
+  --d: 0.76;
+  left: 83.8%;
+  top: 84.6%;
+  width: 13%;
+  height: 0.5cqw;
+  border-radius: 99px;
+  background: var(--wire);
+  box-shadow: 0 1.6cqw 0 -0.05cqw rgb(240 239 233 / 0.14);
+}
+.w-foot {
+  --d: 0.8;
+  left: 3.2%;
+  right: 3.2%;
+  top: 95.2%;
+  height: 0.4cqw;
+  background: linear-gradient(
+    90deg,
+    var(--wire) 24%,
+    transparent 0 38%,
+    var(--wire) 0 62%,
+    transparent 0 76%,
+    var(--wire) 0
+  );
+  box-shadow: none;
+}
+
+/* State 1 — the built site develops over the wireframe behind a scan line. */
+.cs-site {
+  clip-path: inset(0 calc((1 - var(--t1)) * 100%) 0 0);
+  opacity: clamp(0, calc(2.6 - var(--t2) * 3.4), 1);
+}
+.cs-scan {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--t1) * 100%);
+  z-index: 3;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  box-shadow:
+    0 0 1.6cqw 0.3cqw rgb(var(--accent-rgb) / 0.55),
+    -5cqw 0 6cqw 1cqw rgb(var(--accent-rgb) / 0.12);
+  opacity: clamp(0, calc(var(--t1) * (1 - var(--t1)) * 40), 1);
+}
+
+/* State 2 — the app's own screen fills the phone. */
+.cs-app {
+  background: #0b0d12;
+  opacity: calc(
+    clamp(0, calc(var(--t2) * 3 - 1.6), 1) *
+      clamp(0, calc(1.3 - var(--t3) * 3), 1)
+  );
+}
+
+/* State 3 — the terminal that ships it. */
+.cs-term {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.9cqw;
+  padding: 0 4cqw;
+  background:
+    radial-gradient(
+      70% 90% at 100% 100%,
+      rgb(var(--accent-rgb) / 0.07),
+      transparent 70%
+    ),
+    #0c0e0c;
+  font-size: 2.15cqw;
+  white-space: nowrap;
+  color: var(--muted);
+  opacity: clamp(0, calc(var(--t3) * 3 - 0.75), 1);
+}
+.cs-term p {
+  --on: clamp(0, calc((var(--log) - var(--d) * 0.15) * 14), 1);
+  opacity: var(--on);
+  transform: translateX(calc((1 - var(--on)) * -1.6cqw));
+}
+.cs-term b,
+.cs-term u {
+  color: var(--accent);
+}
+.cs-term s {
+  display: inline-block;
+  width: 8.2cqw;
+  color: var(--ink);
+}
+.cs-term .cs-live {
+  display: flex;
+  align-items: center;
+  gap: 1.3cqw;
+  color: var(--accent);
+}
+.cs-live i {
+  width: 1.1cqw;
+  height: 1.1cqw;
+  background: var(--accent);
+  box-shadow: 0 0 1.6cqw rgb(var(--accent-rgb) / 0.9);
+}
+
+/* The two apps that step out from behind the phone. */
+.cs-phone {
+  --side: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 26cqw;
+  margin: 0;
+  padding: 0.65cqw;
+  border-radius: 4cqw;
+  background: #171a17;
+  box-shadow:
+    0 0 0 1px var(--line-2),
+    0 4cqw 8cqw -4cqw rgb(0 0 0 / 0.85);
+  opacity: clamp(0, calc(var(--ph) * 2.2 - 0.4), 1);
+  filter: brightness(0.7);
+  transform: translate(-50%, -50%)
+    translateX(calc(var(--side) * 27.5cqw * var(--ph)))
+    rotate(calc(var(--side) * 6deg * var(--ph)))
+    scale(calc(0.72 + 0.16 * var(--ph)));
+}
+.cs-phone-l {
+  --side: -1;
+}
+.cs-phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3.35cqw;
+}
+
+/* Floating panels */
+.cs-float {
+  position: absolute;
+  z-index: 3;
+  padding: 1.3cqw 1.5cqw 1.5cqw;
+  border-radius: 1.3cqw;
+  background: rgb(16 18 16 / 0.88);
+  box-shadow:
+    0 0 0 1px var(--line-2),
+    0 3cqw 5cqw -2cqw rgb(0 0 0 / 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.cs-float-title {
+  display: flex;
+  align-items: center;
+  gap: 0.8cqw;
+  font-size: 1.1cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+.cs-tokens {
+  --on: clamp(0, calc((var(--in) - 0.6) * 4), 1);
+  left: 0;
+  bottom: 2.5cqw;
+  display: grid;
+  gap: 1.3cqw;
+  opacity: calc(var(--on) * var(--s0));
+  transform: translate(
+    calc(var(--t1) * -5cqw),
+    calc((1 - var(--on)) * 4cqw)
+  );
+}
+.cs-swatches {
+  display: flex;
+  gap: 0.8cqw;
+}
+.cs-swatches i {
+  width: 2.9cqw;
+  height: 2.9cqw;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.14);
+}
+.cs-swatches i:nth-child(1) {
+  background: #c8a862;
+}
+.cs-swatches i:nth-child(2) {
+  background: #f3eee4;
+}
+.cs-swatches i:nth-child(3) {
+  background: #23415a;
+}
+.cs-swatches i:nth-child(4) {
+  background: #7d4a2a;
+}
+.cs-type {
+  display: flex;
+  align-items: center;
+  gap: 1.2cqw;
+  font-size: 1.1cqw;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.cs-type b {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 4.4cqw;
+  line-height: 0.9;
+  color: var(--ink);
+}
+.cs-cursor {
+  position: absolute;
+  left: calc(72% - 31% * var(--t0));
+  top: calc(24% + 37% * var(--t0));
+  z-index: 4;
+  display: flex;
+  align-items: flex-start;
+  color: var(--accent);
+  opacity: calc(clamp(0, calc((var(--in) - 0.7) * 5), 1) * var(--s0));
+}
+.cs-cursor svg {
+  width: 2.2cqw;
+  height: 2.2cqw;
+  filter: drop-shadow(0 0.3cqw 0.6cqw rgb(0 0 0 / 0.6));
+}
+.cs-cursor span {
+  margin: 1.7cqw 0 0 0.2cqw;
+  padding: 0.5cqw 0.9cqw;
+  border-radius: 0.2cqw 0.9cqw 0.9cqw 0.9cqw;
+  background: var(--accent);
+  font-size: 1.15cqw;
+  font-weight: 500;
+  color: var(--on-accent);
+}
+.cs-code {
+  --on: clamp(0, calc(var(--t1) * 3 - 1.8), 1);
+  right: 0;
+  bottom: 1.5cqw;
+  opacity: calc(var(--on) * clamp(0, calc(1 - var(--t2) * 4), 1));
+  transform: translate(
+    calc(var(--t2) * 6cqw),
+    calc((1 - var(--on)) * 4cqw)
+  );
+}
+.cs-code .cs-float-title {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+.cs-code .cs-float-title i {
+  width: 0.8cqw;
+  height: 0.8cqw;
+  background: var(--accent);
+}
+.cs-code pre {
+  display: grid;
+  gap: 0.75cqw;
+  margin: 1.3cqw 0 0;
+  font-family: inherit;
+  font-size: 1.3cqw;
+  color: #d6d6cf;
+}
+.cs-code pre b {
+  color: var(--accent);
+}
+.cs-code pre u {
+  color: var(--merge);
+}
+.cs-code pre em {
+  color: #f0b27a;
+}
+.cs-code pre s {
+  color: var(--subtle);
+}
+.cs-chip {
+  --on: clamp(0, calc(var(--ph) * 4 - 2.8), 1);
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.9cqw;
+  padding: 0.9cqw 1.5cqw;
+  border-radius: 99px;
+  background: rgb(10 11 10 / 0.86);
+  box-shadow: 0 0 0 1px var(--line-2);
+  font-size: 1.4cqw;
+  white-space: nowrap;
+  opacity: var(--on);
+  transform: translateY(calc((1 - var(--on)) * 2cqw));
+}
+.cs-chip i {
+  width: 0.8cqw;
+  height: 0.8cqw;
+  background: var(--accent);
+}
+.cs-chip-a {
+  left: 1cqw;
+  top: 9cqw;
+}
+.cs-chip-b {
+  right: 1cqw;
+  bottom: 9cqw;
+}
+
+/* -------------------------------------------------------------- narrower */
+
+@media (max-height: 720px) and (min-width: 901px) {
+  .craft h3 {
+    font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+  }
+  .craft-line {
+    margin-top: 12px;
+    font-size: 1rem;
+  }
+  .craft-proof {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* Stage on top, copy beneath; the stage gives way to the copy's height. */
+  .crafts-pin {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: clamp(14px, 3vh, 28px);
+  }
+  .crafts-stage {
+    order: -1;
+  }
+  .cs-canvas {
+    width: min(100%, calc((100svh - 64px - 372px) / 0.76));
+  }
+  .crafts-copy {
+    gap: 12px;
+  }
+  .crafts-pipe button {
+    --link: 12px;
+    gap: 6px;
+    padding-right: 8px;
+    font-size: 0.68rem;
+  }
+  .crafts-pipe button + button {
+    padding-left: calc(var(--link) + 8px);
+  }
+  .craft h3 {
+    margin-top: 10px;
+    font-size: clamp(1.9rem, 8.2vw, 3rem);
+  }
+  .craft-line {
+    margin-top: 10px;
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+  .craft-proof {
+    margin-top: 12px;
+    padding-block: 8px;
+    font-size: 0.88rem;
+  }
+  .craft .stack-line {
+    display: none;
+  }
+  .craft .ref {
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 900px) and (max-height: 700px) {
+  .craft-proof {
+    display: none;
+  }
+  .cs-canvas {
+    width: min(100%, calc((100svh - 64px - 300px) / 0.76));
+  }
+}

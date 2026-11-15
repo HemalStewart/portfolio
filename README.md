@@ -9,13 +9,14 @@ Lenis · three.js (a voxel field behind the page that morphs between a
 git-branch glyph, particles, a planet and a wave as you scroll). Visuals are
 drawn in code — web project screens rebuilt from the live interfaces, favicon
 and share image — while the mobile apps and websites show real screenshots.
-Effects include a boot screen, an Interface / Code switch on the featured
-projects, a pinned project showcase and CSS scroll-driven animations, all
-respecting `prefers-reduced-motion`.
+Effects include a boot screen, a pinned "crafts" sequence where one frame
+morphs from wireframe to website to Flutter app to terminal, an Interface /
+Code switch on the featured projects, a pinned project showcase and CSS
+scroll-driven animations, all respecting `prefers-reduced-motion`.
 
 ## Editing content
 
-All content (releases, case studies, side projects, skills, links) is in
+All content (crafts, releases, case studies, side projects, skills, links) is in
 [`app/data/portfolio.ts`](app/data/portfolio.ts). Project screens live in
 `app/components/mockups/screens` (store screenshots in `public/work`),
 website screenshots in `public/showcase/thumbs`, featured code samples in

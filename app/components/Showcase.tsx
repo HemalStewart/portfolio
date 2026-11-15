@@ -26,7 +26,8 @@ const countWords = [
   "thirteen",
   "fourteen",
 ];
-const countWord = (n: number) => countWords[n] ?? String(n);
+/** Small counts spelled out, the way the copy reads: 7 → "seven". */
+export const countWord = (n: number) => countWords[n] ?? String(n);
 
 /** Back to front: the three screens fanned out in depth on the lead panel. */
 const fan = ["wayline", "nilaveli", "ceylon-select"];

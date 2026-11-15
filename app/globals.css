@@ -1531,6 +1531,8 @@ html[data-boot="skip"] {
   .marquee ul {
     display: flex;
     flex: none;
+    /* Leans with scroll speed; set by Marquee.tsx. */
+    transform: skewX(var(--lean, 0deg));
   }
   .marquee li {
     display: flex;
@@ -2989,6 +2991,13 @@ html[data-boot="skip"] {
       animation: grow-x linear both;
       animation-timeline: scroll(root);
     }
+    /* The hero copy recedes as the glyph behind it breaks into particles. */
+    .hero-inner {
+      transform-origin: 20% 50%;
+      animation: hero-exit linear both;
+      animation-timeline: view();
+      animation-range: exit 5% exit 95%;
+    }
     .scrub-word {
       animation: scrub-fill linear both;
       animation-timeline: --readme;
@@ -3024,6 +3033,12 @@ html[data-boot="skip"] {
       animation-timeline: view();
       animation-range: entry 0% entry 60%;
     }
+  }
+}
+@keyframes hero-exit {
+  to {
+    opacity: 0;
+    transform: translateY(-5vh) scale(0.95);
   }
 }
 @keyframes rise-mark {

@@ -37,11 +37,13 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
     };
   }, []);
 
-  // Section in view drives the active link.
+  // Section in view drives the active link. Sections without a nav link
+  // (intro, about, crafts) are watched too, so the marker clears in them
+  // instead of holding on to the last linked section.
   useEffect(() => {
-    const sections = links
-      .map((link) => document.querySelector<HTMLElement>(link.href))
-      .filter((section): section is HTMLElement => Boolean(section));
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>("main > section[id]"),
+    );
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries)
@@ -51,7 +53,7 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
     );
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, [links]);
+  }, []);
 
   // Slide the highlight under the active link.
   useEffect(() => {

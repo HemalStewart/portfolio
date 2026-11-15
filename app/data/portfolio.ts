@@ -59,6 +59,20 @@ export type ShowcaseSite = {
   status: "concept" | "live" | "preview";
 };
 
+export type Craft = {
+  /** Branch prefix shown as the step's git label, e.g. "design" → `design/`. */
+  branch: string;
+  /** Title; the word between asterisks is set in the italic serif. */
+  title: string;
+  line: string;
+  /** Real work that backs the claim. */
+  proof: string;
+  stack: string[];
+  /** Section that shows the evidence. */
+  href: string;
+  cta: string;
+};
+
 export const navLinks = [
   { label: "Releases", href: "#releases" },
   { label: "Work", href: "#work" },
@@ -826,3 +840,47 @@ export const totalDownloads = productionDeployments.reduce(
   (sum, deployment) => sum + (deployment.downloads ?? 0),
   0,
 );
+
+/**
+ * The four crafts behind the work, in the order an idea travels through
+ * them. Drives the pinned "Crafts" sequence, where one frame morphs from a
+ * wireframe into a live website, a Flutter app and the server behind both.
+ */
+export const crafts: Craft[] = [
+  {
+    branch: "design",
+    title: "Web *design.*",
+    line: "Layout, type and motion worked out in the browser — for hotels, food and lifestyle brands, and for every product further down this page.",
+    proof: `${showcaseSites.length} websites, from client builds to 3D concepts`,
+    stack: ["Layout & type", "GSAP", "Three.js", "WebGL"],
+    href: "#showcase",
+    cta: "See the websites",
+  },
+  {
+    branch: "web",
+    title: "Web *development.*",
+    line: "Production web apps and admin consoles in Next.js and TypeScript — fintech operations, government systems and booking flows.",
+    proof: "LinkForex, Novice Monk Registry and PDMS at the Ministry of Education",
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    href: "#work",
+    cta: "See the builds",
+  },
+  {
+    branch: "mobile",
+    title: "Flutter *apps.*",
+    line: "One Dart codebase shipped to Google Play and the App Store, from onboarding and payments to on-device ML.",
+    proof: `VibeChat AI, WriteScan and Smart Guardian Pro — ${formatDownloads(totalDownloads)} downloads`,
+    stack: ["Flutter", "Dart", "Riverpod", "GoRouter"],
+    href: "#releases",
+    cta: "See the releases",
+  },
+  {
+    branch: "api",
+    title: "Backend *& AI.*",
+    line: "The APIs, databases and servers behind all of it — plus retrieval, OCR and speech pipelines on OpenAI, Gemini and Whisper.",
+    proof: "Laravel, CodeIgniter and FastAPI services, deployed and maintained",
+    stack: ["PHP", "FastAPI", "MySQL", "RAG"],
+    href: "#stack",
+    cta: "See the stack",
+  },
+];

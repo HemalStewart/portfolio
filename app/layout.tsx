@@ -36,7 +36,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 const title = "Hemal Herath — Software Engineer · Mobile, Web & AI";
 const description =
-  "Hemal Herath is a software engineer in Colombo, Sri Lanka, shipping production mobile, web and AI products — 300K+ Play Store downloads across three apps — with Flutter, Next.js, TypeScript, PHP (CodeIgniter/Laravel) and FastAPI.";
+  "Hemal Herath is a software engineer in Colombo, Sri Lanka, who designs and ships production websites, web apps, Flutter apps and AI products — 300K+ Play Store downloads across three apps — with Flutter, Next.js, TypeScript, PHP (CodeIgniter/Laravel) and FastAPI.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -54,6 +54,9 @@ export const metadata: Metadata = {
     "Next.js",
     "TypeScript",
     "mobile developer",
+    "Flutter developer",
+    "web developer",
+    "web designer",
     "AI",
   ],
   alternates: { canonical: "/" },
@@ -96,7 +99,16 @@ const personJsonLd = {
   sameAs: profileLinks
     .filter((link) => link.label === "GitHub" || link.label === "LinkedIn")
     .map((link) => link.href),
-  knowsAbout: ["Flutter", "Next.js", "TypeScript", "PHP", "FastAPI", "AI"],
+  knowsAbout: [
+    "Web design",
+    "Web development",
+    "Flutter",
+    "Next.js",
+    "TypeScript",
+    "PHP",
+    "FastAPI",
+    "AI",
+  ],
   alumniOf: {
     "@type": "CollegeOrUniversity",
     name: "University of Westminster",
