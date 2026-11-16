@@ -5,10 +5,10 @@ export const alt = "Hemal Herath — Software Engineer · Mobile, Web & AI";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const BG = "#0a0b0a";
-const INK = "#f0efe9";
-const MUTED = "#a3a79f";
-const ACCENT = "#b6f36a";
+const BG = "#f4f1ea";
+const INK = "#161513";
+const MUTED = "#5e5b54";
+const ACCENT = "#ff5a36";
 
 /**
  * The hero's voxel git-branch glyph, flattened to squares on a grid: three
@@ -66,7 +66,7 @@ function voxels() {
       cells.push({
         x,
         y,
-        fill: head ? ACCENT : shade < 0.15 ? "#8d918a" : shade < 0.4 ? "#d9d8d1" : INK,
+        fill: head ? ACCENT : shade < 0.15 ? "#b9b5aa" : shade < 0.4 ? "#5e5b54" : INK,
       });
     }
   return cells;
@@ -94,7 +94,7 @@ export default function OpenGraphImage() {
             bottom: 0,
             left: col * 200,
             width: 1,
-            background: "rgba(240,239,233,0.05)",
+            background: "rgba(22,21,19,0.07)",
           }}
         />
       ))}

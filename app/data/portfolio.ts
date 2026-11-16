@@ -74,12 +74,11 @@ export type Craft = {
 };
 
 export const navLinks = [
-  { label: "Releases", href: "#releases" },
+  { label: "Crafts", href: "#crafts" },
   { label: "Work", href: "#work" },
-  { label: "Showcase", href: "#showcase" },
+  { label: "Websites", href: "#showcase" },
   { label: "Experience", href: "#experience" },
   { label: "Stack", href: "#stack" },
-  { label: "Side branches", href: "#side-branches" },
   { label: "Contact", href: "#contact" },
 ];
 

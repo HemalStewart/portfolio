@@ -1,0 +1,586 @@
+/*
+ * The hero: copy on the left, and on the right the pieces the cursors bring
+ * in — a browser, a phone, a terminal — pinned together with arrows, notes
+ * and a stamp. Hero.tsx plays the build; while html[data-build="pending"]
+ * each piece waits hidden for its data-on. The scene is sized in cqw off its
+ * own width, so the collage keeps its proportions at any size.
+ */
+
+.hero {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  padding-top: var(--bar);
+  overflow: clip;
+}
+.hero-stage {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 72px);
+  padding-block: clamp(28px, 5vh, 56px) clamp(84px, 12vh, 120px);
+}
+
+/* -------------------------------------------------------------------- copy */
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+}
+.hero-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-kicker .flabel {
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+.hero-title {
+  margin-top: clamp(14px, 2.4vh, 26px);
+  font-size: clamp(3.3rem, 9.2vw, 8.6rem);
+  font-weight: 800;
+  font-variation-settings: "wdth" 125;
+  line-height: 0.84;
+  letter-spacing: -0.05em;
+}
+.hero-name {
+  position: relative;
+  display: inline-block;
+}
+.hero-line {
+  display: block;
+  white-space: nowrap;
+}
+.hc {
+  display: inline-block;
+}
+/* The text caret rests after the last letter once the name is typed. */
+.hero-line:last-of-type::after {
+  content: "";
+  display: inline-block;
+  width: 0.07em;
+  height: 0.7em;
+  margin-left: 0.06em;
+  background: var(--web);
+  animation: caret 1.1s steps(1) infinite;
+}
+.hero-scribble {
+  position: absolute;
+  left: -1%;
+  bottom: -0.2em;
+  width: 74%;
+  height: auto;
+  color: var(--design);
+  pointer-events: none;
+}
+.hero-scribble path {
+  stroke-width: 4.2;
+}
+
+/* The tagline, on a note stuck beside the name. */
+.hero-tag-slot {
+  position: absolute;
+  right: -70px;
+  top: -66px;
+  z-index: 3;
+}
+.hero-tag {
+  --r: 5deg;
+  width: clamp(132px, 12.5vw, 184px);
+  padding: 14px 16px 18px;
+  font-family: var(--font-hand);
+  font-size: clamp(1.45rem, 2.2vw, 2.05rem);
+  font-weight: 700;
+  line-height: 0.95;
+  transition: rotate 0.6s var(--spring);
+}
+.hero-tag span {
+  display: block;
+}
+.hero-tag[data-tilt="1"] {
+  rotate: -3deg;
+}
+
+.hero-message {
+  max-width: 44ch;
+  margin-top: clamp(30px, 5vh, 48px);
+  font-size: clamp(1.02rem, 1.3vw, 1.18rem);
+  line-height: 1.5;
+  color: var(--muted);
+}
+.hero-message strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 26px;
+  margin-top: 26px;
+}
+.hero-kicker,
+.hero-message,
+.hero-actions {
+  transition:
+    opacity 0.6s var(--ease),
+    translate 0.8s var(--ease);
+}
+
+/* ------------------------------------------------------------------- scene */
+
+.hero-scene {
+  container-type: inline-size;
+  position: relative;
+  z-index: 1;
+  justify-self: end;
+  width: min(100%, calc((100svh - var(--bar) - 170px) * 1.02));
+  aspect-ratio: 1 / 0.98;
+}
+.hero-scene .flabel {
+  position: absolute;
+  left: 2px;
+  bottom: calc(100% + 7px);
+}
+
+.hs-browser,
+.hs-phone,
+.hs-term {
+  position: absolute;
+  background: #171a17;
+  transition:
+    opacity 0.25s,
+    scale 0.35s var(--spring),
+    box-shadow 0.35s;
+}
+:is(.hs-browser, .hs-phone, .hs-term)[data-held] {
+  scale: 1.03;
+  box-shadow:
+    0 0 0 1px rgb(22 21 19 / 0.6),
+    0 8cqw 9cqw -4cqw var(--shadow);
+}
+
+.hs-browser {
+  left: 1%;
+  top: 7%;
+  width: 86%;
+  border-radius: 1.7cqw;
+  rotate: -2.2deg;
+  box-shadow:
+    0 0 0 1px rgb(22 21 19 / 0.6),
+    0 5cqw 7cqw -4cqw var(--shadow);
+}
+.hs-chrome {
+  display: flex;
+  align-items: center;
+  gap: 1.6cqw;
+  height: 4.6cqw;
+  padding-inline: 1.9cqw;
+}
+.hs-dots {
+  display: flex;
+  gap: 0.7cqw;
+}
+.hs-dots i {
+  width: 1cqw;
+  height: 1cqw;
+  border-radius: 50%;
+  background: #3a3f3a;
+}
+.hs-urls {
+  position: relative;
+  flex: 1;
+  max-width: 62%;
+  height: 2.8cqw;
+  margin-inline: auto;
+  border-radius: 99px;
+  background: rgb(240 239 233 / 0.08);
+}
+.hs-urls span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 1.45cqw;
+  line-height: 1;
+  color: #a3a79f;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.hs-screen {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 0 0 1.6cqw 1.6cqw;
+  background: #0d0f0d;
+}
+.hs-screen img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  scale: 1.05;
+  transition:
+    opacity 0.7s var(--ease),
+    scale 1.4s var(--ease);
+}
+/* The browser flips through sites: the one named by data-site is on show. */
+.hs-browser[data-site="0"] [data-n="0"],
+.hs-browser[data-site="1"] [data-n="1"],
+.hs-browser[data-site="2"] [data-n="2"] {
+  opacity: 1;
+  scale: 1;
+}
+
+.hs-phone {
+  right: 0;
+  top: 33%;
+  width: 27%;
+  padding: 1.1cqw;
+  border-radius: 5.2cqw;
+  rotate: 5deg;
+  box-shadow:
+    0 0 0 1px rgb(22 21 19 / 0.6),
+    0 5cqw 7cqw -3cqw var(--shadow);
+}
+.hero-scene .hs-phone > .flabel {
+  left: auto;
+  right: 8%;
+}
+.hs-phone-screen {
+  position: relative;
+  aspect-ratio: 330 / 742;
+  overflow: hidden;
+  border-radius: 4.2cqw;
+  background: #0b0d12;
+}
+.hs-phone-screen img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.6s var(--ease);
+}
+.hs-phone-screen img:nth-child(2) {
+  opacity: 0;
+}
+.hs-phone[data-alt="1"] img:nth-child(2) {
+  opacity: 1;
+}
+
+.hs-term {
+  left: 3%;
+  top: 69%;
+  width: 52%;
+  padding: 2.4cqw 2.8cqw 2.6cqw;
+  border-radius: 1.7cqw;
+  rotate: 1.6deg;
+  box-shadow:
+    0 0 0 1px rgb(22 21 19 / 0.6),
+    0 5cqw 7cqw -4cqw var(--shadow);
+}
+.hs-term-body {
+  display: grid;
+  font-family: var(--font-mono);
+  font-size: 1.95cqw;
+  line-height: 1.62;
+  color: #a3a79f;
+}
+.hs-term-body span {
+  overflow: hidden;
+  white-space: pre;
+  text-overflow: ellipsis;
+  transition: opacity 0.3s;
+}
+.hs-term-body span:first-child {
+  color: #f0efe9;
+}
+.hs-term-body span:last-child {
+  color: #b6f36a;
+}
+/* It prints: only the first data-line lines show. */
+.hs-term[data-line="1"] span:nth-child(n + 2),
+.hs-term[data-line="2"] span:nth-child(n + 3),
+.hs-term[data-line="3"] span:nth-child(n + 4),
+.hs-term[data-line="4"] span:nth-child(n + 5) {
+  opacity: 0;
+}
+
+/* Arrows and handwriting between the pieces. */
+.hs-arrow {
+  position: absolute;
+  z-index: 2;
+  height: auto;
+}
+.hs-note {
+  position: absolute;
+  z-index: 2;
+  font-size: 3.9cqw;
+  transition: opacity 0.4s 0.35s;
+}
+.hs-arrow-1 {
+  left: -20%;
+  top: 26%;
+  width: 20%;
+  color: var(--design);
+  rotate: -4deg;
+}
+.hs-note-1 {
+  left: -21%;
+  top: 37%;
+}
+.hs-arrow-2 {
+  left: 86%;
+  top: 13%;
+  width: 12%;
+  color: var(--web);
+  rotate: 4deg;
+}
+.hs-note-2 {
+  left: 88%;
+  top: 6.5%;
+  rotate: 6deg;
+}
+.hs-arrow-3 {
+  left: 53%;
+  top: 70.5%;
+  width: 20%;
+  color: var(--flutter);
+  rotate: -8deg;
+}
+.hs-note-3 {
+  left: 43%;
+  top: 95%;
+  rotate: -3deg;
+}
+
+/* A sticker rather than ink here: it overlaps the dark phone. */
+.hs-stamp {
+  position: absolute;
+  left: 56%;
+  top: 84%;
+  z-index: 3;
+  background: var(--paper);
+  color: var(--flutter);
+  rotate: -10deg;
+  mix-blend-mode: normal;
+  box-shadow: 0 1.4cqw 2cqw -1.2cqw var(--shadow);
+}
+.hs-stamp span {
+  padding: 0.7cqw 2.2cqw 0.6cqw;
+  font-size: 3.1cqw;
+}
+
+/* Facts on notes, stuck over the corners of the browser. */
+.hs-fact-slot {
+  position: absolute;
+  z-index: 4;
+}
+.hs-fact-slot-1 {
+  left: -7%;
+  top: 46%;
+}
+.hs-fact-slot-2 {
+  left: 66%;
+  top: -4%;
+}
+.hs-fact {
+  --r: -6deg;
+  width: 19.5cqw;
+  padding: 1.9cqw 2cqw 2.3cqw;
+}
+.hs-fact-slot-2 .hs-fact {
+  --r: 7deg;
+  width: 17.5cqw;
+}
+.hs-fact b {
+  display: block;
+  font-size: 5.3cqw;
+  font-weight: 800;
+  font-variation-settings: "wdth" 118;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.hs-fact span {
+  display: block;
+  margin-top: 0.5cqw;
+  font-family: var(--font-hand);
+  font-size: 2.9cqw;
+  font-weight: 700;
+  line-height: 0.95;
+}
+
+/* ----------------------------------------------------------------- cursors */
+
+.hero-cur {
+  opacity: 0;
+  transition: opacity 0.3s;
+  will-change: transform;
+}
+.hero-stage[data-cursors] .hero-cur {
+  opacity: 1;
+}
+/* The selection the Design cursor drags out before anything exists. */
+.hero-marquee {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  width: 0;
+  height: 0;
+  border: 1.5px dashed var(--design);
+  border-radius: 3px;
+  background: rgb(255 90 54 / 0.06);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+/* ------------------------------------------------------------ the build-in */
+
+html[data-build="pending"]
+  .hero-stage
+  :is(
+    .hero-kicker,
+    .hero-tag,
+    .hero-message,
+    .hero-actions,
+    .hs-browser,
+    .hs-phone,
+    .hs-term,
+    .hs-stamp,
+    .hs-fact,
+    .hs-note
+  ):not([data-on]),
+html[data-build="pending"] .hero-stage .hc:not([data-on]) {
+  opacity: 0;
+}
+html[data-build="pending"]
+  .hero-stage
+  :is(.hero-kicker, .hero-message, .hero-actions):not([data-on]) {
+  translate: 0 16px;
+}
+html[data-build="pending"] .hero-stage .arrow:not([data-on]) path {
+  stroke-dashoffset: 1;
+}
+html[data-build="pending"]
+  .hero-name:not([data-on])
+  .hero-line:last-of-type::after {
+  opacity: 0;
+  animation: none;
+}
+html[data-build="pending"] .hero-stage :is(.hero-tag, .hs-fact)[data-on] {
+  animation: pop 0.55s var(--spring) both;
+}
+html[data-build="pending"] .hero-stage .hs-stamp[data-on] {
+  animation: thump 0.45s var(--ease) both;
+}
+/* The stamp lands hard enough to shake the pieces. */
+.hero-stage[data-thump] .hero-scene {
+  animation: hero-shake 0.42s var(--ease);
+}
+@keyframes hero-shake {
+  20% {
+    translate: -3px 2px;
+  }
+  45% {
+    translate: 3px -2px;
+  }
+  70% {
+    translate: -1px 1px;
+  }
+}
+
+/* ---------------------------------------------------------------- narrower */
+
+@media (max-width: 1180px) {
+  .hero-tag-slot {
+    right: -40px;
+    top: -58px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* One column, the scene straight after the name so the build stays on
+     screen: the copy's children join the stage's grid and are reordered. */
+  .hero-stage {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 0;
+    padding-block: 26px 64px;
+  }
+  .hero-copy {
+    display: contents;
+  }
+  .hero-kicker {
+    order: 1;
+  }
+  .hero-kicker .flabel {
+    display: none;
+  }
+  .hero-title {
+    order: 2;
+    margin-top: 14px;
+    font-size: clamp(3rem, 17vw, 6.6rem);
+  }
+  .hero-tag-slot {
+    right: calc(var(--gutter) - 4px);
+    top: 74px;
+  }
+  .hero-tag {
+    width: clamp(92px, 27vw, 150px);
+    padding: 10px 12px 13px;
+    font-size: clamp(1.15rem, 5.2vw, 1.7rem);
+  }
+  .hero-scene {
+    order: 3;
+    justify-self: center;
+    width: min(100%, 520px);
+    margin-top: 44px;
+  }
+  .hero-message {
+    order: 4;
+    margin-top: 40px;
+  }
+  .hero-actions {
+    order: 5;
+  }
+  .hs-arrow-1,
+  .hs-note-1 {
+    display: none;
+  }
+  .hs-fact-slot-1 {
+    left: 0;
+  }
+  .hs-note-2 {
+    left: 82%;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-actions {
+    width: 100%;
+  }
+  .hero-actions .magnetic {
+    flex: 1 1 100%;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

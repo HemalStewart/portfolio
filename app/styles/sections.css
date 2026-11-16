@@ -1,0 +1,130 @@
+/*
+ * What every section of the board shares: its spacing and its opening — a
+ * frame label, an oversized title with one highlighted phrase, a lede, an
+ * optional handwritten aside and the section's cursor (Section.tsx).
+ */
+
+.bsec {
+  position: relative;
+  padding-block: clamp(88px, 11vw, 168px);
+}
+
+.bhead {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  column-gap: 56px;
+  align-items: end;
+  margin-bottom: clamp(48px, 7vw, 96px);
+}
+.bhead-label {
+  grid-column: 1 / -1;
+  margin-bottom: clamp(18px, 2.6vw, 28px);
+}
+.bhead h2 {
+  font-size: clamp(2.7rem, 7vw, 6.6rem);
+  font-weight: 750;
+  font-variation-settings: "wdth" 118;
+  line-height: 0.93;
+  letter-spacing: -0.045em;
+}
+.blede {
+  max-width: 42ch;
+  padding-bottom: 10px;
+  font-size: 1.06rem;
+  color: var(--muted);
+}
+html[data-motion] .blede.rv {
+  transition-delay: 0.12s;
+}
+
+/* The aside sits above the lede, its arrow curling down towards it. */
+.bhead-note {
+  position: absolute;
+  right: 4%;
+  top: -4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+.bhead-note .arrow {
+  width: 46px;
+  height: auto;
+  margin-top: 0.5em;
+  rotate: 8deg;
+}
+html[data-motion] .bhead-note.rv {
+  transition-delay: 0.3s;
+}
+
+/* The section's cursor parks just past the end of the title. */
+.bhead .park {
+  --px: 58%;
+  --py: 80%;
+}
+
+.subhead {
+  margin: clamp(80px, 11vw, 140px) 0 clamp(28px, 4vw, 48px);
+  font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+  font-weight: 700;
+  font-variation-settings: "wdth" 116;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+@media (max-width: 900px) {
+  .bhead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .blede {
+    margin-top: 18px;
+  }
+  .bhead-note {
+    position: static;
+    justify-self: start;
+    margin-top: 14px;
+  }
+  .bhead .park {
+    --px: 62%;
+    --py: 30%;
+  }
+}
+@media (max-width: 640px) {
+  .bhead .park {
+    display: none;
+  }
+}
+
+/* The 404 page: one frame's worth of board. */
+.not-found {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 22px;
+  min-height: 100svh;
+  padding-block: 96px;
+}
+.not-found h1 {
+  font-size: clamp(2.8rem, 9vw, 7.4rem);
+  font-weight: 800;
+  font-variation-settings: "wdth" 120;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+.not-found h1 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: normal;
+  letter-spacing: -0.01em;
+  background: linear-gradient(var(--marker), var(--marker)) no-repeat 0 82% / 100%
+    0.36em;
+}
+.not-found-lede {
+  max-width: 40ch;
+  color: var(--muted);
+}
+.not-found-stamp {
+  margin-top: 12px;
+}

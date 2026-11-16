@@ -1,41 +1,19 @@
+import "./code-view.css";
 import type { ExternalReference, ProjectExperience } from "../data/portfolio";
 import { codeSamples } from "../data/code";
+import { FrameLabel, type Who } from "./board/marks";
 import { CodeView } from "./CodeView";
 import { ArrowIcon } from "./icons";
 import { ProjectMockup } from "./mockups/Mockups";
-import { TypeCommand } from "./motion/TypeCommand";
 import { CodeSwitch } from "./motion/CodeSwitch";
-import { DiffToggle } from "./motion/DiffToggle";
 
-export function SectionHead({
-  id,
-  index,
-  label,
-  command,
-  title,
-  description,
-}: {
-  id: string;
-  /** Chapter number shown in the eyebrow, e.g. 2 → "(02)". */
-  index: number;
-  label: string;
-  command: string;
-  title: React.ReactNode;
-  description?: string;
-}) {
-  return (
-    <header className="section-head reveal">
-      <p className="eyebrow">
-        <span className="eyebrow-index">
-          ({String(index).padStart(2, "0")})
-        </span>
-        <span className="eyebrow-label">{label}</span>
-        <TypeCommand text={command} />
-      </p>
-      <h2 id={id}>{title}</h2>
-      {description ? <p className="section-lede">{description}</p> : null}
-    </header>
-  );
+/** Which collaborator's colour a project wears, from its platforms and stack. */
+export function craftOf(project: ProjectExperience): Who {
+  if (project.platforms.some((platform) => /android|ios/i.test(platform)))
+    return "flutter";
+  if (project.techStack.some((tech) => /fastapi|openai|whisper|gemini/i.test(tech)))
+    return "ai";
+  return "web";
 }
 
 export function ReferenceLink({
@@ -66,35 +44,45 @@ export function ReferenceLink({
   );
 }
 
-function Visual({ project }: { project: ProjectExperience }) {
+/** A frame on the board holding a project's screen. */
+function Frame({
+  project,
+  children,
+}: {
+  project: ProjectExperience;
+  children: React.ReactNode;
+}) {
+  const who = craftOf(project);
   return (
-    <div
-      className="shot"
-      role="img"
-      aria-label={`Interface sketch of ${project.title}`}
-    >
-      <ProjectMockup slug={project.slug} />
+    <div className="frame" data-who={who}>
+      <FrameLabel who={who}>{project.slug}</FrameLabel>
+      <div className="shot">{children}</div>
+      <i className="frame-handle" aria-hidden="true" />
+      <i className="frame-handle" aria-hidden="true" />
+      <i className="frame-handle" aria-hidden="true" />
+      <i className="frame-handle" aria-hidden="true" />
     </div>
   );
 }
 
-function CodeVisual({ project }: { project: ProjectExperience }) {
+function Visual({ project }: { project: ProjectExperience }) {
   const sample = codeSamples[project.slug];
-  if (!sample) return <Visual project={project} />;
   return (
-    <div className="shot">
-      <CodeSwitch
-        title={project.title}
-        interfaceLayer={<ProjectMockup slug={project.slug} />}
-        codeLayer={
-          <CodeView
-            file={sample.file}
-            code={sample.code}
-            theme={sample.theme}
-          />
-        }
-      />
-    </div>
+    <Frame project={project}>
+      {sample && project.featured ? (
+        <CodeSwitch
+          title={project.title}
+          interfaceLayer={<ProjectMockup slug={project.slug} />}
+          codeLayer={
+            <CodeView file={sample.file} code={sample.code} theme={sample.theme} />
+          }
+        />
+      ) : (
+        <div role="img" aria-label={`Interface sketch of ${project.title}`}>
+          <ProjectMockup slug={project.slug} />
+        </div>
+      )}
+    </Frame>
   );
 }
 
@@ -108,13 +96,27 @@ function Chips({ items }: { items: string[] }) {
   );
 }
 
-function Diff({ lines }: { lines: string[] }) {
+function Ticks({ lines }: { lines: string[] }) {
   return (
-    <ul className="diff">
+    <ul className="ticks">
       {lines.map((line) => (
         <li key={line}>{line}</li>
       ))}
     </ul>
+  );
+}
+
+function Refs({ project }: { project: ProjectExperience }) {
+  return (
+    <div className="refs">
+      {project.references.map((reference) => (
+        <ReferenceLink
+          key={reference.label}
+          reference={reference}
+          context={project.title}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -128,36 +130,26 @@ export function FeaturedCase({
   return (
     <article
       id={project.slug}
-      className="case reveal"
+      className="case rv"
       aria-labelledby={`${project.slug}-title`}
     >
-      <CodeVisual project={project} />
+      <Visual project={project} />
       <div className="case-body">
-        <code className="branch-label">
-          <span className="branch-dot" aria-hidden="true" />
-          feature/{project.slug}
-          <span className="tag tag-merged">merged</span>
+        <p className="case-meta">
           <span className="case-index">
             {String(index + 1).padStart(2, "0")}
           </span>
-        </code>
+          <span className="tag tag-live">Live</span>
+        </p>
         <h3 id={`${project.slug}-title`}>{project.title}</h3>
         <p className="case-tagline">{project.tagline}</p>
         <Chips items={project.platforms} />
-        <Diff lines={project.highlights} />
+        <Ticks lines={project.highlights} />
         <p className="stack-line">
           <span className="sr-only">Stack: </span>
           {project.techStack.join(" / ")}
         </p>
-        <div className="refs">
-          {project.references.map((reference) => (
-            <ReferenceLink
-              key={reference.label}
-              reference={reference}
-              context={project.title}
-            />
-          ))}
-        </div>
+        <Refs project={project} />
       </div>
     </article>
   );
@@ -167,31 +159,25 @@ export function ProjectCard({ project }: { project: ProjectExperience }) {
   return (
     <article
       id={project.slug}
-      className="card reveal"
+      className="card rv"
       aria-labelledby={`${project.slug}-title`}
     >
       <Visual project={project} />
-      <code className="branch-label">
-        <span className="branch-dot" aria-hidden="true" />
-        feature/{project.slug}
-      </code>
       <h3 id={`${project.slug}-title`}>{project.title}</h3>
       <p className="card-tagline">{project.tagline}</p>
       <Chips items={project.platforms} />
-      <DiffToggle lines={project.highlights} />
+      <details className="notes">
+        <summary>
+          <span className="notes-caret" aria-hidden="true" />
+          {project.highlights.length} notes
+        </summary>
+        <Ticks lines={project.highlights} />
+      </details>
       <p className="stack-line">
         <span className="sr-only">Stack: </span>
         {project.techStack.join(" / ")}
       </p>
-      <div className="refs">
-        {project.references.map((reference) => (
-          <ReferenceLink
-            key={reference.label}
-            reference={reference}
-            context={project.title}
-          />
-        ))}
-      </div>
+      <Refs project={project} />
     </article>
   );
 }

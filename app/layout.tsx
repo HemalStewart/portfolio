@@ -1,12 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Instrument_Serif, JetBrains_Mono } from "next/font/google";
-import { Cursor } from "./components/motion/Cursor";
+import {
+  Archivo,
+  Caveat,
+  Instrument_Serif,
+  JetBrains_Mono,
+} from "next/font/google";
+import { BoardMotion } from "./components/board/BoardMotion";
+import { YouCursor } from "./components/board/YouCursor";
 import { MotionProvider } from "./components/motion/MotionProvider";
 import { SmoothScroll } from "./components/motion/SmoothScroll";
-import { SpotlightTracker } from "./components/motion/SpotlightTracker";
 import { profileLinks } from "./data/portfolio";
 import { siteUrl } from "./site";
 import "./globals.css";
+import "./styles/sections.css";
+import "./styles/hero.css";
+import "./styles/board.css";
 
 // Archivo's width axis gives the expanded display cuts; body text stays normal width.
 const archivo = Archivo({
@@ -23,6 +31,15 @@ const instrumentSerif = Instrument_Serif({
   weight: "400",
   style: "italic",
   display: "swap",
+});
+
+// The handwriting on the board: annotations, sticky notes, arrow labels.
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  display: "swap",
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -76,12 +93,17 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0b0a",
-  colorScheme: "dark",
+  themeColor: "#f4f1ea",
+  colorScheme: "light",
 };
 
-// Show the boot screen once per session: repeat visits skip straight in.
-const bootScript = `try{var s=sessionStorage;if(s.getItem("hh:boot"))document.documentElement.dataset.boot="skip";else s.setItem("hh:boot","1")}catch(e){}`;
+/*
+ * Runs before first paint. `data-motion` turns on the build-in states (never
+ * with reduced motion, so that visitor gets the finished board). `data-build`
+ * holds the hero back until its cursors have built it: once per session, and
+ * with a fallback in case the script that plays it never arrives.
+ */
+const boardScript = `try{var d=document.documentElement,r=matchMedia("(prefers-reduced-motion: reduce)").matches;if(!r){d.dataset.motion="on";if(sessionStorage.getItem("hh:built"))d.dataset.build="done";else{d.dataset.build="pending";setTimeout(function(){if(d.dataset.build==="pending"&&!window.__hero)d.dataset.build="done"},6000)}setTimeout(function(){if(!window.__board)delete d.dataset.motion},6000)}else d.dataset.build="done"}catch(e){document.documentElement.dataset.build="done"}`;
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -123,17 +145,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+      className={`${archivo.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${caveat.variable}`}
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
+        <script dangerouslySetInnerHTML={{ __html: boardScript }} />
       </head>
       <body>
         <MotionProvider>
           <SmoothScroll />
-          <Cursor />
-          <SpotlightTracker />
+          <BoardMotion />
+          <YouCursor />
           {children}
         </MotionProvider>
         <script

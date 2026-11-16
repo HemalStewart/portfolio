@@ -30,8 +30,16 @@
 .crafts-pipe {
   display: none;
 }
-.craft .branch-label {
+.craft-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   max-width: 30rem;
+}
+.craft-count {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--subtle);
 }
 .craft h3 {
   margin-top: 16px;
@@ -52,20 +60,18 @@
   max-width: 30rem;
   margin-top: 18px;
   padding: 10px 14px 10px 32px;
-  border-left: 2px solid var(--accent);
+  border-left: 2.5px solid var(--flutter);
   border-radius: 0 12px 12px 0;
-  background: rgb(var(--accent-rgb) / 0.04);
+  background: rgb(0 165 110 / 0.08);
   font-size: 0.95rem;
   line-height: 1.45;
-  color: #d6d6cf;
 }
 .craft-proof::before {
-  content: "+";
+  content: "\2713";
   position: absolute;
-  left: 12px;
-  font-family: var(--font-mono);
-  font-weight: 500;
-  color: var(--accent);
+  left: 11px;
+  font-weight: 700;
+  color: var(--flutter);
 }
 .craft .ref {
   margin-top: 10px;
@@ -85,7 +91,7 @@
   #crafts {
     padding-bottom: clamp(40px, 5vw, 80px);
   }
-  #crafts .section-head {
+  #crafts .bhead {
     margin-bottom: 0;
   }
   .crafts-track {
@@ -228,6 +234,21 @@
 /* ----------------------------------------------------------------- stage */
 
 .cs-canvas {
+  /* The devices are dark objects lying on the paper, so inside the stage the
+     surface tokens are the dark set; the artboard overrides them below. */
+  --bg: #101210;
+  --bg-2: #161916;
+  --line: #262b26;
+  --line-2: #383e38;
+  --ink: #f0efe9;
+  --muted: #a3a79f;
+  --subtle: #7a7f77;
+  --grid: rgb(240 239 233 / 0.04);
+  --merge: #b9a3ff;
+  --accent: #b6f36a;
+  --accent-rgb: 182 243 106;
+  --on-accent: #0a0b0a;
+  --pick: #ff5a36;
   /* Shared by everything that belongs to one state. */
   --s0: clamp(0, calc(1 - var(--t1) * 4), 1);
   --ph: calc(var(--t2) * (1 - var(--t3)));
@@ -277,8 +298,8 @@
   background: #171a17;
   box-shadow:
     0 0 0 1px
-      color-mix(in srgb, var(--accent) calc(var(--s0) * 100%), var(--line-2)),
-    0 4cqw 8cqw -4cqw rgb(0 0 0 / 0.85),
+      color-mix(in srgb, var(--pick) calc(var(--s0) * 100%), var(--line-2)),
+    0 4cqw 7cqw -4cqw rgb(22 21 19 / 0.45),
     0 0 9cqw -2cqw rgb(var(--accent-rgb) / calc(0.3 * var(--live)));
   transform: translate(-50%, -50%);
   will-change: width, height;
@@ -374,7 +395,7 @@
   left: 0;
   bottom: calc(100% + 1cqw);
   font-size: 1.3cqw;
-  color: var(--accent);
+  color: var(--pick);
   white-space: nowrap;
 }
 .cs-artlabel b {
@@ -385,10 +406,10 @@
   top: calc(100% + 0.9cqw);
   padding: 0.5cqw 1cqw;
   border-radius: 0.5cqw;
-  background: var(--accent);
+  background: var(--pick);
   font-size: 1.15cqw;
   font-weight: 500;
-  color: var(--on-accent);
+  color: #fff;
   white-space: nowrap;
   transform: translateX(-50%);
 }
@@ -396,8 +417,8 @@
   width: 1cqw;
   height: 1cqw;
   margin: -0.5cqw;
-  background: var(--bg);
-  box-shadow: 0 0 0 1px var(--accent);
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--pick);
 }
 .cs-handle:nth-of-type(1) {
   left: 0;
@@ -419,19 +440,21 @@
 /* The wireframe mirrors the built homepage block for block, so the site can
    develop straight out of it. */
 .cs-wire {
-  --wire: rgb(240 239 233 / 0.3);
-  --fill: rgb(240 239 233 / 0.14);
+  --wire: rgb(22 21 19 / 0.34);
+  --fill: rgb(22 21 19 / 0.1);
+  --grid: rgb(22 21 19 / 0.05);
+  --bg-2: #fffdf8;
   background:
     linear-gradient(
       to top right,
       transparent calc(50% - 0.5px),
-      rgb(240 239 233 / 0.07) calc(50% - 0.5px) calc(50% + 0.5px),
+      rgb(22 21 19 / 0.09) calc(50% - 0.5px) calc(50% + 0.5px),
       transparent calc(50% + 0.5px)
     ),
     linear-gradient(
       to bottom right,
       transparent calc(50% - 0.5px),
-      rgb(240 239 233 / 0.07) calc(50% - 0.5px) calc(50% + 0.5px),
+      rgb(22 21 19 / 0.09) calc(50% - 0.5px) calc(50% + 0.5px),
       transparent calc(50% + 0.5px)
     ),
     linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 4cqw 4cqw,
@@ -503,7 +526,7 @@
   width: 65%;
   box-shadow:
     inset 0 0 0 1px var(--wire),
-    0 0 0 1px rgb(var(--accent-rgb) / var(--sel));
+    0 0 0 1px rgb(255 90 54 / var(--sel));
 }
 .w-h2 {
   --d: 0.6;
@@ -546,7 +569,7 @@
   height: 0.5cqw;
   border-radius: 99px;
   background: var(--wire);
-  box-shadow: 0 1.6cqw 0 -0.05cqw rgb(240 239 233 / 0.14);
+  box-shadow: 0 1.6cqw 0 -0.05cqw rgb(22 21 19 / 0.14);
 }
 .w-foot {
   --d: 0.8;
@@ -578,10 +601,10 @@
   z-index: 3;
   width: 2px;
   margin-left: -1px;
-  background: var(--accent);
+  background: var(--pick);
   box-shadow:
-    0 0 1.6cqw 0.3cqw rgb(var(--accent-rgb) / 0.55),
-    -5cqw 0 6cqw 1cqw rgb(var(--accent-rgb) / 0.12);
+    0 0 1.6cqw 0.3cqw rgb(255 90 54 / 0.5),
+    -5cqw 0 6cqw 1cqw rgb(255 90 54 / 0.12);
   opacity: clamp(0, calc(var(--t1) * (1 - var(--t1)) * 40), 1);
 }
 
@@ -654,7 +677,7 @@
   background: #171a17;
   box-shadow:
     0 0 0 1px var(--line-2),
-    0 4cqw 8cqw -4cqw rgb(0 0 0 / 0.85);
+    0 4cqw 7cqw -4cqw rgb(22 21 19 / 0.45);
   opacity: clamp(0, calc(var(--ph) * 2.2 - 0.4), 1);
   filter: brightness(0.7);
   transform: translate(-50%, -50%)
@@ -681,7 +704,7 @@
   background: rgb(16 18 16 / 0.88);
   box-shadow:
     0 0 0 1px var(--line-2),
-    0 3cqw 5cqw -2cqw rgb(0 0 0 / 0.8);
+    0 3cqw 5cqw -2cqw rgb(22 21 19 / 0.45);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -750,7 +773,7 @@
   z-index: 4;
   display: flex;
   align-items: flex-start;
-  color: var(--accent);
+  color: var(--pick);
   opacity: calc(clamp(0, calc((var(--in) - 0.7) * 5), 1) * var(--s0));
 }
 .cs-cursor svg {
@@ -762,10 +785,11 @@
   margin: 1.7cqw 0 0 0.2cqw;
   padding: 0.5cqw 0.9cqw;
   border-radius: 0.2cqw 0.9cqw 0.9cqw 0.9cqw;
-  background: var(--accent);
+  background: var(--pick);
+  font-family: var(--font-sans);
   font-size: 1.15cqw;
-  font-weight: 500;
-  color: var(--on-accent);
+  font-weight: 650;
+  color: #fff;
 }
 .cs-code {
   --on: clamp(0, calc(var(--t1) * 3 - 1.8), 1);

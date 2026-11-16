@@ -4,7 +4,16 @@ import "./crafts.css";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { Craft } from "../../data/portfolio";
+import { FrameLabel, type Who } from "../board/marks";
 import { ArrowIcon } from "../icons";
+
+/** Which collaborator each craft belongs to. */
+const WHO: Record<string, Who> = {
+  design: "design",
+  web: "web",
+  mobile: "flutter",
+  api: "ai",
+};
 
 /** Same condition as the pinned layout in crafts.css. */
 const QUERY = "(prefers-reduced-motion: no-preference) and (min-height: 540px)";
@@ -158,13 +167,12 @@ export function Crafts({
                 }
                 aria-labelledby={`craft-${craft.branch}`}
               >
-                <code className="branch-label">
-                  <span className="branch-dot" aria-hidden="true" />
-                  {craft.branch}/
-                  <span className="case-index" aria-hidden="true">
+                <p className="craft-label">
+                  <FrameLabel who={WHO[craft.branch]}>{craft.branch}</FrameLabel>
+                  <span className="craft-count" aria-hidden="true">
                     {pad(index + 1)} / {pad(crafts.length)}
                   </span>
-                </code>
+                </p>
                 <h3 id={`craft-${craft.branch}`}>
                   <Title text={craft.title} />
                 </h3>
@@ -340,7 +348,7 @@ export function Crafts({
               <svg viewBox="0 0 16 16" fill="currentColor">
                 <path d="M1.5 1 14 6.6 8.4 8.4 6.6 14Z" />
               </svg>
-              <span>Hemal</span>
+              <span>Design</span>
             </div>
 
             <div className="cs-float cs-code">

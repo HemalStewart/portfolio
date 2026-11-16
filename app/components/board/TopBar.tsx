@@ -1,26 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { LocalTime } from "../chrome/LocalTime";
-import { ArrowIcon, BranchMark } from "../icons";
+import { ArrowIcon } from "../icons";
+import { CRAFT_CURSORS, type Who } from "./marks";
 
 type Link = { label: string; href: string };
 
 /**
- * Full-width header bar that stays reachable at all times: it gains a glass
- * backing once you scroll, tracks the section in view with a sliding marker,
- * shows Hemal's local time, and opens a full-screen menu on small screens
- * (Escape closes it, focus returns).
+ * The board's toolbar: file name, the sections as tabs (the one in view is
+ * marked), who is on the board, and a way to get in touch. Small screens get
+ * a full-screen menu; Escape closes it and focus returns to the toggle.
  */
-export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
+export function TopBar({ links, email }: { links: Link[]; email: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const navRef = useRef<HTMLUListElement>(null);
-  const pillRef = useRef<HTMLSpanElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
-  // Compact once past the top.
   useEffect(() => {
     let raf = 0;
     const update = () => {
@@ -30,6 +26,7 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       cancelAnimationFrame(raf);
@@ -37,9 +34,7 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
     };
   }, []);
 
-  // Section in view drives the active link. Sections without a nav link
-  // (intro, about, crafts) are watched too, so the marker clears in them
-  // instead of holding on to the last linked section.
+  // Every section is watched, so the mark clears in ones without a tab.
   useEffect(() => {
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>("main > section[id]"),
@@ -55,24 +50,6 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
     return () => observer.disconnect();
   }, []);
 
-  // Slide the highlight under the active link.
-  useEffect(() => {
-    const pill = pillRef.current;
-    const nav = navRef.current;
-    if (!pill || !nav) return;
-    const link = active
-      ? nav.querySelector<HTMLElement>(`a[href="${active}"]`)
-      : null;
-    if (!link) {
-      pill.style.opacity = "0";
-      return;
-    }
-    pill.style.opacity = "1";
-    pill.style.width = `${link.offsetWidth}px`;
-    pill.style.transform = `translateX(${link.offsetLeft}px)`;
-  }, [active]);
-
-  // Mobile menu: lock scroll, close on Escape, restore focus.
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
@@ -90,22 +67,26 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
 
   return (
     <header
-      className="site-header"
+      className="topbar"
       data-scrolled={scrolled || undefined}
       data-open={open || undefined}
     >
-      <div className="header-bar">
-        <a className="wordmark" href="#top" onClick={() => setOpen(false)}>
-          <BranchMark />
-          <span className="wordmark-text">
+      <div className="topbar-row">
+        <a className="brand" href="#top" onClick={() => setOpen(false)}>
+          <span className="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 20 20" focusable="false">
+              <path d="M4 3.4 16.6 8.5l-5.5 2-2 5.5Z" />
+            </svg>
+          </span>
+          <span className="brand-text">
             <strong>Hemal Herath</strong>
-            <small>hemal/main</small>
+            <small>Portfolio · live board</small>
           </span>
           <span className="sr-only"> — back to top</span>
         </a>
-        <nav aria-label="Sections" className="nav">
-          <span ref={pillRef} className="nav-pill" aria-hidden="true" />
-          <ul ref={navRef}>
+
+        <nav aria-label="Sections" className="tabs">
+          <ul>
             {links.map((link) => (
               <li key={link.href}>
                 <a
@@ -118,21 +99,26 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
             ))}
           </ul>
         </nav>
-        <div className="header-actions">
-          <LocalTime />
+
+        <div className="topbar-actions">
+          <ul className="crew" aria-hidden="true">
+            {(Object.keys(CRAFT_CURSORS) as Who[]).map((who) => (
+              <li key={who} data-who={who} title={CRAFT_CURSORS[who]}>
+                {CRAFT_CURSORS[who][0]}
+              </li>
+            ))}
+          </ul>
           <a
-            className="header-cv"
+            className="topbar-cv"
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
           >
             CV
           </a>
-          <a className="button button-accent button-small" href={email}>
+          <a className="btn btn-ink btn-small" href={email}>
             Hire me
-            <span className="button-arrow" aria-hidden="true">
-              <ArrowIcon direction="right" />
-            </span>
+            <ArrowIcon direction="right" />
           </a>
           <button
             ref={toggleRef}
@@ -148,19 +134,16 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
           </button>
         </div>
       </div>
-      <div className="scroll-progress" aria-hidden="true" />
+      <div className="topbar-progress" aria-hidden="true" />
 
       <div id="mobile-menu" className="mobile-menu" inert={!open}>
         <nav aria-label="Menu">
           <ol>
             {links.map((link, index) => (
-              <li
-                key={link.href}
-                style={{ "--i": index } as React.CSSProperties}
-              >
+              <li key={link.href} style={{ "--i": index } as React.CSSProperties}>
                 <a href={link.href} onClick={() => setOpen(false)}>
                   <span className="mobile-index" aria-hidden="true">
-                    ({String(index + 1).padStart(2, "0")})
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   {link.label}
                 </a>
@@ -169,11 +152,9 @@ export function SiteHeader({ links, email }: { links: Link[]; email: string }) {
           </ol>
         </nav>
         <div className="mobile-actions">
-          <a className="button button-accent" href={email}>
+          <a className="btn btn-ink" href={email}>
             Hire me
-            <span className="button-arrow" aria-hidden="true">
-              <ArrowIcon direction="right" />
-            </span>
+            <ArrowIcon direction="right" />
           </a>
           <a
             className="text-link"
