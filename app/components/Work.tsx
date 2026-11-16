@@ -54,7 +54,7 @@ function Frame({
 }) {
   const who = craftOf(project);
   return (
-    <div className="frame" data-who={who}>
+    <div className="frame" data-who={who} data-pick="" data-name={project.title}>
       <FrameLabel who={who}>{project.slug}</FrameLabel>
       <div className="shot">{children}</div>
       <i className="frame-handle" aria-hidden="true" />
@@ -159,8 +159,11 @@ export function ProjectCard({ project }: { project: ProjectExperience }) {
   return (
     <article
       id={project.slug}
-      className="card rv"
+      className="card"
       aria-labelledby={`${project.slug}-title`}
+      data-b="frame"
+      data-name={project.title}
+      data-by={craftOf(project)}
     >
       <Visual project={project} />
       <h3 id={`${project.slug}-title`}>{project.title}</h3>

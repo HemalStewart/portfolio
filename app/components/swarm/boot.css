@@ -1,0 +1,167 @@
+/*
+ * The opening (Boot.tsx): a card that counts to 100% while the crew rings
+ * it. Everything here runs from the first paint without a script.
+ */
+
+@property --pct {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.boot {
+  display: none;
+}
+html[data-motion] .boot {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  /* If the script never arrives, the opening lets go by itself. */
+  animation: boot-out 0.4s 2.4s var(--ease) forwards;
+}
+html[data-booted] .boot {
+  opacity: 0;
+  visibility: hidden;
+  animation: none;
+  transition:
+    opacity 0.4s var(--ease),
+    visibility 0s 0.4s;
+}
+
+.boot-card {
+  width: min(400px, 100vw - 56px);
+  padding: 20px 22px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 40px 90px -30px #000;
+  animation: boot-card 0.5s var(--spring) backwards;
+  transition:
+    scale 0.45s var(--ease),
+    filter 0.45s;
+}
+html[data-booted] .boot-card {
+  scale: 1.1;
+  filter: blur(10px);
+}
+.boot-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.boot-file {
+  display: grid;
+  line-height: 1.15;
+}
+.boot-file b {
+  font-size: 1rem;
+  font-weight: 750;
+  font-variation-settings: "wdth" 118;
+}
+.boot-file small {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--subtle);
+}
+.boot-pct {
+  margin-left: auto;
+  font-size: 2.3rem;
+  font-weight: 800;
+  font-variation-settings: "wdth" 120;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  counter-reset: pct var(--pct);
+  animation: boot-pct 0.62s cubic-bezier(0.3, 0.6, 0.2, 1) forwards;
+}
+.boot-pct::after {
+  content: counter(pct) "%";
+}
+.boot-bar {
+  display: block;
+  height: 3px;
+  margin-top: 18px;
+  background: var(--sel);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: grow-x 0.62s cubic-bezier(0.3, 0.6, 0.2, 1) forwards;
+}
+.boot-note {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--subtle);
+}
+
+/* The crew flies in from every side and rings the card, a beat apart. */
+html[data-motion]:not([data-booted]) .swarm {
+  z-index: 210;
+}
+html[data-motion] .sw-cur:not([data-on]) {
+  --a: calc(var(--k) * 30deg - 75deg);
+  left: 50vw;
+  top: 50svh;
+  opacity: 1;
+  translate: calc(cos(var(--a)) * min(300px, 46vw))
+    calc(sin(var(--a)) * min(190px, 30svh));
+  animation: sw-arrive 0.62s calc(var(--k) * 26ms) var(--ease) backwards;
+}
+html[data-motion] .sw-cur:not([data-on]) i {
+  opacity: 1;
+  scale: 1;
+  transition: none;
+}
+@keyframes sw-arrive {
+  from {
+    opacity: 0;
+    translate: calc(cos(var(--a)) * 100vmax) calc(sin(var(--a)) * 100vmax);
+  }
+  40% {
+    opacity: 1;
+  }
+}
+@keyframes boot-pct {
+  to {
+    --pct: 100;
+  }
+}
+@keyframes boot-card {
+  from {
+    opacity: 0;
+    scale: 0.86;
+  }
+}
+@keyframes boot-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* The tool chrome slides into place as the file opens. */
+html[data-motion] .topbar,
+html[data-motion] .dock {
+  transition:
+    translate 0.6s var(--ease),
+    opacity 0.4s,
+    left 0.3s var(--ease);
+}
+html[data-motion]:not([data-booted]) .topbar {
+  translate: 0 -100%;
+}
+html[data-motion]:not([data-booted]) .dock {
+  translate: 0 70px;
+  opacity: 0;
+}
+
+@media (max-width: 900px) {
+  html[data-motion] .sw-cur:not([data-on]) {
+    --a: calc(var(--k) * 60deg - 60deg);
+    translate: calc(cos(var(--a)) * 44vw) calc(sin(var(--a)) * min(170px, 28svh));
+  }
+}

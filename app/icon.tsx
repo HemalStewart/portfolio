@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 64, height: 64 };
 export const contentType = "image/png";
 
-/** The site mark, drawn in code: a cursor arrow on an ink tile. */
+/** The site mark: the initials, set heavy, on the canvas colour. */
 export default function Icon() {
   return new ImageResponse(
     <div
@@ -13,13 +13,15 @@ export default function Icon() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#161513",
-        borderRadius: 16,
+        background: "#0f0f11",
+        borderRadius: 12,
+        color: "#f3f1ea",
+        fontSize: 34,
+        fontWeight: 800,
+        letterSpacing: -3,
       }}
     >
-      <svg width="40" height="40" viewBox="0 0 20 20">
-        <path d="M4 3.4 16.6 8.5l-5.5 2-2 5.5Z" fill="#ffd84a" />
-      </svg>
+      hh
     </div>,
     size,
   );

@@ -52,6 +52,8 @@ export function SitePrint({
       className="print"
       style={{ "--r": `${TILT[index % TILT.length]}deg` } as React.CSSProperties}
       aria-labelledby={`site-${site.slug}-title`}
+      data-b="frame"
+      data-name={site.name}
     >
       <span className="tape" aria-hidden="true" />
       <div className="print-shot">
@@ -95,7 +97,12 @@ export function SitePrint({
 /** Closes the row: the 3D fly-through, and an invitation. */
 export function ShowcaseEnd() {
   return (
-    <article className="print print-end" aria-labelledby="showcase-end-title">
+    <article
+      className="print print-end"
+      aria-labelledby="showcase-end-title"
+      data-b="frame"
+      data-name="3D showcase"
+    >
       <h3 id="showcase-end-title">
         Fly through all {countWord(showcaseSites.length)} in 3D.
       </h3>

@@ -5,9 +5,10 @@ export const alt = "Hemal Herath — Software Engineer · Web, Flutter & AI";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const PAPER = "#f4f1ea";
-const INK = "#161513";
-const MUTED = "#5e5b54";
+const PAPER = "#0f0f11";
+const INK = "#f3f1ea";
+const DARK = "#161513";
+const MUTED = "#a9a79f";
 const MARKER = "#ffd84a";
 
 /** A collaborator's cursor with its name tag, as on the board. */
@@ -80,19 +81,20 @@ function Sticky({
         justifyContent: "space-between",
         padding: "20px 22px 22px",
         background: color,
+        color: DARK,
         transform: `rotate(${tilt}deg)`,
-        boxShadow: "0 22px 26px -18px rgba(22,21,19,0.45)",
+        boxShadow: "0 22px 26px -14px rgba(0,0,0,0.7)",
       }}
     >
       <div style={{ fontSize: 64, fontWeight: 800, letterSpacing: -3 }}>
         {value}
       </div>
-      <div style={{ fontSize: 22, color: INK }}>{label}</div>
+      <div style={{ fontSize: 22, color: DARK }}>{label}</div>
     </div>
   );
 }
 
-/** The share image: a still of the board. */
+/** The share image: a still of the file, mid-build. */
 export default function OpenGraphImage() {
   const dots = [];
   for (let x = 0; x < 30; x++)
@@ -107,7 +109,7 @@ export default function OpenGraphImage() {
             width: 3,
             height: 3,
             borderRadius: 3,
-            background: "rgba(22,21,19,0.16)",
+            background: "rgba(255,255,255,0.13)",
           }}
         />,
       );
@@ -172,6 +174,7 @@ export default function OpenGraphImage() {
                 display: "flex",
                 padding: "4px 16px 8px",
                 background: MARKER,
+                color: DARK,
                 fontSize: 44,
                 fontStyle: "italic",
               }}
@@ -196,15 +199,18 @@ export default function OpenGraphImage() {
       <Sticky
         left={930}
         top={300}
-        color="#ffc4d6"
+        color="#ffb9cf"
         tilt={6}
         value={String(releases.length)}
         label="products live"
       />
-      <Cursor left={690} top={318} color="#ff5a36" label="Design" />
-      <Cursor left={1010} top={236} color="#2d5bff" label="Web" />
-      <Cursor left={820} top={470} color="#00a56e" label="Flutter" />
-      <Cursor left={980} top={530} color="#8b4dff" label="Backend & AI" />
+      <Cursor left={690} top={318} color="#ff6a3d" label="Design" />
+      <Cursor left={1010} top={236} color="#4f83ff" label="Web" />
+      <Cursor left={820} top={470} color="#16b877" label="Flutter" />
+      <Cursor left={980} top={530} color="#a678ff" label="Backend" />
+      <Cursor left={610} top={120} color="#e0559b" label="UX" />
+      <Cursor left={1090} top={96} color="#1aa7d6" label="API" />
+      <Cursor left={700} top={556} color="#ff5d5d" label="QA" />
     </div>,
     size,
   );

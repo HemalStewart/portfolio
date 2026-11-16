@@ -5,17 +5,73 @@ import { ArrowIcon } from "../icons";
 import { CRAFT_CURSORS, type Who } from "./marks";
 
 type Link = { label: string; href: string };
+type Side = "lp" | "rp";
+
+const PANELS: Record<Side, { label: string; bar: string }> = {
+  lp: { label: "Layers panel", bar: "M3 4h5v12H3Z" },
+  rp: { label: "Inspector panel", bar: "M12 4h5v12h-5Z" },
+};
 
 /**
- * The board's toolbar: file name, the sections as tabs (the one in view is
- * marked), who is on the board, and a way to get in touch. Small screens get
- * a full-screen menu; Escape closes it and focus returns to the toggle.
+ * The file's toolbar: its name, the sections as tabs (the one in view is
+ * marked), who is in the file, and a way to get in touch. The two panel
+ * buttons open the layers and the inspector, which start closed; the choice
+ * is kept for the next visit. Small screens get a full-screen menu; Escape
+ * closes it and focus returns to the toggle.
  */
 export function TopBar({ links, email }: { links: Link[]; email: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [panels, setPanels] = useState<Record<Side, boolean>>({
+    lp: false,
+    rp: false,
+  });
   const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // The inline script in layout.tsx has already restored a stored choice.
+  useEffect(() => {
+    const data = document.documentElement.dataset;
+    const frame = requestAnimationFrame(() =>
+      setPanels({ lp: "lp" in data, rp: "rp" in data }),
+    );
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  function togglePanel(side: Side) {
+    // The page's own attributes are the source of truth, so quick clicks on
+    // both toggles never act on a stale copy of the state.
+    const root = document.documentElement;
+    root.toggleAttribute(`data-${side}`, !root.hasAttribute(`data-${side}`));
+    const next = { lp: root.hasAttribute("data-lp"), rp: root.hasAttribute("data-rp") };
+    setPanels(next);
+    try {
+      localStorage.setItem(
+        "hh-panels",
+        `${next.lp ? "l" : ""}${next.rp ? "r" : ""}`,
+      );
+    } catch {
+      /* private mode: the choice just lasts for this visit */
+    }
+    // Pinned sections measure themselves on resize; the canvas just changed.
+    window.setTimeout(() => window.dispatchEvent(new Event("resize")), 340);
+  }
+
+  const panelButton = (side: Side) => (
+    <button
+      type="button"
+      className="panel-toggle"
+      aria-pressed={panels[side]}
+      aria-label={PANELS[side].label}
+      title={PANELS[side].label}
+      onClick={() => togglePanel(side)}
+    >
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <path d="M3 4h14v12H3Z" />
+        <path d={PANELS[side].bar} />
+      </svg>
+    </button>
+  );
 
   useEffect(() => {
     let raf = 0;
@@ -73,17 +129,13 @@ export function TopBar({ links, email }: { links: Link[]; email: string }) {
     >
       <div className="topbar-row">
         <a className="brand" href="#top" onClick={() => setOpen(false)}>
-          <span className="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 20 20" focusable="false">
-              <path d="M4 3.4 16.6 8.5l-5.5 2-2 5.5Z" />
-            </svg>
-          </span>
           <span className="brand-text">
             <strong>Hemal Herath</strong>
-            <small>Portfolio · live board</small>
+            <small>Portfolio · live file</small>
           </span>
           <span className="sr-only"> — back to top</span>
         </a>
+        {panelButton("lp")}
 
         <nav aria-label="Sections" className="tabs">
           <ul>
@@ -101,12 +153,14 @@ export function TopBar({ links, email }: { links: Link[]; email: string }) {
         </nav>
 
         <div className="topbar-actions">
+          {panelButton("rp")}
           <ul className="crew" aria-hidden="true">
             {(Object.keys(CRAFT_CURSORS) as Who[]).map((who) => (
               <li key={who} data-who={who} title={CRAFT_CURSORS[who]}>
                 {CRAFT_CURSORS[who][0]}
               </li>
             ))}
+            <li className="crew-more">+8</li>
           </ul>
           <a
             className="topbar-cv"

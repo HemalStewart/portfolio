@@ -11,19 +11,17 @@
 }
 /* The statement: each word inks in as the paragraph crosses the screen. */
 .scrub {
-  max-width: 27ch;
+  max-width: 30ch;
   margin-top: clamp(20px, 3vw, 36px);
-  font-size: clamp(1.8rem, 4.3vw, 4.1rem);
+  font-size: clamp(1.8rem, calc(var(--cw) * 0.043), 5.2rem);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.035em;
   view-timeline: --readme;
 }
 .scrub em {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-style: normal;
+  font-weight: 700;
 }
 .scrub-word {
   --fill: var(--ink);
@@ -38,7 +36,7 @@
       background-image: linear-gradient(
         90deg,
         var(--fill) 50%,
-        rgb(22 21 19 / 0.16) 50%
+        rgb(243 241 234 / 0.2) 50%
       );
       background-size: 200% 100%;
       background-position: 0 0;
@@ -110,25 +108,12 @@
   font-weight: 700;
   line-height: 1;
 }
-/* The notes pop on one after another; the list items themselves stay put. */
-html[data-motion] .facts li.rv,
-html[data-motion] .facts li.rv:not([data-in]) {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-html[data-motion] .facts li.rv:not([data-in]) .fact {
-  opacity: 0;
-}
-html[data-motion] .facts li.rv[data-in] .fact {
-  animation: pop 0.6s calc(var(--i, 0) * 110ms) var(--spring) both;
-}
 
 /* ==================================================================== work */
 
 /* Live products: a ledger. */
 .ships {
-  border-top: 1.5px solid var(--ink);
+  border-top: 1.5px solid var(--line-2);
 }
 .ship {
   position: relative;
@@ -158,21 +143,20 @@ html[data-motion] .facts li.rv[data-in] .fact {
   font-variation-settings: "wdth" 112;
   line-height: 1.04;
   letter-spacing: -0.04em;
-  background: linear-gradient(var(--marker), var(--marker)) no-repeat 0 78% / 0%
-    0.42em;
   transition:
-    background-size 0.5s var(--ease),
+    color 0.3s var(--ease),
     translate 0.5s var(--ease);
 }
 .ship:hover h3,
 .ship:focus-within h3 {
-  background-size: 100% 0.42em;
+  color: var(--marker);
   translate: 10px 0;
 }
 /* The download count, on a scrap of note paper. */
 .ship-stat {
   padding: 3px 12px 5px;
   background: var(--pink);
+  color: var(--ink-d);
   font-family: var(--font-hand);
   font-size: 1.25rem;
   font-weight: 700;
@@ -197,8 +181,8 @@ html[data-motion] .facts li.rv[data-in] .fact {
   gap: 6px;
   min-height: 44px;
   padding: 0 16px;
-  border: 1.5px solid var(--ink);
-  border-radius: 999px;
+  border: 1.5px solid var(--line-2);
+  border-radius: 4px;
   background: var(--card);
   font-size: 0.86rem;
   font-weight: 600;
@@ -209,9 +193,11 @@ html[data-motion] .facts li.rv[data-in] .fact {
 }
 .ship-links a:hover,
 .ship-links a:focus-visible {
+  border-color: var(--marker);
   background: var(--marker);
+  color: var(--ink-d);
   transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--ink);
+  box-shadow: 4px 4px 0 rgb(255 255 255 / 0.25);
 }
 .ship-links a:hover .arrow-icon {
   transform: translate(2px, -2px);
@@ -483,13 +469,13 @@ html[data-motion] .pinned-track[data-enabled] .case.rv {
   background:
     repeating-linear-gradient(
       90deg,
-      rgb(22 21 19 / 0.03) 0 1px,
+      rgb(255 255 255 / 0.035) 0 1px,
       transparent 1px 140px
     ),
     var(--paper-2);
   box-shadow:
-    inset 0 14px 18px -16px rgb(22 21 19 / 0.4),
-    inset 0 -14px 18px -16px rgb(22 21 19 / 0.4);
+    inset 0 1px 0 var(--line),
+    inset 0 -1px 0 var(--line);
 }
 .hpan-row {
   display: flex;
@@ -611,7 +597,7 @@ html[data-motion] .pinned-track[data-enabled] .case.rv {
   align-self: center;
   width: min(84vw, 380px);
   padding: 28px 24px 22px;
-  border-radius: 14px;
+  border-radius: 4px;
   background: var(--ink);
   color: var(--paper);
   rotate: 1.5deg;
@@ -628,28 +614,28 @@ html[data-motion] .pinned-track[data-enabled] .case.rv {
 .print-end .print-line,
 .print-next {
   display: block;
-  color: rgb(244 241 234 / 0.74);
+  color: rgb(22 21 19 / 0.74);
 }
 .print-end .btn-ink {
   margin-top: 18px;
-  background: var(--marker);
+  background: var(--ink-d);
   color: var(--ink);
-  box-shadow: 0 0 0 0 var(--paper);
+  box-shadow: 0 0 0 0 var(--sel);
 }
 .print-end .btn-ink:hover {
-  box-shadow: 5px 5px 0 0 var(--paper);
+  box-shadow: 5px 5px 0 0 var(--sel);
 }
 .print-next {
   margin-top: 22px;
   padding-top: 18px;
-  border-top: 1px solid rgb(244 241 234 / 0.2);
+  border-top: 1px solid rgb(22 21 19 / 0.2);
   font-size: 0.92rem;
   line-height: 1.45;
 }
 
 /* Panning (HPan.tsx): the stage is pinned and the row slides sideways. */
 .hpan[data-enabled] .hpan-stage {
-  --side: max(var(--gutter), calc((100vw - var(--shell)) / 2));
+  --side: var(--gutter);
   position: sticky;
   top: 0;
   display: flex;
@@ -770,10 +756,10 @@ html[data-motion] .pinned-track[data-enabled] .case.rv {
 }
 .timeline-item:first-child .timeline-node {
   background: var(--ai);
-  box-shadow: 0 0 0 5px rgb(139 77 255 / 0.2);
+  box-shadow: 0 0 0 5px rgb(166 120 255 / 0.25);
 }
-html[data-motion] .timeline-item.rv[data-in] .timeline-node {
-  animation: pop 0.5s 0.15s var(--spring) both;
+html[data-motion] .timeline-item[data-built] .timeline-node {
+  animation: sw-pop 0.5s 0.1s var(--spring) backwards;
 }
 .timeline-meta {
   display: flex;
@@ -918,18 +904,8 @@ html[data-motion] .timeline-item.rv[data-in] .timeline-node {
   position: relative;
   padding: 22px 20px 24px;
   border: 1.5px dashed var(--who);
-  border-radius: 14px;
-  background: rgb(255 253 248 / 0.72);
-}
-html[data-motion] .cset.rv {
-  transition:
-    opacity 0.7s var(--ease),
-    transform 0.95s var(--ease),
-    rotate 0.9s var(--spring);
-  transition-delay: calc(var(--i, 0) * 90ms);
-}
-html[data-motion] .cset.rv:not([data-in]) {
-  rotate: -4deg;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 0.03);
 }
 .cset h3 {
   display: flex;
@@ -964,8 +940,8 @@ html[data-motion] .cset.rv:not([data-in]) {
   gap: 8px;
   min-height: 36px;
   padding: 0 13px;
-  border: 1.5px solid var(--ink);
-  border-radius: 999px;
+  border: 1.5px solid var(--line-2);
+  border-radius: 4px;
   background: var(--card);
   font-family: var(--font-mono);
   font-size: 0.76rem;
@@ -991,7 +967,7 @@ html[data-motion] .cset.rv:not([data-in]) {
   margin-top: clamp(64px, 9vw, 120px);
   padding-block: clamp(16px, 2.2vw, 28px);
   overflow: hidden;
-  border-block: 1.5px solid var(--ink);
+  border-block: 1.5px solid var(--line-2);
   mask-image: linear-gradient(
     90deg,
     transparent,
@@ -1051,16 +1027,16 @@ html[data-motion] .cset.rv:not([data-in]) {
 /* A layers panel, turned into a list. */
 .layers {
   overflow: hidden;
-  border: 1.5px solid var(--ink);
-  border-radius: 16px;
+  border: 1.5px solid var(--line-2);
+  border-radius: 4px;
   background: var(--card);
-  box-shadow: 8px 8px 0 var(--ink);
+  box-shadow: 8px 8px 0 var(--ai);
 }
 .layers::before {
   content: "Layers";
   display: block;
   padding: 12px 20px;
-  border-bottom: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--line-2);
   background: var(--paper-2);
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -1086,7 +1062,7 @@ html[data-motion] .cset.rv:not([data-in]) {
   position: absolute;
   inset: 0;
   border-left: 3px solid var(--ai);
-  background: rgb(195 214 255 / 0.5);
+  background: rgb(166 120 255 / 0.14);
   opacity: 0;
   transition: opacity 0.25s;
 }
@@ -1149,11 +1125,10 @@ html[data-motion] .cset.rv:not([data-in]) {
 /* One big frame to finish on. */
 .contact-frame {
   position: relative;
-  padding: clamp(28px, 6vw, 88px);
-  border: 1.5px solid var(--ink);
-  border-radius: 20px;
+  padding: clamp(28px, 6vw, 112px);
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
   background: var(--card);
-  box-shadow: 10px 10px 0 var(--ink);
 }
 .contact-title {
   margin-top: clamp(16px, 2.4vw, 28px);
@@ -1185,13 +1160,16 @@ html[data-motion] .cset.rv:not([data-in]) {
   font-weight: 650;
   letter-spacing: -0.03em;
   overflow-wrap: anywhere;
-  background: linear-gradient(var(--marker), var(--marker)) no-repeat 0 80% / 0%
-    0.4em;
-  transition: background-size 0.5s var(--ease);
+  background: linear-gradient(var(--marker), var(--marker)) no-repeat 0 96% / 0%
+    3px;
+  transition:
+    background-size 0.5s var(--ease),
+    color 0.3s;
 }
 .contact-email:hover,
 .contact-email:focus-visible {
-  background-size: 100% 0.4em;
+  background-size: 100% 3px;
+  color: var(--marker);
 }
 .contact-email:hover .arrow-icon {
   transform: translate(3px, -3px);
@@ -1205,54 +1183,6 @@ html[data-motion] .cset.rv:not([data-in]) {
 }
 .contact-stamp span {
   font-size: clamp(0.78rem, 1.5vw, 1.2rem);
-}
-html[data-motion] .contact-stamp.rv,
-html[data-motion] .contact-stamp.rv:not([data-in]) {
-  transform: none;
-  transition: none;
-}
-html[data-motion] .contact-stamp.rv[data-in] {
-  animation: thump 0.5s 0.5s var(--ease) both;
-}
-
-/* The four cursors gather round the email. */
-.gather {
-  left: var(--gx);
-  top: var(--gy);
-}
-.gather[data-who="design"] {
-  --gx: 57%;
-  --gy: 60%;
-  --from: -320px, -160px;
-}
-.gather[data-who="web"] {
-  --gx: 72%;
-  --gy: 78%;
-  --from: 260px, 200px;
-}
-.gather[data-who="flutter"] {
-  --gx: 84%;
-  --gy: 56%;
-  --from: 300px, -220px;
-}
-.gather[data-who="ai"] {
-  --gx: 63%;
-  --gy: 91%;
-  --from: -200px, 260px;
-}
-html[data-motion] .gather.rv {
-  transition:
-    opacity 0.4s var(--ease),
-    transform 1.2s var(--ease);
-  transition-delay: calc(0.5s + var(--n, 0) * 140ms);
-}
-html[data-motion] .gather.rv:not([data-in]) {
-  opacity: 0;
-  transform: translate(var(--from));
-}
-html[data-motion] .gather[data-in] svg,
-html[data-motion] .gather[data-in] i {
-  animation: hover-drift 5s calc(1.9s + var(--n, 0) * 0.4s) ease-in-out infinite;
 }
 
 .contact-links {
@@ -1269,8 +1199,8 @@ html[data-motion] .gather[data-in] i {
   gap: 14px;
   min-height: 72px;
   padding: 14px 18px;
-  border: 1.5px solid var(--ink);
-  border-radius: 14px;
+  border: 1.5px solid var(--line-2);
+  border-radius: 4px;
   background: var(--card);
   transition:
     transform 0.25s var(--spring),
@@ -1313,7 +1243,7 @@ html[data-motion] .gather[data-in] i {
 .footer {
   margin-top: clamp(64px, 9vw, 120px);
   overflow: hidden;
-  border-top: 1.5px solid var(--ink);
+  border-top: 1.5px solid var(--line-2);
 }
 /* Room for the tool dock, so it never sits on the name. */
 @media (min-width: 901px) {
@@ -1343,7 +1273,7 @@ html[data-motion] .gather[data-in] i {
 }
 .footer-mark {
   margin: clamp(16px, 3vw, 40px) 0 -0.08em;
-  font-size: clamp(2.4rem, 11.4vw, 15rem);
+  font-size: clamp(2.4rem, calc(var(--cw) * 0.114), 15rem);
   font-weight: 800;
   font-variation-settings: "wdth" 125;
   line-height: 0.8;
@@ -1464,7 +1394,7 @@ html[data-motion] .gather[data-in] i {
     grid-template-columns: minmax(0, 1fr);
   }
   .layers {
-    box-shadow: 5px 5px 0 var(--ink);
+    box-shadow: 5px 5px 0 var(--ai);
   }
   .layer {
     grid-template-columns: 24px minmax(0, 1fr);
@@ -1479,26 +1409,10 @@ html[data-motion] .gather[data-in] i {
     align-items: flex-start;
     text-align: left;
   }
-  .contact-frame {
-    box-shadow: 6px 6px 0 var(--ink);
-  }
   .contact-stamp {
     position: static;
     margin-top: 22px;
     rotate: -5deg;
-  }
-  /* Two cursors are plenty on a phone, parked on the frame's lower edge. */
-  .gather[data-who="design"],
-  .gather[data-who="ai"] {
-    display: none;
-  }
-  .gather[data-who="web"] {
-    --gx: 56%;
-    --gy: 97%;
-  }
-  .gather[data-who="flutter"] {
-    --gx: 12%;
-    --gy: 99%;
   }
 }
 

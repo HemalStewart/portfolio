@@ -38,8 +38,8 @@ export type ProductionDeployment = {
   note?: string;
   /** Store download count as shown on the listing (a lower bound, e.g. 100K+). */
   downloads?: number;
-  /** Slug of the matching case study in `selectedProjects`. */
-  project: string;
+  /** Slug of the matching case study in `selectedProjects`, when there is one. */
+  project?: string;
 };
 
 export type SkillGroup = {
@@ -197,6 +197,21 @@ export const productionDeployments: ProductionDeployment[] = [
     platform: "Web",
     href: "https://hotel-kohl-ten.vercel.app/",
     project: "sea-cloud-dalawella",
+  },
+  {
+    name: "Ceylon Select",
+    platform: "Web store",
+    href: "https://ceylonselect.com/",
+  },
+  {
+    name: "Nilaveli Beach Resort",
+    platform: "Web",
+    href: "https://nilavelibeachresort.com/",
+  },
+  {
+    name: "Lakmini International",
+    platform: "Web",
+    href: "https://lakminiint.com/",
   },
 ];
 
@@ -617,20 +632,20 @@ export const showcaseSites: ShowcaseSite[] = [
   {
     slug: "nilaveli",
     name: "Nilaveli Beach Resort",
-    kind: "Boutique resort · project preview",
+    kind: "Boutique resort · Trincomalee",
     line: "Cinematic beach films, room stories, island experiences and direct booking enquiries.",
     stack: ["Next.js", "GSAP", "Booking enquiries"],
-    href: "https://nilaveli-beach-resort.vercel.app/",
-    status: "preview",
+    href: "https://nilavelibeachresort.com/",
+    status: "live",
   },
   {
     slug: "ceylon-select",
     name: "Ceylon Select",
-    kind: "Tea brand · storefront preview",
-    line: "A tea cabinet with product browsing, a guided brew ritual and a scroll story tracing each cup to Ceylon.",
-    stack: ["GSAP", "Product catalogue", "Shop UI"],
-    href: "/preview/ceylon-select",
-    status: "preview",
+    kind: "Tea brand · online store",
+    line: "A loose-leaf Ceylon tea store: colourful canisters, tea bundles, a tea finder, a journal and wholesale.",
+    stack: ["Shopify", "Product catalogue", "Shop UI"],
+    href: "https://ceylonselect.com/",
+    status: "live",
   },
   { slug: "crunch", name: "Crunch Club", kind: "Vietnamese sandwich · reference study", line: "A credited study of HoQuan’s Vietnamese sandwich editorial: floating photographs, stacked history cards, an anatomy spread and a touch gallery.", stack: ["Editorial motion", "Scroll animation", "Reference study"], href: "/showcase/crunch", status: "concept" },
   {
@@ -727,7 +742,7 @@ export const showcaseSites: ShowcaseSite[] = [
 
 export type Release = {
   name: string;
-  project: string;
+  project?: string;
   deployments: ProductionDeployment[];
 };
 

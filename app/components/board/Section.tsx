@@ -1,9 +1,11 @@
-import { Arrow, CursorMark, FrameLabel, type Who } from "./marks";
+import { textOf, Typed } from "../swarm/Typed";
+import { Arrow, FrameLabel, type Who } from "./marks";
 
 /**
- * Opens a section of the board: its frame label, an oversized title with one
- * highlighted phrase, a short lede, and optionally a handwritten aside. The
- * section's cursor flies in to park beside the title.
+ * Opens a section of the file: its frame label, an oversized title with one
+ * phrase in the serif, a short lede, and optionally a handwritten aside. The
+ * swarm builds it: the label is placed, the title typed, the lede written,
+ * the aside's arrow traced.
  */
 export function BoardHead({
   id,
@@ -23,23 +25,31 @@ export function BoardHead({
   note?: string;
 }) {
   return (
-    <header className="bhead">
-      <p className="bhead-label rv">
+    <header className="bhead" data-scene="">
+      <p className="bhead-label" data-b="pop" data-name="Label" data-by={who}>
         <FrameLabel who={who}>
           {String(index).padStart(2, "0")} — {label}
         </FrameLabel>
       </p>
-      <h2 id={id} className="rv">
-        {title}
+      <h2 id={id} data-b="type" data-name="Title" data-by={who}>
+        <span className="sr-only">{textOf(title)}</span>
+        <span aria-hidden="true">
+          <Typed>{title}</Typed>
+        </span>
       </h2>
-      {description ? <p className="blede rv">{description}</p> : null}
-      {note ? (
-        <p className="note bhead-note rv" data-who={who} aria-hidden="true">
-          <span>{note}</span>
-          <Arrow shape="hook" />
+      {description ? (
+        <p className="blede" data-b="words" data-name="Lede" data-w="1">
+          <Typed by="word">{description}</Typed>
         </p>
       ) : null}
-      <CursorMark who={who} className="park rv" />
+      {note ? (
+        <p className="note bhead-note" data-who={who} aria-hidden="true">
+          <span data-b="pop" data-name="Note" data-w="1">
+            {note}
+          </span>
+          <Arrow shape="hook" data-b="draw" data-name="Arrow" data-w="2" />
+        </p>
+      ) : null}
     </header>
   );
 }

@@ -1,14 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Archivo,
-  Caveat,
-  Instrument_Serif,
-  JetBrains_Mono,
-} from "next/font/google";
+import { Archivo, Caveat, JetBrains_Mono } from "next/font/google";
 import { BoardMotion } from "./components/board/BoardMotion";
 import { YouCursor } from "./components/board/YouCursor";
 import { MotionProvider } from "./components/motion/MotionProvider";
 import { SmoothScroll } from "./components/motion/SmoothScroll";
+import { Boot } from "./components/swarm/Boot";
+import { Swarm } from "./components/swarm/Swarm";
 import { profileLinks } from "./data/portfolio";
 import { siteUrl } from "./site";
 import "./globals.css";
@@ -21,15 +18,6 @@ const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
   axes: ["wdth"],
-  display: "swap",
-});
-
-// One italic serif phrase per headline.
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: "400",
-  style: "italic",
   display: "swap",
 });
 
@@ -93,16 +81,17 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f4f1ea",
-  colorScheme: "light",
+  themeColor: "#0f0f11",
+  colorScheme: "dark",
 };
 
 /*
  * Runs before first paint. `data-motion` turns on the scroll reveals, whose
  * hidden states would otherwise strand content; it is never set with reduced
  * motion, and it is withdrawn if the script that plays them never arrives.
+ * It also restores the side panels a returning visitor left open.
  */
-const boardScript = `try{var d=document.documentElement;if(!matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.motion="on";setTimeout(function(){if(!window.__board)delete d.dataset.motion},5000)}}catch(e){}`;
+const boardScript = `try{var d=document.documentElement;if(!matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.motion="on";setTimeout(function(){if(!window.__board)delete d.dataset.motion},5000)}var p=localStorage.getItem("hh-panels")||"";if(p.indexOf("l")>-1)d.dataset.lp="";if(p.indexOf("r")>-1)d.dataset.rp=""}catch(e){}`;
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -144,7 +133,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${caveat.variable}`}
+      className={`${archivo.variable} ${jetbrainsMono.variable} ${caveat.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -155,7 +144,9 @@ export default function RootLayout({
           <SmoothScroll />
           <BoardMotion />
           <YouCursor />
+          <Boot />
           {children}
+          <Swarm />
         </MotionProvider>
         <script
           type="application/ld+json"
