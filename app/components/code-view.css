@@ -1,0 +1,317 @@
+/*
+ * The Interface / Code switch on the featured projects (CodeSwitch.tsx) and
+ * the editor window it wipes to (CodeView.tsx). The editor is a dark window
+ * inside a light frame; its font is sized so every line fits.
+ */
+
+.view {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+.view-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 10px;
+  isolation: isolate;
+  box-shadow: 0 18px 40px -24px var(--shadow);
+}
+.view-layer {
+  position: absolute;
+  inset: 0;
+}
+.view-layer .mock {
+  border-radius: 0;
+}
+/* The code wipes in from the left; the interface sinks back behind it. */
+.view-ui {
+  transition:
+    transform 0.8s var(--ease-io),
+    filter 0.8s var(--ease-io);
+}
+.view[data-view="code"] .view-ui {
+  transform: scale(0.96);
+  filter: brightness(0.45);
+}
+.view-code {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.8s var(--ease-io);
+}
+.view[data-view="code"] .view-code {
+  clip-path: inset(0 0 0 0);
+}
+/* The scan line rides the wipe's edge (a full-frame box, moved on the
+   compositor), glowing only while a switch plays. */
+.view-scan {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: transform 0.8s var(--ease-io);
+}
+.view[data-view="code"] .view-scan {
+  transform: translateX(100%);
+}
+.view-scan::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  background: #b6f36a;
+  box-shadow:
+    0 0 16px 2px rgb(182 243 106 / 0.7),
+    0 0 60px 12px rgb(182 243 106 / 0.22);
+  opacity: 0;
+}
+.view[data-switched][data-view="code"] .view-scan::before {
+  animation: scan-glow 0.8s var(--ease-io);
+}
+.view[data-switched][data-view="interface"] .view-scan::before {
+  animation: scan-glow-back 0.8s var(--ease-io);
+}
+.view[data-view="code"] .code-line {
+  animation: line-in 0.5s calc(0.3s + var(--n) * 30ms) var(--ease) both;
+}
+.view[data-view="code"] .code-line:last-child::after {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 0.15em;
+  vertical-align: text-bottom;
+  background: #b6f36a;
+  animation: blink 1.05s steps(1) infinite;
+}
+
+/* the switch: two options, an accent thumb slides between them */
+.view-switch {
+  position: relative;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  padding: 4px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--card);
+}
+.view-thumb {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: var(--ink);
+  transition: transform 0.55s var(--ease);
+}
+.view[data-view="code"] .view-thumb {
+  transform: translateX(100%);
+}
+.view-switch button {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.35s;
+}
+.view-switch button:hover {
+  color: var(--ink);
+}
+.view-switch button[aria-pressed="true"] {
+  color: var(--paper);
+}
+.view-code-glyph {
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* editor window: its font is sized so every line fits the frame */
+.code-view {
+  --fit: min(
+    calc(var(--mw, 640px) / (var(--cols) * 0.6 + 5)),
+    calc(var(--mw, 640px) * 0.625 / (var(--lines) * 1.55 + 6.2))
+  );
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: var(--font-mono);
+  font-size: clamp(6.5px, var(--fit), 14px);
+  line-height: 1.2;
+  background:
+    radial-gradient(
+        circle at 1px 1px,
+        rgb(182 243 106 / 0.05) 1px,
+        transparent 0
+      )
+      0 0 / 16px 16px,
+    #0b0d0b;
+  color: #d6e2d9;
+}
+.code-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.4em;
+  padding: 0.55em 1em 0;
+  background: #121512;
+  border-bottom: 1px solid #1d231d;
+  font-size: 0.85em;
+}
+.code-lights {
+  display: flex;
+  gap: 0.45em;
+  padding-bottom: 0.7em;
+}
+.code-lights i {
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: 50%;
+  background: #2c322c;
+}
+.code-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.45em 0.9em 0.55em;
+  border-radius: 0.5em 0.5em 0 0;
+  background: #0b0d0b;
+  box-shadow: inset 0 2px 0 #b6f36a;
+  color: #c9d4cc;
+  white-space: nowrap;
+}
+.code-dot {
+  width: 0.55em;
+  height: 0.55em;
+  background: #b6f36a;
+}
+.code-view pre {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.6em 0;
+  overflow: hidden;
+  line-height: 1.55;
+  white-space: pre;
+}
+.code-line {
+  display: block;
+  padding-right: 1em;
+}
+.code-ln {
+  display: inline-block;
+  width: 3.2em;
+  padding-right: 1.2em;
+  text-align: right;
+  color: #3a4a3e;
+  user-select: none;
+}
+.code-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 0.5em 1em;
+  border-top: 1px solid #1d231d;
+  background: #121512;
+  font-size: 0.78em;
+  color: #6f7f73;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.code-status span:first-child {
+  color: #b6f36a;
+}
+.code-light {
+  background:
+    radial-gradient(
+        circle at 1px 1px,
+        rgb(14 90 67 / 0.08) 1px,
+        transparent 0
+      )
+      0 0 / 16px 16px,
+    #fbfaf5;
+  color: #1b2b22;
+}
+.code-light .code-bar,
+.code-light .code-status {
+  background: #efede4;
+  border-color: #e1dfd3;
+}
+.code-light .code-lights i {
+  background: #d6d3c6;
+}
+.code-light .code-tab {
+  background: #fbfaf5;
+  box-shadow: inset 0 2px 0 #2f8a5f;
+  color: #33463b;
+}
+.code-light .code-dot {
+  background: #2f8a5f;
+}
+.code-light .code-status {
+  color: #7d8a80;
+}
+.code-light .code-status span:first-child {
+  color: #0e5a43;
+}
+.code-light .code-ln {
+  color: #b9bfae;
+}
+.code-light .tk-k {
+  color: #0e5a43;
+  font-weight: 600;
+}
+.code-light .tk-s {
+  color: #a3501f;
+}
+.code-light .tk-c {
+  color: #8a978d;
+}
+.code-light .tk-t {
+  color: #2563a8;
+}
+.code-light .tk-f {
+  color: #7c3aed;
+}
+.code-light .tk-n {
+  color: #b45309;
+}
+.code-light .tk-v {
+  color: #be185d;
+}
+.tk-k {
+  color: #b6f36a;
+}
+.tk-s {
+  color: #f6c177;
+}
+.tk-c {
+  color: #5c7a67;
+  font-style: italic;
+}
+.tk-t {
+  color: #8fd6b1;
+}
+.tk-f {
+  color: #7dd3fc;
+}
+.tk-n {
+  color: #f4a261;
+}
+.tk-v {
+  color: #f0abfc;
+}

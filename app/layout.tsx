@@ -1,12 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Instrument_Serif, JetBrains_Mono } from "next/font/google";
-import { Cursor } from "./components/motion/Cursor";
+import {
+  Archivo,
+  Caveat,
+  Instrument_Serif,
+  JetBrains_Mono,
+} from "next/font/google";
+import { BoardMotion } from "./components/board/BoardMotion";
+import { YouCursor } from "./components/board/YouCursor";
 import { MotionProvider } from "./components/motion/MotionProvider";
 import { SmoothScroll } from "./components/motion/SmoothScroll";
-import { SpotlightTracker } from "./components/motion/SpotlightTracker";
 import { profileLinks } from "./data/portfolio";
 import { siteUrl } from "./site";
 import "./globals.css";
+import "./styles/sections.css";
+import "./styles/hero.css";
+import "./styles/board.css";
 
 // Archivo's width axis gives the expanded display cuts; body text stays normal width.
 const archivo = Archivo({
@@ -25,6 +33,15 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+// The handwriting on the board: annotations, sticky notes, arrow labels.
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  display: "swap",
+  preload: false,
+});
+
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
@@ -36,7 +53,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 const title = "Hemal Herath — Software Engineer · Mobile, Web & AI";
 const description =
-  "Hemal Herath is a software engineer in Colombo, Sri Lanka, shipping production mobile, web and AI products — 300K+ Play Store downloads across three apps — with Flutter, Next.js, TypeScript, PHP (CodeIgniter/Laravel) and FastAPI.";
+  "Hemal Herath is a software engineer in Colombo, Sri Lanka, who designs and ships production websites, web apps, Flutter apps and AI products — 300K+ Play Store downloads across three apps — with Flutter, Next.js, TypeScript, PHP (CodeIgniter/Laravel) and FastAPI.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -54,6 +71,9 @@ export const metadata: Metadata = {
     "Next.js",
     "TypeScript",
     "mobile developer",
+    "Flutter developer",
+    "web developer",
+    "web designer",
     "AI",
   ],
   alternates: { canonical: "/" },
@@ -73,12 +93,16 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0b0a",
-  colorScheme: "dark",
+  themeColor: "#f4f1ea",
+  colorScheme: "light",
 };
 
-// Show the boot screen once per session: repeat visits skip straight in.
-const bootScript = `try{var s=sessionStorage;if(s.getItem("hh:boot"))document.documentElement.dataset.boot="skip";else s.setItem("hh:boot","1")}catch(e){}`;
+/*
+ * Runs before first paint. `data-motion` turns on the scroll reveals, whose
+ * hidden states would otherwise strand content; it is never set with reduced
+ * motion, and it is withdrawn if the script that plays them never arrives.
+ */
+const boardScript = `try{var d=document.documentElement;if(!matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.motion="on";setTimeout(function(){if(!window.__board)delete d.dataset.motion},5000)}}catch(e){}`;
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -96,7 +120,16 @@ const personJsonLd = {
   sameAs: profileLinks
     .filter((link) => link.label === "GitHub" || link.label === "LinkedIn")
     .map((link) => link.href),
-  knowsAbout: ["Flutter", "Next.js", "TypeScript", "PHP", "FastAPI", "AI"],
+  knowsAbout: [
+    "Web design",
+    "Web development",
+    "Flutter",
+    "Next.js",
+    "TypeScript",
+    "PHP",
+    "FastAPI",
+    "AI",
+  ],
   alumniOf: {
     "@type": "CollegeOrUniversity",
     name: "University of Westminster",
@@ -111,17 +144,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+      className={`${archivo.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${caveat.variable}`}
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
+        <script dangerouslySetInnerHTML={{ __html: boardScript }} />
       </head>
       <body>
         <MotionProvider>
           <SmoothScroll />
-          <Cursor />
-          <SpotlightTracker />
+          <BoardMotion />
+          <YouCursor />
           {children}
         </MotionProvider>
         <script

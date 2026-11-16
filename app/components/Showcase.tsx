@@ -26,88 +26,62 @@ const countWords = [
   "thirteen",
   "fourteen",
 ];
-const countWord = (n: number) => countWords[n] ?? String(n);
+/** Small counts spelled out, the way the copy reads: 7 → "seven". */
+export const countWord = (n: number) => countWords[n] ?? String(n);
 
-/** Back to front: the three screens fanned out in depth on the lead panel. */
-const fan = ["wayline", "nilaveli", "ceylon-select"];
+/** How far each print sits off square, so the row reads as pinned by hand. */
+const TILT = [-2.2, 1.6, -1.1, 2.4, -1.8, 0.9, -2.6, 1.9];
 
-/** Dark lead panel that sends people into the 3D fly-through at /showcase. */
-export function ShowcaseFeature() {
-  return (
-    <div className="showcase-feature reveal">
-      <div>
-        <p className="showcase-kicker">
-          <span className="tag">new</span>
-          <span>{showcaseSites.length} sites · one 3D scene</span>
-        </p>
-        <h3>Fly through all {countWord(showcaseSites.length)} in 3D.</h3>
-        <p>
-          Scroll, and a camera glides past each site in turn. Click any screen
-          to open the real thing.
-        </p>
-        <a className="button showcase-cta" href={showcaseUrl}>
-          Open the 3D showcase <ArrowIcon direction="right" />
-        </a>
-      </div>
-      <a
-        className="showcase-fan"
-        href={showcaseUrl}
-        tabIndex={-1}
-        aria-hidden="true"
-      >
-        {fan.map((slug, index) => (
-          <Image
-            key={slug}
-            src={`/showcase/thumbs/${slug}.jpg`}
-            alt=""
-            width={1280}
-            height={800}
-            sizes="(max-width: 900px) 70vw, 460px"
-            style={{ "--i": index } as React.CSSProperties}
-          />
-        ))}
-      </a>
-    </div>
-  );
-}
+const STATUS: Record<ShowcaseSite["status"], string> = {
+  live: "live",
+  preview: "design preview",
+  concept: "concept",
+};
 
-export function SiteCard({ site }: { site: ShowcaseSite }) {
+/** A website pinned to the board: a taped print with its name underneath. */
+export function SitePrint({
+  site,
+  index,
+}: {
+  site: ShowcaseSite;
+  index: number;
+}) {
   const external = isExternal(site.href);
   return (
     <article
-      className="site-card reveal"
+      className="print"
+      style={{ "--r": `${TILT[index % TILT.length]}deg` } as React.CSSProperties}
       aria-labelledby={`site-${site.slug}-title`}
     >
-      <div className="site-shot">
+      <span className="tape" aria-hidden="true" />
+      <div className="print-shot">
         <Image
           src={`/showcase/thumbs/${site.slug}.jpg`}
           alt=""
           width={1280}
           height={800}
-          sizes="(max-width: 640px) 78vw, (max-width: 1080px) 46vw, 400px"
+          sizes="(max-width: 900px) 74vw, 320px"
         />
       </div>
-      <code className="branch-label">
-        <span className="branch-dot" aria-hidden="true" />
-        web/{site.slug}
-        <span className={site.status === "live" ? "tag" : "site-status"}>
-          {site.status === "preview" ? "design preview" : site.status}
+      <p className="print-kind">
+        <span className={site.status === "live" ? "tag tag-live" : "tag"}>
+          {STATUS[site.status]}
         </span>
-      </code>
-      <h3 id={`site-${site.slug}-title`}>{site.name}</h3>
-      <p className="site-kind">{site.kind}</p>
-      <p className="site-line">{site.line}</p>
-      <p className="stack-line">
-        <span className="sr-only">Stack: </span>
-        {site.stack.join(" / ")}
+        {site.kind}
       </p>
+      <h3 id={`site-${site.slug}-title`}>{site.name}</h3>
+      <p className="print-line">{site.line}</p>
       <a
-        className="ref site-open"
+        className="ref"
         href={site.href}
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
       >
-        {site.status === "preview" ? "View preview" : external ? "Visit site" : "Open site"}
+        {site.status === "preview"
+          ? "View preview"
+          : external
+            ? "Visit site"
+            : "Open site"}
         <span className="sr-only">
           : {site.name}
           {external ? " (opens in a new tab)" : ""}
@@ -118,24 +92,26 @@ export function SiteCard({ site }: { site: ShowcaseSite }) {
   );
 }
 
-/** Closing card of the grid: the next site could be yours. */
-export function NextSiteCard() {
+/** Closes the row: the 3D fly-through, and an invitation. */
+export function ShowcaseEnd() {
   return (
-    <article
-      className="site-card site-next reveal"
-      aria-labelledby="site-next-title"
-    >
-      <code className="branch-label">
-        <span className="branch-dot" aria-hidden="true" />
-        web/your-brand
-      </code>
-      <h3 id="site-next-title">Your brand, next.</h3>
-      <p className="site-line">
-        3D, motion and scroll-driven websites for hotels, food and lifestyle
-        brands, designed and built in Sri Lanka.
+    <article className="print print-end" aria-labelledby="showcase-end-title">
+      <h3 id="showcase-end-title">
+        Fly through all {countWord(showcaseSites.length)} in 3D.
+      </h3>
+      <p className="print-line">
+        Scroll, and a camera glides past each site in turn. Click any screen to
+        open the real thing.
+      </p>
+      <a className="btn btn-ink" href={showcaseUrl}>
+        Open the 3D showcase <ArrowIcon direction="right" />
+      </a>
+      <p className="print-next">
+        Your brand, next? 3D, motion and scroll-driven websites for hotels, food
+        and lifestyle brands.
       </p>
       <a
-        className="ref site-open"
+        className="ref"
         href={showcaseWhatsApp}
         target="_blank"
         rel="noopener noreferrer"

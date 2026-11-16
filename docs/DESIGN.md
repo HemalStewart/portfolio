@@ -1,129 +1,79 @@
-# Design concept — "Merged to main", after dark
+# Design concept — the live board
 
 ## The idea
 
-The portfolio reads as a **git history of one engineer**. Every product Hemal has
-shipped is a branch that eventually merged into `main` and got a `live` tag. The
-site borrows the vocabulary every engineer already knows — commits, branches,
-tags, releases, pull requests — and uses it as a structural device:
+The portfolio is a designer's working board: dotted paper, black ink,
+hand-drawn arrows, handwriting, sticky notes, rubber stamps, frames with small
+coloured labels, and four collaborator cursors — one per craft — that fly
+around doing the work. It should feel made by a person, in front of you.
 
-- the hero puts the name beside a **voxel git-branch glyph** (three commits, a
-  trunk and a merge) that bursts into particles as you scroll and reassembles
-  at the end — merged;
-- live deployments are **releases**; case studies are **merged branches**;
-  experiments are **side branches**; websites live on a **`web/` branch**,
-  with a 3D fly-through at `/showcase`;
-- the contact section asks you to **open a pull request** (send an email).
+| Cursor       | Colour               | Token       |
+| ------------ | -------------------- | ----------- |
+| Design       | vermilion `#FF5A36`  | `--design`  |
+| Web          | cobalt `#2D5BFF`     | `--web`     |
+| Flutter      | jade `#00A56E`       | `--flutter` |
+| Backend & AI | violet `#8B4DFF`     | `--ai`      |
 
-The look follows the studio sites Hemal has built (Shifenmei, Calcify,
-Lakmini International): near-black, one electric accent, very large
-expanded type with one italic serif phrase, mono metadata, and a living 3D
-layer behind everything.
+`data-who="design|web|flutter|ai"` on any element sets `--who` to that colour.
 
-## Visuals
+## Palette and type
 
-- the **voxel field** is generated geometry (three.js instanced cubes);
-- **project screens** live one per file in `app/components/mockups/screens`.
-  Web products (LinkForex, PDMS, Novice Monk Registry, Huddle, Scholar
-  Desktop, PaperMind, EnglishMind, Smart Guardian's store panels) are rebuilt
-  in code from the live interface: real labels, figures, layout and colours,
-  sized in em off the frame width (`--mw`), with invented names wherever the
-  real screen shows people. Mobile apps whose screens are artwork and
-  photography — VibeChat AI and WriteScan — show their real store
-  screenshots (`public/work/*`) in a coverflow (`StoreShots`), and the Sea
-  Cloud website shows its real homepage;
-- the **favicon** (`app/icon.tsx`) and **share image**
-  (`app/opengraph-image.tsx`) are rendered with `next/og`.
+Paper `#F4F1EA` (with a darker `--paper-2` for the websites wall), cards
+`#FFFDF8`, ink `#161513`, muted `#5E5B54`. Highlighter `--marker #FFD84A`, and
+note stock in pink, mint and sky. Devices (browser, phone, terminal, the code
+editor) stay dark on purpose: they are objects lying on the paper.
 
-The websites section shows real screenshots (`public/showcase/thumbs/*.jpg`,
-lazy-loaded through `next/image`); the same thumbnails are the textures of
-the 3D fly-through at `/showcase`. `public/resume.pdf` is the CV download.
+- **Archivo** (variable, `wdth` axis): display at `wdth` 112–125, body at
+  normal width.
+- **Instrument Serif** italic: the one phrase per headline, run over with the
+  marker.
+- **Caveat**: handwriting — notes, arrow labels, sticky notes.
+- **JetBrains Mono**: frame labels and small metadata.
 
-## Palette
+## Where things live
 
-| Token      | Value     | Use                                        |
-| ---------- | --------- | ------------------------------------------ |
-| `bg`       | `#0A0B0A` | page                                       |
-| `bg-2/3`   | `#101210` / `#161916` | panels, hovers                 |
-| `line`     | `#1F231F` / `#2D322D` | hairlines, grid               |
-| `ink`      | `#F0EFE9` | text                                       |
-| `muted`    | `#A3A79F` | secondary text (AA on bg)                  |
-| `subtle`   | `#7A7F77` | mono labels                                |
-| `accent`   | `#B6F36A` | the one accent: CTAs, emphasis, live state |
-| `merge`    | `#B9A3FF` | the `merged` tag only                      |
-
-Change `--accent` and `--accent-rgb` in `:root`; the voxel palette lives at
-the top of `app/components/field/scene.ts`.
-
-## Type
-
-- **Archivo** (variable, `wdth` axis) — display at `wdth` 112–125 (expanded),
-  body at normal width.
-- **Instrument Serif** — the italic phrase in each headline (`<em>`).
-- **JetBrains Mono** — the git layer: eyebrows, commands, tags, stacks.
-
-## Layout
-
-12-column fluid shell, max 1240px, 16–40px gutters. A faint six-column grid
-sits behind the page; `+` crosshairs mark where each section rule meets the
-shell. Sections open with an eyebrow — `(02) ■ RELEASES — $ git tag …` — then
-an oversized title with one italic serif word.
-
-## Chrome
-
-- **Boot screen** (`chrome/Boot.tsx`): a short clone log and a 00→100
-  counter, then the panel wipes up. Pure CSS; once per session (an inline
-  script in the layout skips it on repeat visits); never with reduced motion.
-- **Header**: full-width bar, branch mark + wordmark, centred nav with a
-  sliding accent square, Colombo local time, CV and an accent "Hire me" pill.
-  Small screens get a full-screen menu.
-- **Chapter rail** (`chrome/ChapterRail.tsx`): fixed right-edge ticks with a
-  `03 / 10` count; wide screens only.
-
-## The voxel field
-
-`app/components/field/scene.ts`: one `InstancedMesh` of rounded cubes
-(2,000 on desktop, 1,100 on phones), lit by a room environment, fog for
-depth. Four formations, each voxelised from a signed distance field or laid
-out on a grid:
-
-- `branch` — the git-branch glyph; the head commit is lit in the accent;
-- `scatter` — sparse particles across the viewport, mostly fine dust;
-- `sphere` — a hollow voxel planet;
-- `wave` — a field of columns that rolls at runtime.
-
-`VoxelField.tsx` maps scroll to a mood per section (shape, placement, scale,
-opacity) and blends to the next as that section's top reaches mid-screen;
-voxels fly with a per-instance stagger and a slight outward bow. The pointer
-tilts the whole field and pushes nearby voxels aside. three.js loads when the
-browser is idle after first paint; rendering stops in hidden tabs; reduced
-motion draws still frames; without WebGL the page simply has no field.
+- `app/globals.css` — tokens and the shared pieces: reveal system, cursors,
+  hand strokes, notes, stamps, frames, buttons, the toolbar and the dock.
+- `app/styles/sections.css` — section spacing and openings (`BoardHead`).
+- `app/styles/hero.css` — the hero collage.
+- `app/styles/board.css` — every other section, top to bottom.
+- `app/components/board/*` — `Hero` (the build), `TopBar`, `Dock`, `HPan`,
+  `Drag`, `YouCursor`, `BoardMotion`, and the marks (`CursorMark`, `Arrow`,
+  `FrameLabel`, `Stamp`).
+- `app/components/crafts/*` — the pinned crafts sequence.
 
 ## Motion
 
-- Hero letters rise out of line masks after the boot screen; the kicker,
-  copy and strip fade up.
-- **Interface / Code switch** (`CodeSwitch`) on the four featured cases: a
-  pill switch wipes the code-built interface into an editor window (file tab,
-  line numbers, status bar) behind an accent scan line, and the lines settle
-  in one by one. The editor sizes its font from the sample's line count and
-  longest line so every line fits, from a phone to the pinned stage; samples
-  in `app/data/code.ts` are illustrative sketches, and the status bar says so.
-  The smaller project cards show the interface only.
-- **Pinned showcase**, **typed commands**,
-  **rolling digits**, **magnetic CTAs**, a **cursor** ring with an accent dot.
-- **Lenis smooth scrolling**, loaded after hydration.
-- CSS scroll-driven animations: the README paragraph inks word by word,
-  headings clip up, the experience rail draws, card visuals drift, the footer
-  wordmark rises, the header progress line fills.
+- **The hero assembles itself in about a second** (`styles/hero.css`, "the
+  intro"). It is CSS alone, so it starts with the first paint and never waits
+  for a script: the name rises letter by letter while the browser, phone and
+  terminal are carried in a beat apart, then arrows draw, notes pop and the
+  stamp lands. Each cursor is a child of the piece it carries, so it arrives
+  with it. Afterwards `board/Hero.tsx` keeps them working there: the browser
+  flips through sites, the phone changes screen, the terminal prints. The
+  dock's Replay restarts the intro by setting `data-still` for a frame.
+- **Reveals** (`board/BoardMotion.tsx`): anything with `.rv` gets `data-in`
+  the first time it is on screen. Hidden states only apply under
+  `html[data-motion]` (set before first paint, never with reduced motion, and
+  withdrawn if the script never arrives), so nobody is left with hidden content.
+  Notes pop, stamps thump, arrows draw, cursors fly in and park.
+- **Crafts** (`crafts/Crafts.tsx`): a pinned stage where one frame morphs
+  from a wireframe artboard to the built site, a Flutter app and a terminal.
+  Scroll position is written to custom properties and the stylesheet
+  interpolates every size in `cqw`.
+- **Featured cases** are pinned and swapped by scroll (`PinnedWork`), each
+  with an Interface / Code switch.
+- **The websites wall** (`board/HPan.tsx`): the stage is pinned and the row of
+  taped prints pans sideways; on small screens it is a swipeable strip.
+- **Notes are draggable** (`board/Drag.tsx`, mouse only), and the visitor's
+  own cursor joins the board with a "You" tag (`board/YouCursor.tsx`).
+- The **tool dock** shows the tool in use during the build, then the current
+  section and progress. The marquee leans and speeds up with scroll velocity.
 
-Everything honours `prefers-reduced-motion`.
+## Performance and accessibility
 
-## Performance & accessibility budget
-
-- Static prerender, self-hosted fonts via `next/font`; raster images (store
-  and website screenshots) are WebP/JPEG, lazy-loaded through `next/image`.
-- three.js, Motion features and Lenis all load lazily after first paint.
-- Contrast AA for all text; visible focus rings; skip link; semantic
-  landmarks; decorative layers are `aria-hidden`.
-- Responsive 320–1920px with no horizontal overflow.
+Static prerender, self-hosted fonts via `next/font`, images through
+`next/image`. Lenis and Motion's features load after first paint. Text
+contrast AA; visible focus rings; skip link; decorative layers are
+`aria-hidden`; touch targets at least 44px. Responsive from 320px to 1920px
+with no horizontal scroll.
