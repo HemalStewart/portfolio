@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Caveat, JetBrains_Mono } from "next/font/google";
+import { Covered_By_Your_Grace, Martian_Mono, Mona_Sans } from "next/font/google";
 import { BoardMotion } from "./components/board/BoardMotion";
 import { YouCursor } from "./components/board/YouCursor";
 import { MotionProvider } from "./components/motion/MotionProvider";
@@ -13,27 +13,27 @@ import "./styles/sections.css";
 import "./styles/hero.css";
 import "./styles/board.css";
 
-// Archivo's width axis gives the expanded display cuts; body text stays normal width.
-const archivo = Archivo({
-  variable: "--font-archivo",
+// Mona Sans (GitHub's typeface): its width axis gives the expanded display
+// cuts, and body text stays at normal width.
+const monaSans = Mona_Sans({
+  variable: "--font-mona",
   subsets: ["latin"],
   axes: ["wdth"],
   display: "swap",
 });
 
-// The handwriting on the board: annotations, sticky notes, arrow labels.
-const caveat = Caveat({
-  variable: "--font-caveat",
+// The handwriting on the board: a felt marker, as on a real whiteboard.
+const marker = Covered_By_Your_Grace({
+  variable: "--font-marker",
   subsets: ["latin"],
-  weight: ["500", "700"],
+  weight: "400",
   display: "swap",
   preload: false,
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const martianMono = Martian_Mono({
+  variable: "--font-martian",
   subsets: ["latin"],
-  weight: ["400", "500"],
   display: "swap",
   // Secondary face: don't compete with the display font for early bandwidth.
   preload: false,
@@ -133,7 +133,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${jetbrainsMono.variable} ${caveat.variable}`}
+      className={`${monaSans.variable} ${martianMono.variable} ${marker.variable}`}
       suppressHydrationWarning
     >
       <head>

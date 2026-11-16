@@ -147,11 +147,10 @@ export default function Home() {
               <Magnetic>
                 <a className="btn btn-ink" href={email.href}>
                   Hire me
-                  <ArrowIcon direction="right" />
                 </a>
               </Magnetic>
               <a className="text-link" href="#work">
-                See the work <ArrowIcon direction="down" />
+                See the work
               </a>
               <a
                 className="text-link"
@@ -159,7 +158,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Download CV <ArrowIcon />
+                Download CV <span className="file-tag">PDF</span>
               </a>
             </>
           }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowIcon } from "../icons";
 import { CRAFT_CURSORS, type Who } from "./marks";
 
 type Link = { label: string; href: string };
@@ -172,7 +171,6 @@ export function TopBar({ links, email }: { links: Link[]; email: string }) {
           </a>
           <a className="btn btn-ink btn-small" href={email}>
             Hire me
-            <ArrowIcon direction="right" />
           </a>
           <button
             ref={toggleRef}
@@ -208,7 +206,6 @@ export function TopBar({ links, email }: { links: Link[]; email: string }) {
         <div className="mobile-actions">
           <a className="btn btn-ink" href={email}>
             Hire me
-            <ArrowIcon direction="right" />
           </a>
           <a
             className="text-link"
@@ -216,7 +213,7 @@ export function TopBar({ links, email }: { links: Link[]; email: string }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Download CV <ArrowIcon />
+            Download CV <span className="file-tag">PDF</span>
           </a>
         </div>
       </div>
