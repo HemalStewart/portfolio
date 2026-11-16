@@ -345,10 +345,10 @@ html[data-motion] .pinned-track[data-enabled] .case.rv {
     rotate 0.5s var(--spring);
 }
 .case[data-state="after"] > .frame {
-  clip-path: inset(100% -30px -70px -30px);
+  clip-path: inset(100% -30px 0 -30px);
 }
 .case[data-state="before"] > .frame {
-  clip-path: inset(-40px -30px 100% -30px);
+  clip-path: inset(0 -30px 100% -30px);
 }
 .case[data-state="before"],
 .case[data-state="after"] {
@@ -665,13 +665,6 @@ html[data-motion] .pinned-track[data-enabled] .case.rv {
   scroll-snap-type: none;
   will-change: transform;
 }
-/* Trailing room, so the last print can reach the page's left edge. */
-.hpan[data-enabled] .hpan-row::after {
-  content: "";
-  flex: none;
-  width: var(--side);
-  height: 1px;
-}
 .hpan[data-enabled] .hpan-bar {
   position: absolute;
   right: var(--side);
@@ -690,8 +683,9 @@ html[data-motion] .pinned-track[data-enabled] .case.rv {
   transform: scaleX(var(--pan, 0));
   transform-origin: left;
 }
-/* Tall screens take two staggered rows of smaller prints. */
-@media (min-height: 900px) {
+/* Tall screens take two staggered rows of smaller prints; the description
+   only joins them when there is height to spare. */
+@media (min-height: 860px) {
   .hpan[data-enabled] .hpan-row {
     display: grid;
     grid-auto-flow: column;
@@ -711,13 +705,24 @@ html[data-motion] .pinned-track[data-enabled] .case.rv {
   .hpan[data-enabled] .print:nth-child(4n + 2):hover {
     translate: 0 10px;
   }
-  .hpan[data-enabled] .print-line {
-    -webkit-line-clamp: 2;
+  .hpan[data-enabled] .print:not(.print-end) .print-line {
+    display: none;
+  }
+  .hpan[data-enabled] .print-end .print-line,
+  .hpan[data-enabled] .print-next {
+    display: block;
   }
   .hpan[data-enabled] .print-end {
     grid-row: 1 / span 2;
     width: 340px;
     margin-left: 20px;
+  }
+}
+
+@media (min-height: 1080px) {
+  .hpan[data-enabled] .print:not(.print-end) .print-line {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
   }
 }
 

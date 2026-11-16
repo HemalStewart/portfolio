@@ -1217,6 +1217,14 @@ html:not([data-motion]) .dock-replay {
   }
 }
 
+/* Fingers get full-size targets. */
+@media (pointer: coarse) {
+  .ref,
+  .view-switch button {
+    min-height: 44px;
+  }
+}
+
 @media (max-width: 1180px) {
   .tabs,
   .topbar-cv,

@@ -44,18 +44,18 @@ editor) stay dark on purpose: they are objects lying on the paper.
 
 ## Motion
 
-- **The hero builds itself** (`board/Hero.tsx`). An inline script sets
-  `html[data-build="pending"]` before first paint (once per session, never
-  with reduced motion); the pieces wait hidden for `data-on`. Design drags a
-  selection and pins the tagline, Web types the name and carries the browser
-  in, Flutter brings the phone, the backend cursor drops a terminal, then
-  arrows draw and the stamp lands. Cursors aim at measured element positions,
-  so the choreography holds at any size. Afterwards they keep working: the
-  browser flips through sites, the phone changes screen, the terminal prints.
-  Scrolling away finishes the build at once; the dock's Replay runs it again.
+- **The hero assembles itself in about a second** (`styles/hero.css`, "the
+  intro"). It is CSS alone, so it starts with the first paint and never waits
+  for a script: the name rises letter by letter while the browser, phone and
+  terminal are carried in a beat apart, then arrows draw, notes pop and the
+  stamp lands. Each cursor is a child of the piece it carries, so it arrives
+  with it. Afterwards `board/Hero.tsx` keeps them working there: the browser
+  flips through sites, the phone changes screen, the terminal prints. The
+  dock's Replay restarts the intro by setting `data-still` for a frame.
 - **Reveals** (`board/BoardMotion.tsx`): anything with `.rv` gets `data-in`
   the first time it is on screen. Hidden states only apply under
-  `html[data-motion]`, so reduced-motion and no-script visitors see everything.
+  `html[data-motion]` (set before first paint, never with reduced motion, and
+  withdrawn if the script never arrives), so nobody is left with hidden content.
   Notes pop, stamps thump, arrows draw, cursors fly in and park.
 - **Crafts** (`crafts/Crafts.tsx`): a pinned stage where one frame morphs
   from a wireframe artboard to the built site, a Flutter app and a terminal.

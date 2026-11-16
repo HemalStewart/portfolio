@@ -12,21 +12,8 @@ import {
   type Who,
 } from "./marks";
 
-type Point = { x: number; y: number };
-
-declare global {
-  interface Window {
-    __hero?: boolean;
-  }
-}
-
 const WHO = Object.keys(CRAFT_CURSORS) as Who[];
-const EASE = "cubic-bezier(0.3, 0.7, 0.1, 1)";
-const sleep = (ms: number) => new Promise((done) => setTimeout(done, ms));
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
-
-/** Thrown inside the build when it is skipped or the component unmounts. */
-class Stop extends Error {}
 
 const TERMINAL = [
   "$ git push origin main",
@@ -36,20 +23,26 @@ const TERMINAL = [
   "● live",
 ];
 
+/** The dock lights each tool in turn while the intro plays: [name, at ms]. */
+const TOOLS: [string, number][] = [
+  ["text", 0],
+  ["note", 300],
+  ["frame", 500],
+  ["arrow", 850],
+  ["move", 1350],
+];
+
 /**
- * The hero is built in front of the visitor. Four cursors, one per craft,
- * fly in and do the work: Design marks out the space and pins the tagline,
- * Web types the name and drags a browser in, Flutter brings the phone, the
- * backend cursor drops a terminal; then arrows draw between the pieces and a
- * stamp lands. Cursors aim at the real elements (measured, not hard-coded),
- * so the same choreography holds at any size. Afterwards they keep working:
- * the browser flips through sites, the phone changes screen, the terminal
- * prints.
+ * The hero assembles itself in about a second: the name rises letter by
+ * letter while a browser, a phone and a terminal are carried in by the
+ * cursors that own them, then arrows draw between the pieces and a stamp
+ * lands. All of that is CSS (see "the intro" in hero.css), so it starts with
+ * the first paint and does not wait for this script; nothing is ever hidden
+ * from a visitor without motion or without JavaScript.
  *
- * Markup renders complete on the server. While `html[data-build="pending"]`
- * (set before first paint, once per session, never with reduced motion) the
- * pieces wait hidden for their `data-on`; scrolling away finishes the build
- * at once.
+ * What the script adds is life afterwards: each cursor sits on its own piece
+ * and keeps working there — the browser flips through sites, the phone
+ * changes screen, the terminal prints, the tagline note is straightened.
  */
 export function Hero({
   kicker,
@@ -79,225 +72,22 @@ export function Hero({
     const stage = stageRef.current;
     if (!stage) return;
     const html = document.documentElement;
-    const motion = "motion" in html.dataset;
-    // One object per run; helpers hold on to the run they started in, so a
-    // skipped or replayed build stops at its next step.
-    let run = { alive: true };
-    const anims = new Set<Animation>();
-    const pos = {} as Record<Who, Point>;
+    if (!("motion" in html.dataset)) return;
+    const timers = new Set<number>();
     let onStage = true;
-    let building = false;
 
+    const later = (fn: () => void, ms: number) => {
+      const id = window.setTimeout(() => {
+        timers.delete(id);
+        fn();
+      }, ms);
+      timers.add(id);
+    };
     const q = (key: string) =>
       stage.querySelector<HTMLElement>(`[data-b="${key}"]`);
     const cursor = (who: Who) =>
-      stage.querySelector<HTMLElement>(`.cur[data-who="${who}"]`)!;
-    /** A point on an element, in stage coordinates. */
-    const at = (el: Element | null, ax = 0.5, ay = 0.5): Point => {
-      const s = stage.getBoundingClientRect();
-      if (!el) return { x: s.width / 2, y: s.height / 2 };
-      const r = el.getBoundingClientRect();
-      return { x: r.left - s.left + r.width * ax, y: r.top - s.top + r.height * ay };
-    };
-    const place = (who: Who, p: Point) => {
-      pos[who] = p;
-      cursor(who).style.transform = `translate(${p.x}px, ${p.y}px)`;
-    };
-    const wait = async (ms: number) => {
-      const mine = run;
-      await sleep(ms);
-      if (!mine.alive) throw new Stop();
-    };
-    /** Plays to the end; a `forwards` fill is committed to inline style. */
-    const play = async (
-      el: HTMLElement,
-      frames: Keyframe[],
-      options: KeyframeAnimationOptions,
-    ) => {
-      const anim = el.animate(frames, { easing: EASE, ...options });
-      anims.add(anim);
-      try {
-        await anim.finished;
-        if (options.fill === "forwards") {
-          anim.commitStyles();
-          anim.cancel();
-        }
-      } catch {
-        // cancelled, or not rendered
-      }
-      anims.delete(anim);
-    };
-    const fly = async (who: Who, to: Point, ms = 520) => {
-      const mine = run;
-      const from = pos[who];
-      await play(
-        cursor(who),
-        [
-          { transform: `translate(${from.x}px, ${from.y}px)` },
-          { transform: `translate(${to.x}px, ${to.y}px)` },
-        ],
-        { duration: ms, fill: "forwards" },
-      );
-      if (!mine.alive) throw new Stop();
-      place(who, to);
-    };
-    const click = (who: Who) => {
-      const el = cursor(who);
-      el.dataset.click = "";
-      setTimeout(() => delete el.dataset.click, 450);
-    };
-    const on = (key: string) => q(key)?.setAttribute("data-on", "");
-    const tool = (name: string) => (html.dataset.tool = name);
+      stage.querySelector<HTMLElement>(`.hero-cur[data-who="${who}"]`);
 
-    /** A cursor fetches a piece from off the board and sets it down. */
-    const drag = async (who: Who, key: string, dx: number, dy: number, ms: number) => {
-      const mine = run;
-      const el = q(key);
-      if (!el) return;
-      const rest = at(el, 0.5, 0.08);
-      await fly(who, { x: rest.x + dx, y: rest.y + dy }, 380);
-      el.setAttribute("data-on", "");
-      el.dataset.held = "";
-      await Promise.all([
-        play(el, [{ translate: `${dx}px ${dy}px` }, { translate: "0px 0px" }], {
-          duration: ms,
-        }),
-        fly(who, rest, ms),
-      ]);
-      if (!mine.alive) throw new Stop();
-      delete el.dataset.held;
-      click(who);
-    };
-
-    const homes: Record<Who, () => Point> = {
-      design: () => at(q("tagline"), 0.9, 0.85),
-      web: () => at(q("browser"), 0.55, 0.55),
-      flutter: () => at(q("phone"), 0.25, 0.42),
-      ai: () => at(q("term"), 0.78, 0.5),
-    };
-
-    const typeName = async () => {
-      const name = q("name");
-      const chars = Array.from(stage.querySelectorAll<HTMLElement>(".hc"));
-      for (const char of chars) {
-        char.dataset.on = "";
-        const r = at(char, 1, 0.62);
-        place("web", { x: r.x + 6, y: r.y });
-        await wait(char.dataset.gap ? 130 : 52);
-      }
-      name?.setAttribute("data-on", "");
-    };
-
-    const settle = () => {
-      stage.querySelectorAll("[data-b], .hc").forEach((el) => el.setAttribute("data-on", ""));
-      stage.querySelectorAll<HTMLElement>("[data-held]").forEach((el) => delete el.dataset.held);
-      html.dataset.build = "done";
-      html.dataset.tool = "move";
-      stage.dataset.cursors = "";
-      const marquee = stage.querySelector<HTMLElement>(".hero-marquee");
-      if (marquee) marquee.style.opacity = "0";
-      try {
-        sessionStorage.setItem("hh:built", "1");
-      } catch {
-        // private mode
-      }
-      WHO.forEach((who) => place(who, homes[who]()));
-    };
-
-    const build = async () => {
-      building = true;
-      const s = stage.getBoundingClientRect();
-      const wide = s.width;
-      place("design", { x: -60, y: s.height * 0.2 });
-      place("web", { x: wide * 0.35, y: -70 });
-      place("flutter", { x: wide + 60, y: s.height * 0.7 });
-      place("ai", { x: wide * 0.5, y: s.height + 60 });
-      stage.dataset.cursors = "";
-      await wait(250);
-
-      // Design marks out the space for the headline.
-      tool("frame");
-      const kicker = q("kicker");
-      const name = q("name");
-      const a = at(kicker, 0, -0.6);
-      const b = at(name, 1, 1.02);
-      await fly("design", a, 520);
-      const marquee = stage.querySelector<HTMLElement>(".hero-marquee");
-      if (marquee) {
-        marquee.style.left = `${a.x}px`;
-        marquee.style.top = `${a.y}px`;
-        marquee.style.opacity = "1";
-        void play(
-          marquee,
-          [
-            { width: "0px", height: "0px" },
-            { width: `${b.x - a.x}px`, height: `${b.y - a.y}px` },
-          ],
-          { duration: 480, fill: "forwards" },
-        );
-      }
-      await fly("design", b, 480);
-      click("design");
-      on("kicker");
-      await wait(160);
-      if (marquee) marquee.style.opacity = "0";
-
-      // Web types the name.
-      tool("text");
-      const first = stage.querySelector(".hc");
-      await fly("web", at(first, 0, 0.6), 480);
-      click("web");
-      await wait(120);
-      await typeName();
-      // The copy does not wait for the rest of the build.
-      on("lede");
-      void wait(220).then(() => on("cta"), () => {});
-
-      // Design underlines it and pins the tagline.
-      tool("pen");
-      const scribble = q("scribble");
-      await fly("design", at(scribble, 0, 0.5), 320);
-      on("scribble");
-      await fly("design", at(scribble, 1, 0.4), 460);
-      tool("note");
-      await fly("design", at(q("tagline"), 0.5, 0.3), 340);
-      on("tagline");
-      click("design");
-
-      // The pieces arrive: browser, phone, terminal.
-      tool("move");
-      const far = wide * 0.55;
-      await Promise.all([
-        drag("web", "browser", far, -s.height * 0.12, 760),
-        wait(420).then(() => drag("flutter", "phone", far * 0.7, s.height * 0.3, 700)),
-        wait(760).then(() => drag("ai", "term", -far * 0.5, s.height * 0.45, 680)),
-      ]);
-
-      // Arrows connect them, the stamp lands, the copy follows.
-      tool("arrow");
-      on("arrow1");
-      on("note1");
-      await wait(300);
-      on("arrow2");
-      on("note2");
-      await wait(300);
-      on("arrow3");
-      on("note3");
-      await wait(380);
-      tool("move");
-      await fly("design", at(q("stamp"), 0.5, 0.5), 300);
-      on("stamp");
-      click("design");
-      stage.dataset.thump = "";
-      setTimeout(() => delete stage.dataset.thump, 500);
-      await wait(220);
-      on("fact1");
-      await wait(140);
-      on("fact2");
-      await wait(900);
-    };
-
-    /** After the build the cursors keep working, each on its own piece. */
     const acts: Record<Who, () => void> = {
       design: () => {
         const note = q("tagline");
@@ -306,7 +96,9 @@ export function Hero({
       web: () => {
         const browser = q("browser");
         if (browser)
-          browser.dataset.site = String((Number(browser.dataset.site ?? 0) + 1) % sites.length);
+          browser.dataset.site = String(
+            (Number(browser.dataset.site ?? 0) + 1) % sites.length,
+          );
       },
       flutter: () => {
         const phone = q("phone");
@@ -314,106 +106,54 @@ export function Hero({
       },
       ai: () => {
         const term = q("term");
-        if (term) {
-          const next = Number(term.dataset.line ?? TERMINAL.length) + 1;
-          term.dataset.line = String(next > TERMINAL.length ? 1 : next);
-        }
+        if (!term) return;
+        const next = Number(term.dataset.line ?? TERMINAL.length) + 1;
+        term.dataset.line = String(next > TERMINAL.length ? 1 : next);
       },
     };
-    const idle = async (who: Who) => {
-      const mine = run;
-      try {
-        await wait(rand(600, 2600));
-        while (mine.alive) {
-          if (onStage && !document.hidden) {
-            const home = homes[who]();
-            await fly(who, { x: home.x + rand(-34, 34), y: home.y + rand(-26, 26) }, rand(900, 1500));
-            if (Math.random() < 0.6) {
-              click(who);
-              acts[who]();
-            }
-          }
-          await wait(rand(1800, 4200));
-        }
-      } catch {
-        // stopped
+
+    /** A cursor drifts a little way over its piece, and sometimes clicks. */
+    const work = (who: Who) => {
+      const el = cursor(who);
+      if (el && onStage && !document.hidden) {
+        el.style.translate = `${rand(-30, 30).toFixed(0)}px ${rand(-22, 22).toFixed(0)}px`;
+        if (Math.random() < 0.75)
+          later(() => {
+            el.dataset.click = "";
+            later(() => delete el.dataset.click, 450);
+            acts[who]();
+          }, 900);
       }
+      later(() => work(who), rand(1900, 3600));
     };
 
-    const stop = () => {
-      run.alive = false;
-      run = { alive: true };
-      anims.forEach((anim) => anim.cancel());
-      anims.clear();
-    };
-    const finish = () => {
-      stop();
-      building = false;
-      settle();
-      if (motion) WHO.forEach((who) => void idle(who));
-    };
+    const tools = () =>
+      TOOLS.forEach(([name, at]) => later(() => (html.dataset.tool = name), at));
 
-    const start = async () => {
-      const mine = run;
-      window.__hero = true;
-      // Positions are measured, so wait for the display font before aiming.
-      await Promise.race([document.fonts.ready, sleep(1200)]);
-      if (!mine.alive) return;
-      if (html.dataset.build === "pending" && window.scrollY < 40) {
-        try {
-          await build();
-        } catch {
-          return; // skipped or unmounted: finish() or cleanup took over
-        }
-        finish();
-      } else {
-        finish();
-      }
+    const start = () => {
+      tools();
+      WHO.forEach((who, i) => later(() => work(who), 1500 + i * 350));
     };
-    void start();
+    start();
 
-    const onScroll = () => {
-      if (building && window.scrollY > window.innerHeight * 0.3) finish();
-    };
-    let resizeTimer = 0;
-    const onResize = () => {
-      window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(() => {
-        if (building) finish();
-        else WHO.forEach((who) => place(who, homes[who]()));
-      }, 150);
-    };
     const onReplay = () => {
-      if (!motion) return;
-      stop();
-      stage.querySelectorAll("[data-on]").forEach((el) => el.removeAttribute("data-on"));
-      delete stage.dataset.cursors;
-      html.dataset.build = "pending";
+      timers.forEach((id) => window.clearTimeout(id));
+      timers.clear();
       window.scrollTo({ top: 0 });
-      void (async () => {
-        try {
-          await wait(450);
-          await build();
-        } catch {
-          return;
-        }
-        finish();
-      })();
+      // Restart the CSS intro: drop its animations for a frame, then restore.
+      stage.dataset.still = "";
+      void stage.offsetWidth;
+      delete stage.dataset.still;
+      start();
     };
     const observer = new IntersectionObserver(([entry]) => {
       onStage = entry.isIntersecting;
     });
     observer.observe(stage);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
     window.addEventListener("hh:replay", onReplay);
     return () => {
-      run.alive = false;
-      anims.forEach((anim) => anim.cancel());
+      timers.forEach((id) => window.clearTimeout(id));
       observer.disconnect();
-      window.clearTimeout(resizeTimer);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onResize);
       window.removeEventListener("hh:replay", onReplay);
     };
   }, [sites.length]);
@@ -432,15 +172,15 @@ export function Hero({
           <h1 id="hero-title" className="hero-title">
             <span className="sr-only">{srTitle}</span>
             <span aria-hidden="true" className="hero-name" data-b="name">
-              {lines.map((line, lineIndex) => (
+              {lines.map((line) => (
                 <span key={line} className="hero-line">
-                  {line.split("").map((char, charIndex) => {
+                  {line.split("").map((char) => {
                     const i = index++;
                     return (
                       <span
                         key={i}
                         className="hc"
-                        data-gap={lineIndex > 0 && charIndex === 0 ? "" : undefined}
+                        style={{ "--i": i } as React.CSSProperties}
                       >
                         {char}
                       </span>
@@ -458,6 +198,7 @@ export function Hero({
                 <span key={part}>{part}</span>
               ))}
             </p>
+            <CursorMark who="design" className="hero-cur" />
           </Drag>
 
           <p className="hero-message" data-b="lede">
@@ -504,6 +245,7 @@ export function Hero({
                 />
               ))}
             </div>
+            <CursorMark who="web" className="hero-cur" />
           </div>
 
           <Arrow shape="hook" className="hs-arrow hs-arrow-2" data-b="arrow2" />
@@ -529,6 +271,7 @@ export function Hero({
                 sizes="(max-width: 900px) 28vw, 170px"
               />
             </div>
+            <CursorMark who="flutter" className="hero-cur" />
           </div>
 
           <div className="hs-term" data-b="term">
@@ -540,6 +283,7 @@ export function Hero({
                 </span>
               ))}
             </div>
+            <CursorMark who="ai" className="hero-cur" />
           </div>
 
           <Arrow shape="loop" className="hs-arrow hs-arrow-3" data-b="arrow3" />
@@ -565,10 +309,6 @@ export function Hero({
           </Drag>
         </div>
 
-        <span className="hero-marquee" aria-hidden="true" />
-        {WHO.map((who) => (
-          <CursorMark key={who} who={who} className="hero-cur" />
-        ))}
       </div>
     </section>
   );

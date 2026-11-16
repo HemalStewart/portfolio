@@ -98,12 +98,11 @@ export const viewport: Viewport = {
 };
 
 /*
- * Runs before first paint. `data-motion` turns on the build-in states (never
- * with reduced motion, so that visitor gets the finished board). `data-build`
- * holds the hero back until its cursors have built it: once per session, and
- * with a fallback in case the script that plays it never arrives.
+ * Runs before first paint. `data-motion` turns on the scroll reveals, whose
+ * hidden states would otherwise strand content; it is never set with reduced
+ * motion, and it is withdrawn if the script that plays them never arrives.
  */
-const boardScript = `try{var d=document.documentElement,r=matchMedia("(prefers-reduced-motion: reduce)").matches;if(!r){d.dataset.motion="on";if(sessionStorage.getItem("hh:built"))d.dataset.build="done";else{d.dataset.build="pending";setTimeout(function(){if(d.dataset.build==="pending"&&!window.__hero)d.dataset.build="done"},6000)}setTimeout(function(){if(!window.__board)delete d.dataset.motion},6000)}else d.dataset.build="done"}catch(e){document.documentElement.dataset.build="done"}`;
+const boardScript = `try{var d=document.documentElement;if(!matchMedia("(prefers-reduced-motion: reduce)").matches){d.dataset.motion="on";setTimeout(function(){if(!window.__board)delete d.dataset.motion},5000)}}catch(e){}`;
 
 const personJsonLd = {
   "@context": "https://schema.org",

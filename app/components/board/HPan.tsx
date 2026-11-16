@@ -41,7 +41,12 @@ export function HPan({
     let distance = 0;
 
     const layout = () => {
-      distance = Math.max(0, row.scrollWidth - row.clientWidth);
+      // From the row's start to the far edge of its last print, plus the
+      // same margin on the right as the row has on the left.
+      const last = row.lastElementChild as HTMLElement | null;
+      const side = parseFloat(getComputedStyle(row).paddingLeft) || 0;
+      const end = last ? last.offsetLeft + last.offsetWidth : row.scrollWidth;
+      distance = Math.max(0, end + side - row.clientWidth);
       track.style.height = `calc(100svh + ${Math.round(distance / SPEED)}px)`;
       move();
     };
