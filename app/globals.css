@@ -9,10 +9,10 @@
 /* ------------------------------------------------------------------ tokens */
 
 @theme {
-  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-mona), ui-sans-serif, system-ui, sans-serif;
   --font-serif: ui-serif, Georgia, serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
-  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
+  --font-mono: var(--font-martian), ui-monospace, SFMono-Regular, monospace;
+  --font-hand: var(--font-marker), "Comic Sans MS", cursive;
 }
 
 :root {
@@ -107,6 +107,8 @@
 /* -------------------------------------------------------------------- base */
 
 html {
+  /* The marker face has one weight: never fake a bold from it. */
+  font-synthesis-weight: none;
   scroll-padding-top: calc(var(--bar) + 24px);
   -webkit-text-size-adjust: 100%;
   background: var(--paper);
@@ -591,6 +593,17 @@ html[data-motion] .rv:not([data-in]) .arrow path {
 }
 .text-link:hover {
   background-size: 100% 2px;
+}
+/* The file a link downloads, named the way a file browser tags it. */
+.file-tag {
+  padding: 3px 5px;
+  border: 1px solid var(--line-2);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--muted);
 }
 
 .tag {
