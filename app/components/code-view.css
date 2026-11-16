@@ -94,8 +94,8 @@
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
   padding: 4px;
-  border: 1.5px solid var(--ink);
-  border-radius: 999px;
+  border: 1.5px solid var(--line-2);
+  border-radius: 5px;
   background: var(--card);
 }
 .view-thumb {
@@ -104,7 +104,7 @@
   bottom: 4px;
   left: 4px;
   width: calc(50% - 4px);
-  border-radius: 999px;
+  border-radius: 5px;
   background: var(--ink);
   transition: transform 0.55s var(--ease);
 }
@@ -120,7 +120,7 @@
   gap: 8px;
   min-height: 36px;
   padding: 0 18px;
-  border-radius: 999px;
+  border-radius: 5px;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.08em;

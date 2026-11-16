@@ -11,11 +11,11 @@ export default function NotFound() {
         Nothing pinned <em>here.</em>
       </h1>
       <p className="not-found-lede">
-        This page isn&apos;t on the board — it may have been moved or taken
+        This page isn&apos;t in the file — it may have been moved or taken
         down.
       </p>
       <Link className="btn btn-ink" href="/">
-        Back to the board
+        Back to the file
       </Link>
       <Stamp className="not-found-stamp">Not found</Stamp>
     </main>

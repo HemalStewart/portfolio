@@ -22,7 +22,7 @@
   margin-bottom: clamp(18px, 2.6vw, 28px);
 }
 .bhead h2 {
-  font-size: clamp(2.7rem, 7vw, 6.6rem);
+  font-size: clamp(2.7rem, calc(var(--cw) * 0.07), 9rem);
   font-weight: 750;
   font-variation-settings: "wdth" 118;
   line-height: 0.93;
@@ -33,9 +33,6 @@
   padding-bottom: 10px;
   font-size: 1.06rem;
   color: var(--muted);
-}
-html[data-motion] .blede.rv {
-  transition-delay: 0.12s;
 }
 
 /* The aside sits above the lede, its arrow curling down towards it. */
@@ -52,15 +49,6 @@ html[data-motion] .blede.rv {
   height: auto;
   margin-top: 0.5em;
   rotate: 8deg;
-}
-html[data-motion] .bhead-note.rv {
-  transition-delay: 0.3s;
-}
-
-/* The section's cursor parks just past the end of the title. */
-.bhead .park {
-  --px: 58%;
-  --py: 80%;
 }
 
 .subhead {
@@ -84,15 +72,6 @@ html[data-motion] .bhead-note.rv {
     justify-self: start;
     margin-top: 14px;
   }
-  .bhead .park {
-    --px: 62%;
-    --py: 30%;
-  }
-}
-@media (max-width: 640px) {
-  .bhead .park {
-    display: none;
-  }
 }
 
 /* The 404 page: one frame's worth of board. */
@@ -111,15 +90,6 @@ html[data-motion] .bhead-note.rv {
   font-variation-settings: "wdth" 120;
   line-height: 0.9;
   letter-spacing: -0.05em;
-}
-.not-found h1 em {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-variation-settings: normal;
-  letter-spacing: -0.01em;
-  background: linear-gradient(var(--marker), var(--marker)) no-repeat 0 82% / 100%
-    0.36em;
 }
 .not-found-lede {
   max-width: 40ch;

@@ -1,0 +1,358 @@
+/*
+ * The side panels of the file: layers on the left, the inspector on the
+ * right. Both are closed until the visitor opens them from the toolbar
+ * (`html[data-lp]` / `html[data-rp]`). From 1440px (layers) and 1680px
+ * (inspector) the page makes room through --pl / --pr (globals.css); on
+ * narrower desktops a panel lies over the canvas. Phones do not have them.
+ */
+
+.panel {
+  position: fixed;
+  top: var(--bar);
+  bottom: 0;
+  z-index: 58;
+  display: none;
+  flex-direction: column;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.74rem;
+  line-height: 1.3;
+  visibility: hidden;
+  transition:
+    translate 0.35s var(--ease),
+    visibility 0s 0.35s;
+}
+.lp {
+  left: 0;
+  width: 232px;
+  border-right: 1px solid var(--line);
+  translate: -100% 0;
+}
+.rp {
+  right: 0;
+  width: 252px;
+  border-left: 1px solid var(--line);
+  overflow-y: auto;
+  translate: 100% 0;
+}
+html[data-lp] .lp,
+html[data-rp] .rp {
+  translate: 0 0;
+  visibility: visible;
+  transition:
+    translate 0.35s var(--ease),
+    visibility 0s;
+}
+@media (min-width: 1180px) {
+  .panel {
+    display: flex;
+  }
+}
+@media (max-width: 1439px) {
+  .lp {
+    box-shadow: 40px 0 70px -40px #000;
+  }
+}
+@media (max-width: 1679px) {
+  .rp {
+    box-shadow: -40px 0 70px -40px #000;
+  }
+}
+
+.panel-tabs {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: none;
+  height: 40px;
+  padding-inline: 14px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 600;
+  color: var(--subtle);
+}
+.panel-tabs [data-on] {
+  color: var(--ink);
+}
+.rp-zoom {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-weight: 400;
+}
+.panel-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  flex: none;
+  padding: 14px 14px 8px;
+  font-weight: 650;
+  color: var(--ink);
+}
+.panel-title span {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 400;
+  color: var(--subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------ layers */
+
+.lp-tree {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 12px;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.lp-tree > ol > li > a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding-inline: 14px 12px;
+  color: var(--muted);
+  font-weight: 550;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.lp-tree a:hover {
+  background: rgb(255 255 255 / 0.05);
+  color: var(--ink);
+}
+.lp-tree [data-current] > a {
+  background: color-mix(in srgb, var(--sel) 22%, transparent);
+  color: var(--ink);
+}
+.lp-tree svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lp-tree a span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lp-tree small {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--subtle);
+  font-variant-numeric: tabular-nums;
+}
+.lp-tree ul {
+  padding-block: 2px 8px;
+}
+.lp-tree ul li {
+  --who: var(--subtle);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 25px;
+  padding-inline: 34px 12px;
+  color: var(--subtle);
+  opacity: 0.45;
+  transition:
+    opacity 0.3s,
+    color 0.3s;
+}
+.lp-tree ul li span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lp-tree ul li[data-built] {
+  opacity: 1;
+  color: var(--muted);
+  animation: layer-in 0.9s var(--ease);
+}
+.lp-tree ul li[data-built] svg {
+  color: var(--who);
+}
+@keyframes layer-in {
+  from {
+    background: color-mix(in srgb, var(--who) 34%, transparent);
+    color: var(--ink);
+  }
+}
+
+.lp-log {
+  flex: none;
+  min-height: 190px;
+  border-top: 1px solid var(--line);
+}
+.lp-log ol {
+  display: grid;
+  gap: 7px;
+  padding: 2px 14px 16px;
+}
+.lp-log li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: rise 0.3s var(--ease);
+}
+.lp-log li:nth-child(n + 4) {
+  opacity: 0.6;
+}
+.lp-log li:nth-child(n + 6) {
+  opacity: 0.35;
+}
+.lp-log b {
+  color: var(--who);
+  font-weight: 650;
+}
+
+/* --------------------------------------------------------------- inspector */
+
+.rp-block {
+  flex: none;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.rp-pick {
+  --who: var(--subtle);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px 10px;
+}
+.rp-pick i,
+.rp-crew i {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--who);
+}
+.rp-pick b {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink);
+  font-weight: 600;
+}
+.rp-pick span {
+  color: var(--who);
+  font-weight: 600;
+}
+.rp-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding-inline: 14px;
+}
+.rp-fields div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding-inline: 8px;
+  border-radius: 5px;
+  background: var(--panel-2);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+.rp-fields dt {
+  color: var(--subtle);
+  text-transform: uppercase;
+}
+.rp-fields dd {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.rp-crew {
+  display: grid;
+  gap: 1px;
+}
+.rp-crew li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 25px;
+  padding-inline: 14px;
+  transition: background 0.3s;
+}
+.rp-crew b {
+  flex: none;
+  width: 58px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.rp-crew span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--subtle);
+}
+.rp-crew i {
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+.rp-crew [data-on] {
+  background: color-mix(in srgb, var(--who) 12%, transparent);
+}
+.rp-crew [data-on] i {
+  opacity: 1;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--who) 30%, transparent);
+}
+.rp-crew [data-on] b {
+  color: var(--ink);
+}
+.rp-crew [data-on] span {
+  color: var(--who);
+}
+.rp-export {
+  display: grid;
+  gap: 8px;
+  padding-inline: 14px;
+  border-bottom: 0;
+}
+.rp-export .panel-title {
+  padding-inline: 0;
+}
+.rp-btn {
+  display: grid;
+  place-items: center;
+  height: 36px;
+  border: 1px solid var(--line-2);
+  border-radius: 7px;
+  color: var(--ink);
+  font-weight: 600;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.rp-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.rp-mail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+.rp-mail:hover {
+  color: var(--ink);
+}

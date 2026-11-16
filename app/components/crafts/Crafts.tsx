@@ -230,7 +230,7 @@ export function Crafts({
               />
             </figure>
 
-            <div className="cs-frame">
+            <div className="cs-frame" data-pick="" data-name="Artboard">
               <span className="cs-artlabel">
                 <b>#</b> Home — Desktop
               </span>

@@ -2,16 +2,12 @@ import { Dock } from "./components/board/Dock";
 import { Drag } from "./components/board/Drag";
 import { Hero } from "./components/board/Hero";
 import { HPan } from "./components/board/HPan";
-import {
-  Arrow,
-  CRAFT_CURSORS,
-  CursorMark,
-  FrameLabel,
-  Stamp,
-  type Who,
-} from "./components/board/marks";
+import { Rulers } from "./components/board/Rulers";
+import { Arrow, FrameLabel, Stamp, type Who } from "./components/board/marks";
 import { BoardHead } from "./components/board/Section";
 import { TopBar } from "./components/board/TopBar";
+import { Panels } from "./components/swarm/Panels";
+import { Typed } from "./components/swarm/Typed";
 import { CopyButton } from "./components/CopyButton";
 import { Crafts } from "./components/crafts/Crafts";
 import { ArrowIcon, LinkIcon } from "./components/icons";
@@ -125,25 +121,26 @@ export default function Home() {
       </a>
       <div className="paper" aria-hidden="true" />
       <TopBar links={navLinks} email={email.href} />
+      <Rulers />
       <Dock chapters={chapters} />
+      <Panels chapters={chapters} email={email.href} emailLabel={email.display} />
 
       <main id="main">
         <Hero
-          kicker={`Designer & developer · Web, Flutter & AI · Since ${since}`}
+          kicker="Designer & developer · Web, Flutter & AI"
           lines={["Hemal", "Herath"]}
           srTitle="Hemal Herath, software engineer — from idea to production"
           tagline={["from idea", "to production."]}
-          downloads={downloads}
           liveCount={releases.length}
           sites={heroSites}
           message={
-            <>
+            <Typed by="word">
               I design and build websites, web apps and Flutter apps end to end
               — and ship them to real users:{" "}
-              <strong>{`${downloads} Play Store downloads`}</strong> across
-              three apps, and systems running at Sri Lanka&apos;s Ministry of
-              Education.
-            </>
+              <strong>{`${downloads} Play Store downloads`}</strong>
+              {" "}across three apps, and systems running at Sri Lanka&apos;s
+              Ministry of Education.
+            </Typed>
           }
           actions={
             <>
@@ -171,28 +168,29 @@ export default function Home() {
         {/* About */}
         <section id="about" className="bsec about" aria-labelledby="about-title">
           <div className="shell">
-            <p className="bhead-label rv">
+            <p className="bhead-label" data-b="pop" data-name="Label" data-by="design">
               <FrameLabel who="design">01 — About</FrameLabel>
             </p>
             <h2 id="about-title" className="sr-only">
               About
             </h2>
             <ScrubText text="I build the *whole* thing — the interface, the API, the database and the server it runs on — and I *own* it from the first design to the deployment. Flutter and Next.js up front; CodeIgniter, Laravel, Django and FastAPI behind them. Shipped to Google Play, the App Store, and Sri Lanka's Ministry of Education." />
-            <p className="note about-note rv" data-who="design" aria-hidden="true">
-              <span>go on, move them</span>
-              <Arrow shape="down" />
+            <p className="note about-note" data-who="design" aria-hidden="true">
+              <span data-b="pop" data-name="Note">
+                go on, move them
+              </span>
+              <Arrow shape="down" data-b="draw" data-name="Arrow" />
             </p>
             <ul className="facts">
               {facts.map((fact, index) => (
-                <li
-                  key={fact.label}
-                  className="rv"
-                  style={{ "--i": index } as React.CSSProperties}
-                >
+                <li key={fact.label}>
                   <Drag>
                     <div
                       className={`sticky sticky-${fact.tone} fact`}
                       style={{ "--r": fact.tilt } as React.CSSProperties}
+                      data-b="drop"
+                      data-name={`${fact.label} note`}
+                      data-by={skillWho[index % skillWho.length]}
                     >
                       <p className="fact-value">{fact.value}</p>
                       <p className="fact-label">{fact.label}</p>
@@ -241,13 +239,9 @@ export default function Home() {
               note="every one is a real link"
             />
 
-            <ol id="releases" className="ships">
+            <ol id="releases" className="ships" data-b="rows" data-name="Shipped list">
               {releases.map((release, index) => (
-                <li
-                  key={release.name}
-                  className="ship rv"
-                  style={{ "--i": index % 4 } as React.CSSProperties}
-                >
+                <li key={release.name} className="ship" data-row="">
                   <span className="ship-index" aria-hidden="true">
                     {String(index + 1).padStart(2, "0")}
                   </span>
@@ -283,17 +277,30 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <a className="ship-case" href={`#${release.project}`}>
-                    Case study
-                    <span className="sr-only"> for {release.name}</span>
-                    <ArrowIcon direction="down" />
-                  </a>
+                  {release.project ? (
+                    <a className="ship-case" href={`#${release.project}`}>
+                      Case study
+                      <span className="sr-only"> for {release.name}</span>
+                      <ArrowIcon direction="down" />
+                    </a>
+                  ) : (
+                    <a className="ship-case" href="#showcase">
+                      On the wall
+                      <span className="sr-only">: {release.name} in Websites</span>
+                      <ArrowIcon direction="down" />
+                    </a>
+                  )}
                 </li>
               ))}
             </ol>
 
-            <h3 className="subhead rv">
-              Four builds, <em>up close.</em>
+            <h3 className="subhead" data-b="type" data-name="Subhead">
+              <span className="sr-only">Four builds, up close.</span>
+              <span aria-hidden="true">
+                <Typed>
+                  Four builds, <em>up close.</em>
+                </Typed>
+              </span>
             </h3>
             <PinnedWork titles={featured.map((project) => project.title)}>
               {featured.map((project, index) => (
@@ -301,8 +308,13 @@ export default function Home() {
               ))}
             </PinnedWork>
 
-            <h3 className="subhead rv">
-              And {countWord(more.length)} <em>more.</em>
+            <h3 className="subhead" data-b="type" data-name="Subhead">
+              <span className="sr-only">{`And ${countWord(more.length)} more.`}</span>
+              <span aria-hidden="true">
+                <Typed>
+                  And {countWord(more.length)} <em>more.</em>
+                </Typed>
+              </span>
             </h3>
             <div className="card-grid">
               {more.map((project) => (
@@ -357,9 +369,9 @@ export default function Home() {
               description="From a Laravel and React internship to owning full-stack delivery for government and product clients."
             />
             <div className="experience-grid">
-              <ol className="timeline">
+              <ol className="timeline" data-b="rows" data-name="Timeline">
                 {experience.map((item) => (
-                  <li key={item.start} className="timeline-item rv">
+                  <li key={item.start} className="timeline-item" data-row="">
                     <span className="timeline-node" aria-hidden="true" />
                     <p className="timeline-meta">
                       <time dateTime={item.start}>{item.period}</time>
@@ -377,9 +389,11 @@ export default function Home() {
               </ol>
               <aside className="credentials" aria-label="Education and recognition">
                 <section
-                  className="index-card rv"
+                  className="index-card"
                   style={{ "--r": "1.2deg" } as React.CSSProperties}
                   aria-labelledby="education-title"
+                  data-b="drop"
+                  data-name="Education card"
                 >
                   <p className="index-card-kicker">Education</p>
                   <h3 id="education-title">{education.degree}</h3>
@@ -387,9 +401,11 @@ export default function Home() {
                   <p className="index-card-meta">{education.period}</p>
                 </section>
                 <section
-                  className="index-card rv"
+                  className="index-card"
                   style={{ "--r": "-1deg" } as React.CSSProperties}
                   aria-labelledby="recognition-title"
+                  data-b="drop"
+                  data-name="Recognition card"
                 >
                   <p className="index-card-kicker">Recognition</p>
                   <h3 id="recognition-title" className="sr-only">
@@ -431,10 +447,12 @@ export default function Home() {
               {skillGroups.map((group, index) => (
                 <section
                   key={group.title}
-                  className="cset rv"
+                  className="cset"
                   data-who={skillWho[index % skillWho.length]}
-                  style={{ "--i": index } as React.CSSProperties}
                   aria-labelledby={`skill-${index}`}
+                  data-b="frame"
+                  data-name={group.title}
+                  data-by={skillWho[index % skillWho.length]}
                 >
                   <h3 id={`skill-${index}`}>
                     <i aria-hidden="true" />
@@ -472,13 +490,9 @@ export default function Home() {
               }
               description="Focused builds and research tools — different problems, same hands-on engineering."
             />
-            <ul className="layers">
-              {additionalProjects.map((project, index) => (
-                <li
-                  key={project.title}
-                  className="layer rv"
-                  style={{ "--i": index % 5 } as React.CSSProperties}
-                >
+            <ul className="layers" data-b="rows" data-name="Side projects">
+              {additionalProjects.map((project) => (
+                <li key={project.title} className="layer" data-row="">
                   <span className="layer-icon" aria-hidden="true" />
                   <div className="layer-main">
                     <h3>{project.title}</h3>
@@ -498,44 +512,47 @@ export default function Home() {
         {/* Contact */}
         <section id="contact" className="contact" aria-labelledby="contact-title">
           <div className="shell">
-            <div className="contact-frame">
-              <p className="bhead-label rv">
+            <div className="contact-frame" data-scene="" data-gather="">
+              <p className="bhead-label" data-b="pop" data-name="Label" data-by="web">
                 <FrameLabel who="web">08 — Contact</FrameLabel>
               </p>
-              <h2 id="contact-title" className="contact-title rv">
-                Let&apos;s build <em>yours.</em>
+              <h2
+                id="contact-title"
+                className="contact-title"
+                data-b="type"
+                data-name="Title"
+                data-by="web"
+              >
+                <span className="sr-only">Let&apos;s build yours.</span>
+                <span aria-hidden="true">
+                  <Typed>
+                    Let&apos;s build <em>yours.</em>
+                  </Typed>
+                </span>
               </h2>
-              <p className="contact-lede rv">
-                Hiring a software engineer or building a product? I&apos;m open
-                to full-time roles and contract work — let&apos;s talk about
-                what you&apos;re shipping.
+              <p className="contact-lede" data-b="words" data-name="Lede" data-w="1">
+                <Typed by="word">
+                  Hiring a software engineer or building a product? I&apos;m open
+                  to full-time roles and contract work — let&apos;s talk about
+                  what you&apos;re shipping.
+                </Typed>
               </p>
-              <div className="contact-email-row rv">
+              <div className="contact-email-row" data-b="pop" data-name="Email" data-w="2">
                 <a className="contact-email" href={email.href}>
                   {email.display}
                   <ArrowIcon />
                 </a>
                 <CopyButton value={email.display} label="Copy email" />
               </div>
-              <Stamp className="contact-stamp rv">Open to work</Stamp>
-              {(Object.keys(CRAFT_CURSORS) as Who[]).map((who, index) => (
-                <CursorMark
-                  key={who}
-                  who={who}
-                  className="gather rv"
-                  style={{ "--n": index } as React.CSSProperties}
-                />
-              ))}
+              <Stamp className="contact-stamp" data-b="pop" data-name="Stamp" data-w="3">
+                Open to work
+              </Stamp>
             </div>
-            <ul className="contact-links">
+            <ul className="contact-links" data-b="rows" data-name="Links">
               {profileLinks
                 .filter((link) => link.label !== "Email")
-                .map((link, index) => (
-                  <li
-                    key={link.label}
-                    className="rv"
-                    style={{ "--i": index } as React.CSSProperties}
-                  >
+                .map((link) => (
+                  <li key={link.label} data-row="">
                     <a
                       href={link.href}
                       target={link.external ? "_blank" : undefined}

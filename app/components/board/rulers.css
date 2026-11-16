@@ -1,0 +1,111 @@
+/*
+ * The canvas rulers (Rulers.tsx): a strip along the top and one down the
+ * left, ticked every 10px with a number every 100px. They are only shown
+ * where there is room for them (--ruler is 0 on phones).
+ */
+
+.rulers {
+  --tick: rgb(255 255 255 / 0.16);
+  display: none;
+}
+@media (min-width: 900px) {
+  .rulers {
+    display: block;
+  }
+}
+
+.ruler,
+.ruler-corner {
+  position: fixed;
+  z-index: 55;
+  overflow: hidden;
+  background: var(--panel);
+  transition:
+    left 0.3s var(--ease),
+    right 0.3s var(--ease);
+}
+.ruler span {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1;
+  color: var(--subtle);
+  white-space: nowrap;
+}
+
+/* Across the top, under the toolbar. */
+.ruler-x {
+  top: var(--bar);
+  left: calc(var(--pl) + var(--ruler));
+  right: var(--pr);
+  height: var(--ruler);
+  border-bottom: 1px solid var(--line);
+  background:
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 10px)
+      left bottom / 100% 4px no-repeat,
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 50px)
+      left bottom / 100% 8px no-repeat,
+    repeating-linear-gradient(90deg, var(--tick) 0 1px, transparent 1px 100px)
+      left bottom / 100% 100% no-repeat,
+    var(--panel);
+}
+.ruler-x span {
+  top: 3px;
+  margin-left: 3px;
+}
+
+/* Down the left: the strip is the page's height and scrolls with it. */
+.ruler-y {
+  top: var(--bar);
+  bottom: 0;
+  left: var(--pl);
+  width: var(--ruler);
+  border-right: 1px solid var(--line);
+}
+.ruler-strip {
+  position: absolute;
+  top: calc(var(--bar) * -1);
+  left: 0;
+  width: 100%;
+  background:
+    repeating-linear-gradient(180deg, var(--tick) 0 1px, transparent 1px 10px)
+      right top / 4px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--tick) 0 1px, transparent 1px 50px)
+      right top / 8px 100% no-repeat,
+    repeating-linear-gradient(180deg, var(--tick) 0 1px, transparent 1px 100px)
+      right top / 100% 100% no-repeat;
+  will-change: transform;
+}
+.ruler-y .ruler-strip span {
+  left: 3px;
+  margin-top: 3px;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+}
+
+.ruler-corner {
+  top: var(--bar);
+  left: var(--pl);
+  width: var(--ruler);
+  height: var(--ruler);
+  z-index: 56;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* The extent of the layer under the pointer, in selection blue. */
+.ruler .ruler-mark {
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0;
+  background: color-mix(in srgb, var(--sel) 30%, transparent);
+  transition: opacity 0.2s;
+}
+.ruler-x .ruler-mark {
+  height: 100%;
+  margin: 0;
+}
+.ruler-y .ruler-mark {
+  width: 100%;
+}

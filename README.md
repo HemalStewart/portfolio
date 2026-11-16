@@ -5,11 +5,13 @@ Personal portfolio of Hemal Herath, software engineer in Colombo, Sri Lanka
 motion rules live in [`docs/DESIGN.md`](docs/DESIGN.md).
 
 Next.js 16 (App Router, fully static) · React 19 · Tailwind CSS 4 (preflight
-only; the styles are plain CSS) · Motion · Lenis. The site is a designer's
-live board: the hero is built in front of you by four named cursors, sections
-are frames, notes and prints on dotted paper, the crafts sequence morphs one
-frame from wireframe to website to Flutter app to terminal, and the websites
-pan sideways along a wall. Everything respects `prefers-reduced-motion`.
+only; the styles are plain CSS) · Motion · Lenis. The site is a design file
+that builds itself: a crew of twelve named cursors drags the frames open,
+types the headings, carries the notes in and traces the arrows, section after
+section, with a live layers panel and inspector beside the canvas. The crafts
+sequence morphs one frame from wireframe to website to Flutter app to
+terminal, and the websites pan sideways along a wall. Everything respects
+`prefers-reduced-motion`.
 
 ## Editing content
 
